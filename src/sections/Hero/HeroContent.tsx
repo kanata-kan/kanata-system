@@ -1,28 +1,21 @@
 /**
  * @file HeroContent.tsx
- * @description Hero left side: available badge, name with gradient, rotating role with cursor blink,
- * bio, tech pills, and CTAs. Manages its own cursor and role rotation state.
+ * @description Hero content with integrated avatar beside the name.
+ * Layout: Badge → [Avatar + Name] → Role → Bio → CTA.
+ * Manages cursor blink and role rotation state.
  */
 "use client";
 
 import { useState, useEffect } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { Avatar } from "@/components/ui/Avatar";
+import { content } from "@/data/content";
 import { HeroCTA } from "./HeroCTA";
 
-const ROLES = [
-  "Understand before building",
-  "Fix what slows growth",
-  "Make decisions, not assumptions",
-  "Clarity over speed",
-];
+const ROLES = content.hero.roles;
 
-export const PILLS = [
-  "Understanding first",
-  "Clear decisions",
-  "Real constraints",
-  "Value-driven work",
-];
+export const PILLS = content.hero.pills;
 
 export function HeroContent() {
   const { C } = useThemeContext();
@@ -40,16 +33,18 @@ export function HeroContent() {
     return () => clearInterval(t);
   }, []);
 
+  const avatarSize = isMobile ? 80 : 120;
+
   return (
     <div>
-      {/* Available badge */}
+      {/* Available badge with location */}
       <div
         className="rv d1"
         style={{
           display: "inline-flex",
           alignItems: "center",
           gap: 8,
-          marginBottom: 32,
+          marginBottom: isMobile ? 28 : 36,
           background: `${C.green}15`,
           border: `1px solid ${C.green}35`,
           borderRadius: 40,
@@ -58,8 +53,8 @@ export function HeroContent() {
       >
         <span
           style={{
-            width: 7,
-            height: 7,
+            width: 8,
+            height: 8,
             borderRadius: "50%",
             background: C.green,
             display: "inline-block",
@@ -74,40 +69,70 @@ export function HeroContent() {
             letterSpacing: 1.5,
           }}
         >
-          AVAILABLE FOR WORK
+          {content.hero.badge}
+        </span>
+        <span
+          style={{
+            width: 1,
+            height: 12,
+            background: `${C.green}40`,
+          }}
+        />
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 10,
+            color: `${C.green}BB`,
+            letterSpacing: 1,
+          }}
+        >
+          {content.hero.avatar.infoItems[0]}
         </span>
       </div>
 
-      {/* Name */}
-      <h1
+      {/* Avatar + Name integrated row */}
+      <div
         className="rv d2"
         style={{
-          fontFamily: "var(--font-serif)",
-          fontSize: isMobile
-            ? "clamp(48px,12vw,70px)"
-            : "clamp(68px,7.5vw,105px)",
-          fontWeight: 700,
-          lineHeight: 0.93,
-          letterSpacing: "-.03em",
-          color: C.text,
-          marginBottom: 20,
-          paddingRight: 8,
+          display: "flex",
+          alignItems: "center",
+          gap: isMobile ? 18 : 28,
+          marginBottom: isMobile ? 16 : 20,
         }}
       >
-        Abdel
-        <span
-          className="grad-text"
-          style={{
-            fontStyle: "italic",
-            fontWeight: 400,
-            paddingRight: 6,
-          }}
-        >
-          ilah
-        </span>
-        <br />
-        Wajid<span style={{ color: C.cyan }}>.</span>
-      </h1>
+        <Avatar size={avatarSize} c={C} />
+
+        <div style={{ minWidth: 0 }}>
+          <h1
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: isMobile
+                ? "clamp(36px,10vw,52px)"
+                : "clamp(56px,5.5vw,80px)",
+              fontWeight: 700,
+              lineHeight: 0.93,
+              letterSpacing: "-.03em",
+              color: C.text,
+              paddingRight: 8,
+            }}
+          >
+            {content.hero.name.base}
+            <span
+              className="grad-text"
+              style={{
+                fontStyle: "italic",
+                fontWeight: 400,
+                paddingRight: 6,
+              }}
+            >
+              {content.hero.name.highlight}
+            </span>
+            <br />
+            {content.hero.name.lastName}
+            <span style={{ color: C.cyan }}>.</span>
+          </h1>
+        </div>
+      </div>
 
       {/* Rotating role */}
       <div
@@ -132,9 +157,10 @@ export function HeroContent() {
             fontSize: isMobile ? 11 : 13,
             color: C.sub,
             letterSpacing: 1,
+            transition: "opacity 0.3s",
           }}
         >
-          {ROLES[ri]}
+          {content.hero.roles[ri]}
           <span
             style={{
               display: "inline-block",
@@ -159,15 +185,12 @@ export function HeroContent() {
           fontSize: isMobile ? 14 : 15,
           color: C.muted,
           lineHeight: 1.75,
-          maxWidth: 460,
-          marginBottom: 32,
+          maxWidth: 540,
+          marginBottom: 24,
           fontWeight: 300,
         }}
       >
-        Before writing any code, I try to understand how the business actually
-        works. If the goal is growth, I don&apos;t jump into building — I look
-        for what&apos;s slowing things down first. Then I decide where I can
-        truly add value.
+        {content.hero.bio}
       </p>
 
       <HeroCTA />

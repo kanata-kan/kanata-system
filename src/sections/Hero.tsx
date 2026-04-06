@@ -11,6 +11,7 @@ import { useResponsiveContext } from "@/hooks/useResponsive";
 import { HeroContent, HeroStats, HeroAvatar, PILLS } from "./Hero/index";
 import { Container } from "@/components/layout/Container";
 import { SECTION_SPACING } from "@/tokens/spacing";
+import { content } from "@/data/content";
 
 export function Hero() {
   const { C } = useThemeContext();
@@ -24,9 +25,7 @@ export function Hero() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        paddingTop: isMobile
-          ? SECTION_SPACING.y.mobile
-          : SECTION_SPACING.y.desktop,
+        paddingTop: isMobile ? 32 : 80,
         paddingBottom: isMobile
           ? SECTION_SPACING.y.mobile
           : SECTION_SPACING.y.desktop,
@@ -76,31 +75,30 @@ export function Hero() {
         }}
       />
 
-      <Container variant="wide">
+      <Container>
         <div
           style={{
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
-            gap: isMobile ? 32 : 48,
-            alignItems: isMobile ? "stretch" : "flex-start",
+            gap: isMobile ? 28 : 40,
+            alignItems: isMobile ? "stretch" : "center",
             position: "relative",
             zIndex: 1,
           }}
         >
-          {/* LEFT — wider column for name & text */}
-          <div style={{ flex: isMobile ? "unset" : "1.3 1 0%", minWidth: 0 }}>
+          {/* LEFT — identity + content */}
+          <div style={{ flex: isMobile ? "unset" : "1.1 1 0%", minWidth: 0 }}>
             <HeroContent />
           </div>
 
-          {/* RIGHT — card column */}
+          {/* RIGHT — code card (desktop only) */}
           <div
             style={{
-              flex: isMobile ? "unset" : "0.7 1 0%",
+              flex: isMobile ? "unset" : "0.9 1 0%",
               minWidth: isMobile ? "unset" : 300,
-              maxWidth: isMobile ? "unset" : 380,
+              maxWidth: isMobile ? "unset" : 400,
               display: "flex",
               justifyContent: isMobile ? "stretch" : "flex-end",
-              paddingTop: isMobile ? 0 : 16,
             }}
           >
             <HeroAvatar />
@@ -163,7 +161,7 @@ export function Hero() {
             letterSpacing: 2,
           }}
         >
-          SCROLL
+          {content.hero.scroll}
         </span>
         <div style={{ width: 28, height: 1, background: C.text }} />
       </div>

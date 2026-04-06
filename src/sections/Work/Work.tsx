@@ -15,6 +15,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
+import { content } from "@/data/content";
 import { WorkFeaturedCard } from "./WorkFeaturedCard";
 import { WorkSmallCards } from "./WorkSmallCards";
 
@@ -37,9 +38,9 @@ export function Work() {
           style={{ marginBottom: 36 }}
         >
           <div>
-            <Label c={C}>01 — Approach</Label>
+            <Label c={C}>{content.work.label}</Label>
             <h2 style={TEXT.sectionHeading(C, isMobile)}>
-              Projects that shipped.
+              {content.work.heading}
             </h2>
           </div>
           <span
@@ -49,7 +50,7 @@ export function Work() {
               color: C.muted,
             }}
           >
-            4 projects · 2023–2024
+            {content.work.subtitle}
           </span>
         </Stack>
 

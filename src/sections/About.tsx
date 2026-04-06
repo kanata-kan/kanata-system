@@ -15,47 +15,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
-
-const BIO_PARAGRAPHS = [
-  "I don’t start from features or tools. I start by understanding how the business actually works — and where things break.",
-
-  "Most of the time, the problem isn’t missing code. It’s unclear decisions, hidden complexity, or things slowing the system down.",
-
-  "My role is to bring clarity first — then decide what’s worth building, what should be fixed, and what should be left untouched.",
-];
-
-const CODE_ROWS: [string, string][][] = [
-  [
-    ["const ", "cyan"],
-    ["dev", "text"],
-    [" = {", "muted"],
-  ],
-  [
-    ["  mindset: ", "muted"],
-    ['"understand-first"', "amber"],
-    [",", "muted"],
-  ],
-  [
-    ["  focus: ", "muted"],
-    ['"clarity-over-speed"', "amber"],
-    [",", "muted"],
-  ],
-  [
-    ["  approach: ", "muted"],
-    ['"fix-what-slows"', "green"],
-    [",", "muted"],
-  ],
-  [
-    ["  decisions: ", "muted"],
-    ["true", "cyan"],
-    [",", "muted"],
-  ],
-  [
-    ["  hire: ", "muted"],
-    ['"only-if-it-makes-sense"', "amber"],
-  ],
-  [["}", "muted"]],
-];
+import { content } from "@/data/content";
 
 export function About() {
   const { C } = useThemeContext();
@@ -70,7 +30,7 @@ export function About() {
         >
           {/* Left */}
           <div className="rv-l">
-            <Label c={C}>02 — Mindset</Label>
+            <Label c={C}>{content.about.label}</Label>
 
             <h2
               className="rv-l d1"
@@ -80,12 +40,12 @@ export function About() {
                 lineHeight: 1.1,
               }}
             >
-              I work from reality,
+              {content.about.headingLine1}
               <br />
-              not assumptions.
+              {content.about.headingLine2}
             </h2>
 
-            {BIO_PARAGRAPHS.map((t, i) => (
+            {content.about.paragraphs.map((t, i) => (
               <p
                 key={i}
                 style={{
@@ -106,9 +66,11 @@ export function About() {
                 marginTop: 20,
               }}
             >
-              <Tag color={C.cyan}>Clarity first</Tag>
-              <Tag color={C.amber}>No blind execution</Tag>
-              <Tag color={C.purple}>Value over noise</Tag>
+              {content.about.tags.map((tag) => (
+                <Tag key={tag.text} color={resolveColor(C, tag.colorKey)}>
+                  {tag.text}
+                </Tag>
+              ))}
             </div>
           </div>
 
@@ -182,12 +144,12 @@ export function About() {
                     marginLeft: 4,
                   }}
                 >
-                  about.ts
+                  {content.about.codeFilename}
                 </span>
               </div>
 
               <div style={{ padding: "16px 18px" }}>
-                {CODE_ROWS.map((row, i) => (
+                {content.about.codeRows.map((row, i) => (
                   <div
                     key={i}
                     style={{
@@ -211,12 +173,12 @@ export function About() {
                       {i + 1}
                     </span>
 
-                    {row.map(([txt, colorKey], j) => (
+                    {row.map((token, j) => (
                       <span
                         key={j}
-                        style={{ color: resolveColor(C, colorKey) }}
+                        style={{ color: resolveColor(C, token.colorKey) }}
                       >
-                        {txt}
+                        {token.text}
                       </span>
                     ))}
                   </div>

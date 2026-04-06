@@ -12,6 +12,7 @@ import { useResponsive, ResponsiveContext } from "@/hooks/useResponsive";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Nav } from "@/components/layout/Nav/index";
 import { Footer } from "@/components/layout/Footer";
+import { content } from "@/data/content";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -48,11 +49,48 @@ export default function RootLayout({
       className={`${playfair.variable} ${jetbrains.variable} ${inter.variable}`}
     >
       <head>
-        <title>Abdelilah Wajid · Full-Stack Engineer</title>
+        {/* ── Basic SEO ── */}
+        <title>{content.meta.title}</title>
+        <meta name="description" content={content.meta.description} />
+        <meta name="author" content={content.meta.author} />
+        <meta name="keywords" content={content.meta.keywords} />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={content.meta.siteUrl} />
+
+        {/* ── Favicon ── */}
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+
+        {/* ── Open Graph (Facebook / WhatsApp / LinkedIn) ── */}
+        <meta property="og:type" content={content.meta.ogType} />
+        <meta property="og:title" content={content.meta.title} />
+        <meta property="og:description" content={content.meta.description} />
+        <meta property="og:site_name" content={content.meta.ogSiteName} />
+        <meta property="og:url" content={content.meta.siteUrl} />
         <meta
-          name="description"
-          content="Portfolio of Abdelilah Wajid — Full-Stack Engineer based in Marrakech, Morocco."
+          property="og:image"
+          content={`${content.meta.siteUrl}/opengraph-image`}
         />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={content.meta.title} />
+        <meta property="og:locale" content="en_US" />
+
+        {/* ── Twitter Card ── */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={content.meta.title} />
+        <meta name="twitter:description" content={content.meta.description} />
+        <meta name="twitter:site" content={content.meta.twitterHandle} />
+        <meta name="twitter:creator" content={content.meta.twitterHandle} />
+        <meta
+          name="twitter:image"
+          content={`${content.meta.siteUrl}/twitter-image`}
+        />
+        <meta name="twitter:image:alt" content={content.meta.title} />
+
+        {/* ── Theme / Mobile ── */}
+        <meta name="theme-color" content="#0D1117" />
+        <meta name="color-scheme" content="dark light" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
         style={{

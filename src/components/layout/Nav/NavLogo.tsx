@@ -5,6 +5,7 @@
  */
 
 import type { Theme } from "@/tokens/themes";
+import { content } from "@/data/content";
 
 interface NavLogoProps {
   C: Theme;
@@ -44,7 +45,7 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
             fontWeight: 500,
           }}
         >
-          A.
+          {content.nav.logoInitial}
         </span>
       </div>
       {!isMobile && (
@@ -58,7 +59,7 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
               fontWeight: 500,
             }}
           >
-            ABDELILAH
+            {content.nav.logoName}
           </div>
           <div
             style={{
@@ -68,7 +69,7 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
               letterSpacing: 1.5,
             }}
           >
-            UNDERSTAND · DECIDE · BUILD
+            {content.nav.logoTagline}
           </div>
         </div>
       )}

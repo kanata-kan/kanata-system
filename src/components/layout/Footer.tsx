@@ -4,6 +4,7 @@
  */
 
 import type { Theme } from "@/tokens/themes";
+import { content } from "@/data/content";
 
 interface FooterProps {
   C: Theme;
@@ -34,7 +35,8 @@ export function Footer({ C, isMobile }: FooterProps) {
           letterSpacing: 1.5,
         }}
       >
-        © 2026 <span style={{ color: C.muted }}>Abdelilah Wajid</span>
+        {content.footer.copyright}{" "}
+        <span style={{ color: C.muted }}>{content.footer.author}</span>
       </span>
 
       {/* Right */}
@@ -46,7 +48,7 @@ export function Footer({ C, isMobile }: FooterProps) {
           letterSpacing: 1.5,
         }}
       >
-        Built with clarity · not complexity
+        {content.footer.tagline}
       </span>
     </footer>
   );

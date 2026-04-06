@@ -11,10 +11,11 @@ import { Label } from "@/components/ui/Label";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
+import { content } from "@/data/content";
 
-const EMAIL = "abdelilah@email.com";
+const EMAIL = content.contact.email;
 
-const SOCIALS = ["GitHub", "LinkedIn", "Twitter / X"];
+const SOCIALS = content.contact.socials;
 
 export function Contact() {
   const { C } = useThemeContext();
@@ -54,7 +55,7 @@ export function Contact() {
 
       <Container variant="narrow">
         <Stack direction="column" gap="lg" style={{ position: "relative" }}>
-          <Label c={C}>04 — Contact</Label>
+          <Label c={C}>{content.contact.label}</Label>
 
           {/* 🔥 TITLE */}
           <h2
@@ -71,9 +72,11 @@ export function Contact() {
               lineHeight: 1.05,
             }}
           >
-            Start with clarity,
+            {content.contact.headingLine1}
             <br />
-            <span className="grad-text">then we decide.</span>
+            <span className="grad-text">
+              {content.contact.headingHighlight}
+            </span>
           </h2>
 
           {/* 🔥 PARAGRAPH */}
@@ -89,11 +92,10 @@ export function Contact() {
               maxWidth: 420,
             }}
           >
-            If you’re dealing with something unclear, slow, or hard to scale —
-            we can start by understanding it properly.
+            {content.contact.paragraphLine1}
             <br />
             <br />
-            If I can help, I’ll tell you how. If not, I’ll say it early.
+            {content.contact.paragraphLine2}
           </p>
 
           {/* Email + Copy */}
@@ -148,7 +150,7 @@ export function Contact() {
                 transition: "all .2s",
               }}
             >
-              {copied ? "COPIED ✓" : "COPY"}
+              {copied ? content.contact.copiedLabel : content.contact.copyLabel}
             </span>
           </button>
 

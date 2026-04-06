@@ -76,27 +76,27 @@ export function resolveColor(C: Theme, key: string): string {
 }
 
 export const LIGHT: Theme = {
-  bg: "#F6F8FA",
+  bg: "#F8F9FB",
   bg2: "#FFFFFF",
-  bg3: "#F1F3F5",
-  card: "#E8ECF0",
+  bg3: "#EEF1F5",
+  card: "#E4E8EE",
 
-  text: "#0D1117",
-  sub: "#24292F",
-  muted: "#57606A",
-  faint: "#9198A1",
+  text: "#1B1F24",
+  sub: "#2D333B",
+  muted: "#4D5562",
+  faint: "#8C95A1",
 
-  cyan: "#0969DA",
-  green: "#1A7F37",
-  amber: "#9A6700",
-  purple: "#6639BA",
+  cyan: "#0550AE",
+  green: "#116329",
+  amber: "#7D4E00",
+  purple: "#512EA8",
 
-  border: "rgba(9,105,218,0.15)",
-  border2: "rgba(9,105,218,0.40)",
-  line: "rgba(13,17,23,0.07)",
+  border: "rgba(27,31,36,0.12)",
+  border2: "rgba(27,31,36,0.25)",
+  line: "rgba(27,31,36,0.08)",
 
-  gridLine: "rgba(9,105,218,0.04)",
-  glow1: "rgba(9,105,218,0.08)",
-  glow2: "rgba(102,57,186,0.06)",
-  shadow: "0 24px 48px rgba(0,0,0,0.10)",
+  gridLine: "rgba(27,31,36,0.04)",
+  glow1: "rgba(5,80,174,0.06)",
+  glow2: "rgba(81,46,168,0.05)",
+  shadow: "0 24px 48px rgba(27,31,36,0.08)",
 };

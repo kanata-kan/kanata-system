@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="108" fill="#0D1117"/>
+  <!-- Letter A -->
+  <text
+    x="72"
+    y="355"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-weight="700"
+    font-size="340"
+    fill="#E6EDF3"
+  >A</text>
+  <!-- Cyan dot -->
+  <circle cx="368" cy="335" r="28" fill="#38BDF8"/>
+  <!-- Cyan dashes -->
+  <rect x="82" y="400" width="130" height="20" rx="10" fill="#38BDF8"/>
+  <rect x="230" y="400" width="85" height="20" rx="10" fill="#38BDF8"/>
+</svg>

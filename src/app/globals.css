@@ -119,10 +119,23 @@
 @keyframes glow {
   0%,
   100% {
-    box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.3);
+    box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.35);
   }
   50% {
-    box-shadow: 0 0 0 4px rgba(63, 185, 80, 0.15);
+    box-shadow: 0 0 0 6px rgba(63, 185, 80, 0.15);
+  }
+}
+@keyframes avatarPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 30px rgba(56, 189, 248, 0.12),
+      0 0 60px rgba(167, 139, 250, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(56, 189, 248, 0.2),
+      0 0 80px rgba(167, 139, 250, 0.1);
   }
 }
 @keyframes spin {

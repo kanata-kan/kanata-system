@@ -1,17 +1,9 @@
 /**
  * @file nav.ts
- * @description Liens de navigation.
+ * @description Navigation links — sourced from content system.
  */
 
-export interface NavLink {
-  id: string;
-  n: string;
-  label: string;
-}
+import { content } from "@/data/content";
+export type { NavLinkContent as NavLink } from "@/data/content";
 
-export const NAV_LINKS: NavLink[] = [
-  { id: "work", n: "01", label: "Approach" },
-  { id: "about", n: "02", label: "Mindset" },
-  { id: "skills", n: "03", label: "Tools" },
-  { id: "contact", n: "04", label: "Contact" },
-];
+export const NAV_LINKS = content.nav.links;

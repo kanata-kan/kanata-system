@@ -1,13 +1,19 @@
 /**
  * @file Avatar.tsx
- * @description Illustration SVG personnalisée pour le profil.
- * SVG inline — zéro requête réseau.
- * Inclut : gradient ring conic, visage détaillé, cheveux, épaules,
- * et pastille verte "online" avec animation glow.
+ * @description Profile photo avatar with conic gradient ring,
+ * green "online" status dot with glow animation,
+ * and fullscreen photo lightbox on click.
+ * Uses createPortal to render lightbox in document.body
+ * (escaping parent transform that breaks position:fixed).
  * Reçoit le thème via prop `c: Theme`.
  */
+"use client";
 
+import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
+import Image from "next/image";
 import type { Theme } from "@/tokens/themes";
+import { content } from "@/data/content";
 
 interface AvatarProps {
   c: Theme;
@@ -15,144 +21,281 @@ interface AvatarProps {
 }
 
 export function Avatar({ c, size = 110 }: AvatarProps) {
-  return (
+  const dotSize = Math.max(12, Math.round(size * 0.12));
+  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const isBrowser = typeof window !== "undefined";
+
+  const openModal = useCallback(() => {
+    setOpen(true);
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setVisible(false);
+    document.body.style.overflow = "";
+    setTimeout(() => setOpen(false), 300);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeModal();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, closeModal]);
+
+  const lightbox = open ? (
     <div
-      style={{ position: "relative", width: size, height: size, flexShrink: 0 }}
+      onClick={closeModal}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: visible ? "rgba(0,0,0,0.88)" : "rgba(0,0,0,0)",
+        backdropFilter: visible ? "blur(16px)" : "blur(0px)",
+        transition: "background 0.3s, backdrop-filter 0.3s",
+        cursor: "zoom-out",
+        padding: 32,
+        boxSizing: "border-box" as const,
+      }}
     >
-      {/* Gradient ring */}
-      <div
+      {/* Close button */}
+      <button
+        onClick={closeModal}
         style={{
           position: "absolute",
-          inset: -2,
-          borderRadius: "50%",
-          background: `conic-gradient(from 0deg,${c.cyan},${c.purple},${c.cyan})`,
-          padding: 2,
+          top: 20,
+          right: 24,
+          background: "rgba(255,255,255,0.08)",
+          border: "1px solid rgba(255,255,255,0.15)",
+          borderRadius: 8,
+          padding: "6px 14px",
+          fontFamily: "var(--font-mono)",
+          fontSize: 11,
+          color: "rgba(255,255,255,0.5)",
+          letterSpacing: 1.5,
+          cursor: "pointer",
+          transition: "all .2s",
+          zIndex: 10,
+        }}
+        onMouseOver={(e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.15)";
+          e.currentTarget.style.color = "rgba(255,255,255,0.8)";
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+          e.currentTarget.style.color = "rgba(255,255,255,0.5)";
         }}
       >
+        ESC
+      </button>
+
+      {/* Photo card */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          position: "relative",
+          maxWidth: 420,
+          maxHeight: "80vh",
+          width: "100%",
+          borderRadius: 16,
+          overflow: "hidden",
+          border: "1px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
+          transform: visible
+            ? "scale(1) translateY(0)"
+            : "scale(0.92) translateY(12px)",
+          opacity: visible ? 1 : 0,
+          transition:
+            "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s",
+          cursor: "default",
+          background: c.bg2,
+        }}
+      >
+        <div style={{ aspectRatio: "1 / 1", position: "relative" }}>
+          <Image
+            src="/Abdelilah-Wajid .png"
+            alt="Abdelilah Wajid — Full photo"
+            width={420}
+            height={420}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            priority
+          />
+        </div>
+
+        {/* Info bar below photo */}
         <div
           style={{
-            width: "100%",
-            height: "100%",
+            padding: "14px 20px",
+            borderTop: `1px solid ${c.line}`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: 16,
+                fontStyle: "italic",
+                color: c.text,
+                letterSpacing: -0.3,
+              }}
+            >
+              {content.hero.avatar.displayName}
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 9,
+                color: c.muted,
+                letterSpacing: 2,
+                marginTop: 3,
+              }}
+            >
+              {content.hero.avatar.tagline}
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: "50%",
+                background: c.green,
+                animation: "glow 2s ease-in-out infinite",
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 9,
+                color: c.green,
+                letterSpacing: 1,
+              }}
+            >
+              {content.hero.badge}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
+  return (
+    <>
+      {/* Avatar circle */}
+      <div
+        onClick={openModal}
+        role="button"
+        tabIndex={0}
+        aria-label="View full photo"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") openModal();
+        }}
+        style={{
+          position: "relative",
+          width: size,
+          height: size,
+          flexShrink: 0,
+          borderRadius: "50%",
+          animation: "avatarPulse 4s ease-in-out infinite",
+          transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+          cursor: "pointer",
+        }}
+        onMouseOver={(e) => {
+          e.currentTarget.style.transform = "scale(1.05)";
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+        }}
+      >
+        {/* Gradient ring */}
+        <div
+          style={{
+            position: "absolute",
+            inset: -3,
             borderRadius: "50%",
-            background: c.bg,
+            background: `conic-gradient(from 0deg,${c.cyan},${c.purple},${c.cyan})`,
+            padding: 3,
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              borderRadius: "50%",
+              background: c.bg,
+            }}
+          />
+        </div>
+
+        {/* Photo */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 3,
+            borderRadius: "50%",
+            overflow: "hidden",
+            border: `1px solid ${c.border}`,
+          }}
+        >
+          <Image
+            src="/Abdelilah-Wajid .png"
+            alt="Abdelilah Wajid"
+            width={size}
+            height={size}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              display: "block",
+            }}
+            priority
+          />
+        </div>
+
+        {/* Online status dot */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: Math.round(size * 0.03),
+            right: Math.round(size * 0.03),
+            width: dotSize,
+            height: dotSize,
+            borderRadius: "50%",
+            background: c.green,
+            border: `2.5px solid ${c.bg}`,
+            animation: "glow 2s ease-in-out infinite",
+            zIndex: 2,
+            boxShadow: `0 0 10px ${c.green}80`,
           }}
         />
       </div>
 
-      {/* Face */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 3,
-          borderRadius: "50%",
-          overflow: "hidden",
-          background: `linear-gradient(145deg,${c.bg3},${c.card})`,
-          border: `1px solid ${c.border}`,
-        }}
-      >
-        <svg viewBox="0 0 120 120" width="100%" height="100%">
-          <defs>
-            <linearGradient id="bg_g" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor={c.bg3} />
-              <stop offset="100%" stopColor={c.card} />
-            </linearGradient>
-            <linearGradient id="skin_g" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E8B98A" />
-              <stop offset="100%" stopColor="#C8916A" />
-            </linearGradient>
-            <linearGradient id="shirt_g" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={c.cyan} stopOpacity=".9" />
-              <stop offset="100%" stopColor={c.purple} stopOpacity=".9" />
-            </linearGradient>
-            <clipPath id="cc">
-              <circle cx="60" cy="60" r="57" />
-            </clipPath>
-          </defs>
-          <circle cx="60" cy="60" r="60" fill="url(#bg_g)" />
-          {/* Body */}
-          <ellipse
-            cx="60"
-            cy="105"
-            rx="40"
-            ry="28"
-            fill="url(#shirt_g)"
-            clipPath="url(#cc)"
-          />
-          <polygon
-            points="52,88 60,96 68,88 64,105 56,105"
-            fill="rgba(255,255,255,0.12)"
-          />
-          {/* Neck */}
-          <rect
-            x="54"
-            y="74"
-            width="12"
-            height="16"
-            rx="6"
-            fill="url(#skin_g)"
-          />
-          {/* Head */}
-          <ellipse cx="60" cy="60" rx="22" ry="24" fill="url(#skin_g)" />
-          {/* Hair */}
-          <ellipse cx="60" cy="37" rx="22" ry="10" fill="#2C1810" />
-          <rect x="38" y="37" width="44" height="8" fill="#2C1810" />
-          {/* Eyes */}
-          <ellipse cx="52" cy="60" rx="4" ry="4.5" fill="white" />
-          <ellipse cx="68" cy="60" rx="4" ry="4.5" fill="white" />
-          <circle cx="53" cy="61" r="2.5" fill="#1a1a2e" />
-          <circle cx="69" cy="61" r="2.5" fill="#1a1a2e" />
-          <circle cx="54" cy="60" r="1" fill="white" />
-          <circle cx="70" cy="60" r="1" fill="white" />
-          {/* Eyebrows */}
-          <path
-            d="M47,54 Q52,51 57,54"
-            stroke="#2C1810"
-            strokeWidth="1.8"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <path
-            d="M63,54 Q68,51 73,54"
-            stroke="#2C1810"
-            strokeWidth="1.8"
-            fill="none"
-            strokeLinecap="round"
-          />
-          {/* Nose */}
-          <path
-            d="M59,64 Q57,70 60,72 Q63,70 61,64"
-            stroke="#C8916A"
-            strokeWidth="1"
-            fill="none"
-          />
-          {/* Mouth */}
-          <path
-            d="M53,77 Q60,83 67,77"
-            stroke="#C8916A"
-            strokeWidth="1.5"
-            fill="none"
-            strokeLinecap="round"
-          />
-          {/* Beard shadow */}
-          <ellipse cx="60" cy="80" rx="13" ry="5" fill="rgba(44,24,16,0.25)" />
-        </svg>
-      </div>
-
-      {/* Online status dot */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 4,
-          right: 4,
-          width: 16,
-          height: 16,
-          borderRadius: "50%",
-          background: c.green,
-          border: `2px solid ${c.bg}`,
-          animation: "glow 2s ease-in-out infinite",
-          zIndex: 2,
-        }}
-      />
-    </div>
+      {/* Portal: render lightbox in document.body to escape transform parents */}
+      {isBrowser && lightbox && createPortal(lightbox, document.body)}
+    </>
   );
 }

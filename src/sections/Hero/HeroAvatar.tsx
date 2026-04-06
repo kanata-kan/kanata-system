@@ -1,71 +1,17 @@
 /**
  * @file HeroAvatar.tsx
- * @description Hero avatar card (desktop) and avatar row (mobile).
- * No internal state. Uses Avatar component and theme tokens.
+ * @description Hero right-side code card (desktop) — IDE-style developer info.
+ * Shows developer data as code syntax with social links.
  * Uses inline SVG icons — no external icon library.
  */
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
-import { Avatar } from "@/components/ui/Avatar";
+import { WindowDots } from "@/components/ui/WindowDots";
+import { content } from "@/data/content";
 
 /* ── Inline SVG Icons ── */
-
-function IconMapPin({ color, size = 14 }: { color: string; size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-      <circle cx="12" cy="10" r="3" />
-    </svg>
-  );
-}
-
-function IconClock({ color, size = 14 }: { color: string; size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
-
-function IconGlobe({ color, size = 14 }: { color: string; size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke={color}
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-    </svg>
-  );
-}
 
 function IconGitHub({ color, size = 15 }: { color: string; size?: number }) {
   return (
@@ -91,108 +37,104 @@ function IconX({ color, size = 14 }: { color: string; size?: number }) {
   );
 }
 
-interface InfoItem {
-  icon: (color: string) => React.ReactNode;
+const SOCIAL_ICONS = [
+  (c: string) => <IconGitHub color={c} />,
+  (c: string) => <IconLinkedIn color={c} />,
+  (c: string) => <IconX color={c} />,
+];
+
+const SOCIALS = content.hero.avatar.socials.map((s, i) => ({
+  icon: SOCIAL_ICONS[i],
+  ...s,
+}));
+
+/** Code lines for the IDE-style card */
+interface CodeToken {
   text: string;
+  colorKey: "keyword" | "key" | "string" | "boolean" | "punct" | "comment";
 }
 
-const INFO_ITEMS: InfoItem[] = [
-  { icon: (c) => <IconMapPin color={c} />, text: "Marrakech, Morocco" },
-  { icon: (c) => <IconClock color={c} />, text: "UTC+1 — GMT+1" },
-  { icon: (c) => <IconGlobe color={c} />, text: "Open to remote" },
-];
-
-const SOCIALS = [
-  {
-    icon: (c: string) => <IconGitHub color={c} />,
-    href: "https://github.com/abdelilah",
-    label: "GitHub",
-  },
-  {
-    icon: (c: string) => <IconLinkedIn color={c} />,
-    href: "https://linkedin.com/in/abdelilahwajid",
-    label: "LinkedIn",
-  },
-  {
-    icon: (c: string) => <IconX color={c} />,
-    href: "https://x.com/abdelilahwajid",
-    label: "X",
-  },
-];
+function getCodeLines(): CodeToken[][] {
+  return [
+    [{ text: "// developer.ts", colorKey: "comment" }],
+    [
+      { text: "const ", colorKey: "keyword" },
+      { text: "dev", colorKey: "key" },
+      { text: " = {", colorKey: "punct" },
+    ],
+    [
+      { text: "  name", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: '"Abdelilah Wajid"', colorKey: "string" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  role", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: '"Full-Stack Engineer"', colorKey: "string" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  location", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: '"Marrakech, Morocco"', colorKey: "string" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  timezone", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: '"UTC+1"', colorKey: "string" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  available", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: "true", colorKey: "boolean" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  remote", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: "true", colorKey: "boolean" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [
+      { text: "  approach", colorKey: "key" },
+      { text: ": ", colorKey: "punct" },
+      { text: '"understand-first"', colorKey: "string" },
+      { text: ",", colorKey: "punct" },
+    ],
+    [{ text: "}", colorKey: "punct" }],
+  ];
+}
 
 export function HeroAvatar() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
 
-  // Mobile avatar row
-  if (isMobile) {
-    return (
-      <div
-        className="rv d4"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-          padding: 18,
-          background: C.bg2,
-          borderRadius: 16,
-          border: `1px solid ${C.border}`,
-          transition: "background .35s",
-        }}
-      >
-        <Avatar size={68} c={C} />
-        <div>
-          <div
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 17,
-              fontStyle: "italic",
-              color: C.text,
-            }}
-          >
-            Abdelilah W.
-          </div>
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 8,
-              color: C.muted,
-              letterSpacing: 2,
-              marginTop: 2,
-            }}
-          >
-            UNDERSTAND → DECIDE → BUILD
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-              fontFamily: "var(--font-sans)",
-              fontSize: 11,
-              color: C.muted,
-              marginTop: 5,
-            }}
-          >
-            <IconMapPin color={C.muted} size={11} />
-            Marrakech · Open to remote
-          </div>
-        </div>
-      </div>
-    );
-  }
+  if (isMobile) return null;
 
-  // Desktop avatar card — COMPACT
+  const colorMap: Record<CodeToken["colorKey"], string> = {
+    keyword: C.purple,
+    key: C.text,
+    string: C.green,
+    boolean: C.cyan,
+    punct: C.muted,
+    comment: C.faint,
+  };
+
+  const codeLines = getCodeLines();
+
   return (
     <div
       className="rv d4"
       style={{ animation: "fadeUp .5s ease .4s both", width: "100%" }}
     >
-      {/* Outer gradient ring */}
+      {/* Outer gradient border */}
       <div
         style={{
           position: "relative",
-          borderRadius: 20,
+          borderRadius: 16,
           padding: 1,
           background: `linear-gradient(145deg, ${C.border2}, transparent 60%, ${C.border})`,
         }}
@@ -200,151 +142,77 @@ export function HeroAvatar() {
         <div
           style={{
             background: C.bg2,
-            border: `1px solid ${C.border}`,
-            borderRadius: 19,
-            padding: "28px 24px 24px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            boxShadow: `${C.shadow}, 0 0 60px -12px rgba(59,130,246,0.1)`,
-            transition: "background .35s, border-color .35s, box-shadow .35s",
+            borderRadius: 15,
+            overflow: "hidden",
+            boxShadow: `${C.shadow}, 0 0 60px -12px rgba(59,130,246,0.08)`,
+            transition: "background .35s, box-shadow .35s",
           }}
         >
-          {/* Avatar with ring glow */}
-          <div style={{ position: "relative", marginBottom: 16 }}>
-            {/* Animated ring */}
-            <div
-              style={{
-                position: "absolute",
-                inset: -5,
-                borderRadius: "50%",
-                background: `conic-gradient(from 0deg, ${C.border2}, transparent 40%, ${C.border2} 100%)`,
-                animation: "spin 8s linear infinite",
-                opacity: 0.5,
-              }}
-            />
-            <div
-              style={{
-                position: "absolute",
-                inset: -3,
-                borderRadius: "50%",
-                background: C.bg2,
-              }}
-            />
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <Avatar size={110} c={C} />
-            </div>
-            {/* Online dot */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: 4,
-                right: 4,
-                width: 13,
-                height: 13,
-                borderRadius: "50%",
-                background: C.green,
-                border: `2.5px solid ${C.bg2}`,
-                zIndex: 2,
-                boxShadow: `0 0 8px ${C.green}99`,
-              }}
-            />
-          </div>
-
-          {/* Name & title */}
-          <div style={{ textAlign: "center", marginBottom: 2 }}>
-            <div
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: 21,
-                fontStyle: "italic",
-                color: C.text,
-                letterSpacing: -0.5,
-                lineHeight: 1.2,
-              }}
-            >
-              Abdelilah W.
-            </div>
-            <div
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 8,
-                color: C.muted,
-                letterSpacing: 3,
-                marginTop: 5,
-                textTransform: "uppercase",
-              }}
-            >
-              UNDERSTAND → DECIDE → BUILD
-            </div>
-          </div>
-
-          {/* Divider */}
+          {/* Title bar */}
           <div
             style={{
-              width: "100%",
-              height: 1,
-              background: C.line,
-              margin: "16px 0",
-            }}
-          />
-
-          {/* Info items */}
-          <div
-            style={{
-              width: "100%",
               display: "flex",
-              flexDirection: "column",
-              gap: 8,
+              alignItems: "center",
+              gap: 10,
+              padding: "10px 16px",
+              borderBottom: `1px solid ${C.line}`,
+              background: C.bg3,
             }}
           >
-            {INFO_ITEMS.map((item) => (
+            <WindowDots />
+            <span
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 10,
+                color: C.muted,
+                letterSpacing: 0.5,
+              }}
+            >
+              developer.ts
+            </span>
+          </div>
+
+          {/* Code body */}
+          <div style={{ padding: "16px 20px" }}>
+            {codeLines.map((line, li) => (
               <div
-                key={item.text}
+                key={li}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  padding: "5px 10px",
-                  borderRadius: 8,
-                  background: C.bg3,
-                  border: `1px solid ${C.border}`,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                  lineHeight: 1.9,
+                  whiteSpace: "pre",
                 }}
               >
-                <span style={{ display: "flex", flexShrink: 0 }}>
-                  {item.icon(C.muted)}
-                </span>
                 <span
                   style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: 12,
-                    color: C.muted,
-                    fontWeight: 300,
+                    display: "inline-block",
+                    width: 24,
+                    color: C.faint,
+                    fontSize: 10,
+                    textAlign: "right",
+                    marginRight: 16,
+                    userSelect: "none",
                   }}
                 >
-                  {item.text}
+                  {li + 1}
                 </span>
+                {line.map((token, ti) => (
+                  <span key={ti} style={{ color: colorMap[token.colorKey] }}>
+                    {token.text}
+                  </span>
+                ))}
               </div>
             ))}
           </div>
 
-          {/* Divider */}
-          <div
-            style={{
-              width: "100%",
-              height: 1,
-              background: C.line,
-              margin: "16px 0",
-            }}
-          />
-
-          {/* Social icons */}
+          {/* Social bar */}
           <div
             style={{
               display: "flex",
-              gap: 8,
-              width: "100%",
-              justifyContent: "center",
+              gap: 6,
+              padding: "12px 20px",
+              borderTop: `1px solid ${C.line}`,
             }}
           >
             {SOCIALS.map(({ icon, href, label }) => (
@@ -356,13 +224,14 @@ export function HeroAvatar() {
                 aria-label={label}
                 style={{
                   flex: 1,
-                  height: 34,
-                  borderRadius: 8,
+                  height: 32,
+                  borderRadius: 6,
                   background: C.bg3,
                   border: `1px solid ${C.border}`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  gap: 6,
                   cursor: "pointer",
                   transition: "all .2s",
                   textDecoration: "none",
@@ -370,7 +239,7 @@ export function HeroAvatar() {
                 onMouseOver={(e) => {
                   e.currentTarget.style.borderColor = C.border2;
                   e.currentTarget.style.background = C.card;
-                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.borderColor = C.border;
@@ -379,6 +248,16 @@ export function HeroAvatar() {
                 }}
               >
                 {icon(C.muted)}
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    color: C.muted,
+                    letterSpacing: 1,
+                  }}
+                >
+                  {label.toUpperCase()}
+                </span>
               </a>
             ))}
           </div>

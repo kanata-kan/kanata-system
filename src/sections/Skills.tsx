@@ -14,6 +14,7 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
+import { content } from "@/data/content";
 
 export function Skills() {
   const { C } = useThemeContext();
@@ -23,9 +24,9 @@ export function Skills() {
     <Section id="skills">
       <Container>
         <Stack direction="column" gap="lg" style={{ marginBottom: 36 }}>
-          <Label c={C}>03 — Tools </Label>
+          <Label c={C}>{content.skills.label}</Label>
           <h2 style={TEXT.sectionHeading(C, isMobile)}>
-            Tools I use — when they actually matter.
+            {content.skills.heading}
           </h2>
           <p
             style={{
@@ -34,7 +35,7 @@ export function Skills() {
               maxWidth: 420,
             }}
           >
-            Tools follow the problem — not the other way around.
+            {content.skills.subtitle}
           </p>
         </Stack>
 
