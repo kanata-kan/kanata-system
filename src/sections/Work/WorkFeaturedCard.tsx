@@ -4,6 +4,7 @@
  * tech stack, highlights, et UI preview schématique.
  */
 
+import Link from "next/link";
 import type { Theme } from "@/tokens/themes";
 import type { Project } from "@/data/projects";
 import { WindowDots } from "@/components/ui/WindowDots";
@@ -142,64 +143,142 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
             &ldquo;{p.longDesc}&rdquo;
           </p>
 
-          {/* Tech Stack */}
+          {/* Tech Stack — categorized */}
           <div style={{ marginBottom: 24 }}>
             <div
               style={{
                 ...TEXT.monoLabel(C),
-                marginBottom: 10,
+                marginBottom: 12,
               }}
             >
               Tech Stack
             </div>
-            <Stack direction="row" gap="xs" wrap>
-              {p.stack.map((t) => (
-                <span
-                  key={t}
+            <Stack direction="column" gap="sm">
+              {Object.entries(p.stack).map(([group, items]) => (
+                <div
+                  key={group}
                   style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 10,
-                    padding: "4px 10px",
-                    borderRadius: 4,
-                    border: `1px solid ${C.line}`,
-                    color: C.muted,
-                    background: C.bg,
-                    transition: "background .35s",
+                    display: "flex",
+                    gap: 8,
+                    alignItems: "center",
+                    flexWrap: "wrap",
                   }}
                 >
-                  {t}
-                </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9,
+                      letterSpacing: 1,
+                      color: p.color,
+                      textTransform: "uppercase",
+                      minWidth: 52,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {group}
+                  </span>
+                  {items.map((t) => (
+                    <span
+                      key={t}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 10,
+                        padding: "3px 9px",
+                        borderRadius: 4,
+                        border: `1px solid ${C.line}`,
+                        color: C.muted,
+                        background: C.bg,
+                        transition: "background .35s",
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               ))}
             </Stack>
           </div>
 
-          <button
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              fontFamily: "var(--font-mono)",
-              fontSize: 10,
-              letterSpacing: 2,
-              padding: "10px 20px",
-              borderRadius: 6,
-              border: `1px solid ${p.color}50`,
-              color: p.color,
-              background: p.color + "10",
-              transition: "all .2s",
-              cursor: "pointer",
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = p.color + "25";
-              e.currentTarget.style.boxShadow = `0 4px 16px ${p.color}30`;
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = p.color + "10";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            VIEW PROJECT <span style={{ fontSize: 14 }}>↗</span>
-          </button>
+          {p.caseStudy ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 6,
+                alignItems: "flex-start",
+              }}
+            >
+              <Link
+                href={`/work/${p.slug}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  letterSpacing: 2,
+                  padding: "12px 28px",
+                  borderRadius: 8,
+                  border: `1px solid ${p.color}60`,
+                  color: p.color,
+                  background: p.color + "12",
+                  transition: "all .25s",
+                  textDecoration: "none",
+                  fontWeight: 600,
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = p.color + "28";
+                  e.currentTarget.style.boxShadow = `0 6px 24px ${p.color}35`;
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = p.color + "12";
+                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                VIEW CASE STUDY <span style={{ fontSize: 15 }}>→</span>
+              </Link>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 9,
+                  letterSpacing: 1,
+                  color: C.faint,
+                }}
+              >
+                See the full breakdown — problem, decisions, results
+              </span>
+            </div>
+          ) : (
+            <button
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                fontFamily: "var(--font-mono)",
+                fontSize: 10,
+                letterSpacing: 2,
+                padding: "10px 20px",
+                borderRadius: 6,
+                border: `1px solid ${p.color}50`,
+                color: p.color,
+                background: p.color + "10",
+                transition: "all .2s",
+                cursor: "pointer",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = p.color + "25";
+                e.currentTarget.style.boxShadow = `0 4px 16px ${p.color}30`;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = p.color + "10";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
+              VIEW PROJECT <span style={{ fontSize: 14 }}>↗</span>
+            </button>
+          )}
         </div>
 
         {/* Right — highlights + UI preview (desktop only) */}

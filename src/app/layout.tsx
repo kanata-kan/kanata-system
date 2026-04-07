@@ -12,6 +12,7 @@ import { useResponsive, ResponsiveContext } from "@/hooks/useResponsive";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Nav } from "@/components/layout/Nav/index";
 import { Footer } from "@/components/layout/Footer";
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { content } from "@/data/content";
 import "./globals.css";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${playfair.variable} ${jetbrains.variable} ${inter.variable}`}
     >
       <head>
@@ -109,6 +111,7 @@ export default function RootLayout({
             />
             {children}
             <Footer C={C} isMobile={responsive.isMobile} />
+            <ScrollToTop C={C} />
           </ResponsiveContext.Provider>
         </ThemeContext.Provider>
       </body>

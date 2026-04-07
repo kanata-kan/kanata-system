@@ -7,7 +7,8 @@
  */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import type { Theme } from "@/tokens/themes";
 import { ThemeToggle } from "../ThemeToggle";
 import { NavLogo } from "./NavLogo";
@@ -24,6 +25,8 @@ interface NavProps {
 export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 48);
@@ -32,13 +35,25 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
     return () => window.removeEventListener("scroll", f);
   }, []);
 
-  const go = (id: string) => {
-    setOpen(false);
-    setTimeout(
-      () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),
-      open ? 250 : 0,
-    );
-  };
+  const go = useCallback(
+    (id: string) => {
+      setOpen(false);
+
+      const scrollTo = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      };
+
+      if (pathname === "/") {
+        setTimeout(scrollTo, open ? 250 : 0);
+      } else {
+        router.push(`/#${id}`);
+      }
+    },
+    [pathname, router, open],
+  );
 
   return (
     <>

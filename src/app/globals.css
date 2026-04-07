@@ -156,9 +156,8 @@
   color: var(--cyan);
 }
 
-/* ── Smooth scroll + prevent horizontal overflow ── */
+/* ── Prevent horizontal overflow ── */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 

@@ -105,21 +105,24 @@ export function WorkSmallCards({
             {pr.type}
           </div>
           <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
-            {pr.stack.slice(0, 3).map((t) => (
-              <span
-                key={t}
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 9,
-                  padding: "2px 8px",
-                  borderRadius: 3,
-                  border: `1px solid ${C.line}`,
-                  color: C.faint,
-                }}
-              >
-                {t}
-              </span>
-            ))}
+            {Object.values(pr.stack)
+              .flat()
+              .slice(0, 3)
+              .map((t) => (
+                <span
+                  key={t}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    padding: "2px 8px",
+                    borderRadius: 3,
+                    border: `1px solid ${C.line}`,
+                    color: C.faint,
+                  }}
+                >
+                  {t}
+                </span>
+              ))}
           </div>
         </button>
       ))}

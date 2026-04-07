@@ -4,3 +4,4 @@
  */
 
 export { Work } from "./Work";
+export { CaseStudyPage } from "./CaseStudyPage";

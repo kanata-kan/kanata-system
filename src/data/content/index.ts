@@ -35,6 +35,8 @@ export type {
   CodeToken,
   WorkContent,
   ProjectContent,
+  CaseStudyContent,
+  CaseStudyScreenshot,
   SkillsContent,
   SkillGroupContent,
   MetricContent,
