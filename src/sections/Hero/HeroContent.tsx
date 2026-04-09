@@ -9,17 +9,18 @@
 import { useState, useEffect } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 import { Avatar } from "@/components/ui/Avatar";
-import { content } from "@/data/content";
 import { HeroCTA } from "./HeroCTA";
-
-const ROLES = content.hero.roles;
-
-export const PILLS = content.hero.pills;
 
 export function HeroContent() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
+
+  const ROLES = content.hero.roles;
   const [cur, setCur] = useState(true);
   const [ri, setRi] = useState(0);
 
@@ -31,7 +32,7 @@ export function HeroContent() {
   useEffect(() => {
     const t = setInterval(() => setRi((r) => (r + 1) % ROLES.length), 2800);
     return () => clearInterval(t);
-  }, []);
+  }, [ROLES.length]);
 
   const avatarSize = isMobile ? 80 : 120;
 

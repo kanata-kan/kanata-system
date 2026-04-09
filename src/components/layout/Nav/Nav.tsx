@@ -11,6 +11,7 @@ import { useState, useEffect, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import type { Theme } from "@/tokens/themes";
 import { ThemeToggle } from "../ThemeToggle";
+import { LocaleSwitch } from "./LocaleSwitch";
 import { NavLogo } from "./NavLogo";
 import { NavLinks } from "./NavLinks";
 import { NavMobileMenu } from "./NavMobileMenu";
@@ -89,6 +90,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
             flexShrink: 0,
           }}
         >
+          <LocaleSwitch C={C} />
           <ThemeToggle dark={dark} onToggle={onToggle} c={C} />
           {!isMobile && (
             <button

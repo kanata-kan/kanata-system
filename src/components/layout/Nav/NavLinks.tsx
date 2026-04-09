@@ -5,7 +5,7 @@
  */
 
 import type { Theme } from "@/tokens/themes";
-import { NAV_LINKS } from "@/data/nav";
+import { getNavLinks } from "@/data/nav";
 
 interface NavLinksProps {
   C: Theme;
@@ -15,7 +15,7 @@ interface NavLinksProps {
 export function NavLinks({ C, onNavigate }: NavLinksProps) {
   return (
     <nav style={{ display: "flex", alignItems: "center", gap: 28 }}>
-      {NAV_LINKS.map((l) => (
+      {getNavLinks().map((l) => (
         <button
           key={l.id}
           onClick={() => onNavigate(l.id)}

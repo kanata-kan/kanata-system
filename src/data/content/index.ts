@@ -6,9 +6,10 @@
  */
 
 import { en } from "./en";
+import { fr } from "./fr";
 import type { SiteContent, Locale } from "./types";
 
-const locales: Record<string, SiteContent> = { en };
+const locales: Record<string, SiteContent> = { en, fr };
 
 const DEFAULT_LOCALE: Locale = "en";
 

@@ -5,7 +5,7 @@
  */
 
 import type { Theme } from "@/tokens/themes";
-import { NAV_LINKS } from "@/data/nav";
+import { getNavLinks } from "@/data/nav";
 
 interface NavMobileMenuProps {
   C: Theme;
@@ -50,7 +50,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           gap: 4,
         }}
       >
-        {NAV_LINKS.map((l, i) => (
+        {getNavLinks().map((l, i) => (
           <button
             key={l.id}
             onClick={() => onNavigate(l.id)}
@@ -67,9 +67,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
               cursor: "pointer",
             }}
           >
-            <div
-              style={{ display: "flex", alignItems: "baseline", gap: 14 }}
-            >
+            <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
               <span
                 style={{
                   fontFamily: "var(--font-mono)",

@@ -8,14 +8,17 @@
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
-import { HeroContent, HeroStats, HeroAvatar, PILLS } from "./Hero/index";
+import { useLocale } from "@/hooks/useLocale";
+import { HeroContent, HeroStats, HeroAvatar } from "./Hero/index";
 import { Container } from "@/components/layout/Container";
 import { SECTION_SPACING } from "@/tokens/spacing";
-import { content } from "@/data/content";
+import { getContent } from "@/data/content";
 
 export function Hero() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
 
   return (
     <section
@@ -117,7 +120,7 @@ export function Hero() {
             zIndex: 1,
           }}
         >
-          {PILLS.map((p) => (
+          {content.hero.pills.map((p) => (
             <span
               key={p}
               style={{

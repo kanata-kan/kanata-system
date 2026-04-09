@@ -7,19 +7,22 @@
 import { useState, useCallback } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
 import { Label } from "@/components/ui/Label";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
-import { content } from "@/data/content";
-
-const EMAIL = content.contact.email;
-
-const SOCIALS = content.contact.socials;
+import { getContent } from "@/data/content";
 
 export function Contact() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
+
+  const EMAIL = content.contact.email;
+  const SOCIALS = content.contact.socials;
+
   const [copied, setCopied] = useState(false);
 
   const copy = useCallback(() => {
@@ -27,7 +30,7 @@ export function Contact() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     });
-  }, []);
+  }, [EMAIL]);
 
   return (
     <Section

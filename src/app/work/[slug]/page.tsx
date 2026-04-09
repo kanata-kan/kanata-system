@@ -10,6 +10,7 @@ import { use } from "react";
 import { notFound } from "next/navigation";
 import { getProjectBySlug } from "@/data/projects";
 import { CaseStudyPage } from "@/sections/Work/CaseStudyPage";
+import { useLocale } from "@/hooks/useLocale";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -17,7 +18,8 @@ interface Props {
 
 export default function WorkCaseStudy({ params }: Props) {
   const { slug } = use(params);
-  const project = getProjectBySlug(slug);
+  const { locale } = useLocale();
+  const project = getProjectBySlug(slug, locale);
 
   if (!project || !project.caseStudy) {
     notFound();

@@ -5,7 +5,8 @@
  */
 
 import type { Theme } from "@/tokens/themes";
-import { PROJECTS } from "@/data/projects";
+import { getProjects } from "@/data/projects";
+import { useLocale } from "@/hooks/useLocale";
 import { Stack } from "@/components/layout/Stack";
 
 interface WorkSmallCardsProps {
@@ -16,11 +17,13 @@ interface WorkSmallCardsProps {
 }
 
 export function WorkSmallCards({
+  active,
   C,
   isMobile,
-  active,
   onSelect,
 }: WorkSmallCardsProps) {
+  const { locale } = useLocale();
+  const PROJECTS = getProjects(locale);
   return (
     <Stack
       direction={isMobile ? "column" : "row"}

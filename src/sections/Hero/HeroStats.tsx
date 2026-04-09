@@ -7,7 +7,7 @@
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { resolveColor } from "@/tokens/themes";
-import { HERO_METRICS } from "@/data/stats";
+import { getHeroMetrics } from "@/data/stats";
 import { TEXT } from "@/tokens/typography";
 
 export function HeroStats() {
@@ -24,14 +24,14 @@ export function HeroStats() {
         paddingTop: 28,
       }}
     >
-      {HERO_METRICS.map((m, i) => (
+      {getHeroMetrics().map((m, i) => (
         <div
           key={m.label}
           style={{
             paddingRight: 36,
             marginRight: 36,
             borderRight:
-              i < HERO_METRICS.length - 1 ? `1px solid ${C.line}` : "none",
+              i < getHeroMetrics().length - 1 ? `1px solid ${C.line}` : "none",
           }}
         >
           <div

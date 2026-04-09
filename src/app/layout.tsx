@@ -10,6 +10,7 @@ import { Playfair_Display, JetBrains_Mono, Inter } from "next/font/google";
 import { useTheme, ThemeContext } from "@/hooks/useTheme";
 import { useResponsive, ResponsiveContext } from "@/hooks/useResponsive";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { LocaleProvider } from "@/hooks/useLocale";
 import { Nav } from "@/components/layout/Nav/index";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
@@ -101,19 +102,21 @@ export default function RootLayout({
           transition: "background .35s, color .35s",
         }}
       >
-        <ThemeContext.Provider value={{ dark, toggle, C }}>
-          <ResponsiveContext.Provider value={responsive}>
-            <Nav
-              C={C}
-              dark={dark}
-              onToggle={toggle}
-              isMobile={responsive.isMobile}
-            />
-            {children}
-            <Footer C={C} isMobile={responsive.isMobile} />
-            <ScrollToTop C={C} />
-          </ResponsiveContext.Provider>
-        </ThemeContext.Provider>
+        <LocaleProvider>
+          <ThemeContext.Provider value={{ dark, toggle, C }}>
+            <ResponsiveContext.Provider value={responsive}>
+              <Nav
+                C={C}
+                dark={dark}
+                onToggle={toggle}
+                isMobile={responsive.isMobile}
+              />
+              {children}
+              <Footer C={C} isMobile={responsive.isMobile} />
+              <ScrollToTop C={C} />
+            </ResponsiveContext.Provider>
+          </ThemeContext.Provider>
+        </LocaleProvider>
       </body>
     </html>
   );

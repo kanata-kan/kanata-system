@@ -7,13 +7,16 @@
  */
 "use client";
 
-import { TECH_STRIP } from "@/data/skills";
+import { getTechStrip } from "@/data/skills";
 import { useThemeContext } from "@/hooks/useTheme";
+import { useLocale } from "@/hooks/useLocale";
 import { Container } from "@/components/layout/Container";
 
 export function TechStrip() {
+  const { locale } = useLocale();
+  const techStrip = getTechStrip(locale);
   const { C } = useThemeContext();
-  const items = [...TECH_STRIP, ...TECH_STRIP];
+  const items = [...techStrip, ...techStrip];
 
   return (
     <div
@@ -34,7 +37,7 @@ export function TechStrip() {
             animation: "marquee 30s linear infinite",
           }}
         >
-          {items.map((t, i) => (
+          {techStrip.map((t, i) => (
             <span
               key={`${t}-${i}`}
               style={{

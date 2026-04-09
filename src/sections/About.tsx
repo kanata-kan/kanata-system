@@ -5,9 +5,10 @@
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
-import { resolveColor } from "@/tokens/themes";
-import { METRICS } from "@/data/stats";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
+import { getHeroMetrics } from "@/data/stats";
+import { resolveColor } from "@/tokens/themes";
 import { Label } from "@/components/ui/Label";
 import { Tag } from "@/components/ui/Tag";
 import { WindowDots } from "@/components/ui/WindowDots";
@@ -15,11 +16,13 @@ import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
-import { content } from "@/data/content";
+import { getContent } from "@/data/content";
 
 export function About() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
 
   return (
     <Section id="about" bg="alt">
@@ -91,7 +94,7 @@ export function About() {
                 border: `1px solid ${C.border}`,
               }}
             >
-              {METRICS.map((m) => (
+              {getHeroMetrics(locale).map((m) => (
                 <div
                   key={m.label}
                   style={{

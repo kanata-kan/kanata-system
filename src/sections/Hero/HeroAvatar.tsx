@@ -8,8 +8,9 @@
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 import { WindowDots } from "@/components/ui/WindowDots";
-import { content } from "@/data/content";
 
 /* ── Inline SVG Icons ── */
 
@@ -42,11 +43,6 @@ const SOCIAL_ICONS = [
   (c: string) => <IconLinkedIn color={c} />,
   (c: string) => <IconX color={c} />,
 ];
-
-const SOCIALS = content.hero.avatar.socials.map((s, i) => ({
-  icon: SOCIAL_ICONS[i],
-  ...s,
-}));
 
 /** Code lines for the IDE-style card */
 interface CodeToken {
@@ -111,6 +107,13 @@ function getCodeLines(): CodeToken[][] {
 export function HeroAvatar() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
+
+  const SOCIALS = content.hero.avatar.socials.map((s, i) => ({
+    icon: SOCIAL_ICONS[i],
+    ...s,
+  }));
 
   if (isMobile) return null;
 

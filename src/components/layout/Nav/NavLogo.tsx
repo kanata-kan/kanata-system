@@ -5,7 +5,8 @@
  */
 
 import type { Theme } from "@/tokens/themes";
-import { content } from "@/data/content";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 
 interface NavLogoProps {
   C: Theme;
@@ -14,6 +15,8 @@ interface NavLogoProps {
 }
 
 export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
+  const { locale } = useLocale();
+  const content = getContent(locale);
   return (
     <button
       onClick={() => onNavigate("top")}

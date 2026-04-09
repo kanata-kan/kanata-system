@@ -6,10 +6,13 @@
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
-import { content } from "@/data/content";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 
 export function HeroCTA() {
   const { C } = useThemeContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
 
   return (
     <div

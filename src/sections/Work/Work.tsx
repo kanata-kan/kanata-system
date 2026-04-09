@@ -9,19 +9,23 @@
 import { useState } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
-import { PROJECTS } from "@/data/projects";
+import { useLocale } from "@/hooks/useLocale";
+import { getProjects } from "@/data/projects";
 import { Label } from "@/components/ui/Label";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
-import { content } from "@/data/content";
+import { getContent } from "@/data/content";
 import { WorkFeaturedCard } from "./WorkFeaturedCard";
 import { WorkSmallCards } from "./WorkSmallCards";
 
 export function Work() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
+  const PROJECTS = getProjects(locale);
   const [active, setActive] = useState(0);
   const p = PROJECTS[active];
 

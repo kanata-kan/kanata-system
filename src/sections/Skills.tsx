@@ -6,18 +6,21 @@
  */
 "use client";
 
-import { SKILL_GROUPS } from "@/data/skills";
+import { getSkillGroups, getTechStrip } from "@/data/skills";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
 import { Label } from "@/components/ui/Label";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
-import { content } from "@/data/content";
+import { getContent } from "@/data/content";
 
 export function Skills() {
   const { C } = useThemeContext();
+  const { locale } = useLocale();
+  const content = getContent(locale);
   const { isMobile } = useResponsiveContext();
 
   return (
@@ -50,7 +53,7 @@ export function Skills() {
             overflow: "hidden",
           }}
         >
-          {SKILL_GROUPS.map((g, gi) => (
+          {getSkillGroups(locale).map((g, gi) => (
             <div
               key={g.title}
               className={`rv d${gi + 1}`}

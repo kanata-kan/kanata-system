@@ -4,7 +4,8 @@
  */
 
 import type { Theme } from "@/tokens/themes";
-import { content } from "@/data/content";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 
 interface FooterProps {
   C: Theme;
@@ -12,6 +13,8 @@ interface FooterProps {
 }
 
 export function Footer({ C, isMobile }: FooterProps) {
+  const { locale } = useLocale();
+  const content = getContent(locale);
   return (
     <footer
       style={{

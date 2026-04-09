@@ -3,9 +3,16 @@
  * @description Metrics data — sourced from content system.
  */
 
-import { content } from "@/data/content";
+import { getContent } from "@/data/content";
+import type { Locale } from "@/data/content/types";
 export type { MetricContent as Metric } from "@/data/content";
 
-export const METRICS = content.stats;
+export function getMetrics(locale?: Locale) {
+  const content = getContent(locale);
+  return content.stats;
+}
 
-export const HERO_METRICS = METRICS.slice(0, 3);
+export function getHeroMetrics(locale?: Locale) {
+  const metrics = getMetrics(locale);
+  return metrics.slice(0, 3);
+}

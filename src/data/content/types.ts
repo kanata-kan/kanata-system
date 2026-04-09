@@ -4,7 +4,7 @@
  * Designed for i18n — each locale file implements SiteContent.
  */
 
-export type Locale = "en" | "fr" | "ar";
+export type Locale = "en" | "fr";
 
 /* ── Meta ── */
 export interface MetaContent {
