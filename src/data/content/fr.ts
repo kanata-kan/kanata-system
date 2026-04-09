@@ -9,12 +9,12 @@ import type { SiteContent } from "./types";
 export const fr: SiteContent = {
   /* Meta */
   meta: {
-    title: "Abdelilah Wajid · Ingénieur Full-Stack",
+    title: "Abdelilah Wajid · Développeur JavaScript",
     description:
-      "Portfolio d'Abdelilah Wajid - Ingénieur Full-Stack basé à Marrakech, Maroc. J'aide les startups à identifier les goulots d'étranglement produit et à construire des systèmes qui passent à l'échelle sans tomber.",
+      "Portfolio d'Abdelilah Wajid - Développeur JavaScript spécialisé en architecture système et patterns de code propre.",
     author: "Abdelilah Wajid",
     keywords:
-      "Abdelilah Wajid, ingénieur full-stack, développeur web, react, next.js, typescript, portfolio, marrakech, maroc, freelance",
+      "Abdelilah Wajid, développeur javascript, développeur frontend, react, next.js, typescript, portfolio, marrakech, maroc",
     siteUrl: "https://abdelilahwajid.com",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
@@ -36,33 +36,33 @@ export const fr: SiteContent = {
 
   /* Hero */
   hero: {
-    badge: "DISPONIBLE POUR MISSION",
+    badge: "OUVERT AUX OPPORTUNITÉS",
     name: {
       base: "Abdel",
       highlight: "ilah",
       lastName: "Wajid",
     },
     roles: [
-      "Diagnostiquer avant de construire",
-      "Éliminer ce qui ralentit la croissance",
-      "Livrer des systèmes qui tiennent sous pression",
-      "Une structure qui résiste à la charge",
+      "La structure d'abord",
+      "Construire avec clarté",
+      "Penser avant de coder",
+      "Créer des systèmes maintenables",
     ],
     pills: [
       "Pensée système",
-      "Décisions claires",
-      "Architecture évolutive",
-      "Travail orienté résultat",
+      "Architecture propre",
+      "Focus TypeScript",
+      "Esprit d'apprentissage",
     ],
-    bio: "J'interviens auprès des startups et équipes produit pour identifier ce qui bloque réellement la croissance - systèmes lents, flux incompréhensibles, ou architecture fragile. Ensuite je construis des solutions performantes, évolutives, qui n'auront pas besoin d'être réécrites six mois plus tard.",
+    bio: "Je me concentre sur la création d'applications web structurées et évolutives. Je me soucie de la manière dont les systèmes sont conçus, pas seulement de leur apparence. Mon approche met l'accent sur une architecture claire et un code maintenable.",
     cta: {
-      primary: "VOIR MES RÉALISATIONS",
-      secondary: "DISCUTONS ENSEMBLE",
+      primary: "VOIR MES RÉALISATIONS ↓",
+      secondary: "EXPLORER LES PROJETS →",
     },
     scroll: "DÉFILER",
     avatar: {
       displayName: "Abdelilah W.",
-      tagline: "COMPRENDRE -> DÉCIDER -> CONSTRUIRE",
+      tagline: "PENSER -> CONSTRUIRE -> AMÉLIORER",
       locationShort: "Marrakech · Ouvert au remote",
       infoItems: ["Marrakech, Maroc", "UTC+1 - GMT+1", "Ouvert au remote"],
       socials: [

@@ -18,15 +18,22 @@ interface LocaleContextValue {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "en";
+  const [locale, setLocaleState] = useState<Locale>("en");
+
+  useEffect(() => {
+    // This effect runs only on the client, after hydration
+
     const stored = localStorage.getItem("locale");
-    return (stored === "en" || stored === "fr") ? stored : "en";
-  });
+    if (stored === "en" || stored === "fr") {
+      setLocaleState(stored);
+    }
+  }, []);
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
-    localStorage.setItem("locale", newLocale);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("locale", newLocale);
+    }
   };
 
   return (

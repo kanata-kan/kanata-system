@@ -65,6 +65,7 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
             {content.nav.logoName}
           </div>
           <div
+            suppressHydrationWarning
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 8,
