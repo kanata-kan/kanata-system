@@ -37,7 +37,7 @@ export function TechStrip() {
             animation: "marquee 30s linear infinite",
           }}
         >
-          {techStrip.map((t, i) => (
+          {items.map((t, i) => (
             <span
               key={`${t}-${i}`}
               style={{

@@ -67,7 +67,7 @@ function getCodeLines(): CodeToken[][] {
     [
       { text: "  role", colorKey: "key" },
       { text: ": ", colorKey: "punct" },
-      { text: '"Full-Stack Engineer"', colorKey: "string" },
+      { text: '"Product Engineer"', colorKey: "string" },
       { text: ",", colorKey: "punct" },
     ],
     [

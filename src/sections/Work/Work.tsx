@@ -26,6 +26,7 @@ export function Work() {
   const { locale } = useLocale();
   const content = getContent(locale);
   const PROJECTS = getProjects(locale);
+  const hasMultipleProjects = PROJECTS.length > 1;
   const [active, setActive] = useState(0);
   const p = PROJECTS[active];
 
@@ -58,84 +59,87 @@ export function Work() {
           </span>
         </Stack>
 
-        {/* Tabs */}
-        <Stack
-          direction="row"
-          gap="xs"
-          style={{
-            marginBottom: 24,
-            background: C.bg2,
-            borderRadius: 10,
-            padding: 4,
-            border: `1px solid ${C.border}`,
-            overflowX: "auto",
-            transition: "background .35s",
-          }}
-        >
-          {PROJECTS.map((pr, i) => (
-            <button
-              key={pr.n}
-              onClick={() => setActive(i)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: isMobile ? "9px 12px" : "10px 18px",
-                borderRadius: 7,
-                whiteSpace: "nowrap",
-                background: active === i ? C.bg3 : "transparent",
-                border:
-                  active === i
-                    ? `1px solid ${pr.color}35`
-                    : "1px solid transparent",
-                transition: "all .2s",
-                flexShrink: 0,
-                cursor: "pointer",
-              }}
-            >
-              <span
+        {hasMultipleProjects && (
+          <Stack
+            direction="row"
+            gap="xs"
+            style={{
+              marginBottom: 24,
+              background: C.bg2,
+              borderRadius: 10,
+              padding: 4,
+              border: `1px solid ${C.border}`,
+              overflowX: "auto",
+              transition: "background .35s",
+            }}
+          >
+            {PROJECTS.map((pr, i) => (
+              <button
+                key={pr.n}
+                onClick={() => setActive(i)}
                 style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 9,
-                  color: active === i ? pr.color : C.faint,
-                  letterSpacing: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: isMobile ? "9px 12px" : "10px 18px",
+                  borderRadius: 7,
+                  whiteSpace: "nowrap",
+                  background: active === i ? C.bg3 : "transparent",
+                  border:
+                    active === i
+                      ? `1px solid ${pr.color}35`
+                      : "1px solid transparent",
+                  transition: "all .2s",
+                  flexShrink: 0,
+                  cursor: "pointer",
                 }}
               >
-                {pr.n}
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 13,
-                  color: active === i ? C.text : C.muted,
-                  fontWeight: active === i ? 500 : 300,
-                }}
-              >
-                {pr.name}
-              </span>
-              {active === i && (
-                <div
+                <span
                   style={{
-                    width: 6,
-                    height: 6,
-                    borderRadius: "50%",
-                    background: pr.color,
-                    flexShrink: 0,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 9,
+                    color: active === i ? pr.color : C.faint,
+                    letterSpacing: 1,
                   }}
-                />
-              )}
-            </button>
-          ))}
-        </Stack>
+                >
+                  {pr.n}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 13,
+                    color: active === i ? C.text : C.muted,
+                    fontWeight: active === i ? 500 : 300,
+                  }}
+                >
+                  {pr.name}
+                </span>
+                {active === i && (
+                  <div
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: pr.color,
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
+              </button>
+            ))}
+          </Stack>
+        )}
 
         <WorkFeaturedCard C={C} p={p} isMobile={isMobile} />
 
-        <WorkSmallCards
-          C={C}
-          isMobile={isMobile}
-          active={active}
-          onSelect={setActive}
-        />
+        {hasMultipleProjects && (
+          <WorkSmallCards
+            C={C}
+            isMobile={isMobile}
+            active={active}
+            onSelect={setActive}
+          />
+        )}
       </Container>
     </Section>
   );

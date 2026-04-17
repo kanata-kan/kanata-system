@@ -7,7 +7,7 @@
  */
 "use client";
 
-import { useState, useEffect, useContext, createContext } from "react";
+import { useContext, createContext, useSyncExternalStore } from "react";
 import { BREAKPOINTS } from "@/tokens/breakpoints";
 
 export interface ResponsiveContextValue {
@@ -33,28 +33,36 @@ export function useResponsiveContext(): ResponsiveContextValue {
 /** SSR-safe default — always desktop so server & client first render match. */
 const SSR_WIDTH = 1024;
 
+function getWidthSnapshot() {
+  return typeof window === "undefined" ? SSR_WIDTH : window.innerWidth;
+}
+
+function subscribe(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
+
+  let timeoutId: ReturnType<typeof setTimeout>;
+
+  const handleResize = () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(onStoreChange, 16);
+  };
+
+  window.addEventListener("resize", handleResize);
+
+  return () => {
+    window.removeEventListener("resize", handleResize);
+    clearTimeout(timeoutId);
+  };
+}
+
 export function useResponsive(): ResponsiveContextValue {
-  const [width, setWidth] = useState(SSR_WIDTH);
-
-  useEffect(() => {
-    // Sync to real width after hydration
-    setWidth(window.innerWidth);
-
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    const handleResize = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setWidth(window.innerWidth);
-      }, 16);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearTimeout(timeoutId);
-    };
-  }, []);
+  const width = useSyncExternalStore(
+    subscribe,
+    getWidthSnapshot,
+    () => SSR_WIDTH,
+  );
 
   return {
     width,

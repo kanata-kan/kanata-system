@@ -10,12 +10,12 @@ import type { SiteContent } from "./types";
 export const en: SiteContent = {
   /* ── Meta ── */
   meta: {
-    title: "Abdelilah Wajid · Full-Stack Engineer",
+    title: "Abdelilah Wajid · Product Engineer",
     description:
-      "Portfolio of Abdelilah Wajid — Full-Stack Engineer based in Marrakech, Morocco. I help startups diagnose product bottlenecks and build systems that scale without breaking.",
+      "Case-study-driven portfolio of Abdelilah Wajid, a product engineer focused on operational systems, clear architecture, and defensible technical decisions.",
     author: "Abdelilah Wajid",
     keywords:
-      "Abdelilah Wajid, full-stack engineer, web developer, react, next.js, typescript, portfolio, marrakech, morocco, freelance",
+      "Abdelilah Wajid, product engineer, case study portfolio, react, next.js, typescript, operational systems, marrakech, morocco",
     siteUrl: "https://abdelilahwajid.com",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
@@ -28,7 +28,7 @@ export const en: SiteContent = {
     logoName: "ABDELILAH",
     logoTagline: "UNDERSTAND · DECIDE · BUILD",
     links: [
-      { id: "work", n: "01", label: "Approach" },
+      { id: "work", n: "01", label: "Case Studies" },
       { id: "about", n: "02", label: "Mindset" },
       { id: "skills", n: "03", label: "Tools" },
       { id: "contact", n: "04", label: "Contact" },
@@ -37,28 +37,30 @@ export const en: SiteContent = {
 
   /* ── Hero ── */
   hero: {
-    badge: "AVAILABLE FOR WORK",
+    badge: "OPEN TO WORK",
     name: {
       base: "Abdel",
       highlight: "ilah",
       lastName: "Wajid",
     },
+    positioning:
+      "Product engineer focused on operational systems, case-study thinking, and architecture teams can maintain.",
     roles: [
-      "Diagnose before building",
-      "Remove what slows growth",
-      "Ship systems that hold under pressure",
-      "Structure that holds under load",
+      "Case-study driven product engineering",
+      "Operational workflows over flashy demos",
+      "Architecture shaped by real constraints",
+      "Clear systems that teams can trust",
     ],
     pills: [
-      "System thinking",
-      "Clear decisions",
-      "Scalable architecture",
-      "Outcome-driven work",
+      "Case-study driven",
+      "Operational systems",
+      "Clear trade-offs",
+      "Maintainable architecture",
     ],
-    bio: "I work with startups and product teams to identify what's actually blocking growth — slow systems, unclear flows, or fragile architecture. Then I build solutions that perform, scale, and don't need a rewrite six months later.",
+    bio: "This portfolio is a case-study-driven engineering showcase. I focus on messy operational workflows - inventory, pricing, reporting, and internal tools - and turn them into systems that are easier to trust, explain, and extend.",
     cta: {
-      primary: "VIEW MY WORK ↓",
-      secondary: "LET'S TALK →",
+      primary: "VIEW CASE STUDY ↓",
+      secondary: "CONTACT ME →",
     },
     scroll: "SCROLL",
     avatar: {
@@ -67,12 +69,11 @@ export const en: SiteContent = {
       locationShort: "Marrakech · Open to remote",
       infoItems: ["Marrakech, Morocco", "UTC+1 — GMT+1", "Open to remote"],
       socials: [
-        { href: "https://github.com/abdelilah", label: "GitHub" },
+        { href: "https://github.com/kanata-kan", label: "GitHub" },
         {
           href: "https://linkedin.com/in/abdelilahwajid",
           label: "LinkedIn",
         },
-        { href: "https://x.com/abdelilahwajid", label: "X" },
       ],
     },
   },
@@ -80,17 +81,17 @@ export const en: SiteContent = {
   /* ── About ── */
   about: {
     label: "02 — Mindset",
-    headingLine1: "I diagnose systems,",
-    headingLine2: "then I build.",
+    headingLine1: "I turn messy operations,",
+    headingLine2: "into clear systems.",
     paragraphs: [
-      "Most engineering problems aren't missing features — they're unclear decisions made early that compound over time.",
-      "Before writing a line of code, I map the system: where it breaks, where complexity hides, and what's actually worth solving.",
-      "That's where the real work happens. Everything I build after that is grounded in what the product actually needs — not what seemed like a good idea in a sprint.",
+      "I am most useful when a product already exists but the workflow behind it is slow, fragile, or hard to reason about.",
+      "My process starts with diagnosis: what breaks, what is duplicated, where data loses meaning, and which decisions deserve to become system rules.",
+      "This portfolio is built to show that thinking in public - through case studies, trade-offs, and implementation details - not just finished screens.",
     ],
     tags: [
-      { text: "Clarity first", colorKey: "cyan" },
-      { text: "No blind execution", colorKey: "amber" },
-      { text: "Value over noise", colorKey: "purple" },
+      { text: "Case-study driven", colorKey: "cyan" },
+      { text: "Defensible decisions", colorKey: "amber" },
+      { text: "System clarity", colorKey: "purple" },
     ],
     codeFilename: "about.ts",
     codeRows: [
@@ -129,60 +130,66 @@ export const en: SiteContent = {
 
   /* ── Work ── */
   work: {
-    label: "01 — Approach",
-    heading: "Problems solved. Products shipped.",
-    subtitle: "Real problems · Structural decisions · Shipped.",
+    label: "01 — Case Studies",
+    heading: "Operational systems, explained clearly.",
+    subtitle: "Problem → solution → decisions → impact",
   },
 
   /* ── Skills ── */
   skills: {
     label: "03 — Tools",
-    heading: "Tools I reach for — and why.",
-    subtitle: "The right tool for the right problem. Nothing more.",
+    heading: "Core stack and implementation habits.",
+    subtitle: "Chosen for reliability, maintainability, and delivery speed.",
   },
 
   /* ── Contact ── */
   contact: {
     label: "04 — Contact",
-    headingLine1: "Tell me what's broken,",
-    headingHighlight: "I'll tell you what's worth fixing.",
+    headingLine1: "Open to product engineering roles,",
+    headingHighlight: "consulting, and scoped builds.",
     paragraphLine1:
-      "If your product is slow, hard to scale, or accumulating decisions nobody remembers making — that's exactly where I work best.",
+      "If you need someone to turn messy workflows into reliable product systems, send me the context, constraints, and what is slowing the team down.",
     paragraphLine2:
-      "I'll give you an honest read on the situation. If there's a fit, I'll show you how. If there isn't, I'll tell you upfront.",
-    email: "abdelilah@email.com",
+      "I respond clearly about fit, scope, and the fastest path to something useful.",
+    email: "kanata10@gmail.com",
     copyLabel: "COPY",
     copiedLabel: "COPIED ✓",
-    socials: ["GitHub", "LinkedIn", "Twitter / X"],
+    socials: [
+      { href: "https://github.com/kanata-kan", label: "GitHub" },
+      {
+        href: "https://linkedin.com/in/abdelilahwajid",
+        label: "LinkedIn",
+      },
+    ],
   },
 
   /* ── Footer ── */
   footer: {
     copyright: "© 2026",
     author: "Abdelilah Wajid",
-    tagline: "Clarity ships. Complexity sinks.",
+    tagline: "Case studies over claims.",
   },
 
   /* ── Stats ── */
   stats: [
-    { value: "4+", label: "Years exp.", colorKey: "cyan" },
-    { value: "12+", label: "Shipped", colorKey: "purple" },
-    { value: "20+", label: "Clients", colorKey: "amber" },
-    { value: "3", label: "Countries", colorKey: "green" },
+    { value: "2", label: "Supported locales", colorKey: "cyan" },
+    { value: "Typed", label: "Content architecture", colorKey: "purple" },
+    { value: "FIFO", label: "Inventory cost logic", colorKey: "amber" },
+    { value: "Private", label: "Deployment model", colorKey: "green" },
   ],
 
   /* ── Tech Strip ── */
   techStrip: [
-    "Zero technical debt day one",
-    "Architecture before features",
-    "Performance by design",
-    "Structure for scale",
-    "Remove the friction",
-    "Business-aware engineering",
-    "Think in flows",
-    "Cut complexity early",
-    "Ship with confidence",
-    "Clarity at every layer",
+    "Case-study driven",
+    "Operational workflows",
+    "Typed content",
+    "Clear trade-offs",
+    "Responsive UI",
+    "Business rules first",
+    "Inventory logic",
+    "Readable architecture",
+    "Fast scanning",
+    "Defensible decisions",
   ],
 
   /* ── Projects ── */
@@ -194,12 +201,12 @@ export const en: SiteContent = {
       name: "Electro Abidin eSystem",
       type: "Retail Management System",
       color: "#3B82F6",
-      status: "Live",
+      status: "Private deployment",
       statusColor: "#3FB950",
-      link: "",
-      desc: "An electronics store running on manual stock checks and paper-based tracking — the system replaced chaos with real-time operational control.",
+      link: "/work/electro-abidin",
+      desc: "A retail operation with manual stock checks, paper-based tracking, and slow checkout needed one system that staff could trust in real time.",
       longDesc:
-        "I designed inventory, sales, and invoicing as one integrated flow — not three separate tools bolted together.",
+        "I turned inventory, checkout, invoicing, and warranty handling into a single operational flow with reliable stock, pricing, and profit logic.",
       stack: {
         core: ["Next.js", "React", "TypeScript"],
         backend: ["MongoDB", "Mongoose", "Zod", "JWT Auth", "bcrypt"],
@@ -212,20 +219,21 @@ export const en: SiteContent = {
         testing: ["Jest", "Supertest"],
       },
       highlights: [
-        "Eliminated manual stock checking by connecting inventory directly to the sales flow",
-        "Built FIFO-based profit calculation for accurate financial tracking per unit sold",
-        "Designed flexible invoicing supporting both individuals and companies with optional VAT",
-        "Implemented automatic warranty tracking tied to each product at the point of sale",
+        "Connected stock availability directly to checkout so sales staff stop guessing what is available",
+        "Used FIFO batch costing to keep profit reporting tied to real purchase prices",
+        "Separated workflow state from financial truth with immutable transaction records",
+        "Supported invoices, VAT handling, returns, and warranty tracking in one retail workflow",
       ],
       caseStudy: {
-        headline: "From manual chaos to real-time retail control",
+        headline:
+          "Replacing manual retail operations with a system staff could trust",
         subtitle:
-          "The store wasn't missing software — it was missing a system that understood how a real electronics business actually operates.",
+          "This case study shows how I turned disconnected stock checks, pricing decisions, and invoicing into one operational workflow for an electronics store.",
         tags: [
-          "Inventory Management",
-          "Point of Sale",
-          "Financial Tracking",
-          "Business Automation",
+          "Retail Operations",
+          "Inventory Logic",
+          "Checkout Flow",
+          "Business Rules",
         ],
         problem: [
           "The store relied on manual stock checking inside the storage room",
@@ -258,12 +266,11 @@ export const en: SiteContent = {
           "Designed system with data consistency and transactional integrity in mind",
         ],
         results: [
-          "Eliminated the need for manual stock checking completely",
-          "Significantly reduced checkout friction and waiting time",
-          "Prevented selling unavailable products",
-          "Enabled accurate profit and financial tracking",
-          "Improved employee efficiency and reduced physical workload",
-          "Gave the owner real-time visibility into operations and performance",
+          "Stock availability became visible during checkout instead of after a manual trip to storage",
+          "Cashiers could process multi-product orders inside one consistent flow",
+          "Profit tracking moved from approximation to batch-based calculation",
+          "Returns and cancellations restored stock through defined system rules",
+          "The owner gained a clearer daily view of sales, stock movement, and invoicing",
         ],
         screenshots: [
           {
@@ -297,7 +304,7 @@ export const en: SiteContent = {
               "Automatic invoice generation with support for VAT and client types",
           },
         ],
-        cta: "The system didn't just digitize the process — it redesigned how the business operates.",
+        cta: "The value was not a prettier dashboard. It was a workflow the store could rely on during real sales.",
         technicalDeepDive: {
           sectionTitle: "Technical Deep Dive",
           sectionSubtitle:
@@ -392,7 +399,7 @@ export const en: SiteContent = {
               title: "FIFO Cost Engine",
               why: "Ensures accurate profit per unit sold",
               impact:
-                "Every unit sold carries its real purchase cost — profit margins are never estimated",
+                "Every unit sold carries batch-based purchase cost, which makes margin tracking far more reliable than manual estimation",
               points: [
                 "Each InventoryLog entry = one batch with remainingQty and purchasePrice",
                 "On sale: oldest batches consumed first (sort: createdAt ASC)",
@@ -404,7 +411,7 @@ export const en: SiteContent = {
               title: "Dual-Write Pattern",
               why: "Separates workflow state from financial truth",
               impact:
-                "Analytics and reports are never polluted by workflow mutations or UI-driven state changes",
+                "Analytics and reports stay insulated from most workflow mutations and UI-driven state changes",
               points: [
                 "Sale/Order = workflow documents for UI and process tracking",
                 "SalesTransactionItem = canonical financial truth for analytics",
@@ -427,7 +434,7 @@ export const en: SiteContent = {
               title: "Snapshot Architecture",
               why: "Past records stay accurate regardless of future changes",
               impact:
-                "An invoice from 6 months ago still shows the exact product name, price, and brand at sale time",
+                "Past invoices remain tied to the product data captured at sale time",
               points: [
                 "Every sale captures a point-in-time product snapshot",
                 "Invoice and Guarantee items are fully embedded — immutable after creation",
@@ -499,7 +506,7 @@ export const en: SiteContent = {
             },
             {
               title: "Historical Accuracy",
-              desc: "Point-in-time snapshots on every sale. Product changes never retroactively affect invoices or reports.",
+              desc: "Point-in-time snapshots on every sale so later product edits do not rewrite past invoices or reports.",
               category: "transaction",
             },
           ],
@@ -553,7 +560,7 @@ export const en: SiteContent = {
               chose: "Embedded snapshots",
               over: "Reference-only lookups",
               reason:
-                "Historical accuracy without join queries — past invoices never change when products are updated",
+                "Historical accuracy without heavy join queries - past invoices stay tied to stored sale snapshots",
             },
             {
               chose: "Cached stock on Product",

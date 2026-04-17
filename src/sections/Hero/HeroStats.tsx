@@ -1,17 +1,20 @@
 /**
  * @file HeroStats.tsx
- * @description Hero stats bar (desktop only): 4+ Years / 12+ Shipped / 20+ Clients
+ * @description Hero stats bar (desktop only) sourced from the content system.
  * with colored values and separators. No internal state.
  */
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
+import { useLocale } from "@/hooks/useLocale";
 import { resolveColor } from "@/tokens/themes";
 import { getHeroMetrics } from "@/data/stats";
 import { TEXT } from "@/tokens/typography";
 
 export function HeroStats() {
   const { C } = useThemeContext();
+  const { locale } = useLocale();
+  const metrics = getHeroMetrics(locale);
 
   return (
     <div
@@ -24,14 +27,14 @@ export function HeroStats() {
         paddingTop: 28,
       }}
     >
-      {getHeroMetrics().map((m, i) => (
+      {metrics.map((m, i) => (
         <div
           key={m.label}
           style={{
             paddingRight: 36,
             marginRight: 36,
             borderRight:
-              i < getHeroMetrics().length - 1 ? `1px solid ${C.line}` : "none",
+              i < metrics.length - 1 ? `1px solid ${C.line}` : "none",
           }}
         >
           <div

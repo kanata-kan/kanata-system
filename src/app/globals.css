@@ -13,6 +13,13 @@
   --purple: #a78bfa;
   --green: #3fb950;
   --amber: #f0883e;
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-mono:
+    "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Consolas, "Liberation Mono",
+    Menlo, monospace;
+  --font-sans:
+    "Segoe UI", Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 
 /* Gradient text — JAMAIS en inline style */

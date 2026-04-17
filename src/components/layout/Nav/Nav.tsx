@@ -118,7 +118,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              Hire Me
+              Contact
             </button>
           )}
           {isMobile && (

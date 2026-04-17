@@ -139,10 +139,32 @@ export function HeroContent() {
       <div
         className="rv d3"
         style={{
+          marginBottom: 18,
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: isMobile ? 16 : 18,
+            color: C.sub,
+            lineHeight: 1.6,
+            maxWidth: 620,
+            margin: 0,
+            fontWeight: 500,
+          }}
+        >
+          {content.hero.positioning}
+        </p>
+      </div>
+
+      {/* Rotating role */}
+      <div
+        className="rv d4"
+        style={{
           display: "flex",
           alignItems: "center",
           gap: 12,
-          marginBottom: 20,
+          marginBottom: 18,
         }}
       >
         <div
@@ -180,7 +202,7 @@ export function HeroContent() {
 
       {/* Bio */}
       <p
-        className="rv d4"
+        className="rv d5"
         style={{
           fontFamily: "var(--font-sans)",
           fontSize: isMobile ? 14 : 15,

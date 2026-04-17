@@ -6,7 +6,7 @@
  */
 "use client";
 
-import { getSkillGroups, getTechStrip } from "@/data/skills";
+import { getSkillGroups } from "@/data/skills";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";

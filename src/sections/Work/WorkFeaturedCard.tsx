@@ -1,7 +1,6 @@
 /**
  * @file WorkFeaturedCard.tsx
- * @description Carte projet principale avec browser bar, description,
- * tech stack, highlights, et UI preview schématique.
+ * @description Featured project card with stronger recruiter-facing structure.
  */
 
 import Link from "next/link";
@@ -18,6 +17,31 @@ interface WorkFeaturedCardProps {
 }
 
 export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
+  const snapshotSections = p.caseStudy
+    ? [
+        {
+          title: "Problem",
+          items: p.caseStudy.problem.slice(0, 2),
+          accent: "#E5484D",
+        },
+        {
+          title: "Solution",
+          items: [p.longDesc, p.caseStudy.architecture[0]].filter(Boolean),
+          accent: p.color,
+        },
+        {
+          title: "Key Decisions",
+          items: p.caseStudy.decisions.slice(0, 2),
+          accent: C.cyan,
+        },
+        {
+          title: "Impact",
+          items: p.caseStudy.results.slice(0, 2),
+          accent: p.statusColor,
+        },
+      ]
+    : [];
+
   return (
     <div
       style={{
@@ -30,7 +54,6 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
         marginBottom: 14,
       }}
     >
-      {/* Browser bar */}
       <Stack
         direction="row"
         justify="space-between"
@@ -70,7 +93,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               borderRadius: 4,
             }}
           >
-            ● {p.status}
+            • {p.status}
           </span>
           <span
             style={{
@@ -85,14 +108,12 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
         </Stack>
       </Stack>
 
-      {/* Body */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: isMobile ? "1fr" : "1.2fr 1fr",
         }}
       >
-        {/* Left info */}
         <div
           style={{
             padding: isMobile ? 22 : 36,
@@ -140,10 +161,9 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               marginBottom: 24,
             }}
           >
-            &ldquo;{p.longDesc}&rdquo;
+            “{p.longDesc}”
           </p>
 
-          {/* Tech Stack — categorized */}
           <div style={{ marginBottom: 24 }}>
             <div
               style={{
@@ -199,6 +219,65 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
             </Stack>
           </div>
 
+          {isMobile && snapshotSections.length > 0 && (
+            <div style={{ marginBottom: 24 }}>
+              <div
+                style={{
+                  ...TEXT.monoLabel(C),
+                  marginBottom: 12,
+                }}
+              >
+                Project Snapshot
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
+                  gap: 10,
+                }}
+              >
+                {snapshotSections.map((section) => (
+                  <div
+                    key={section.title}
+                    style={{
+                      padding: "14px 16px",
+                      borderRadius: 10,
+                      background: C.bg,
+                      border: `1px solid ${C.line}`,
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 9,
+                        letterSpacing: 1.5,
+                        color: section.accent,
+                        textTransform: "uppercase",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {section.title}
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                      {section.items.map((item) => (
+                        <span
+                          key={`${section.title}-${item}`}
+                          style={{
+                            ...TEXT.bodySmall(C),
+                            color: C.sub,
+                            display: "block",
+                          }}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {p.caseStudy ? (
             <div
               style={{
@@ -247,7 +326,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   color: C.faint,
                 }}
               >
-                See the full breakdown — problem, decisions, results
+                Structured around problem, solution, decisions, and impact
               </span>
             </div>
           ) : (
@@ -267,172 +346,123 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                 transition: "all .2s",
                 cursor: "pointer",
               }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.background = p.color + "25";
-                e.currentTarget.style.boxShadow = `0 4px 16px ${p.color}30`;
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.background = p.color + "10";
-                e.currentTarget.style.boxShadow = "none";
-              }}
             >
               VIEW PROJECT <span style={{ fontSize: 14 }}>↗</span>
             </button>
           )}
         </div>
 
-        {/* Right — highlights + UI preview (desktop only) */}
         {!isMobile && (
           <div
             style={{
               padding: 36,
               display: "flex",
               flexDirection: "column",
-              gap: 24,
+              gap: 18,
             }}
           >
-            <div>
-              <div
-                style={{
-                  ...TEXT.monoLabel(C),
-                  marginBottom: 14,
-                }}
-              >
-                Key Highlights
-              </div>
-              {p.highlights.map((h) => (
+            <div
+              style={{
+                ...TEXT.monoLabel(C),
+                marginBottom: 2,
+              }}
+            >
+              Recruiter Snapshot
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 12,
+              }}
+            >
+              {snapshotSections.map((section) => (
                 <div
-                  key={h}
+                  key={section.title}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    marginBottom: 10,
+                    padding: "16px 18px",
+                    borderRadius: 12,
+                    background: C.bg3,
+                    border: `1px solid ${C.border}`,
+                    transition: "background .35s",
                   }}
                 >
                   <div
                     style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 6,
-                      background: p.color + "18",
-                      border: `1px solid ${p.color}35`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9,
+                      letterSpacing: 1.5,
+                      color: section.accent,
+                      textTransform: "uppercase",
+                      marginBottom: 12,
                     }}
                   >
-                    <span style={{ color: p.color, fontSize: 11 }}>✓</span>
+                    {section.title}
                   </div>
-                  <span
-                    style={{
-                      ...TEXT.bodySmall(C),
-                      color: C.sub,
-                    }}
-                  >
-                    {h}
-                  </span>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                    {section.items.map((item) => (
+                      <div
+                        key={`${section.title}-${item}`}
+                        style={{
+                          display: "flex",
+                          gap: 10,
+                          alignItems: "flex-start",
+                        }}
+                      >
+                        <span
+                          style={{
+                            width: 5,
+                            height: 5,
+                            borderRadius: "50%",
+                            background: section.accent,
+                            marginTop: 8,
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span
+                          style={{
+                            ...TEXT.bodySmall(C),
+                            color: C.sub,
+                            lineHeight: 1.6,
+                          }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
 
-            {/* UI preview schematic */}
             <div
               style={{
-                flex: 1,
-                background: C.bg3,
+                padding: "16px 18px",
                 borderRadius: 12,
-                border: `1px solid ${C.border}`,
-                overflow: "hidden",
-                minHeight: 160,
-                transition: "background .35s",
+                background: p.color + "10",
+                border: `1px solid ${p.color}25`,
               }}
             >
               <div
                 style={{
-                  height: 30,
-                  background: C.card,
-                  borderBottom: `1px solid ${C.line}`,
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "0 12px",
-                  gap: 6,
-                  transition: "background .35s",
+                  ...TEXT.monoLabel(C),
+                  color: p.color,
+                  marginBottom: 10,
                 }}
               >
-                <WindowDots />
-                <div
-                  style={{
-                    flex: 1,
-                    height: 12,
-                    background: C.bg3,
-                    borderRadius: 4,
-                    marginLeft: 8,
-                    maxWidth: 100,
-                    transition: "background .35s",
-                  }}
-                />
+                Why This Project Matters
               </div>
-              <div
+              <p
                 style={{
-                  padding: 14,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 9,
+                  ...TEXT.bodySmall(C),
+                  color: C.sub,
+                  lineHeight: 1.7,
+                  margin: 0,
                 }}
               >
-                <div
-                  style={{
-                    height: 8,
-                    background: p.color + "28",
-                    borderRadius: 4,
-                    width: "65%",
-                  }}
-                />
-                <div
-                  style={{
-                    height: 6,
-                    background: C.bg2,
-                    borderRadius: 4,
-                    width: "85%",
-                    transition: "background .35s",
-                  }}
-                />
-                <div
-                  style={{
-                    height: 6,
-                    background: C.bg2,
-                    borderRadius: 4,
-                    width: "55%",
-                    transition: "background .35s",
-                  }}
-                />
-                <div
-                  style={{
-                    height: 32,
-                    background: p.color + "14",
-                    border: `1px solid ${p.color}25`,
-                    borderRadius: 8,
-                    marginTop: 6,
-                  }}
-                />
-                <div style={{ display: "flex", gap: 7 }}>
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      style={{
-                        height: 22,
-                        flex: 1,
-                        background: C.bg2,
-                        borderRadius: 4,
-                        border: `1px solid ${C.line}`,
-                        transition: "background .35s",
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
+                {p.caseStudy ? p.caseStudy.cta : p.longDesc}
+              </p>
             </div>
           </div>
         )}

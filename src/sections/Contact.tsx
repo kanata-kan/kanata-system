@@ -1,10 +1,10 @@
 /**
  * @file Contact.tsx
- * @description Contact section — clarity-first, filtered communication.
+ * @description Contact section with direct CTA, email copy, and real social links.
  */
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
@@ -22,15 +22,14 @@ export function Contact() {
 
   const EMAIL = content.contact.email;
   const SOCIALS = content.contact.socials;
-
   const [copied, setCopied] = useState(false);
 
-  const copy = useCallback(() => {
+  const copy = () => {
     navigator.clipboard.writeText(EMAIL).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     });
-  }, [EMAIL]);
+  };
 
   return (
     <Section
@@ -42,7 +41,6 @@ export function Contact() {
         overflow: "hidden",
       }}
     >
-      {/* Glow orb */}
       <div
         style={{
           position: "absolute",
@@ -60,7 +58,6 @@ export function Contact() {
         <Stack direction="column" gap="lg" style={{ position: "relative" }}>
           <Label c={C}>{content.contact.label}</Label>
 
-          {/* 🔥 TITLE */}
           <h2
             className="rv d1"
             style={{
@@ -82,7 +79,6 @@ export function Contact() {
             </span>
           </h2>
 
-          {/* 🔥 PARAGRAPH */}
           <p
             className="rv d2"
             style={{
@@ -92,7 +88,7 @@ export function Contact() {
               lineHeight: 1.85,
               marginBottom: 36,
               fontWeight: 300,
-              maxWidth: 420,
+              maxWidth: 460,
             }}
           >
             {content.contact.paragraphLine1}
@@ -101,7 +97,6 @@ export function Contact() {
             {content.contact.paragraphLine2}
           </p>
 
-          {/* Email + Copy */}
           <button
             onClick={copy}
             style={{
@@ -109,10 +104,10 @@ export function Contact() {
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-              maxWidth: 440,
-              padding: "15px 20px",
-              borderRadius: 10,
-              background: C.bg3,
+              maxWidth: 460,
+              padding: "16px 20px",
+              borderRadius: 12,
+              background: C.bg,
               border: `1px solid ${copied ? C.green + "50" : C.border}`,
               color: C.text,
               marginBottom: 24,
@@ -121,13 +116,13 @@ export function Contact() {
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.borderColor = C.border2;
-              e.currentTarget.style.background = C.card;
+              e.currentTarget.style.background = C.bg3;
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.borderColor = copied
                 ? C.green + "50"
                 : C.border;
-              e.currentTarget.style.background = C.bg3;
+              e.currentTarget.style.background = C.bg;
             }}
           >
             <span
@@ -157,11 +152,13 @@ export function Contact() {
             </span>
           </button>
 
-          {/* Socials */}
           <div style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
-            {SOCIALS.map((name) => (
-              <button
-                key={name}
+            {SOCIALS.map((social) => (
+              <a
+                key={social.href}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 10,
@@ -173,8 +170,7 @@ export function Contact() {
                   gap: 6,
                   transition: "color .2s",
                   cursor: "pointer",
-                  background: "none",
-                  border: "none",
+                  textDecoration: "none",
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.color = C.cyan;
@@ -183,8 +179,8 @@ export function Contact() {
                   e.currentTarget.style.color = C.muted;
                 }}
               >
-                {name} <span style={{ fontSize: 12 }}>↗</span>
-              </button>
+                {social.label} <span style={{ fontSize: 12 }}>↗</span>
+              </a>
             ))}
           </div>
         </Stack>

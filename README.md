@@ -1,126 +1,95 @@
-# Kanata System
+# kanata-system
 
-A portfolio project focused on building scalable structure using Next.js and TypeScript, with emphasis on separation of concerns and maintainable architecture.
+Case-study-driven portfolio for Abdelilah Wajid.
 
-## Concept
+This project is not a generic personal site. It is built as a product-engineering showcase focused on:
 
-This project is built to practice system thinking rather than just UI development.
+- operational systems
+- clear architecture
+- believable case studies
+- fast recruiter scanning
 
-The goal is to build applications with clear structure, where:
+## Positioning
 
-- logic is separated from UI
-- content is managed independently
-- components remain reusable and predictable
+The portfolio represents three things at once:
 
-The multilingual system is designed so that `useLocale()` only handles state, while content is accessed through pure functions. This keeps the UI clean and decoupled.
+1. Personal portfolio
+2. Case-study platform
+3. Engineering showcase
 
-## Tech Stack
+The goal is to make technical thinking visible, not just to display finished screens.
 
-| Technology | Purpose                |
-| ---------- | ---------------------- |
-| Next.js    | App Router & rendering |
-| React      | UI layer               |
-| TypeScript | Type safety            |
-| Tailwind   | Styling                |
+## Current focus
 
-No external UI libraries are used. All components and styles are custom-built.
+The current featured project is:
 
-## Architecture
+- `Electro Abidin eSystem`
 
-The project follows a layered structure:
+It is presented as a structured case study with:
 
-Content -> Data -> Tokens -> Hooks -> Components -> Sections -> Pages
+- problem
+- solution
+- key engineering decisions
+- impact
 
-This structure is intentionally organized to simulate how larger applications are built.
+## Tech stack
 
-### Structure
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
 
-```
-src/
-app/ # Routing and pages
-data/ # Content and data logic
-hooks/ # Shared logic
-tokens/ # Design system
-components/ # UI building blocks
-sections/ # Page sections
-```
+The UI is custom-built. Content is centralized in `src/data/content/`.
 
-### Separation of Concerns
+## Content model
 
-- Content is isolated from components
-- Logic is separated into hooks
-- UI remains reusable and predictable
+The site currently supports:
 
-## Features
+- English: `src/data/content/en.ts`
+- French: `src/data/content/fr.ts`
 
-### Implemented
+Both locales share the same typed structure from `src/data/content/types.ts`.
 
-- Multilingual system (EN / FR)
-- Theme switching (dark / light)
-- Responsive layout
-- Dynamic routing (projects)
-- Scroll animations
+## Technical status
 
-### Not Implemented
+Verified on April 17, 2026:
 
-- Authentication system
-- Backend API
-- Database
-- Admin dashboard
+- `npm run lint` passes
+- `npx tsc --noEmit` passes
+- `npm run build` passes
 
-## Key Decisions
+## Key implementation notes
 
-### No External UI Libraries
+- `src/app/layout.tsx` is now a server layout using Next metadata.
+- `src/app/AppShell.tsx` owns the client-side theme, responsive, locale, and navigation shell.
+- Remote Google font fetching was removed from the build path in favor of stable font stacks defined in `src/app/globals.css`.
+- Contact links are real anchors instead of placeholder buttons.
+- Project presentation on the homepage is structured for recruiter scanning.
 
-Avoided UI libraries to better understand core rendering and styling.
-
-### Layered Architecture
-
-Used a structured architecture to simulate real-world scalable systems.
-
-### Content Separation
-
-Kept content outside components to allow easy scaling and localization.
-
-### Avoid Over-Abstraction
-
-Kept the system simple and avoided unnecessary complexity.
-
-## Preview
-
-![Home](./screenshots/home.png)
-
-## Setup
+## Run locally
 
 ```bash
-git clone https://github.com/kanata-kan/kanata-system.git
-cd kanata-system
 npm install
+npm run lint
+npx tsc --noEmit
+npm run build
 npm run dev
 ```
 
-## Status
+## Repo structure
 
-In progress - actively improving structure and refining architectural decisions.
-
-Built to learn system design, not just build interfaces.
-
----
-
-# Screenshots Needed
-
-Don't exaggerate features. Take these essential screenshots:
-
-## 1. Home Page (Required)
-
-The most important screenshot showing:
-
-- Hero section
-- Navigation bar
-- Overall structure
-
-Name it:
-
-```bash
-home.png
+```text
+src/
+  app/        Next.js routes, metadata, shell
+  components/ Layout, UI, and flow components
+  data/       Typed content wrappers
+  hooks/      Theme, locale, responsive, scroll logic
+  sections/   Homepage and case-study sections
+  tokens/     Design tokens
 ```
+
+## Notes
+
+- The portfolio intentionally favors one stronger case study over multiple weak demo projects.
+- Metrics and claims were reduced to defensible statements.
+- Documentation in this repository is aligned to the current codebase and copy.

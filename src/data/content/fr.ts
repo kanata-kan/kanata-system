@@ -9,9 +9,9 @@ import type { SiteContent } from "./types";
 export const fr: SiteContent = {
   /* Meta */
   meta: {
-    title: "Abdelilah Wajid · Développeur JavaScript",
+    title: "Abdelilah Wajid · Product Engineer",
     description:
-      "Portfolio d'Abdelilah Wajid - Développeur JavaScript spécialisé en architecture système et patterns de code propre.",
+      "Portfolio oriente case studies d'Abdelilah Wajid, product engineer focalise sur les systemes operationnels, l'architecture claire, et des decisions techniques defendables.",
     author: "Abdelilah Wajid",
     keywords:
       "Abdelilah Wajid, développeur javascript, développeur frontend, react, next.js, typescript, portfolio, marrakech, maroc",
@@ -36,28 +36,30 @@ export const fr: SiteContent = {
 
   /* Hero */
   hero: {
-    badge: "OUVERT AUX OPPORTUNITÉS",
+    badge: "OUVERT AUX OPPORTUNITES",
     name: {
       base: "Abdel",
       highlight: "ilah",
       lastName: "Wajid",
     },
+    positioning:
+      "Product engineer focalise sur les systemes operationnels, les case studies, et une architecture que les equipes peuvent maintenir.",
     roles: [
-      "La structure d'abord",
-      "Construire avec clarté",
-      "Penser avant de coder",
-      "Créer des systèmes maintenables",
+      "Ingenierie produit guidee par les case studies",
+      "Workflows operationnels avant demos visuelles",
+      "Architecture guidee par de vraies contraintes",
+      "Systemes clairs que les equipes peuvent expliquer",
     ],
     pills: [
-      "Pensée système",
-      "Architecture propre",
-      "Focus TypeScript",
-      "Esprit d'apprentissage",
+      "Case-study driven",
+      "Systemes operationnels",
+      "Trade-offs clairs",
+      "Architecture maintenable",
     ],
-    bio: "Je me concentre sur la création d'applications web structurées et évolutives. Je me soucie de la manière dont les systèmes sont conçus, pas seulement de leur apparence. Mon approche met l'accent sur une architecture claire et un code maintenable.",
+    bio: "Ce portfolio est une vitrine d'ingenierie guidee par les case studies. Je travaille surtout sur des workflows operationnels confus - stock, pricing, reporting, outils internes - pour les transformer en systemes plus fiables, explicables, et maintenables.",
     cta: {
-      primary: "VOIR MES RÉALISATIONS ↓",
-      secondary: "EXPLORER LES PROJETS →",
+      primary: "VOIR LE CASE STUDY ↓",
+      secondary: "ME CONTACTER →",
     },
     scroll: "DÉFILER",
     avatar: {
@@ -66,12 +68,11 @@ export const fr: SiteContent = {
       locationShort: "Marrakech · Ouvert au remote",
       infoItems: ["Marrakech, Maroc", "UTC+1 - GMT+1", "Ouvert au remote"],
       socials: [
-        { href: "https://github.com/abdelilah", label: "GitHub" },
+        { href: "https://github.com/kanata-kan", label: "GitHub" },
         {
           href: "https://linkedin.com/in/abdelilahwajid",
           label: "LinkedIn",
         },
-        { href: "https://x.com/abdelilahwajid", label: "X" },
       ],
     },
   },
@@ -79,17 +80,17 @@ export const fr: SiteContent = {
   /* About */
   about: {
     label: "02 - État d'esprit",
-    headingLine1: "Je diagnostique les systèmes,",
-    headingLine2: "puis je construis.",
+    headingLine1: "Je transforme des operations confuses,",
+    headingLine2: "en systemes clairs.",
     paragraphs: [
-      "La plupart des problèmes d'ingénierie ne sont pas des fonctionnalités manquantes - ce sont des décisions peu claires prises au début qui se cumulent avec le temps.",
-      "Avant d'écrire une ligne de code, je cartographie le système : où il casse, où se cache la complexité, et ce qui vaut vraiment la peine d'être résolu.",
-      "C'est là que le vrai travail se passe. Tout ce que je construis ensuite est ancré dans ce dont le produit a réellement besoin - pas ce qui semblait une bonne idée dans un sprint.",
+      "Je suis surtout utile quand un produit existe deja mais que le workflow derriere reste lent, fragile, ou difficile a expliquer.",
+      "Mon travail commence par le diagnostic : ou ca casse, ou la duplication apparait, ou la donnee perd son sens, et quelles decisions doivent devenir des regles systeme.",
+      "Ce portfolio sert a montrer cette reflexion en public - via des case studies, des trade-offs, et des details d'implementation - pas seulement des ecrans finis.",
     ],
     tags: [
-      { text: "Clarté d'abord", colorKey: "cyan" },
-      { text: "Pas d'exécution aveugle", colorKey: "amber" },
-      { text: "La valeur plutôt que le bruit", colorKey: "purple" },
+      { text: "Case-study driven", colorKey: "cyan" },
+      { text: "Decisions defendables", colorKey: "amber" },
+      { text: "Clarite systeme", colorKey: "purple" },
     ],
     codeFilename: "about.ts",
     codeRows: [
@@ -128,60 +129,66 @@ export const fr: SiteContent = {
 
   /* Work */
   work: {
-    label: "01 - Approche",
-    heading: "Problèmes résolus. Produits livrés.",
-    subtitle: "Vrais problèmes · Décisions structurelles · Livrés.",
+    label: "01 - Case Studies",
+    heading: "Systemes operationnels, expliques clairement.",
+    subtitle: "Probleme -> solution -> decisions -> impact",
   },
 
   /* Skills */
   skills: {
     label: "03 - Outils",
-    heading: "Les outils que je choisis - et pourquoi.",
-    subtitle: "Le bon outil pour le bon problème. Rien de plus.",
+    heading: "Stack principal et habitudes d'implementation.",
+    subtitle: "Choisis pour la fiabilite, la maintenabilite, et la vitesse de livraison.",
   },
 
   /* Contact */
   contact: {
     label: "04 - Contact",
-    headingLine1: "Dites-moi ce qui est cassé,",
-    headingHighlight: "je vous dirai ce qui vaut la peine d'être réparé.",
+    headingLine1: "Ouvert aux roles de product engineering,",
+    headingHighlight: "au consulting, et aux builds bien scopes.",
     paragraphLine1:
-      "Si votre produit est lent, difficile à faire évoluer, ou accumule des décisions dont personne ne se souvient - c'est précisément là que j'interviens le mieux.",
+      "Si vous avez besoin de transformer des workflows confus en systemes fiables, envoyez-moi le contexte, les contraintes, et ce qui ralentit vraiment l'equipe.",
     paragraphLine2:
-      "Je vous donnerai une lecture honnête de la situation. S'il y a une adéquation, je vous montrerai comment. S'il n'y en a pas, je vous le dirai franchement.",
-    email: "abdelilah@email.com",
+      "Je reponds clairement sur le fit, le scope, et le chemin le plus rapide vers quelque chose d'utile.",
+    email: "kanata10@gmail.com",
     copyLabel: "COPIER",
-    copiedLabel: "COPIÉ",
-    socials: ["GitHub", "LinkedIn", "Twitter / X"],
+    copiedLabel: "COPIE",
+    socials: [
+      { href: "https://github.com/kanata-kan", label: "GitHub" },
+      {
+        href: "https://linkedin.com/in/abdelilahwajid",
+        label: "LinkedIn",
+      },
+    ],
   },
 
   /* Footer */
   footer: {
     copyright: "© 2026",
     author: "Abdelilah Wajid",
-    tagline: "La clarté livre. La complexité coule.",
+    tagline: "Les case studies avant les claims.",
   },
 
   /* Stats */
   stats: [
-    { value: "4+", label: "Ans exp.", colorKey: "cyan" },
-    { value: "12+", label: "Projets livrés", colorKey: "purple" },
-    { value: "20+", label: "Clients", colorKey: "amber" },
-    { value: "3", label: "Pays", colorKey: "green" },
+    { value: "2", label: "Locales supportees", colorKey: "cyan" },
+    { value: "Typed", label: "Architecture de contenu", colorKey: "purple" },
+    { value: "FIFO", label: "Logique de cout stock", colorKey: "amber" },
+    { value: "Prive", label: "Mode de deploiement", colorKey: "green" },
   ],
 
   /* Tech Strip */
   techStrip: [
-    "Zéro dette technique le jour 1",
-    "Architecture avant fonctionnalités",
-    "Performance par conception",
-    "Structure pour l'échelle",
-    "Éliminer les frictions",
-    "Ingénierie orientée business",
-    "Penser en flux",
-    "Couper la complexité tôt",
-    "Livrer avec confiance",
-    "Clarté à chaque couche",
+    "Case-study driven",
+    "Workflows operationnels",
+    "Contenu type-safe",
+    "Trade-offs clairs",
+    "UI responsive",
+    "Business rules first",
+    "Logique d'inventaire",
+    "Architecture lisible",
+    "Scan rapide",
+    "Decisions defendables",
   ],
 
   /* Projects */
@@ -193,12 +200,12 @@ export const fr: SiteContent = {
       name: "Electro Abidin eSystem",
       type: "Système de Gestion de Vente au Détail",
       color: "#3B82F6",
-      status: "En ligne",
+      status: "Déploiement privé",
       statusColor: "#3FB950",
-      link: "",
-      desc: "Un magasin d'électronique fonctionnant avec des vérifications de stock manuelles et un suivi papier - le système a remplacé le chaos par un contrôle opérationnel en temps réel.",
+      link: "/work/electro-abidin",
+      desc: "Une operation retail avec des controles de stock manuels, du suivi papier, et une caisse lente avait besoin d'un systeme unique que l'equipe pouvait vraiment faire confiance en temps reel.",
       longDesc:
-        "J'ai conçu la gestion des stocks, des ventes et de la facturation comme un flux intégré - pas trois outils séparés boulonnés ensemble.",
+        "J'ai reuni stock, caisse, facturation, et gestion de garantie dans un seul flux operationnel avec des regles fiables pour le stock, le pricing, et la marge.",
       stack: {
         core: ["Next.js", "React", "TypeScript"],
         backend: ["MongoDB", "Mongoose", "Zod", "JWT Auth", "bcrypt"],
@@ -211,20 +218,21 @@ export const fr: SiteContent = {
         testing: ["Jest", "Supertest"],
       },
       highlights: [
-        "Éliminé les vérifications de stock manuelles en connectant directement l'inventaire au flux de vente",
-        "Construit un calcul de profit basé sur FIFO pour un suivi financier précis par unité vendue",
-        "Conçu une facturation flexible supportant particuliers et entreprises avec TVA optionnelle",
-        "Implémenté un suivi de garantie automatique lié à chaque produit au point de vente",
+        "Relie la disponibilite stock directement a la caisse pour eviter les ventes a l'aveugle",
+        "Utilise le cout par lot FIFO pour un suivi de marge base sur le vrai prix d'achat",
+        "Separe l'etat workflow de la verite financiere avec des enregistrements immuables",
+        "Couvre facturation, TVA, retours, et garanties dans le meme workflow retail",
       ],
       caseStudy: {
-        headline: "Du chaos manuel au contrôle retail en temps réel",
+        headline:
+          "Remplacer des operations retail manuelles par un systeme fiable en caisse",
         subtitle:
-          "Le magasin ne manquait pas de logiciel - il manquait d'un système qui comprenait comment une véritable entreprise d'électronique opère réellement.",
+          "Ce case study montre comment j'ai transforme des verifications de stock deconnectees, des decisions de pricing, et la facturation en un workflow operationnel unique pour un magasin d'electronique.",
         tags: [
-          "Gestion d'Inventaire",
-          "Point de Vente",
-          "Suivi Financier",
-          "Automatisation Business",
+          "Operations Retail",
+          "Logique Stock",
+          "Flux de Caisse",
+          "Business Rules",
         ],
         problem: [
           "Le magasin dépendait de vérifications de stock manuelles dans la réserve",
@@ -257,12 +265,11 @@ export const fr: SiteContent = {
           "Conçu le système avec cohérence des données et intégrité transactionnelle en tête",
         ],
         results: [
-          "Éliminé complètement le besoin de vérifications de stock manuelles",
-          "Réduit significativement les frictions à la caisse et le temps d'attente",
-          "Évité la vente de produits non disponibles",
-          "Permis un suivi précis des profits et des finances",
-          "Amélioré l'efficacité des employés et réduit la charge physique",
-          "Donné au propriétaire une visibilité en temps réel sur les opérations et la performance",
+          "La disponibilite stock devient visible pendant le checkout au lieu d'un aller-retour manuel vers la reserve",
+          "Les caissiers peuvent traiter des commandes multi-produits dans un seul flux coherent",
+          "Le suivi de marge passe de l'approximation a un calcul base sur les lots",
+          "Les retours et annulations restaurent le stock via des regles systeme explicites",
+          "Le proprietaire obtient une vision plus claire des ventes, du mouvement stock, et de la facturation",
         ],
         screenshots: [
           {
@@ -296,7 +303,7 @@ export const fr: SiteContent = {
               "Génération factures automatiques avec support TVA et types clients",
           },
         ],
-        cta: "Le système n'a pas simplement digitalisé le processus - il a redéfini comment l'entreprise opère.",
+        cta: "La valeur n'etait pas un dashboard plus joli. C'etait un workflow sur lequel le magasin pouvait compter pendant de vraies ventes.",
         technicalDeepDive: {
           sectionTitle: "Analyse Technique",
           sectionSubtitle:

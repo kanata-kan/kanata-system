@@ -60,6 +60,7 @@ export interface HeroAvatarContent {
 export interface HeroContent {
   badge: string;
   name: HeroNameContent;
+  positioning: string;
   roles: string[];
   pills: string[];
   bio: string;
@@ -231,7 +232,7 @@ export interface ContactContent {
   email: string;
   copyLabel: string;
   copiedLabel: string;
-  socials: string[];
+  socials: SocialLinkContent[];
 }
 
 /* ── Footer ── */
