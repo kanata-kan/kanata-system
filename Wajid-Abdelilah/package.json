@@ -5,7 +5,8 @@
   "scripts": {
     "build:cv": "node generate-pdf.js",
     "build:cv-fr": "node generate-pdf.js cv-abdelilah-wajid-fr.html",
-    "build:cv-all": "node generate-pdf.js && node generate-pdf.js cv-abdelilah-wajid-fr.html"
+    "build:cv-ar": "node generate-pdf.js cv-abdelilah-wajid-ar.html",
+    "build:cv-all": "node generate-pdf.js && node generate-pdf.js cv-abdelilah-wajid-fr.html && node generate-pdf.js cv-abdelilah-wajid-ar.html"
   },
   "dependencies": {
     "puppeteer": "^24.15.0",

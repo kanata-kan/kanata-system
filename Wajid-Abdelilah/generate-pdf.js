@@ -24,11 +24,12 @@ const requestedHtmlFile = process.argv[2] || DEFAULT_HTML_FILE;
 const HTML_FILE = path.resolve(__dirname, requestedHtmlFile);
 const PDF_CSS = path.resolve(__dirname, "css", "pdf.css");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-const isFr = requestedHtmlFile.includes("-fr");
-const OUTPUT_PDF = path.join(
-  OUTPUT_DIR,
-  isFr ? "Abdelilah_Wajid_CV_FR.pdf" : "Abdelilah_Wajid_CV.pdf"
-);
+const langSuffix = requestedHtmlFile.includes("-ar")
+  ? "_AR"
+  : requestedHtmlFile.includes("-fr")
+    ? "_FR"
+    : "";
+const OUTPUT_PDF = path.join(OUTPUT_DIR, `Abdelilah_Wajid_CV${langSuffix}.pdf`);
 
 /* ── Helpers ─────────────────────────────────────────────── */
 function ensureDir(dir) {
