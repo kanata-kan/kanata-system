@@ -11,12 +11,12 @@ export type SiteData = Omit<SiteContent, "projects">;
 export const site: SiteData = {
   /* ── Meta ── */
   meta: {
-    title: "Abdelilah Wajid · Fullstack Developer",
+    title: "Abdelilah Wajid · Product Engineer",
     description:
-      "Case-study-driven portfolio of Abdelilah Wajid, a fullstack developer focused on operational systems, clear architecture, and defensible technical decisions.",
+      "Case-study-driven portfolio of Abdelilah Wajid, a product engineer focused on operational systems, clear architecture, and defensible technical decisions.",
     author: "Abdelilah Wajid",
     keywords:
-      "Abdelilah Wajid, fullstack developer, case study portfolio, react, next.js, typescript, operational systems, marrakech, morocco",
+      "Abdelilah Wajid, product engineer, fullstack developer, case study portfolio, react, next.js, typescript, operational systems, marrakech, morocco",
     siteUrl: "https://kanata-system.vercel.app",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
@@ -30,8 +30,8 @@ export const site: SiteData = {
     logoTagline: "UNDERSTAND · DECIDE · BUILD",
     links: [
       { id: "work", n: "01", label: "Case Studies" },
-      { id: "about", n: "02", label: "Mindset" },
-      { id: "skills", n: "03", label: "Tools" },
+      { id: "about", n: "02", label: "Approach" },
+      { id: "skills", n: "03", label: "Stack" },
       { id: "contact", n: "04", label: "Contact" },
     ],
   },
@@ -45,12 +45,12 @@ export const site: SiteData = {
       lastName: "Wajid",
     },
     positioning:
-      "Product engineer focused on operational systems, case-study thinking, and architecture teams can maintain.",
+      "Product engineer working on operational systems, with a case-study-driven approach and architecture built for real teams under real constraints.",
     roles: [
-      "Case-study driven product engineering",
-      "Operational workflows over flashy demos",
+      "Case-study-driven product engineering",
+      "Operational workflows over surface-level demos",
       "Architecture shaped by real constraints",
-      "Clear systems that teams can trust",
+      "Systems that teams can trust, explain, and extend",
     ],
     pills: [
       "Case-study driven",
@@ -58,7 +58,7 @@ export const site: SiteData = {
       "Clear trade-offs",
       "Maintainable architecture",
     ],
-    bio: "This portfolio is a case-study-driven engineering showcase. I focus on messy operational workflows - inventory, pricing, reporting, and internal tools - and turn them into systems that are easier to trust, explain, and extend.",
+    bio: "This portfolio is an engineering showcase built around real case studies. I focus on messy operational workflows — inventory, pricing, reporting, and internal tools — and turn them into systems that are reliable, understandable, and built to evolve.",
     cta: {
       primary: "VIEW CASE STUDY ↓",
       secondary: "CONTACT ME →",
@@ -81,13 +81,13 @@ export const site: SiteData = {
 
   /* ── About ── */
   about: {
-    label: "02 — Mindset",
+    label: "02 — Approach",
     headingLine1: "I turn messy operations,",
-    headingLine2: "into clear systems.",
+    headingLine2: "into clear, reliable systems.",
     paragraphs: [
       "I am most useful when a product already exists but the workflow behind it is slow, fragile, or hard to reason about.",
-      "My process starts with diagnosis: what breaks, what is duplicated, where data loses meaning, and which decisions deserve to become system rules.",
-      "This portfolio is built to show that thinking in public - through case studies, trade-offs, and implementation details - not just finished screens.",
+      "My work starts with diagnosis: what breaks, what is duplicated, where data loses meaning, and which decisions should become system rules.",
+      "This portfolio shows how I think in public — through case studies, trade-offs, and implementation details — not just finished interfaces.",
     ],
     tags: [
       { text: "Case-study driven", colorKey: "cyan" },
@@ -113,17 +113,17 @@ export const site: SiteData = {
       ],
       [
         { text: "  approach: ", colorKey: "muted" },
-        { text: '"fix-what-slows"', colorKey: "green" },
+        { text: '"fix-what-slows-teams"', colorKey: "green" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  decisions: ", colorKey: "muted" },
-        { text: "true", colorKey: "cyan" },
+        { text: "defensible", colorKey: "cyan" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  hire: ", colorKey: "muted" },
-        { text: '"only-if-it-makes-sense"', colorKey: "amber" },
+        { text: '"only-when-impact-is-clear"', colorKey: "amber" },
       ],
       [{ text: "}", colorKey: "muted" }],
     ],
@@ -132,15 +132,15 @@ export const site: SiteData = {
   /* ── Work ── */
   work: {
     label: "01 — Case Studies",
-    heading: "Operational systems, explained clearly.",
-    subtitle: "Problem → solution → decisions → impact",
+    heading: "Operational systems, broken down clearly.",
+    subtitle: "Problem → constraints → decisions → impact",
   },
 
   /* ── Skills ── */
   skills: {
-    label: "03 — Tools",
-    heading: "Core stack and implementation habits.",
-    subtitle: "Chosen for reliability, maintainability, and delivery speed.",
+    label: "03 — Stack",
+    heading: "Tools I use to ship reliable systems.",
+    subtitle: "Chosen for clarity, maintainability, and delivery speed.",
   },
 
   /* ── Contact ── */
@@ -149,9 +149,9 @@ export const site: SiteData = {
     headingLine1: "Open to product engineering roles,",
     headingHighlight: "consulting, and scoped builds.",
     paragraphLine1:
-      "If you need someone to turn messy workflows into reliable product systems, send me the context, constraints, and what is slowing the team down.",
+      "If your team is dealing with slow, unclear, or fragile workflows, send me the context, constraints, and what is breaking.",
     paragraphLine2:
-      "I respond clearly about fit, scope, and the fastest path to something useful.",
+      "I will respond clearly about fit, scope, and the fastest path to a working solution.",
     email: "kanata10kan@gmail.com",
     copyLabel: "COPY",
     copiedLabel: "COPIED ✓",
