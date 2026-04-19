@@ -1,10 +1,3 @@
-/**
- * @file Nav.tsx
- * @description Navigation principale — orchestrateur.
- * Gère le state (scroll, menu mobile) et délègue le rendu
- * aux sous-composants NavLogo, NavLinks, NavMobileMenu.
- * Reçoit le thème et l'état dark/light via props depuis layout.tsx.
- */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -65,7 +58,10 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
           left: 0,
           right: 0,
           zIndex: 900,
-          height: 64,
+
+          // ✅ FIX: بدل hardcode
+          height: "var(--navbar-height)",
+
           padding: isMobile ? "0 16px" : "0 48px",
           background: scrolled ? `${C.bg}F5` : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
@@ -92,6 +88,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
         >
           <LocaleSwitch C={C} />
           <ThemeToggle dark={dark} onToggle={onToggle} c={C} />
+
           {!isMobile && (
             <button
               onClick={() => go("contact")}
@@ -121,6 +118,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
               Contact
             </button>
           )}
+
           {isMobile && (
             <button
               onClick={() => setOpen((o) => !o)}
