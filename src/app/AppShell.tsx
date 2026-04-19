@@ -23,6 +23,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               background: C.bg,
               color: C.text,
               transition: "background .35s, color .35s",
+paddingTop: 64,
             }}
           >
             <Nav
