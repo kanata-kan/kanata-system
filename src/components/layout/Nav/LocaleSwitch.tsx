@@ -14,7 +14,7 @@ interface Props {
 }
 
 const LOCALES = ["en", "fr", "ar"] as const;
-const LOCALE_LABELS: Record<string, string> = { en: "EN", fr: "FR", ar: "ع" };
+const LOCALE_LABELS: Record<string, string> = { en: "EN", fr: "FR", ar: "AR" };
 
 export function LocaleSwitch({ C }: Props) {
   const { locale, setLocale } = useLocale();
