@@ -1,0 +1,13 @@
+/* ═══════════════════════════════════════════════════════════
+   SCREEN STYLES — browser/preview only
+   Applied via <link media="screen"> in the HTML.
+   ═══════════════════════════════════════════════════════════ */
+
+body {
+  background: #e8ecf0;
+  padding: 30px 20px;
+}
+
+.page {
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+}

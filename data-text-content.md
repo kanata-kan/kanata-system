@@ -1,6 +1,7 @@
 # Content Map
 
 > Source of truth:
+>
 > - `src/data/content/en.ts`
 > - `src/data/content/fr.ts`
 > - `src/data/content/types.ts`
@@ -17,7 +18,7 @@ The portfolio is positioned as:
 
 Primary identity in the English locale:
 
-- `meta.title`: `Abdelilah Wajid · Product Engineer`
+- `meta.title`: `Abdelilah Wajid · Fullstack Developer`
 - hero badge: `OPEN TO WORK`
 - work section label: `01 — Case Studies`
 
@@ -82,7 +83,7 @@ These replace the older unverifiable metrics.
 
 Current contact content includes:
 
-- email: `kanata10@gmail.com`
+- email: `kanata10kan@gmail.com`
 - GitHub link
 - LinkedIn link
 

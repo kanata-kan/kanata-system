@@ -1,0 +1,15 @@
+{
+  "name": "wajid-cv",
+  "version": "1.0.0",
+  "description": "HTML → PDF pipeline for Abdelilah Wajid CV",
+  "scripts": {
+    "build:cv": "node generate-pdf.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.15.0",
+    "qrcode": "^1.5.4"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

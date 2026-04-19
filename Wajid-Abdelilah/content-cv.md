@@ -2,7 +2,7 @@
 
 **Fullstack Developer — Next.js & Node.js**
 
-[kanata10kan@gmail.com](mailto:kanata10kan@gmail.com) | 0652 064 823 | https://github.com/kanata-kan | https://kanata-system.vercel.app/
+[kanata10kan@gmail.com](mailto:kanata10kan@gmail.com) | +212 652 064 823 | https://github.com/kanata-kan | https://kanata-system.vercel.app/
 
 ---
 
@@ -14,7 +14,7 @@ I build products end-to-end and communicate engineering work through clear, recr
 
 ---
 
-## Supporting Asset - Engineering Case Study Portfolio
+## Supporting Asset - Engineering Case Study Portfolio (2025)
 
 Built a Next.js and TypeScript platform to communicate engineering work through structured, recruiter-friendly case studies.
 
@@ -23,45 +23,66 @@ Built a Next.js and TypeScript platform to communicate engineering work through 
 
 ### Highlights
 
-* Structured project stories around Problem, Solution, Key Decisions, and Impact for faster recruiter scanning.
-* Built a typed content architecture to keep project stories consistent and easy to update.
-* Refined section flow and copy hierarchy so each project is easier to review in a short hiring pass.
+- Structured project stories around Problem, Solution, Key Decisions, and Impact for faster recruiter scanning.
+- Built a typed content architecture to keep project stories consistent and easy to update.
+- Refined section flow and copy hierarchy so each project is easier to review in a short hiring pass.
 
 ---
 
-## Featured Project - MediTrans Core (SaaS Platform)
+## Featured Project - Electro Abidin eSystem (Retail Management System) — 2025
 
-Built and deployed a real-world SaaS platform for managing medical transport, pricing, invoicing, and home care operations.
+Built and deployed a retail operations system for an electronics store, replacing manual stock checks, paper tracking, and slow checkout with a single integrated workflow.
 
-- GitHub: https://github.com/kanata-kan
+- Case Study: https://kanata-system.vercel.app/work/electro-abidin
+- Repository: Private — demo available on request
 
 ### Key Achievements
 
-* Designed a modular layered architecture with clear service, repository, and schema boundaries.
-* Built a deterministic pricing engine with rule-based logic and immutable snapshot versioning.
-* Delivered the full workflow from services and pricing to invoicing, payments, and PDF billing.
+- Built FIFO batch costing to tie profit reporting to real purchase prices instead of manual estimates.
+- Connected stock visibility directly to checkout so sales staff can verify availability in real time.
+- Separated workflow state from financial truth using a dual-write pattern (Sale + SalesTransactionItem).
+- Delivered invoicing (FACTURE / BON DE VENTE), VAT handling, returns, and warranty tracking in one retail workflow.
 
 ### Tech Stack
 
-Next.js · TypeScript · PostgreSQL · Prisma · TailwindCSS · NextAuth · Zod
+Next.js · React · JavaScript (ES6+) · MongoDB · Mongoose · Styled Components · Zod · JWT · Jest
 
 ---
 
-## Project - Store Management System
+## Client Project - Elmoussaaif Abdelghafour Brand Website — 2025
 
-Designed and developed a retail inventory and sales management system focused on stock movement, checkout, invoicing, and day-to-day business workflows.
+Built and delivered a personal brand website for a client, now live in production. Full ownership of architecture, database design, content management, and deployment.
 
-- GitHub: https://github.com/kanata-kan
+- Live: https://elmoussaif.com/
+- Repository: Client-owned (private)
 
 ### Key Achievements
 
-* Implemented FIFO-based inventory logic for more accurate cost and profit tracking.
-* Connected checkout, invoice generation, and stock updates in one operational workflow.
-* Applied service-layer architecture to isolate business logic and improve maintainability.
+- Designed a full content management system with drag-and-drop ordering, image optimization (Cloudinary + Sharp), and admin dashboard.
+- Built authentication and admin routes with JWT and bcrypt, including role-based access control.
+- Implemented multilingual content support and structured SEO metadata for discoverability.
 
 ### Tech Stack
 
-Next.js · React · MongoDB · Mongoose · TailwindCSS
+Next.js 16 · React 19 · TypeScript · MongoDB · Mongoose · Tailwind CSS 4 · Framer Motion · Cloudinary · Zod · JWT
+
+---
+
+## Project In Development - MediTrans Core (SaaS Platform) — 2025
+
+Operational management platform for medical transport and home care services in Morocco. Currently in active development, Phase 1 (foundations) complete.
+
+- GitHub: https://github.com/kanata-kan/meditrans-core
+
+### Key Achievements
+
+- Designed a modular architecture with clear service, repository, and schema boundaries per domain.
+- Built a deterministic 7-step pricing engine: catalog resolution, distance fees, modifiers, VAT, and immutable snapshot persistence.
+- Implemented Vitest test coverage for pricing, invoicing, and payment modules.
+
+### Tech Stack
+
+Next.js 14 · TypeScript (strict) · PostgreSQL · Prisma 5 · Zod · NextAuth · TailwindCSS · Vitest
 
 ---
 
@@ -71,16 +92,16 @@ Next.js · React · MongoDB · Mongoose · TailwindCSS
 JavaScript (ES6+), TypeScript
 
 **Frontend:**  
-React.js, Next.js, Redux, Tailwind CSS
+React.js, Next.js, Tailwind CSS, Styled Components
 
 **Backend:**  
-Node.js, Express.js, REST API Design, Authentication (JWT), Validation (Zod, Joi)
+Node.js, Express.js, REST API Design, Authentication (JWT), Validation (Zod)
 
 **Databases:**  
-MongoDB, PostgreSQL, Prisma
+MongoDB, Mongoose, PostgreSQL, Prisma
 
 **Tools & DevOps:**  
-Git, GitHub, GitHub Actions (CI/CD), Postman
+Git, GitHub, Postman, Jest, Vitest
 
 **Concepts:**  
 Layered Architecture, MVC Pattern, RESTful Design, Clean Code, Separation of Concerns
@@ -90,6 +111,7 @@ Layered Architecture, MVC Pattern, RESTful Design, Clean Code, Separation of Con
 ## Languages
 
 Arabic (Native)  
+French (Professional proficiency)  
 English (Working proficiency)
 
 ---

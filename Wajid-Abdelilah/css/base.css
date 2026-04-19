@@ -1,0 +1,407 @@
+/* ═══════════════════════════════════════════════════════════
+   BASE STYLES — shared between screen and PDF rendering
+   DO NOT add screen-only or print-only rules here.
+   ═══════════════════════════════════════════════════════════ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+:root {
+  --accent: #1a3c5e;
+  --accent-lt: #2a5f8f;
+  --accent-bright: #3b82c4;
+  --sidebar-bg: #1a3c5e;
+  --sidebar-text: #ffffff;
+  --sidebar-muted: rgba(255, 255, 255, 0.62);
+  --sidebar-line: rgba(255, 255, 255, 0.14);
+  --sidebar-icon: rgba(255, 255, 255, 0.1);
+  --text: #1e2532;
+  --muted: #5a6478;
+  --border: #e2e8f0;
+  --white: #ffffff;
+  --surface: #f4f7fb;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+/* ─── PAGE CONTAINER ─────────────────────────────────────── */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 218px 1fr;
+}
+
+/* ─── SIDEBAR (dark navy) ─────────────────────────────────── */
+.sidebar {
+  background: var(--sidebar-bg);
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ── Avatar ── */
+.avatar-block {
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid rgba(255, 255, 255, 0.35);
+  margin-bottom: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.avatar-block h1 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--sidebar-text);
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+}
+
+.avatar-block p {
+  font-size: 10px;
+  color: var(--sidebar-muted);
+  font-weight: 500;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ── Sidebar section titles ── */
+.s-section h3 {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: var(--sidebar-muted);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--sidebar-line);
+  margin-bottom: 10px;
+}
+
+/* ─── CONTACT LIST ────────────────────────────────────────── */
+.contact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11.5px;
+  color: var(--sidebar-muted);
+  line-height: 1.4;
+}
+
+.contact-list li span.icon {
+  width: 24px;
+  height: 24px;
+  background: var(--sidebar-icon);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-list li span.icon svg {
+  width: 11px;
+  height: 11px;
+  fill: rgba(255, 255, 255, 0.75);
+}
+
+/* ─── LANGUAGE BARS ───────────────────────────────────────── */
+.lang-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.lang-item label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 4px;
+}
+
+.lang-item label span {
+  color: var(--sidebar-muted);
+  font-weight: 400;
+  font-size: 10.5px;
+}
+
+.lang-bar {
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.lang-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* ─── SKILL TAGS ──────────────────────────────────────────── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 3px 9px;
+  border-radius: 99px;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+/* ─── INTERESTS ───────────────────────────────────────────── */
+.interest-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.interest-list li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11.5px;
+  color: var(--sidebar-muted);
+}
+
+.interest-list li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─── MAIN PANEL ──────────────────────────────────────────── */
+.main {
+  padding: 18px 22px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* ── Header ── */
+.main-header {
+  border-bottom: 2.5px solid var(--accent);
+  padding-bottom: 5px;
+}
+
+.main-header h2 {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.6px;
+  line-height: 1.1;
+}
+
+.main-header .title-tag {
+  display: inline-block;
+  margin-top: 5px;
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 12px;
+  border-radius: 99px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* ── Section headers ── */
+.m-section h3 {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--accent);
+  margin-bottom: 5px;
+}
+
+/* ─── PROFILE ─────────────────────────────────────────────── */
+.profile-text {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ─── EXPERIENCE ──────────────────────────────────────────── */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.exp-item {
+  padding-left: 15px;
+  border-left: 2.5px solid var(--border);
+  position: relative;
+}
+
+.exp-item::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px var(--border);
+}
+
+.exp-item .job-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.1px;
+}
+
+.exp-item .job-meta {
+  font-size: 11px;
+  color: var(--accent-bright);
+  font-weight: 600;
+  margin: 2px 0 3px;
+}
+
+.exp-item .job-detail {
+  font-size: 10.5px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.85;
+}
+
+.exp-item ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.exp-item ul li {
+  font-size: 11px;
+  color: var(--muted);
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.exp-item ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent-bright);
+  font-size: 10px;
+  top: 1px;
+}
+
+/* ─── EDUCATION ───────────────────────────────────────────── */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.edu-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+  padding: 5px 9px;
+  background: var(--surface);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+}
+
+.edu-item .edu-degree {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.edu-item .edu-school {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.edu-item .edu-year {
+  background: var(--accent);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 99px;
+  white-space: nowrap;
+  align-self: start;
+}
+
+/* ─── STRENGTHS ───────────────────────────────────────────── */
+.strengths-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.strengths-list li {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 5px 10px;
+  background: var(--surface);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  line-height: 1.48;
+}

@@ -5,8 +5,8 @@
  * To add a language, create a new file (e.g. fr.ts) and register it below.
  */
 
-import { en } from "./en";
-import { fr } from "./fr";
+import { en } from "./en/index";
+import { fr } from "./fr/index";
 import type { SiteContent, Locale } from "./types";
 
 const locales: Record<string, SiteContent> = { en, fr };
