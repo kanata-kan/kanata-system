@@ -115,8 +115,6 @@ export function HeroAvatar() {
     ...s,
   }));
 
-  if (isMobile) return null;
-
   const colorMap: Record<CodeToken["colorKey"], string> = {
     keyword: C.purple,
     key: C.text,
@@ -127,6 +125,57 @@ export function HeroAvatar() {
   };
 
   const codeLines = getCodeLines();
+
+  if (isMobile) {
+    return (
+      <div className="rv d4" style={{ width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            justifyContent: "center",
+          }}
+        >
+          {SOCIALS.map(({ icon, href, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              style={{
+                flex: 1,
+                maxWidth: 160,
+                height: 44,
+                borderRadius: 10,
+                background: C.bg2,
+                border: `1px solid ${C.border}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 8,
+                cursor: "pointer",
+                transition: "all .2s",
+                textDecoration: "none",
+              }}
+            >
+              {icon(C.muted)}
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 10,
+                  color: C.muted,
+                  letterSpacing: 1,
+                }}
+              >
+                {label.toUpperCase()}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

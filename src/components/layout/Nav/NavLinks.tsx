@@ -6,6 +6,7 @@
 
 import type { Theme } from "@/tokens/themes";
 import { getNavLinks } from "@/data/nav";
+import { useLocale } from "@/hooks/useLocale";
 
 interface NavLinksProps {
   C: Theme;
@@ -13,9 +14,10 @@ interface NavLinksProps {
 }
 
 export function NavLinks({ C, onNavigate }: NavLinksProps) {
+  const { locale } = useLocale();
   return (
     <nav style={{ display: "flex", alignItems: "center", gap: 28 }}>
-      {getNavLinks().map((l) => (
+      {getNavLinks(locale).map((l) => (
         <button
           key={l.id}
           onClick={() => onNavigate(l.id)}

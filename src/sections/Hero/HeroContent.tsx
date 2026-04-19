@@ -13,6 +13,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { getContent } from "@/data/content";
 import { Avatar } from "@/components/ui/Avatar";
 import { HeroCTA } from "./HeroCTA";
+import { HeroAvatar } from "./HeroAvatar";
 
 export function HeroContent() {
   const { C } = useThemeContext();
@@ -217,6 +218,13 @@ export function HeroContent() {
       </p>
 
       <HeroCTA />
+
+      {/* Mobile social links */}
+      {isMobile && (
+        <div style={{ marginTop: 16 }}>
+          <HeroAvatar />
+        </div>
+      )}
     </div>
   );
 }

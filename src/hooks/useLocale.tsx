@@ -24,7 +24,7 @@ function getLocaleSnapshot(): Locale {
   }
 
   const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-  return stored === "en" || stored === "fr" ? stored : "en";
+  return stored === "en" || stored === "fr" || stored === "ar" ? stored : "en";
 }
 
 function subscribe(onStoreChange: () => void) {
@@ -38,10 +38,7 @@ function subscribe(onStoreChange: () => void) {
 
   return () => {
     window.removeEventListener("storage", handleChange);
-    window.removeEventListener(
-      "locale-change",
-      handleChange as EventListener,
-    );
+    window.removeEventListener("locale-change", handleChange as EventListener);
   };
 }
 

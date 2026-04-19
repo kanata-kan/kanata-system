@@ -6,6 +6,7 @@
 
 import type { Theme } from "@/tokens/themes";
 import { getNavLinks } from "@/data/nav";
+import { useLocale } from "@/hooks/useLocale";
 
 interface NavMobileMenuProps {
   C: Theme;
@@ -14,6 +15,7 @@ interface NavMobileMenuProps {
 }
 
 export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
+  const { locale } = useLocale();
   return (
     <div
       style={{
@@ -50,7 +52,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           gap: 4,
         }}
       >
-        {getNavLinks().map((l, i) => (
+        {getNavLinks(locale).map((l, i) => (
           <button
             key={l.id}
             onClick={() => onNavigate(l.id)}
@@ -128,7 +130,11 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
             cursor: "pointer",
           }}
         >
-          HIRE ME →
+          {locale === "ar"
+            ? "تواصل معي →"
+            : locale === "fr"
+              ? "CONTACTEZ-MOI →"
+              : "HIRE ME →"}
         </button>
         <div style={{ display: "flex", gap: 28, justifyContent: "center" }}>
           {["GitHub", "LinkedIn", "Email"].map((s) => (

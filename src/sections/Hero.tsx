@@ -94,18 +94,20 @@ export function Hero() {
             <HeroContent />
           </div>
 
-          {/* RIGHT — code card (desktop only) */}
-          <div
-            style={{
-              flex: isMobile ? "unset" : "0.9 1 0%",
-              minWidth: isMobile ? "unset" : 300,
-              maxWidth: isMobile ? "unset" : 400,
-              display: "flex",
-              justifyContent: isMobile ? "stretch" : "flex-end",
-            }}
-          >
-            <HeroAvatar />
-          </div>
+          {/* RIGHT — code card (desktop) / social bar (mobile) */}
+          {!isMobile && (
+            <div
+              style={{
+                flex: "0.9 1 0%",
+                minWidth: 300,
+                maxWidth: 400,
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <HeroAvatar />
+            </div>
+          )}
         </div>
 
         {/* Pills — full-width below columns */}
@@ -140,8 +142,7 @@ export function Hero() {
           ))}
         </div>
 
-        {/* Stats — desktop only */}
-        {!isMobile && <HeroStats />}
+        <HeroStats />
       </Container>
 
       {/* Scroll indicator */}

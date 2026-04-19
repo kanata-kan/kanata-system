@@ -13,53 +13,53 @@ interface Props {
   C: Theme;
 }
 
+const LOCALES = ["en", "fr", "ar"] as const;
+const LOCALE_LABELS: Record<string, string> = { en: "EN", fr: "FR", ar: "ع" };
+
 export function LocaleSwitch({ C }: Props) {
   const { locale, setLocale } = useLocale();
 
-  const toggle = () => {
-    setLocale(locale === "en" ? "fr" : "en");
-  };
-
   return (
-    <button
-      aria-label={`Switch language. Current: ${locale === "en" ? "English" : "Français"}`}
-      onClick={toggle}
+    <div
+      role="radiogroup"
+      aria-label="Language switcher"
       style={{
-        padding: "6px 12px",
+        display: "flex",
         borderRadius: 8,
         border: `1px solid ${C.line}`,
         background: C.bg2,
-        color: C.text,
-        cursor: "pointer",
-        fontSize: 12,
-        fontFamily: "var(--font-mono)",
-        fontWeight: 500,
-        letterSpacing: 1,
+        overflow: "hidden",
         transition: "all .25s",
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-      }}
-      onMouseOver={(e) => {
-        e.currentTarget.style.background = C.bg3;
-        e.currentTarget.style.borderColor = C.cyan;
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.background = C.bg2;
-        e.currentTarget.style.borderColor = C.line;
       }}
     >
-      <span style={{ opacity: 0.6 }}>EN</span>
-      <div
-        style={{
-          width: 20,
-          height: 2,
-          background: locale === "en" ? C.cyan : C.faint,
-          borderRadius: 1,
-          transition: "all .25s",
-        }}
-      />
-      <span style={{ opacity: locale === "fr" ? 1 : 0.6 }}>FR</span>
-    </button>
+      {LOCALES.map((l) => {
+        const active = locale === l;
+        return (
+          <button
+            key={l}
+            role="radio"
+            aria-checked={active}
+            aria-label={l}
+            onClick={() => setLocale(l)}
+            style={{
+              padding: "5px 10px",
+              fontFamily: l === "ar" ? "var(--font-sans)" : "var(--font-mono)",
+              fontSize: l === "ar" ? 13 : 11,
+              fontWeight: active ? 600 : 400,
+              letterSpacing: l === "ar" ? 0 : 1,
+              color: active ? C.cyan : C.faint,
+              background: active ? `${C.cyan}12` : "transparent",
+              cursor: "pointer",
+              border: "none",
+              borderRight: l !== "ar" ? `1px solid ${C.line}` : "none",
+              transition: "all .2s",
+              lineHeight: 1,
+            }}
+          >
+            {LOCALE_LABELS[l]}
+          </button>
+        );
+      })}
+    </div>
   );
 }

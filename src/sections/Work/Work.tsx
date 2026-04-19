@@ -70,6 +70,8 @@ export function Work() {
               padding: 4,
               border: `1px solid ${C.border}`,
               overflowX: "auto",
+              WebkitOverflowScrolling: "touch",
+              scrollbarWidth: "none",
               transition: "background .35s",
             }}
           >

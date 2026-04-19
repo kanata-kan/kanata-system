@@ -7,9 +7,10 @@
 
 import { en } from "./en/index";
 import { fr } from "./fr/index";
+import { ar } from "./ar/index";
 import type { SiteContent, Locale } from "./types";
 
-const locales: Record<string, SiteContent> = { en, fr };
+const locales: Record<string, SiteContent> = { en, fr, ar };
 
 const DEFAULT_LOCALE: Locale = "en";
 

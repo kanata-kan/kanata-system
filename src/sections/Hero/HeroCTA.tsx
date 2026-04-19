@@ -6,11 +6,13 @@
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
+import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
 import { getContent } from "@/data/content";
 
 export function HeroCTA() {
   const { C } = useThemeContext();
+  const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
   const content = getContent(locale);
 
@@ -19,8 +21,9 @@ export function HeroCTA() {
       className="rv d6"
       style={{
         display: "flex",
-        gap: 12,
+        gap: isMobile ? 10 : 12,
         flexWrap: "wrap",
+        flexDirection: isMobile ? "column" : "row",
       }}
     >
       <button
@@ -89,9 +92,11 @@ export function HeroCTA() {
       </button>
       <a
         href={
-          locale === "fr"
-            ? "/Abdelilah_Wajid_CV_FR.pdf"
-            : "/Abdelilah_Wajid_CV.pdf"
+          locale === "ar"
+            ? "/Abdelilah_Wajid_CV_AR.pdf"
+            : locale === "fr"
+              ? "/Abdelilah_Wajid_CV_FR.pdf"
+              : "/Abdelilah_Wajid_CV.pdf"
         }
         download
         style={{
@@ -138,7 +143,11 @@ export function HeroCTA() {
           <polyline points="7 10 12 15 17 10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
-        {locale === "fr" ? "TÉLÉCHARGER CV" : "DOWNLOAD CV"}
+        {locale === "ar"
+          ? "تحميل CV"
+          : locale === "fr"
+            ? "TÉLÉCHARGER CV"
+            : "DOWNLOAD CV"}
       </a>
     </div>
   );

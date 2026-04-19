@@ -125,8 +125,8 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
             <button
               onClick={() => setOpen((o) => !o)}
               style={{
-                width: 38,
-                height: 38,
+                width: 44,
+                height: 44,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

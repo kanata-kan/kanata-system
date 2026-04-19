@@ -173,7 +173,7 @@ export const site: SiteData = {
 
   /* ── Stats ── */
   stats: [
-    { value: "2", label: "Supported locales", colorKey: "cyan" },
+    { value: "3", label: "Supported locales", colorKey: "cyan" },
     { value: "Typed", label: "Content architecture", colorKey: "purple" },
     { value: "FIFO", label: "Inventory cost logic", colorKey: "amber" },
     { value: "Private", label: "Deployment model", colorKey: "green" },
