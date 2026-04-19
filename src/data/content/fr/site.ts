@@ -1,6 +1,6 @@
 /**
  * @file fr/site.ts
- * @description French locale (Moroccan professional tone) — all non-project site content.
+ * @description French locale (professional tone) — all non-project site content.
  * Technical terms remain in English (FIFO, MongoDB, etc.).
  * Projects are split into individual files under ./projects/
  */
@@ -12,12 +12,12 @@ export type SiteData = Omit<SiteContent, "projects">;
 export const site: SiteData = {
   /* Meta */
   meta: {
-    title: "Abdelilah Wajid · Développeur Fullstack",
+    title: "Abdelilah Wajid · Product Engineer",
     description:
-      "Portfolio oriente case studies d'Abdelilah Wajid, developpeur fullstack focalise sur les systemes operationnels, l'architecture claire, et des decisions techniques defendables.",
+      "Portfolio orienté case studies d'Abdelilah Wajid, product engineer spécialisé dans les systèmes opérationnels, l’architecture claire, et des décisions techniques défendables.",
     author: "Abdelilah Wajid",
     keywords:
-      "Abdelilah Wajid, développeur javascript, développeur frontend, react, next.js, typescript, portfolio, marrakech, maroc",
+      "Abdelilah Wajid, product engineer, développeur fullstack, react, next.js, typescript, portfolio, systèmes opérationnels, marrakech, maroc",
     siteUrl: "https://kanata-system.vercel.app",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
@@ -30,36 +30,36 @@ export const site: SiteData = {
     logoName: "ABDELILAH",
     logoTagline: "COMPRENDRE · DÉCIDER · CONSTRUIRE",
     links: [
-      { id: "work", n: "01", label: "Approche" },
-      { id: "about", n: "02", label: "État d'esprit" },
-      { id: "skills", n: "03", label: "Outils" },
+      { id: "work", n: "01", label: "Case Studies" },
+      { id: "about", n: "02", label: "Approche" },
+      { id: "skills", n: "03", label: "Stack" },
       { id: "contact", n: "04", label: "Contact" },
     ],
   },
 
   /* Hero */
   hero: {
-    badge: "OUVERT AUX OPPORTUNITES",
+    badge: "OUVERT AUX OPPORTUNITÉS",
     name: {
       base: "Abdel",
       highlight: "ilah",
       lastName: "Wajid",
     },
     positioning:
-      "Product engineer focalise sur les systemes operationnels, les case studies, et une architecture que les equipes peuvent maintenir.",
+      "Product engineer travaillant sur des systèmes opérationnels, avec une approche basée sur les case studies et une architecture pensée pour des équipes réelles, sous contraintes réelles.",
     roles: [
-      "Ingenierie produit guidee par les case studies",
-      "Workflows operationnels avant demos visuelles",
-      "Architecture guidee par de vraies contraintes",
-      "Systemes clairs que les equipes peuvent expliquer",
+      "Product engineering guidé par des case studies",
+      "Workflows opérationnels avant les démos superficielles",
+      "Architecture construite sous contraintes réelles",
+      "Systèmes que les équipes peuvent comprendre, expliquer et faire évoluer",
     ],
     pills: [
       "Case-study driven",
-      "Systemes operationnels",
+      "Systèmes opérationnels",
       "Trade-offs clairs",
       "Architecture maintenable",
     ],
-    bio: "Ce portfolio est une vitrine d'ingenierie guidee par les case studies. Je travaille surtout sur des workflows operationnels confus - stock, pricing, reporting, outils internes - pour les transformer en systemes plus fiables, explicables, et maintenables.",
+    bio: "Ce portfolio est une vitrine d’ingénierie basée sur des cas réels. Je travaille sur des workflows opérationnels complexes — stock, pricing, reporting, outils internes — pour les transformer en systèmes fiables, compréhensibles et conçus pour évoluer.",
     cta: {
       primary: "VOIR LE CASE STUDY ↓",
       secondary: "ME CONTACTER →",
@@ -67,9 +67,9 @@ export const site: SiteData = {
     scroll: "DÉFILER",
     avatar: {
       displayName: "Abdelilah W.",
-      tagline: "PENSER -> CONSTRUIRE -> AMÉLIORER",
-      locationShort: "Marrakech · Ouvert au remote",
-      infoItems: ["Marrakech, Maroc", "UTC+1 - GMT+1", "Ouvert au remote"],
+      tagline: "COMPRENDRE → DÉCIDER → CONSTRUIRE",
+      locationShort: "Marrakech · Remote OK",
+      infoItems: ["Marrakech, Maroc", "UTC+1 — GMT+1", "Disponible en remote"],
       socials: [
         { href: "https://github.com/kanata-kan", label: "GitHub" },
         {
@@ -82,18 +82,18 @@ export const site: SiteData = {
 
   /* About */
   about: {
-    label: "02 - État d'esprit",
-    headingLine1: "Je transforme des operations confuses,",
-    headingLine2: "en systemes clairs.",
+    label: "02 — Approche",
+    headingLine1: "Je transforme des opérations complexes,",
+    headingLine2: "en systèmes clairs et fiables.",
     paragraphs: [
-      "Je suis surtout utile quand un produit existe deja mais que le workflow derriere reste lent, fragile, ou difficile a expliquer.",
-      "Mon travail commence par le diagnostic : ou ca casse, ou la duplication apparait, ou la donnee perd son sens, et quelles decisions doivent devenir des regles systeme.",
-      "Ce portfolio sert a montrer cette reflexion en public - via des case studies, des trade-offs, et des details d'implementation - pas seulement des ecrans finis.",
+      "Je suis particulièrement utile quand un produit existe déjà mais que le workflow derrière est lent, fragile ou difficile à comprendre.",
+      "Mon travail commence par un diagnostic précis : où ça casse, où la duplication apparaît, où la donnée perd du sens, et quelles décisions doivent devenir des règles système.",
+      "Ce portfolio montre ma manière de penser — à travers des case studies, des trade-offs et des choix d’implémentation — pas seulement des interfaces finales.",
     ],
     tags: [
       { text: "Case-study driven", colorKey: "cyan" },
-      { text: "Decisions defendables", colorKey: "amber" },
-      { text: "Clarite systeme", colorKey: "purple" },
+      { text: "Décisions défendables", colorKey: "amber" },
+      { text: "Clarté système", colorKey: "purple" },
     ],
     codeFilename: "about.ts",
     codeRows: [
@@ -104,27 +104,27 @@ export const site: SiteData = {
       ],
       [
         { text: "  mindset: ", colorKey: "muted" },
-        { text: '"comprendre-dabord"', colorKey: "amber" },
+        { text: '"understand-first"', colorKey: "amber" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  focus: ", colorKey: "muted" },
-        { text: '"clarté-plutôt-qu-vitesse"', colorKey: "amber" },
+        { text: '"clarity-over-speed"', colorKey: "amber" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  approach: ", colorKey: "muted" },
-        { text: '"corriger-ce-qui-ralentit"', colorKey: "green" },
+        { text: '"fix-what-slows-teams"', colorKey: "green" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  decisions: ", colorKey: "muted" },
-        { text: "true", colorKey: "cyan" },
+        { text: "defensible", colorKey: "cyan" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  hire: ", colorKey: "muted" },
-        { text: '"seulement-si-ça-a-du-sens"', colorKey: "amber" },
+        { text: '"only-when-impact-is-clear"', colorKey: "amber" },
       ],
       [{ text: "}", colorKey: "muted" }],
     ],
@@ -132,31 +132,31 @@ export const site: SiteData = {
 
   /* Work */
   work: {
-    label: "01 - Case Studies",
-    heading: "Systemes operationnels, expliques clairement.",
-    subtitle: "Probleme -> solution -> decisions -> impact",
+    label: "01 — Case Studies",
+    heading: "Systèmes opérationnels, expliqués clairement.",
+    subtitle: "Problème → contraintes → décisions → impact",
   },
 
   /* Skills */
   skills: {
-    label: "03 - Outils",
-    heading: "Stack principal et habitudes d'implementation.",
+    label: "03 — Stack",
+    heading: "Les outils que j’utilise pour livrer des systèmes fiables.",
     subtitle:
-      "Choisis pour la fiabilite, la maintenabilite, et la vitesse de livraison.",
+      "Choisis pour leur clarté, leur maintenabilité et leur vitesse de livraison.",
   },
 
   /* Contact */
   contact: {
-    label: "04 - Contact",
-    headingLine1: "Ouvert aux roles de product engineering,",
-    headingHighlight: "au consulting, et aux builds bien scopes.",
+    label: "04 — Contact",
+    headingLine1: "Ouvert aux rôles de product engineering,",
+    headingHighlight: "au consulting et aux builds bien cadrés.",
     paragraphLine1:
-      "Si vous avez besoin de transformer des workflows confus en systemes fiables, envoyez-moi le contexte, les contraintes, et ce qui ralentit vraiment l'equipe.",
+      "Si votre équipe fait face à des workflows lents, flous ou fragiles, envoyez-moi le contexte, les contraintes et ce qui bloque réellement.",
     paragraphLine2:
-      "Je reponds clairement sur le fit, le scope, et le chemin le plus rapide vers quelque chose d'utile.",
+      "Je vous répondrai clairement sur le fit, le scope et le chemin le plus rapide vers une solution utile.",
     email: "kanata10kan@gmail.com",
     copyLabel: "COPIER",
-    copiedLabel: "COPIE",
+    copiedLabel: "COPIÉ ✓",
     socials: [
       { href: "https://github.com/kanata-kan", label: "GitHub" },
       {
@@ -170,29 +170,29 @@ export const site: SiteData = {
   footer: {
     copyright: "© 2026",
     author: "Abdelilah Wajid",
-    tagline: "Les case studies avant les claims.",
+    tagline: "Les case studies avant les promesses.",
   },
 
   /* Stats */
   stats: [
-    { value: "3", label: "Locales supportees", colorKey: "cyan" },
+    { value: "3", label: "Langues supportées", colorKey: "cyan" },
     { value: "Typed", label: "Architecture de contenu", colorKey: "purple" },
-    { value: "FIFO", label: "Logique de cout stock", colorKey: "amber" },
-    { value: "Prive", label: "Mode de deploiement", colorKey: "green" },
+    { value: "FIFO", label: "Logique de coût stock", colorKey: "amber" },
+    { value: "Privé", label: "Mode de déploiement", colorKey: "green" },
   ],
 
   /* Tech Strip */
   techStrip: [
     "Case-study driven",
-    "Workflows operationnels",
-    "Contenu type-safe",
+    "Workflows opérationnels",
+    "Typed content",
     "Trade-offs clairs",
     "UI responsive",
     "Business rules first",
     "Logique d'inventaire",
     "Architecture lisible",
     "Scan rapide",
-    "Decisions defendables",
+    "Décisions défendables",
   ],
 
   /* Skill Groups */
