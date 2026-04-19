@@ -11,6 +11,7 @@ import { ScrollToTop } from "@/components/ui/ScrollToTop";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { dark, toggle, C } = useTheme();
   const responsive = useResponsive();
+
   useScrollReveal();
 
   return (
@@ -23,7 +24,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               background: C.bg,
               color: C.text,
               transition: "background .35s, color .35s",
-paddingTop: 64,
+
+              // ✅ FIX: بدل hardcode
+              paddingTop: "var(--navbar-height)",
             }}
           >
             <Nav
@@ -32,7 +35,9 @@ paddingTop: 64,
               onToggle={toggle}
               isMobile={responsive.isMobile}
             />
+
             {children}
+
             <Footer C={C} isMobile={responsive.isMobile} />
             <ScrollToTop C={C} />
           </div>
