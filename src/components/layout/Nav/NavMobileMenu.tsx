@@ -1,9 +1,3 @@
-/**
- * @file NavMobileMenu.tsx
- * @description Menu mobile fullscreen avec liens serif, stagger animation,
- * CTA "HIRE ME →", et liens sociaux.
- */
-
 import type { Theme } from "@/tokens/themes";
 import { getNavLinks } from "@/data/nav";
 import { useLocale } from "@/hooks/useLocale";
@@ -16,6 +10,7 @@ interface NavMobileMenuProps {
 
 export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
   const { locale } = useLocale();
+
   return (
     <div
       style={{
@@ -25,12 +20,16 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         background: C.bg,
         display: "flex",
         flexDirection: "column",
-        padding: "80px 28px 48px",
+
+        // ✅ FIX هنا
+        padding: "var(--navbar-height) 28px 48px",
+
         opacity: open ? 1 : 0,
         pointerEvents: open ? "all" : "none",
         transition: "opacity .28s",
       }}
     >
+      {/* Glow decoration */}
       <div
         style={{
           position: "absolute",
@@ -43,6 +42,8 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           pointerEvents: "none",
         }}
       />
+
+      {/* Navigation */}
       <nav
         style={{
           flex: 1,
@@ -81,6 +82,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
               >
                 {l.n}
               </span>
+
               <span
                 style={{
                   fontFamily: "var(--font-serif)",
@@ -94,6 +96,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
                 {l.label}
               </span>
             </div>
+
             <span
               style={{
                 fontFamily: "var(--font-mono)",
@@ -107,6 +110,8 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           </button>
         ))}
       </nav>
+
+      {/* Footer section */}
       <div
         style={{
           display: "flex",
@@ -136,6 +141,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
               ? "CONTACTEZ-MOI →"
               : "HIRE ME →"}
         </button>
+
         <div style={{ display: "flex", gap: 28, justifyContent: "center" }}>
           {["GitHub", "LinkedIn", "Email"].map((s) => (
             <span
