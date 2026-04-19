@@ -10,6 +10,7 @@ export const elmoussaaifBrand: ProjectContent = {
   status: "Live in production",
   statusColor: "#3FB950",
   link: "/work/elmoussaaif-brand",
+  liveUrl: "https://elmoussaif.com",
   desc: "A client needed a professional personal brand website with full content management, multilingual support, and a polished design that reflects their identity.",
   longDesc:
     "I designed and built the entire platform — from database schema and authentication to CMS, SEO, and deployment — and delivered it live in production.",

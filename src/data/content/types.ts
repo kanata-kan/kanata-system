@@ -197,6 +197,8 @@ export interface ProjectContent {
   status: string;
   statusColor: string;
   link: string;
+  liveUrl?: string;
+  repoUrl?: string;
   highlights: string[];
   color: string;
   caseStudy?: CaseStudyContent;

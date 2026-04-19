@@ -10,6 +10,7 @@ export const electroAbidin: ProjectContent = {
   status: "Private deployment",
   statusColor: "#3FB950",
   link: "/work/electro-abidin",
+  liveUrl: "https://kanata-system.vercel.app/work/electro-abidin",
   desc: "A retail operation with manual stock checks, paper-based tracking, and slow checkout needed one system that staff could trust in real time.",
   longDesc:
     "I turned inventory, checkout, invoicing, and warranty handling into a single operational flow with reliable stock, pricing, and profit logic.",
@@ -94,8 +95,7 @@ export const electroAbidin: ProjectContent = {
       {
         src: "/electro-abidin/dashboard.webp",
         alt: "Admin dashboard with sales and stock analytics",
-        caption:
-          "Full operational visibility with real-time business insights",
+        caption: "Full operational visibility with real-time business insights",
       },
       {
         src: "/electro-abidin/catalogue.webp",
@@ -162,12 +162,42 @@ export const electroAbidin: ProjectContent = {
         },
       ],
       relationships: [
-        { from: "Product", to: "InventoryLog", label: "FIFO batches", cardinality: "1 → N" },
-        { from: "Product", to: "Sale", label: "sold via", cardinality: "1 → N" },
-        { from: "Sale", to: "SalesTransactionItem", label: "dual-write", cardinality: "1 → 1" },
-        { from: "Order", to: "SalesTransactionItem", label: "per item", cardinality: "1 → N" },
-        { from: "Sale", to: "Invoice", label: "generates", cardinality: "1 → 0..1" },
-        { from: "Invoice", to: "Guarantee", label: "warranty", cardinality: "1 → 0..1" },
+        {
+          from: "Product",
+          to: "InventoryLog",
+          label: "FIFO batches",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Product",
+          to: "Sale",
+          label: "sold via",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Sale",
+          to: "SalesTransactionItem",
+          label: "dual-write",
+          cardinality: "1 → 1",
+        },
+        {
+          from: "Order",
+          to: "SalesTransactionItem",
+          label: "per item",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Sale",
+          to: "Invoice",
+          label: "generates",
+          cardinality: "1 → 0..1",
+        },
+        {
+          from: "Invoice",
+          to: "Guarantee",
+          label: "warranty",
+          cardinality: "1 → 0..1",
+        },
       ],
       archTitle: "Core Architecture",
       archBlocks: [
@@ -220,23 +250,71 @@ export const electroAbidin: ProjectContent = {
       ],
       flowTitle: "Sale Execution Flow",
       flowSteps: [
-        { step: "Validate inputs", desc: "productId, quantity, sellingPrice, cashierId — Zod + business rules" },
-        { step: "Calculate TVA", desc: "tvaAmount = priceHT × tvaRate, priceTTC = priceHT × (1 + tvaRate)" },
-        { step: "Start MongoDB transaction", desc: "All subsequent operations are atomic — commit or rollback" },
-        { step: "Check stock (cached + FIFO)", desc: "Product.stock (cached projection) ≥ qty, then authoritative check: aggregate(InventoryLog.remainingQty) ≥ qty" },
-        { step: "Consume FIFO batches", desc: "Loop oldest → decrement remainingQty → accumulate cost with $gte guard" },
-        { step: "Create Sale + STI", desc: "Dual-write: Sale (workflow) + SalesTransactionItem (financial truth)" },
-        { step: "Decrement Product.stock", desc: "adjustStock(-qty) updates the cached projection — FIFO batches remain the source of truth" },
-        { step: "Commit transaction", desc: "All-or-nothing — any failure rolls back every operation" },
+        {
+          step: "Validate inputs",
+          desc: "productId, quantity, sellingPrice, cashierId — Zod + business rules",
+        },
+        {
+          step: "Calculate TVA",
+          desc: "tvaAmount = priceHT × tvaRate, priceTTC = priceHT × (1 + tvaRate)",
+        },
+        {
+          step: "Start MongoDB transaction",
+          desc: "All subsequent operations are atomic — commit or rollback",
+        },
+        {
+          step: "Check stock (cached + FIFO)",
+          desc: "Product.stock (cached projection) ≥ qty, then authoritative check: aggregate(InventoryLog.remainingQty) ≥ qty",
+        },
+        {
+          step: "Consume FIFO batches",
+          desc: "Loop oldest → decrement remainingQty → accumulate cost with $gte guard",
+        },
+        {
+          step: "Create Sale + STI",
+          desc: "Dual-write: Sale (workflow) + SalesTransactionItem (financial truth)",
+        },
+        {
+          step: "Decrement Product.stock",
+          desc: "adjustStock(-qty) updates the cached projection — FIFO batches remain the source of truth",
+        },
+        {
+          step: "Commit transaction",
+          desc: "All-or-nothing — any failure rolls back every operation",
+        },
       ],
       guaranteesTitle: "System Guarantees",
       guarantees: [
-        { title: "No Overselling", desc: "3-layer defense: cached stock → FIFO aggregate → atomic batch guard ($gte). Concurrent conflicts return 409.", category: "data" },
-        { title: "Consistent State", desc: "Cancellation atomically updates Sale + STI + Invoice + Guarantee + FIFO restore in one transaction.", category: "data" },
-        { title: "Accurate Profit Calculation", desc: "Cost comes from FIFO batches (not product-level). Each unit sold carries its exact purchase price.", category: "financial" },
-        { title: "Immutable Financial Records", desc: "STI financial fields and daily snapshots cannot be modified. Corrections create new records.", category: "financial" },
-        { title: "Transaction Safety", desc: "Every critical operation uses MongoDB transactions. Partial state is impossible — commit or full rollback.", category: "transaction" },
-        { title: "Historical Accuracy", desc: "Point-in-time snapshots on every sale so later product edits do not rewrite past invoices or reports.", category: "transaction" },
+        {
+          title: "No Overselling",
+          desc: "3-layer defense: cached stock → FIFO aggregate → atomic batch guard ($gte). Concurrent conflicts return 409.",
+          category: "data",
+        },
+        {
+          title: "Consistent State",
+          desc: "Cancellation atomically updates Sale + STI + Invoice + Guarantee + FIFO restore in one transaction.",
+          category: "data",
+        },
+        {
+          title: "Accurate Profit Calculation",
+          desc: "Cost comes from FIFO batches (not product-level). Each unit sold carries its exact purchase price.",
+          category: "financial",
+        },
+        {
+          title: "Immutable Financial Records",
+          desc: "STI financial fields and daily snapshots cannot be modified. Corrections create new records.",
+          category: "financial",
+        },
+        {
+          title: "Transaction Safety",
+          desc: "Every critical operation uses MongoDB transactions. Partial state is impossible — commit or full rollback.",
+          category: "transaction",
+        },
+        {
+          title: "Historical Accuracy",
+          desc: "Point-in-time snapshots on every sale so later product edits do not rewrite past invoices or reports.",
+          category: "transaction",
+        },
       ],
       codeTitle: "Data Flow",
       codeSnippets: [
@@ -272,10 +350,30 @@ export const electroAbidin: ProjectContent = {
         "All operations between steps 3–8 execute within a single MongoDB transaction. Any failure triggers a full rollback.",
       tradeoffsTitle: "Trade-offs",
       tradeoffs: [
-        { chose: "FIFO costing", over: "Average cost pricing", reason: "Exact profit per unit — critical for a store where purchase prices fluctuate between batches" },
-        { chose: "Dual-write (Sale + STI)", over: "Single document", reason: "Separates mutable workflow state from immutable financial truth — analytics stay clean" },
-        { chose: "Embedded snapshots", over: "Reference-only lookups", reason: "Historical accuracy without heavy join queries - past invoices stay tied to stored sale snapshots" },
-        { chose: "Cached stock on Product", over: "Live aggregation only", reason: "Fast reads for UI/POS — FIFO aggregation remains authoritative for all write operations" },
+        {
+          chose: "FIFO costing",
+          over: "Average cost pricing",
+          reason:
+            "Exact profit per unit — critical for a store where purchase prices fluctuate between batches",
+        },
+        {
+          chose: "Dual-write (Sale + STI)",
+          over: "Single document",
+          reason:
+            "Separates mutable workflow state from immutable financial truth — analytics stay clean",
+        },
+        {
+          chose: "Embedded snapshots",
+          over: "Reference-only lookups",
+          reason:
+            "Historical accuracy without heavy join queries - past invoices stay tied to stored sale snapshots",
+        },
+        {
+          chose: "Cached stock on Product",
+          over: "Live aggregation only",
+          reason:
+            "Fast reads for UI/POS — FIFO aggregation remains authoritative for all write operations",
+        },
       ],
       principlesTitle: "System Principles",
       principles: [

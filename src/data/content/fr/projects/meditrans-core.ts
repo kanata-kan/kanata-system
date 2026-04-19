@@ -10,6 +10,7 @@ export const meditransCore: ProjectContent = {
   status: "Phase 1 terminée",
   statusColor: "#F59E0B",
   link: "/work/meditrans-core",
+  repoUrl: "https://github.com/kanata-kan/meditrans-core",
   desc: "Les opérateurs de transport médical et soins à domicile au Maroc manquent d'un système unifié pour la planification, tarification, facturation et gestion de flotte.",
   longDesc:
     "Je construis une plateforme SaaS modulaire avec des frontières domain-driven, un moteur de tarification déterministe, et une couverture de tests complète dès le départ.",
@@ -87,30 +88,99 @@ export const meditransCore: ProjectContent = {
         "Comment le moteur de tarification, le modèle de sécurité et l'architecture modulaire sont conçus — du schéma au déploiement.",
       erdTitle: "Modèle de Données",
       entities: [
-        { name: "Client", desc: "Client entreprise ou particulier avec coordonnées et détails de facturation", type: "core" },
-        { name: "Patient", desc: "Dossier patient lié au client — nom, condition, besoins de transport", type: "core" },
-        { name: "Service", desc: "Transport planifié ou visite de soins avec snapshot de tarification", type: "core", central: true },
-        { name: "PricingRule", desc: "Règles de tarification basées catalogue avec modificateurs urgence et type personnel", type: "core", ssot: "Source de Vérité Tarification" },
-        { name: "PricingSnapshot", desc: "Capture immuable point-in-time du calcul de tarification", type: "financial" },
-        { name: "Invoice", desc: "Générée à partir des services complétés avec lignes détaillées et export PDF", type: "financial" },
-        { name: "Payment", desc: "Enregistrement de paiement multi-méthode avec réconciliation automatique", type: "financial" },
-        { name: "User", desc: "Admin ou assistant avec RBAC et durcissement de session", type: "audit" },
-        { name: "AuditLog", desc: "Journalisation automatique de toutes les opérations critiques", type: "audit" },
+        {
+          name: "Client",
+          desc: "Client entreprise ou particulier avec coordonnées et détails de facturation",
+          type: "core",
+        },
+        {
+          name: "Patient",
+          desc: "Dossier patient lié au client — nom, condition, besoins de transport",
+          type: "core",
+        },
+        {
+          name: "Service",
+          desc: "Transport planifié ou visite de soins avec snapshot de tarification",
+          type: "core",
+          central: true,
+        },
+        {
+          name: "PricingRule",
+          desc: "Règles de tarification basées catalogue avec modificateurs urgence et type personnel",
+          type: "core",
+          ssot: "Source de Vérité Tarification",
+        },
+        {
+          name: "PricingSnapshot",
+          desc: "Capture immuable point-in-time du calcul de tarification",
+          type: "financial",
+        },
+        {
+          name: "Invoice",
+          desc: "Générée à partir des services complétés avec lignes détaillées et export PDF",
+          type: "financial",
+        },
+        {
+          name: "Payment",
+          desc: "Enregistrement de paiement multi-méthode avec réconciliation automatique",
+          type: "financial",
+        },
+        {
+          name: "User",
+          desc: "Admin ou assistant avec RBAC et durcissement de session",
+          type: "audit",
+        },
+        {
+          name: "AuditLog",
+          desc: "Journalisation automatique de toutes les opérations critiques",
+          type: "audit",
+        },
       ],
       relationships: [
-        { from: "Client", to: "Patient", label: "a des patients", cardinality: "1 → N" },
-        { from: "Patient", to: "Service", label: "reçoit", cardinality: "1 → N" },
-        { from: "Service", to: "PricingSnapshot", label: "capture le prix", cardinality: "1 → 1" },
-        { from: "Service", to: "Invoice", label: "génère", cardinality: "N → 1" },
-        { from: "Invoice", to: "Payment", label: "payé par", cardinality: "1 → N" },
-        { from: "User", to: "AuditLog", label: "journalisé par", cardinality: "1 → N" },
+        {
+          from: "Client",
+          to: "Patient",
+          label: "a des patients",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Patient",
+          to: "Service",
+          label: "reçoit",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Service",
+          to: "PricingSnapshot",
+          label: "capture le prix",
+          cardinality: "1 → 1",
+        },
+        {
+          from: "Service",
+          to: "Invoice",
+          label: "génère",
+          cardinality: "N → 1",
+        },
+        {
+          from: "Invoice",
+          to: "Payment",
+          label: "payé par",
+          cardinality: "1 → N",
+        },
+        {
+          from: "User",
+          to: "AuditLog",
+          label: "journalisé par",
+          cardinality: "1 → N",
+        },
       ],
       archTitle: "Architecture Principale",
       archBlocks: [
         {
           title: "Moteur de Tarification 7 Étapes",
           why: "La tarification du transport médical implique des règles d'empilement complexes qui doivent être déterministes et auditables",
-          impact: "Chaque service obtient une trace de prix vérifiable — aucun calcul boîte noire",
+          impact:
+            "Chaque service obtient une trace de prix vérifiable — aucun calcul boîte noire",
           points: [
             "Étape 1 : Résolution catalogue — correspondance type de service, urgence et personnel à la règle de tarification",
             "Étape 2 : Extraction du prix de base de la règle correspondante",
@@ -124,7 +194,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "Architecture DDD Modulaire",
           why: "8 domaines métier doivent évoluer indépendamment sans contamination croisée",
-          impact: "Ajouter un nouveau module (ex : gestion de flotte) suit un pattern connu sans toucher le code existant",
+          impact:
+            "Ajouter un nouveau module (ex : gestion de flotte) suit un pattern connu sans toucher le code existant",
           points: [
             "Chaque module : schema.ts → types.ts → repository.ts → service.ts → actions.ts",
             "Pas d'imports cross-module au niveau repository — uniquement via les frontières service",
@@ -135,7 +206,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "Couches de Sécurité",
           why: "Les données médicales et financières nécessitent une défense en profondeur — pas juste des checks de login",
-          impact: "Chaque requête passe par 4 frontières de sécurité avant d'atteindre la logique métier",
+          impact:
+            "Chaque requête passe par 4 frontières de sécurité avant d'atteindre la logique métier",
           points: [
             "Couche 1 : Middleware Next.js — redirection des utilisateurs non authentifiés depuis /dashboard",
             "Couche 2 : requireSession() — valide le JWT, vérifie le flag isActive, extrait le rôle",
@@ -146,7 +218,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "Moteur PDF de Facturation",
           why: "Les factures professionnelles sont un besoin métier — pas un nice-to-have",
-          impact: "Les factures sont rendues côté serveur avec mise en page cohérente, branding et ventilation des prix",
+          impact:
+            "Les factures sont rendues côté serveur avec mise en page cohérente, branding et ventilation des prix",
           points: [
             "Construit avec @react-pdf/renderer — 11 composants modulaires",
             "Lignes de service détaillées avec ventilation prix par ligne",
@@ -157,22 +230,67 @@ export const meditransCore: ProjectContent = {
       ],
       flowTitle: "Flux de Tarification Service",
       flowSteps: [
-        { step: "Créer demande de service", desc: "Client, patient, type de service, urgence, type de personnel, distance — validé avec Zod" },
-        { step: "Résoudre règle de tarification", desc: "Correspondance code catalogue + urgence + type personnel à PricingRule active" },
-        { step: "Calculer base + distance", desc: "Prix de base de la règle + frais distance de la configuration de zone" },
-        { step: "Appliquer modificateurs", desc: "Auto-détection nuit, vérification weekend, empilement jours fériés — chaque modificateur journalisé" },
-        { step: "Vérifier override manuel", desc: "L'admin peut fixer un prix — calcul original préservé dans le snapshot pour audit" },
-        { step: "Calculer TVA", desc: "Appliquer le taux de TVA configuré au montant final" },
-        { step: "Persister snapshot", desc: "PricingSnapshot immuable créé aux côtés du Service — jamais modifié après création" },
+        {
+          step: "Créer demande de service",
+          desc: "Client, patient, type de service, urgence, type de personnel, distance — validé avec Zod",
+        },
+        {
+          step: "Résoudre règle de tarification",
+          desc: "Correspondance code catalogue + urgence + type personnel à PricingRule active",
+        },
+        {
+          step: "Calculer base + distance",
+          desc: "Prix de base de la règle + frais distance de la configuration de zone",
+        },
+        {
+          step: "Appliquer modificateurs",
+          desc: "Auto-détection nuit, vérification weekend, empilement jours fériés — chaque modificateur journalisé",
+        },
+        {
+          step: "Vérifier override manuel",
+          desc: "L'admin peut fixer un prix — calcul original préservé dans le snapshot pour audit",
+        },
+        {
+          step: "Calculer TVA",
+          desc: "Appliquer le taux de TVA configuré au montant final",
+        },
+        {
+          step: "Persister snapshot",
+          desc: "PricingSnapshot immuable créé aux côtés du Service — jamais modifié après création",
+        },
       ],
       guaranteesTitle: "Garanties Système",
       guarantees: [
-        { title: "Tarification Déterministe", desc: "Les mêmes entrées produisent toujours le même prix. Chaque étape de calcul est journalisée et persistée en snapshot.", category: "data" },
-        { title: "Historique de Prix Immuable", desc: "Les PricingSnapshots ne sont jamais modifiés. Les changements de règles n'altèrent pas rétroactivement les prix des services passés.", category: "financial" },
-        { title: "Réconciliation des Paiements", desc: "Le statut facture se met à jour automatiquement selon les totaux de paiement : Impayé → Partiel → Payé. Pas de gestion manuelle de statut.", category: "financial" },
-        { title: "Piste d'Audit", desc: "Chaque opération de création, suppression et annulation est journalisée avec userId, rôle, action, entité, entityId et timestamp.", category: "transaction" },
-        { title: "Application des Rôles", desc: "RBAC vérifié à chaque server action — pas seulement au niveau UI. Les utilisateurs assistant ne peuvent pas accéder aux mutations admin.", category: "transaction" },
-        { title: "Durcissement de Session", desc: "JWT avec maxAge 8h, re-validation isActive au refresh, protection middleware sur toutes les routes dashboard.", category: "data" },
+        {
+          title: "Tarification Déterministe",
+          desc: "Les mêmes entrées produisent toujours le même prix. Chaque étape de calcul est journalisée et persistée en snapshot.",
+          category: "data",
+        },
+        {
+          title: "Historique de Prix Immuable",
+          desc: "Les PricingSnapshots ne sont jamais modifiés. Les changements de règles n'altèrent pas rétroactivement les prix des services passés.",
+          category: "financial",
+        },
+        {
+          title: "Réconciliation des Paiements",
+          desc: "Le statut facture se met à jour automatiquement selon les totaux de paiement : Impayé → Partiel → Payé. Pas de gestion manuelle de statut.",
+          category: "financial",
+        },
+        {
+          title: "Piste d'Audit",
+          desc: "Chaque opération de création, suppression et annulation est journalisée avec userId, rôle, action, entité, entityId et timestamp.",
+          category: "transaction",
+        },
+        {
+          title: "Application des Rôles",
+          desc: "RBAC vérifié à chaque server action — pas seulement au niveau UI. Les utilisateurs assistant ne peuvent pas accéder aux mutations admin.",
+          category: "transaction",
+        },
+        {
+          title: "Durcissement de Session",
+          desc: "JWT avec maxAge 8h, re-validation isActive au refresh, protection middleware sur toutes les routes dashboard.",
+          category: "data",
+        },
       ],
       codeTitle: "Flux de Données",
       codeSnippets: [
@@ -213,10 +331,30 @@ export const meditransCore: ProjectContent = {
         "Les 7 étapes de tarification s'exécutent de manière synchrone. Le snapshot final est persisté atomiquement avec l'enregistrement de service.",
       tradeoffsTitle: "Compromis",
       tradeoffs: [
-        { chose: "Tarification par snapshot", over: "Évaluation de règles en temps réel", reason: "Les factures passées reflètent toujours les règles actives au moment du service — les changements de règles ne corrompent jamais l'historique" },
-        { chose: "Server Actions uniquement", over: "Routes API REST", reason: "Couche de mutation plus simple avec type safety intégrée — pas de versioning d'API ou gestion d'endpoints nécessaire" },
-        { chose: "Vitest dès la Phase 0", over: "Tests après les features", reason: "Le moteur de tarification était testé à 100% avant toute UI — 12 cas limites détectés pendant le développement" },
-        { chose: "Frontières DDD modulaires", over: "Organisation par feature-folder", reason: "Chaque module peut évoluer indépendamment — ajouter la gestion de flotte ne touchera pas le code tarification ou facturation" },
+        {
+          chose: "Tarification par snapshot",
+          over: "Évaluation de règles en temps réel",
+          reason:
+            "Les factures passées reflètent toujours les règles actives au moment du service — les changements de règles ne corrompent jamais l'historique",
+        },
+        {
+          chose: "Server Actions uniquement",
+          over: "Routes API REST",
+          reason:
+            "Couche de mutation plus simple avec type safety intégrée — pas de versioning d'API ou gestion d'endpoints nécessaire",
+        },
+        {
+          chose: "Vitest dès la Phase 0",
+          over: "Tests après les features",
+          reason:
+            "Le moteur de tarification était testé à 100% avant toute UI — 12 cas limites détectés pendant le développement",
+        },
+        {
+          chose: "Frontières DDD modulaires",
+          over: "Organisation par feature-folder",
+          reason:
+            "Chaque module peut évoluer indépendamment — ajouter la gestion de flotte ne touchera pas le code tarification ou facturation",
+        },
       ],
       principlesTitle: "Principes Système",
       principles: [

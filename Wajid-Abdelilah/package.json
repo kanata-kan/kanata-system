@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "HTML → PDF pipeline for Abdelilah Wajid CV",
   "scripts": {
-    "build:cv": "node generate-pdf.js"
+    "build:cv": "node generate-pdf.js",
+    "build:cv-fr": "node generate-pdf.js cv-abdelilah-wajid-fr.html",
+    "build:cv-all": "node generate-pdf.js && node generate-pdf.js cv-abdelilah-wajid-fr.html"
   },
   "dependencies": {
     "puppeteer": "^24.15.0",

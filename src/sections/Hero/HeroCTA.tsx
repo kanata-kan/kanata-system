@@ -88,7 +88,11 @@ export function HeroCTA() {
         {content.hero.cta.secondary}
       </button>
       <a
-        href="/Abdelilah_Wajid_CV.pdf"
+        href={
+          locale === "fr"
+            ? "/Abdelilah_Wajid_CV_FR.pdf"
+            : "/Abdelilah_Wajid_CV.pdf"
+        }
         download
         style={{
           fontFamily: "var(--font-mono)",

@@ -10,6 +10,7 @@ export const meditransCore: ProjectContent = {
   status: "Phase 1 complete",
   statusColor: "#F59E0B",
   link: "/work/meditrans-core",
+  repoUrl: "https://github.com/kanata-kan/meditrans-core",
   desc: "Medical transport and home care operators in Morocco lack a unified system for scheduling, pricing, invoicing, and fleet management.",
   longDesc:
     "I am building a modular SaaS platform with domain-driven boundaries, a deterministic pricing engine, and comprehensive test coverage from day one.",
@@ -87,30 +88,99 @@ export const meditransCore: ProjectContent = {
         "How the pricing engine, security model, and module architecture are designed — from schema to deployment.",
       erdTitle: "Data Model",
       entities: [
-        { name: "Client", desc: "Business or individual client with contact info and billing details", type: "core" },
-        { name: "Patient", desc: "Patient record linked to client — name, condition, transport needs", type: "core" },
-        { name: "Service", desc: "Scheduled transport or care visit with pricing snapshot", type: "core", central: true },
-        { name: "PricingRule", desc: "Catalog-based pricing rules with urgency and staff type modifiers", type: "core", ssot: "Pricing Source of Truth" },
-        { name: "PricingSnapshot", desc: "Immutable point-in-time capture of pricing calculation", type: "financial" },
-        { name: "Invoice", desc: "Generated from completed services with itemized lines and PDF export", type: "financial" },
-        { name: "Payment", desc: "Multi-method payment record with auto-reconciliation", type: "financial" },
-        { name: "User", desc: "Admin or assistant with RBAC and session hardening", type: "audit" },
-        { name: "AuditLog", desc: "Automatic logging of all critical operations", type: "audit" },
+        {
+          name: "Client",
+          desc: "Business or individual client with contact info and billing details",
+          type: "core",
+        },
+        {
+          name: "Patient",
+          desc: "Patient record linked to client — name, condition, transport needs",
+          type: "core",
+        },
+        {
+          name: "Service",
+          desc: "Scheduled transport or care visit with pricing snapshot",
+          type: "core",
+          central: true,
+        },
+        {
+          name: "PricingRule",
+          desc: "Catalog-based pricing rules with urgency and staff type modifiers",
+          type: "core",
+          ssot: "Pricing Source of Truth",
+        },
+        {
+          name: "PricingSnapshot",
+          desc: "Immutable point-in-time capture of pricing calculation",
+          type: "financial",
+        },
+        {
+          name: "Invoice",
+          desc: "Generated from completed services with itemized lines and PDF export",
+          type: "financial",
+        },
+        {
+          name: "Payment",
+          desc: "Multi-method payment record with auto-reconciliation",
+          type: "financial",
+        },
+        {
+          name: "User",
+          desc: "Admin or assistant with RBAC and session hardening",
+          type: "audit",
+        },
+        {
+          name: "AuditLog",
+          desc: "Automatic logging of all critical operations",
+          type: "audit",
+        },
       ],
       relationships: [
-        { from: "Client", to: "Patient", label: "has patients", cardinality: "1 → N" },
-        { from: "Patient", to: "Service", label: "receives", cardinality: "1 → N" },
-        { from: "Service", to: "PricingSnapshot", label: "captures price", cardinality: "1 → 1" },
-        { from: "Service", to: "Invoice", label: "generates", cardinality: "N → 1" },
-        { from: "Invoice", to: "Payment", label: "paid by", cardinality: "1 → N" },
-        { from: "User", to: "AuditLog", label: "logged by", cardinality: "1 → N" },
+        {
+          from: "Client",
+          to: "Patient",
+          label: "has patients",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Patient",
+          to: "Service",
+          label: "receives",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Service",
+          to: "PricingSnapshot",
+          label: "captures price",
+          cardinality: "1 → 1",
+        },
+        {
+          from: "Service",
+          to: "Invoice",
+          label: "generates",
+          cardinality: "N → 1",
+        },
+        {
+          from: "Invoice",
+          to: "Payment",
+          label: "paid by",
+          cardinality: "1 → N",
+        },
+        {
+          from: "User",
+          to: "AuditLog",
+          label: "logged by",
+          cardinality: "1 → N",
+        },
       ],
       archTitle: "Core Architecture",
       archBlocks: [
         {
           title: "7-Step Pricing Engine",
           why: "Medical transport pricing involves complex stacking rules that must be deterministic and auditable",
-          impact: "Every service gets a verifiable price trace — no black-box calculations",
+          impact:
+            "Every service gets a verifiable price trace — no black-box calculations",
           points: [
             "Step 1: Catalog resolution — match service type, urgency, and staff to pricing rule",
             "Step 2: Base price extraction from matched rule",
@@ -124,7 +194,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "Modular DDD Architecture",
           why: "8 business domains must evolve independently without cross-contamination",
-          impact: "Adding a new module (e.g. fleet management) follows a known pattern without touching existing code",
+          impact:
+            "Adding a new module (e.g. fleet management) follows a known pattern without touching existing code",
           points: [
             "Each module: schema.ts → types.ts → repository.ts → service.ts → actions.ts",
             "No cross-module imports at the repository level — only through service boundaries",
@@ -135,7 +206,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "Security Layers",
           why: "Medical and financial data requires defense in depth — not just login checks",
-          impact: "Every request passes through 4 security boundaries before reaching business logic",
+          impact:
+            "Every request passes through 4 security boundaries before reaching business logic",
           points: [
             "Layer 1: Next.js middleware — redirect unauthenticated users from /dashboard",
             "Layer 2: requireSession() — validates JWT, checks isActive flag, extracts role",
@@ -146,7 +218,8 @@ export const meditransCore: ProjectContent = {
         {
           title: "PDF Invoice Engine",
           why: "Professional invoices are a business requirement — not a nice-to-have",
-          impact: "Invoices render server-side with consistent layout, branding, and pricing breakdown",
+          impact:
+            "Invoices render server-side with consistent layout, branding, and pricing breakdown",
           points: [
             "Built with @react-pdf/renderer — 11 modular components",
             "Itemized service lines with per-line pricing breakdown",
@@ -157,22 +230,67 @@ export const meditransCore: ProjectContent = {
       ],
       flowTitle: "Service Pricing Flow",
       flowSteps: [
-        { step: "Create service request", desc: "Client, patient, service type, urgency, staff type, distance — validated with Zod" },
-        { step: "Resolve pricing rule", desc: "Match catalog code + urgency + staff type to active PricingRule" },
-        { step: "Calculate base + distance", desc: "Base price from rule + distance fee from zone configuration" },
-        { step: "Apply modifiers", desc: "Night auto-detection, weekend check, holiday stacking — each modifier logged" },
-        { step: "Check manual override", desc: "Admin can set fixed price — original calculation preserved in snapshot for audit" },
-        { step: "Calculate VAT", desc: "Apply configured VAT rate to final amount" },
-        { step: "Persist snapshot", desc: "Immutable PricingSnapshot created alongside Service — never modified after creation" },
+        {
+          step: "Create service request",
+          desc: "Client, patient, service type, urgency, staff type, distance — validated with Zod",
+        },
+        {
+          step: "Resolve pricing rule",
+          desc: "Match catalog code + urgency + staff type to active PricingRule",
+        },
+        {
+          step: "Calculate base + distance",
+          desc: "Base price from rule + distance fee from zone configuration",
+        },
+        {
+          step: "Apply modifiers",
+          desc: "Night auto-detection, weekend check, holiday stacking — each modifier logged",
+        },
+        {
+          step: "Check manual override",
+          desc: "Admin can set fixed price — original calculation preserved in snapshot for audit",
+        },
+        {
+          step: "Calculate VAT",
+          desc: "Apply configured VAT rate to final amount",
+        },
+        {
+          step: "Persist snapshot",
+          desc: "Immutable PricingSnapshot created alongside Service — never modified after creation",
+        },
       ],
       guaranteesTitle: "System Guarantees",
       guarantees: [
-        { title: "Deterministic Pricing", desc: "Same inputs always produce the same price. Every calculation step is logged and snapshot-persisted.", category: "data" },
-        { title: "Immutable Price History", desc: "PricingSnapshots are never modified. Rule changes don't retroactively alter past service prices.", category: "financial" },
-        { title: "Payment Reconciliation", desc: "Invoice status auto-updates based on payment totals: Unpaid → Partial → Paid. No manual status management.", category: "financial" },
-        { title: "Audit Trail", desc: "Every create, delete, and cancel operation is logged with userId, role, entity, entityId, and timestamp.", category: "transaction" },
-        { title: "Role Enforcement", desc: "RBAC checked at every server action — not just at the UI level. Assistant users cannot access admin mutations.", category: "transaction" },
-        { title: "Session Hardening", desc: "JWT with 8h maxAge, isActive re-validation on refresh, middleware protection on all dashboard routes.", category: "data" },
+        {
+          title: "Deterministic Pricing",
+          desc: "Same inputs always produce the same price. Every calculation step is logged and snapshot-persisted.",
+          category: "data",
+        },
+        {
+          title: "Immutable Price History",
+          desc: "PricingSnapshots are never modified. Rule changes don't retroactively alter past service prices.",
+          category: "financial",
+        },
+        {
+          title: "Payment Reconciliation",
+          desc: "Invoice status auto-updates based on payment totals: Unpaid → Partial → Paid. No manual status management.",
+          category: "financial",
+        },
+        {
+          title: "Audit Trail",
+          desc: "Every create, delete, and cancel operation is logged with userId, role, entity, entityId, and timestamp.",
+          category: "transaction",
+        },
+        {
+          title: "Role Enforcement",
+          desc: "RBAC checked at every server action — not just at the UI level. Assistant users cannot access admin mutations.",
+          category: "transaction",
+        },
+        {
+          title: "Session Hardening",
+          desc: "JWT with 8h maxAge, isActive re-validation on refresh, middleware protection on all dashboard routes.",
+          category: "data",
+        },
       ],
       codeTitle: "Data Flow",
       codeSnippets: [
@@ -213,10 +331,30 @@ export const meditransCore: ProjectContent = {
         "All 7 pricing steps execute synchronously. The final snapshot is persisted atomically with the service record.",
       tradeoffsTitle: "Trade-offs",
       tradeoffs: [
-        { chose: "Snapshot-based pricing", over: "Live rule evaluation", reason: "Past invoices always reflect the rules active at service time — rule changes never corrupt history" },
-        { chose: "Server Actions only", over: "REST API routes", reason: "Simpler mutation layer with built-in type safety — no API versioning or endpoint management needed" },
-        { chose: "Vitest from Phase 0", over: "Testing after features", reason: "Pricing engine was 100% tested before any UI existed — caught 12 edge cases during development" },
-        { chose: "Modular DDD boundaries", over: "Feature-folder organization", reason: "Each module can evolve independently — adding fleet management won't touch pricing or invoicing code" },
+        {
+          chose: "Snapshot-based pricing",
+          over: "Live rule evaluation",
+          reason:
+            "Past invoices always reflect the rules active at service time — rule changes never corrupt history",
+        },
+        {
+          chose: "Server Actions only",
+          over: "REST API routes",
+          reason:
+            "Simpler mutation layer with built-in type safety — no API versioning or endpoint management needed",
+        },
+        {
+          chose: "Vitest from Phase 0",
+          over: "Testing after features",
+          reason:
+            "Pricing engine was 100% tested before any UI existed — caught 12 edge cases during development",
+        },
+        {
+          chose: "Modular DDD boundaries",
+          over: "Feature-folder organization",
+          reason:
+            "Each module can evolve independently — adding fleet management won't touch pricing or invoicing code",
+        },
       ],
       principlesTitle: "System Principles",
       principles: [
