@@ -12,12 +12,12 @@ export type SiteData = Omit<SiteContent, "projects">;
 export const site: SiteData = {
   /* Meta */
   meta: {
-    title: "عبد الإله واجد · مطور Fullstack",
+    title: "عبد الإله واجد · Product Engineer",
     description:
-      "معرض أعمال مبني على دراسات حالة لعبد الإله واجد، مطور fullstack متخصص في الأنظمة التشغيلية، الهندسة الواضحة، والقرارات التقنية المدافع عنها.",
+      "بورتفوليو مبني على دراسات حالة لعبد الإله واجد، Product Engineer يركز على الأنظمة التشغيلية، هندسة واضحة، وقرارات تقنية قابلة للدفاع.",
     author: "Abdelilah Wajid",
     keywords:
-      "عبد الإله واجد, مطور fullstack, دراسات حالة, react, next.js, typescript, أنظمة تشغيلية, مراكش, المغرب",
+      "عبد الإله واجد, product engineer, مطور fullstack, دراسات حالة, react, next.js, typescript, أنظمة تشغيلية, مراكش, المغرب",
     siteUrl: "https://kanata-system.vercel.app",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
@@ -32,7 +32,7 @@ export const site: SiteData = {
     links: [
       { id: "work", n: "01", label: "دراسات الحالة" },
       { id: "about", n: "02", label: "المنهجية" },
-      { id: "skills", n: "03", label: "الأدوات" },
+      { id: "skills", n: "03", label: "Stack" },
       { id: "contact", n: "04", label: "تواصل" },
     ],
   },
@@ -46,12 +46,12 @@ export const site: SiteData = {
       lastName: "Wajid",
     },
     positioning:
-      "مهندس منتجات متخصص في الأنظمة التشغيلية، دراسات الحالة، وهندسة يمكن للفرق صيانتها.",
+      "Product Engineer يعمل على الأنظمة التشغيلية، بمنهجية تعتمد على دراسات الحالة، وبناء هندسة مناسبة لفرق حقيقية تحت قيود حقيقية.",
     roles: [
-      "هندسة منتجات موجهة بدراسات الحالة",
-      "سير عمل تشغيلي قبل العروض البصرية",
-      "هندسة معمارية مبنية على قيود حقيقية",
-      "أنظمة واضحة يمكن للفرق الوثوق بها",
+      "هندسة منتجات مبنية على case studies",
+      "سير عمل تشغيلي بدل العروض السطحية",
+      "هندسة مبنية على قيود واقعية",
+      "أنظمة يمكن للفرق فهمها وشرحها وتطويرها",
     ],
     pills: [
       "Case-study driven",
@@ -59,7 +59,7 @@ export const site: SiteData = {
       "مقايضات واضحة",
       "هندسة قابلة للصيانة",
     ],
-    bio: "هذا المعرض هو عرض هندسي مبني على دراسات الحالة. أركز على سير العمل التشغيلي المعقد — المخزون، التسعير، التقارير، والأدوات الداخلية — وأحوّلها إلى أنظمة أسهل في الثقة والشرح والتوسيع.",
+    bio: "هذا البورتفوليو يعرض عملي من خلال case studies حقيقية. أركز على workflows تشغيلية معقدة — مثل المخزون، التسعير، التقارير، والأدوات الداخلية — وأحوّلها إلى أنظمة موثوقة، واضحة، وقابلة للتطوير.",
     cta: {
       primary: "عرض دراسة الحالة ↓",
       secondary: "تواصل معي →",
@@ -68,7 +68,7 @@ export const site: SiteData = {
     avatar: {
       displayName: "Abdelilah W.",
       tagline: "فهم → قرار → بناء",
-      locationShort: "مراكش · متاح عن بعد",
+      locationShort: "مراكش · Remote متاح",
       infoItems: ["مراكش، المغرب", "UTC+1 — GMT+1", "متاح عن بعد"],
       socials: [
         { href: "https://github.com/kanata-kan", label: "GitHub" },
@@ -84,15 +84,15 @@ export const site: SiteData = {
   about: {
     label: "02 — المنهجية",
     headingLine1: "أحوّل العمليات المعقدة،",
-    headingLine2: "إلى أنظمة واضحة.",
+    headingLine2: "إلى أنظمة واضحة وقابلة للاعتماد.",
     paragraphs: [
-      "أكون أكثر فائدة عندما يوجد منتج بالفعل لكن سير العمل خلفه بطيء أو هش أو صعب التفسير.",
-      "عملي يبدأ بالتشخيص: أين ينكسر النظام، أين يظهر التكرار، أين تفقد البيانات معناها، وأي قرارات يجب أن تصبح قواعد نظام.",
-      "هذا المعرض مصمم لإظهار هذا التفكير علنياً — عبر دراسات حالة ومقايضات وتفاصيل تنفيذ — وليس مجرد شاشات نهائية.",
+      "أكون أكثر قيمة عندما يوجد منتج فعلاً، لكن workflow خلفه بطيء أو هش أو صعب الفهم.",
+      "أبدأ دائماً بالتشخيص: أين يحدث الكسر، أين يوجد التكرار، أين تفقد البيانات معناها، وما القرارات التي يجب تحويلها إلى قواعد داخل النظام.",
+      "هذا البورتفوليو يوضح طريقة تفكيري — عبر case studies، وtrade-offs، وتفاصيل التنفيذ — وليس فقط واجهات جاهزة.",
     ],
     tags: [
       { text: "Case-study driven", colorKey: "cyan" },
-      { text: "قرارات مدافع عنها", colorKey: "amber" },
+      { text: "قرارات قابلة للدفاع", colorKey: "amber" },
       { text: "وضوح النظام", colorKey: "purple" },
     ],
     codeFilename: "about.ts",
@@ -104,27 +104,27 @@ export const site: SiteData = {
       ],
       [
         { text: "  mindset: ", colorKey: "muted" },
-        { text: '"افهم-أولاً"', colorKey: "amber" },
+        { text: '"understand-first"', colorKey: "amber" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  focus: ", colorKey: "muted" },
-        { text: '"الوضوح-قبل-السرعة"', colorKey: "amber" },
+        { text: '"clarity-over-speed"', colorKey: "amber" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  approach: ", colorKey: "muted" },
-        { text: '"أصلح-ما-يبطئ"', colorKey: "green" },
+        { text: '"fix-what-slows-teams"', colorKey: "green" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  decisions: ", colorKey: "muted" },
-        { text: "true", colorKey: "cyan" },
+        { text: "defensible", colorKey: "cyan" },
         { text: ",", colorKey: "muted" },
       ],
       [
         { text: "  hire: ", colorKey: "muted" },
-        { text: '"فقط-إذا-كان-منطقياً"', colorKey: "amber" },
+        { text: '"only-when-impact-is-clear"', colorKey: "amber" },
       ],
       [{ text: "}", colorKey: "muted" }],
     ],
@@ -133,26 +133,26 @@ export const site: SiteData = {
   /* Work */
   work: {
     label: "01 — دراسات الحالة",
-    heading: "أنظمة تشغيلية، مشروحة بوضوح.",
-    subtitle: "مشكلة → حل → قرارات → أثر",
+    heading: "أنظمة تشغيلية، مفهومة بوضوح.",
+    subtitle: "مشكلة → قيود → قرارات → أثر",
   },
 
   /* Skills */
   skills: {
-    label: "03 — الأدوات",
-    heading: "Stack أساسي وعادات تنفيذ.",
-    subtitle: "مختارة للموثوقية والصيانة وسرعة التسليم.",
+    label: "03 — Stack",
+    heading: "الأدوات التي أستخدمها لبناء أنظمة موثوقة.",
+    subtitle: "مختارة للوضوح، قابلية الصيانة، وسرعة التنفيذ.",
   },
 
   /* Contact */
   contact: {
     label: "04 — تواصل",
-    headingLine1: "متاح لأدوار هندسة المنتجات،",
+    headingLine1: "متاح لأدوار Product Engineering،",
     headingHighlight: "الاستشارة، والمشاريع المحددة.",
     paragraphLine1:
-      "إذا كنت بحاجة لشخص يحوّل سير العمل المعقد إلى أنظمة موثوقة، أرسل لي السياق والقيود وما يبطئ الفريق فعلاً.",
+      "إذا كان لديك workflow بطيء أو غير واضح أو هش، أرسل لي السياق، القيود، وما يسبب المشكلة فعلياً.",
     paragraphLine2:
-      "أرد بوضوح حول التوافق والنطاق وأسرع مسار نحو شيء مفيد.",
+      "سأعطيك جواباً واضحاً حول التوافق، النطاق، وأسرع طريقة للوصول إلى حل عملي.",
     email: "kanata10kan@gmail.com",
     copyLabel: "نسخ",
     copiedLabel: "تم النسخ ✓",
@@ -183,15 +183,15 @@ export const site: SiteData = {
   /* Tech Strip */
   techStrip: [
     "Case-study driven",
-    "سير عمل تشغيلي",
-    "محتوى مكتوب",
+    "Workflows تشغيلية",
+    "Typed content",
     "مقايضات واضحة",
     "UI متجاوب",
-    "قواعد الأعمال أولاً",
+    "Business rules first",
     "منطق المخزون",
-    "هندسة قابلة للقراءة",
-    "فحص سريع",
-    "قرارات مدافع عنها",
+    "هندسة واضحة",
+    "قراءة سريعة",
+    "قرارات قابلة للدفاع",
   ],
 
   /* Skill Groups */
