@@ -155,6 +155,12 @@ export const site: SiteData = {
     email: "kanata10kan@gmail.com",
     copyLabel: "COPY",
     copiedLabel: "COPIED ✓",
+    whatsapp: {
+      phone: "+212652064823",
+      label: "WHATSAPP",
+      message:
+        "Hello Abdelilah, I'm reaching out from your portfolio. I'd like to discuss a potential collaboration.",
+    },
     socials: [
       { href: "https://github.com/kanata-kan", label: "GitHub" },
       {

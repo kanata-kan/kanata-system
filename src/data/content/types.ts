@@ -234,6 +234,11 @@ export interface ContactContent {
   email: string;
   copyLabel: string;
   copiedLabel: string;
+  whatsapp: {
+    phone: string;
+    label: string;
+    message: string;
+  };
   socials: SocialLinkContent[];
 }
 

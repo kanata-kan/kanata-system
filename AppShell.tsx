@@ -1,1 +1,0 @@
-<div style={{ minHeight: '100vh', background: '#f4f4f4', color: '#333', transition: 'all 0.3s ease', paddingTop: '64px' }}>{children}</div>
