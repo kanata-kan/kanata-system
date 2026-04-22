@@ -13,10 +13,16 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  const photoBuffer = await readFile(
-    join(process.cwd(), "public", "Abdelilah-Wajid.png"),
-  );
-  const photoSrc = `data:image/png;base64,${photoBuffer.toString("base64")}`;
+  let photoSrc = "";
+  try {
+    const photoBuffer = await readFile(
+      join(process.cwd(), "public", "Abdelilah-Wajid.png"),
+    );
+    photoSrc = `data:image/png;base64,${photoBuffer.toString("base64")}`;
+  } catch (error) {
+    console.error("Failed to load photo for Twitter image:", error);
+    // Fallback to a solid color or gradient if image fails to load
+  }
 
   return new ImageResponse(
     <div
@@ -177,14 +183,32 @@ export default async function Image() {
             display: "flex",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photoSrc}
-            width={320}
-            height={320}
-            alt=""
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
-          />
+          {photoSrc ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={photoSrc}
+              width={320}
+              height={320}
+              alt=""
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            />
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(135deg, #38BDF8 0%, #8B5CF6 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "72px",
+                fontWeight: "800",
+                color: "#fff",
+              }}
+            >
+              AW
+            </div>
+          )}
         </div>
       </div>
     </div>,
