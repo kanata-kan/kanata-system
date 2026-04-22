@@ -123,7 +123,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
       >
         <div style={{ aspectRatio: "1 / 1", position: "relative" }}>
           <Image
-            src="/Abdelilah-Wajid .png"
+            src="/Abdelilah-Wajid.png"
             alt="Abdelilah Wajid — Full photo"
             width={420}
             height={420}
