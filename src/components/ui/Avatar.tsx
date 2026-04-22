@@ -262,7 +262,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
           }}
         >
           <Image
-            src="/Abdelilah-Wajid .png"
+            src="/Abdelilah-Wajid.png"
             alt="Abdelilah Wajid"
             width={size}
             height={size}
