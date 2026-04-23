@@ -84,7 +84,7 @@ export const site: SiteData = {
           label: "GitHub (Kanata)",
         },
         {
-          href: "https://linkedin.com/in/abdelilahwajid",
+          href: "https://www.linkedin.com/in/abdelilah-wajid-847888285",
           label: "LinkedIn",
         },
       ],
