@@ -134,6 +134,15 @@
   color: var(--cyan);
 }
 
+/* NavLogo SVG mark — border brightens on hover */
+#navlogo-border {
+  opacity: 0.22;
+  transition: opacity 0.15s ease;
+}
+.nav-logo-button:hover #navlogo-border {
+  opacity: 0.55;
+}
+
 /* Prevent overflow */
 html {
   overflow-x: hidden;

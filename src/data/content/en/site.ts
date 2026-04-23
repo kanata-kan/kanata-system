@@ -25,9 +25,7 @@ export const site: SiteData = {
 
   /* ── Nav ── */
   nav: {
-    logoInitial: "A.",
-    logoName: "ABDELILAH",
-    logoTagline: "UNDERSTAND · DECIDE · BUILD",
+    logoTagline: "Turning chaos into reliable systems",
     links: [
       { id: "work", n: "01", label: "Case Studies" },
       { id: "about", n: "02", label: "Approach" },
@@ -37,40 +35,54 @@ export const site: SiteData = {
   },
 
   /* ── Hero ── */
+  /* ── Hero ── */
   hero: {
     badge: "OPEN TO WORK",
+
     name: {
-      base: "Abdel",
-      highlight: "ilah",
-      lastName: "Wajid",
+      base: "Abdelilah",
+      highlight: "Wajid",
+      lastName: "",
     },
+
     positioning:
-      "Product engineer working on operational systems, with a case-study-driven approach and architecture built for real teams under real constraints.",
+      "Product Engineer building systems that survive real constraints.",
+
     roles: [
-      "Case-study-driven product engineering",
-      "Operational workflows over surface-level demos",
-      "Architecture shaped by real constraints",
-      "Systems that teams can trust, explain, and extend",
+      "Built from real case studies — not demo projects",
+      "Designed for operations, not surface-level UI",
+      "Clear and intentional technical trade-offs",
+      "Systems teams can trust, explain, and evolve",
     ],
+
     pills: [
-      "Case-study driven",
-      "Operational systems",
-      "Clear trade-offs",
+      "Real-world systems",
+      "Operational thinking",
+      "Explicit trade-offs",
       "Maintainable architecture",
     ],
-    bio: "This portfolio is an engineering showcase built around real case studies. I focus on messy operational workflows — inventory, pricing, reporting, and internal tools — and turn them into systems that are reliable, understandable, and built to evolve.",
+
+    bio: "I build systems from real operational problems — inventory, pricing, reporting, and internal tools — focusing on clarity, reliability, and long-term evolution.",
+
     cta: {
       primary: "VIEW CASE STUDY ↓",
       secondary: "CONTACT ME →",
     },
+
     scroll: "SCROLL",
+
     avatar: {
-      displayName: "Abdelilah W.",
-      tagline: "UNDERSTAND → DECIDE → BUILD",
+      displayName: "Abdelilah Wajid",
+      tagline: "From messy workflows to reliable systems",
       locationShort: "Marrakech · Open to remote",
+
       infoItems: ["Marrakech, Morocco", "UTC+1 — GMT+1", "Open to remote"],
+
       socials: [
-        { href: "https://github.com/kanata-kan", label: "GitHub" },
+        {
+          href: "https://github.com/kanata-kan",
+          label: "GitHub (Kanata)",
+        },
         {
           href: "https://linkedin.com/in/abdelilahwajid",
           label: "LinkedIn",

@@ -1,17 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="108" fill="#0D1117"/>
-  <!-- Letter A -->
+  <defs>
+
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%"   stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+
+    <!-- Subtle grid pattern matching portfolio bg -->
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#21262D" stroke-width="0.8"/>
+    </pattern>
+
+    <!-- Cyan glow — top right, matching portfolio vibe -->
+    <radialGradient id="glow" cx="80%" cy="15%" r="55%" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#38BDF8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Clip to rounded square shape -->
+    <clipPath id="clip">
+      <rect width="512" height="512" rx="112"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- Base background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Grid overlay (clipped) -->
+  <rect width="512" height="512" fill="url(#grid)" clip-path="url(#clip)" opacity="0.55"/>
+
+  <!-- Cyan glow overlay -->
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+
+  <!-- Outer border — thin cyan line, low opacity -->
+  <rect x="1.5" y="1.5" width="509" height="509" rx="111"
+        fill="none" stroke="#38BDF8" stroke-width="1.5" opacity="0.18"/>
+
+  <!-- ─── MONOGRAM ─── -->
+
+  <!--
+    A  → italic, white — mirrors "Abdel" weight in heading
+    W  → upright, bold cyan — mirrors "Wajid" identity
+    .  → cyan dot — the brand signature from "Wajid."
+  -->
+
+  <!-- A — white, italic serif -->
   <text
-    x="72"
-    y="355"
+    x="38"
+    y="352"
     font-family="Georgia, 'Times New Roman', serif"
+    font-style="italic"
     font-weight="700"
-    font-size="340"
+    font-size="272"
     fill="#E6EDF3"
+    opacity="0.95"
   >A</text>
-  <!-- Cyan dot -->
-  <circle cx="368" cy="335" r="28" fill="#38BDF8"/>
-  <!-- Cyan dashes -->
-  <rect x="82" y="400" width="130" height="20" rx="10" fill="#38BDF8"/>
-  <rect x="230" y="400" width="85" height="20" rx="10" fill="#38BDF8"/>
+
+  <!-- W — cyan, upright serif -->
+  <text
+    x="212"
+    y="352"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-style="normal"
+    font-weight="700"
+    font-size="272"
+    fill="#38BDF8"
+  >W</text>
+
+  <!-- Cyan dot — brand signature matching "Wajid." -->
+  <circle cx="475" cy="338" r="21" fill="#38BDF8"/>
+
+  <!-- ─── BOTTOM ACCENT DASHES ─── -->
+  <!-- Matching the horizontal line accent from portfolio -->
+  <rect x="38"  y="388" width="116" height="7" rx="3.5" fill="#38BDF8" opacity="0.40"/>
+  <rect x="166" y="388" width="72"  height="7" rx="3.5" fill="#38BDF8" opacity="0.18"/>
+
 </svg>

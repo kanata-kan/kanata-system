@@ -26,8 +26,6 @@ export interface NavLinkContent {
 }
 
 export interface NavContent {
-  logoInitial: string;
-  logoName: string;
   logoTagline: string;
   links: NavLinkContent[];
 }

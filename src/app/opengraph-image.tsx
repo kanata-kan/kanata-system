@@ -3,21 +3,24 @@
  * @description Dynamic OG image generator for social sharing (WhatsApp, Facebook, Twitter).
  * Composites the brand mark + user photo into a 1200×630 card.
  * Next.js auto-injects the corresponding <meta property="og:image"> tag.
+ * Uses OG_STYLES from brandStyles.ts for consistent styling.
  */
 
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { BRAND } from "@/lib/brand";
+import { OG_STYLES } from "@/lib/brandStyles";
 
-export const alt = "Abdelilah Wajid — Product Engineer";
-export const size = { width: 1200, height: 630 };
+export const alt = `${BRAND.name} — ${BRAND.role}`;
+export const size = OG_STYLES.dimensions;
 export const contentType = "image/png";
 
 export default async function Image() {
   let photoSrc = "";
   try {
     const photoBuffer = await readFile(
-      join(process.cwd(), "public", "Abdelilah-Wajid.png"),
+      join(process.cwd(), "public", BRAND.profilePhoto),
     );
     photoSrc = `data:image/png;base64,${photoBuffer.toString("base64")}`;
   } catch (error) {
@@ -31,8 +34,8 @@ export default async function Image() {
         display: "flex",
         width: "100%",
         height: "100%",
-        background: "linear-gradient(145deg, #0D1117 0%, #161B22 100%)",
-        padding: "60px 70px",
+        background: `linear-gradient(${OG_STYLES.background.angle}deg, ${OG_STYLES.background.start} 0%, ${OG_STYLES.background.end} 100%)`,
+        padding: `${OG_STYLES.padding.vertical}px ${OG_STYLES.padding.horizontal}px`,
         fontFamily: "system-ui, -apple-system, sans-serif",
         position: "relative",
         overflow: "hidden",
@@ -42,13 +45,12 @@ export default async function Image() {
       <div
         style={{
           position: "absolute",
-          top: "-120px",
-          right: "-80px",
-          width: "500px",
-          height: "500px",
+          top: OG_STYLES.glow.position.top,
+          right: OG_STYLES.glow.position.right,
+          width: OG_STYLES.glow.size,
+          height: OG_STYLES.glow.size,
           borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%)",
+          background: `radial-gradient(circle, ${OG_STYLES.glow.color}${OG_STYLES.glow.opacity} 0%, transparent 70%)`,
         }}
       />
 
@@ -62,111 +64,106 @@ export default async function Image() {
           gap: "4px",
         }}
       >
-        {/* Brand mark: A. */}
+        {/* Brand mark: AW */}
         <div
           style={{
             display: "flex",
             alignItems: "baseline",
-            marginBottom: "20px",
+            marginBottom: OG_STYLES.spacing.monogramMarginBottom,
           }}
         >
           <span
             style={{
-              fontSize: "72px",
-              fontWeight: 800,
-              color: "#E6EDF3",
+              fontSize: `${OG_STYLES.monogram.fontSize}px`,
+              fontWeight: OG_STYLES.monogram.fontWeight,
+              color: OG_STYLES.monogram.colors.first,
               lineHeight: 1,
             }}
           >
-            A
+            {BRAND.monogram[0]}
           </span>
           <span
             style={{
-              fontSize: "72px",
-              fontWeight: 800,
-              color: "#38BDF8",
+              fontSize: `${OG_STYLES.monogram.fontSize}px`,
+              fontWeight: OG_STYLES.monogram.fontWeight,
+              color: OG_STYLES.monogram.colors.second,
               lineHeight: 1,
             }}
           >
-            .
+            {BRAND.monogram[1]}
           </span>
           {/* Cyan dashes */}
           <div
             style={{
               display: "flex",
-              gap: "8px",
-              marginLeft: "16px",
+              gap: `${OG_STYLES.dashes.gap}px`,
+              marginLeft: `${OG_STYLES.dashes.marginLeft}px`,
               alignItems: "center",
             }}
           >
-            <div
-              style={{
-                width: "40px",
-                height: "4px",
-                background: "#38BDF8",
-                borderRadius: "2px",
-              }}
-            />
-            <div
-              style={{
-                width: "24px",
-                height: "4px",
-                background: "#38BDF8",
-                borderRadius: "2px",
-              }}
-            />
+            {OG_STYLES.dashes.items.map((item, index) => (
+              <div
+                key={index}
+                style={{
+                  width: `${item.width}px`,
+                  height: `${item.height}px`,
+                  background: OG_STYLES.dashes.color,
+                  borderRadius: `${OG_STYLES.dashes.radius}px`,
+                }}
+              />
+            ))}
           </div>
         </div>
 
         {/* Name */}
         <div
           style={{
-            fontSize: "54px",
-            fontWeight: 700,
-            color: "#E6EDF3",
-            lineHeight: 1.1,
-            marginBottom: "12px",
-            letterSpacing: "-1px",
+            fontSize: `${OG_STYLES.name.fontSize}px`,
+            fontWeight: OG_STYLES.name.fontWeight,
+            color: OG_STYLES.name.color,
+            lineHeight: OG_STYLES.name.lineHeight,
+            marginBottom: `${OG_STYLES.name.marginBottom}px`,
+            letterSpacing: `${OG_STYLES.name.letterSpacing}px`,
           }}
         >
-          Abdelilah Wajid
+          {BRAND.name}
         </div>
 
         {/* Role */}
         <div
           style={{
-            fontSize: "20px",
-            color: "#8B949E",
-            letterSpacing: "4px",
-            marginBottom: "20px",
-            fontWeight: 500,
+            fontSize: `${OG_STYLES.role.fontSize}px`,
+            color: OG_STYLES.role.color,
+            letterSpacing: `${OG_STYLES.role.letterSpacing}px`,
+            marginBottom: `${OG_STYLES.role.marginBottom}px`,
+            fontWeight: OG_STYLES.role.fontWeight,
           }}
         >
-          PRODUCT ENGINEER
+          {BRAND.role}
         </div>
 
         {/* Tagline */}
         <div
           style={{
-            fontSize: "15px",
-            color: "#38BDF8",
-            letterSpacing: "5px",
-            fontWeight: 400,
+            fontSize: `${OG_STYLES.tagline.fontSize}px`,
+            color: OG_STYLES.tagline.color,
+            letterSpacing: `${OG_STYLES.tagline.letterSpacing}px`,
+            fontWeight: OG_STYLES.tagline.fontWeight,
           }}
         >
-          UNDERSTAND · DECIDE · BUILD
+          Turning chaos into reliable systems
         </div>
 
         {/* Location */}
         <div
           style={{
-            fontSize: "14px",
-            color: "#484F58",
-            letterSpacing: "2px",
-            marginTop: "16px",
+            fontSize: `${OG_STYLES.location.fontSize}px`,
+            color: OG_STYLES.location.color,
+            letterSpacing: `${OG_STYLES.location.letterSpacing}px`,
+            marginTop: `${OG_STYLES.location.marginTop}px`,
           }}
         >
-          MARRAKECH, MOROCCO
+          {BRAND.location}
         </div>
       </div>
 
@@ -176,17 +173,17 @@ export default async function Image() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          paddingLeft: "40px",
+          paddingLeft: `${OG_STYLES.spacing.photoPaddingLeft}px`,
         }}
       >
         <div
           style={{
-            width: "320px",
-            height: "320px",
-            borderRadius: "50%",
+            width: `${OG_STYLES.photo.size}px`,
+            height: `${OG_STYLES.photo.size}px`,
+            borderRadius: OG_STYLES.photo.border.radius,
             overflow: "hidden",
-            border: "4px solid #38BDF8",
-            boxShadow: "0 0 60px rgba(56,189,248,0.15)",
+            border: `${OG_STYLES.photo.border.width}px solid ${OG_STYLES.photo.border.color}`,
+            boxShadow: `0 0 ${OG_STYLES.photo.shadow.blur}px ${OG_STYLES.photo.shadow.color}${OG_STYLES.photo.shadow.opacity}`,
             display: "flex",
           }}
         >
@@ -194,8 +191,8 @@ export default async function Image() {
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={photoSrc}
-              width={320}
-              height={320}
+              width={OG_STYLES.photo.size}
+              height={OG_STYLES.photo.size}
               alt=""
               style={{
                 objectFit: "cover",
@@ -208,21 +205,21 @@ export default async function Image() {
               style={{
                 width: "100%",
                 height: "100%",
-                background: "linear-gradient(135deg, #38BDF8 0%, #8B5CF6 100%)",
+                background: `linear-gradient(${OG_STYLES.photo.fallback.gradient.angle}deg, ${OG_STYLES.photo.fallback.gradient.start} 0%, ${OG_STYLES.photo.fallback.gradient.end} 100%)`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "72px",
-                fontWeight: "800",
-                color: "#fff",
+                fontSize: `${OG_STYLES.photo.fallback.text.fontSize}px`,
+                fontWeight: OG_STYLES.photo.fallback.text.fontWeight,
+                color: OG_STYLES.photo.fallback.text.color,
               }}
             >
-              AW
+              {BRAND.monogram}
             </div>
           )}
         </div>
       </div>
     </div>,
-    { ...size },
+    OG_STYLES.dimensions,
   );
 }

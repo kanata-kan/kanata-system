@@ -26,9 +26,7 @@ export const site: SiteData = {
 
   /* Nav */
   nav: {
-    logoInitial: "A.",
-    logoName: "ABDELILAH",
-    logoTagline: "فهم · قرار · بناء",
+    logoTagline: "تحويل الفوضى إلى أنظمة موثوقة",
     links: [
       { id: "work", n: "01", label: "دراسات الحالة" },
       { id: "about", n: "02", label: "المنهجية" },
@@ -40,38 +38,47 @@ export const site: SiteData = {
   /* Hero */
   hero: {
     badge: "متاح للعمل",
+
     name: {
-      base: "Abdel",
-      highlight: "ilah",
-      lastName: "Wajid",
+      base: "Abdelilah",
+      highlight: "Wajid",
+      lastName: "",
     },
-    positioning:
-      "Product Engineer يعمل على الأنظمة التشغيلية، بمنهجية تعتمد على دراسات الحالة، وبناء هندسة مناسبة لفرق حقيقية تحت قيود حقيقية.",
+
+    positioning: "Product Engineer كيبني أنظمة حقيقية كتخدم تحت قيود واقعية.",
+
     roles: [
-      "هندسة منتجات مبنية على case studies",
-      "سير عمل تشغيلي بدل العروض السطحية",
-      "هندسة مبنية على قيود واقعية",
-      "أنظمة يمكن للفرق فهمها وشرحها وتطويرها",
+      "كنخدم على مشاريع مبنية على case studies حقيقية، ماشي demos",
+      "كنركز على workflows تشغيلية، ماشي غير الواجهة",
+      "كنوضح المقايضات التقنية بشكل صريح",
+      "كنبني أنظمة الفرق تقدر تفهمها وتطورها بسهولة",
     ],
+
     pills: [
-      "Case-study driven",
-      "أنظمة تشغيلية",
+      "أنظمة واقعية",
+      "تفكير تشغيلي",
       "مقايضات واضحة",
-      "هندسة قابلة للصيانة",
+      "هندسة قابلة للتطوير",
     ],
-    bio: "هذا البورتفوليو يعرض عملي من خلال case studies حقيقية. أركز على workflows تشغيلية معقدة — مثل المخزون، التسعير، التقارير، والأدوات الداخلية — وأحوّلها إلى أنظمة موثوقة، واضحة، وقابلة للتطوير.",
+
+    bio: "هاد البورتفوليو كيعرض خدمتي من خلال case studies حقيقية. كنركز على مشاكل تشغيلية معقدة بحال المخزون، التسعير، والتقارير، ونحوّلها لأنظمة واضحة، موثوقة، وقابلة للتطور مع الوقت.",
+
     cta: {
       primary: "عرض دراسة الحالة ↓",
       secondary: "تواصل معي →",
     },
+
     scroll: "تمرير",
+
     avatar: {
-      displayName: "Abdelilah W.",
-      tagline: "فهم → قرار → بناء",
-      locationShort: "مراكش · Remote متاح",
-      infoItems: ["مراكش، المغرب", "UTC+1 — GMT+1", "متاح عن بعد"],
+      displayName: "Abdelilah Wajid",
+      tagline: "من الفوضى إلى أنظمة مفهومة وقابلة للتطوير",
+      locationShort: "مراكش · متاح عن بعد",
+
+      infoItems: ["مراكش، المغرب", "UTC+1 — GMT+1", "متاح للعمل عن بعد"],
+
       socials: [
-        { href: "https://github.com/kanata-kan", label: "GitHub" },
+        { href: "https://github.com/kanata-kan", label: "GitHub (Kanata)" },
         {
           href: "https://linkedin.com/in/abdelilahwajid",
           label: "LinkedIn",

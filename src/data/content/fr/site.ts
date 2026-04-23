@@ -26,9 +26,7 @@ export const site: SiteData = {
 
   /* Nav */
   nav: {
-    logoInitial: "A.",
-    logoName: "ABDELILAH",
-    logoTagline: "COMPRENDRE · DÉCIDER · CONSTRUIRE",
+    logoTagline: "Transformer le chaos en systèmes fiables",
     links: [
       { id: "work", n: "01", label: "Case Studies" },
       { id: "about", n: "02", label: "Approche" },
@@ -40,38 +38,48 @@ export const site: SiteData = {
   /* Hero */
   hero: {
     badge: "OUVERT AUX OPPORTUNITÉS",
+
     name: {
-      base: "Abdel",
-      highlight: "ilah",
-      lastName: "Wajid",
+      base: "Abdelilah",
+      highlight: "Wajid",
+      lastName: "",
     },
+
     positioning:
-      "Product engineer travaillant sur des systèmes opérationnels, avec une approche basée sur les case studies et une architecture pensée pour des équipes réelles, sous contraintes réelles.",
+      "Product Engineer spécialisé dans la conception de systèmes fiables sous contraintes réelles.",
+
     roles: [
-      "Product engineering guidé par des case studies",
-      "Workflows opérationnels avant les démos superficielles",
-      "Architecture construite sous contraintes réelles",
-      "Systèmes que les équipes peuvent comprendre, expliquer et faire évoluer",
+      "Je travaille à partir de cas réels, pas de démos fictives",
+      "Je conçois pour des workflows opérationnels, pas seulement pour l’interface",
+      "Je rends les trade-offs techniques explicites",
+      "Je construis des systèmes compréhensibles et évolutifs",
     ],
+
     pills: [
-      "Case-study driven",
-      "Systèmes opérationnels",
-      "Trade-offs clairs",
+      "Systèmes réels",
+      "Pensée opérationnelle",
+      "Trade-offs explicites",
       "Architecture maintenable",
     ],
-    bio: "Ce portfolio est une vitrine d’ingénierie basée sur des cas réels. Je travaille sur des workflows opérationnels complexes — stock, pricing, reporting, outils internes — pour les transformer en systèmes fiables, compréhensibles et conçus pour évoluer.",
+
+    bio: "Ce portfolio présente mon travail à travers des cas concrets. Je me concentre sur des problématiques opérationnelles — stock, pricing, reporting, outils internes — pour les transformer en systèmes fiables, clairs et conçus pour évoluer dans le temps.",
+
     cta: {
-      primary: "VOIR LE CASE STUDY ↓",
+      primary: "VOIR UNE ÉTUDE DE CAS ↓",
       secondary: "ME CONTACTER →",
     },
+
     scroll: "DÉFILER",
+
     avatar: {
-      displayName: "Abdelilah W.",
-      tagline: "COMPRENDRE → DÉCIDER → CONSTRUIRE",
-      locationShort: "Marrakech · Remote OK",
+      displayName: "Abdelilah Wajid",
+      tagline: "Des workflows complexes vers des systèmes fiables",
+      locationShort: "Marrakech · Remote",
+
       infoItems: ["Marrakech, Maroc", "UTC+1 — GMT+1", "Disponible en remote"],
+
       socials: [
-        { href: "https://github.com/kanata-kan", label: "GitHub" },
+        { href: "https://github.com/kanata-kan", label: "GitHub (Kanata)" },
         {
           href: "https://linkedin.com/in/abdelilahwajid",
           label: "LinkedIn",
