@@ -187,6 +187,8 @@ export default async function Image() {
         {/* Name */}
         <div
           style={{
+            display: "flex",
+            flexDirection: "column",
             fontSize: 80,
             fontWeight: 800,
             color: "#f0f4ff",
@@ -199,7 +201,6 @@ export default async function Image() {
             <span
               key={i}
               style={{
-                display: "block",
                 color: i === 1 ? accent : "#f0f4ff",
               }}
             >
