@@ -174,7 +174,7 @@ export default async function Image() {
         }}
       >
         {/* Role badge */}
-        <div style={{ display: "flex", alignItems: "center", gap: 9, background: accentFaint, border: `1px solid ${accentDim}`, borderRadius: 100, padding: "7px 20px", marginBottom: 30, width: "fit-content" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 9, background: accentFaint, border: `1px solid ${accentDim}`, borderRadius: 100, padding: "7px 20px", marginBottom: 30, alignSelf: "flex-start" }}>
           <div style={{ width: 7, height: 7, borderRadius: "50%", background: accent, boxShadow: `0 0 12px ${accent}, 0 0 4px ${accent}`, display: "flex" }} />
           <span style={{ fontSize: 13, color: accent, letterSpacing: "0.12em", fontWeight: 600 }}>PRODUCT ENGINEER</span>
         </div>

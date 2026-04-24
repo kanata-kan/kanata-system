@@ -277,7 +277,7 @@ export default async function Image() {
             borderRadius: 100,
             padding: "7px 20px",
             marginBottom: 30,
-            width: "fit-content",
+            alignSelf: "flex-start",
           }}
         >
           <div
