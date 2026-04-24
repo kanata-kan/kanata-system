@@ -172,7 +172,7 @@ export const site: SiteData = {
     socials: [
       { href: "https://github.com/kanata-kan", label: "GitHub" },
       {
-        href: "https://linkedin.com/in/abdelilahwajid",
+        href: "https://www.linkedin.com/in/abdelilah-wajid/",
         label: "LinkedIn",
       },
     ],
