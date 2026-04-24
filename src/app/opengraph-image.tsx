@@ -159,7 +159,6 @@ export default async function Image() {
             border: `1px solid ${accentDim}`,
             borderRadius: 100,
             padding: "6px 18px",
-            width: "fit-content",
             marginBottom: 32,
           }}
         >
