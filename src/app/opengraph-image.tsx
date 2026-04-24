@@ -54,6 +54,7 @@ export default async function Image() {
             linear-gradient(90deg, rgba(99,179,237,0.04) 1px, transparent 1px)
           `,
           backgroundSize: "60px 60px",
+          display: "none",
         }}
       />
 
@@ -68,6 +69,7 @@ export default async function Image() {
           borderRadius: "50%",
           background:
             "radial-gradient(circle, rgba(56,189,248,0.13) 0%, transparent 70%)",
+          display: "none",
         }}
       />
 
@@ -80,6 +82,7 @@ export default async function Image() {
           right: 0,
           height: 3,
           background: `linear-gradient(90deg, transparent, ${accent} 30%, #818cf8 70%, transparent)`,
+          display: "none",
         }}
       />
 
@@ -94,6 +97,7 @@ export default async function Image() {
           height: 22,
           borderTop: `1.5px solid ${accentDim}`,
           borderLeft: `1.5px solid ${accentDim}`,
+          display: "none",
         }}
       />
       {/* BL */}
@@ -106,6 +110,7 @@ export default async function Image() {
           height: 22,
           borderBottom: `1.5px solid ${accentDim}`,
           borderLeft: `1.5px solid ${accentDim}`,
+          display: "none",
         }}
       />
       {/* TR — stop before photo area */}
@@ -118,6 +123,7 @@ export default async function Image() {
           height: 22,
           borderTop: `1.5px solid ${accentDim}`,
           borderRight: `1.5px solid ${accentDim}`,
+          display: "none",
         }}
       />
       {/* BR */}
@@ -130,6 +136,7 @@ export default async function Image() {
           height: 22,
           borderBottom: `1.5px solid ${accentDim}`,
           borderRight: `1.5px solid ${accentDim}`,
+          display: "none",
         }}
       />
 
@@ -212,6 +219,7 @@ export default async function Image() {
         {/* Tagline */}
         <div
           style={{
+            display: "flex",
             fontSize: 21,
             color: "rgba(200,210,240,0.5)",
             fontWeight: 300,
@@ -279,6 +287,7 @@ export default async function Image() {
             height: "100%",
             background: "linear-gradient(90deg, #060810 0%, transparent 100%)",
             zIndex: 3,
+            display: "none",
           }}
         />
 
@@ -338,6 +347,7 @@ export default async function Image() {
               border: `1px solid ${accentDim}`,
               /* Static "rotation" — dot at ~30deg position */
               transform: "rotate(30deg)",
+              display: "none",
             }}
           >
             {/* Ring dot */}
@@ -364,6 +374,7 @@ export default async function Image() {
               borderRadius: "50%",
               border: "1px solid rgba(129,140,248,0.15)",
               transform: "rotate(-20deg)",
+              display: "none",
             }}
           />
 
