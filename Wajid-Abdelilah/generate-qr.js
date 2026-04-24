@@ -5,11 +5,11 @@ const URL = "https://www.abdelilahwajid.com/";
 const OUTPUT = path.join(__dirname, "qr-portfolio.png");
 
 QRCode.toFile(OUTPUT, URL, {
-  width: 200,
-  margin: 1,
+  width: 240,
+  margin: 2,
   color: {
-    dark: "#ffffffFF",
-    light: "#00000000",
+    dark: "#111827FF",
+    light: "#FFFFFFFF",
   },
 }).then(() => {
   console.log("✅ QR code saved →", OUTPUT);
