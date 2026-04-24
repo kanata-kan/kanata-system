@@ -1,25 +1,80 @@
-/**
- * @file work/[slug]/page.tsx
- * @description Dynamic route for project case studies.
- * Fetches project by slug, renders CaseStudyPage section.
- * Returns notFound() if project or case study doesn't exist.
- */
-"use client";
-
-import { use } from "react";
+import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { getProjectBySlug } from "@/data/projects";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { getContent } from "@/data/content";
+import { getProjectBySlug, getProjects } from "@/data/projects";
+import { buildCaseStudyJsonLd, resolveLocale } from "@/lib/seo";
 import { CaseStudyPage } from "@/sections/Work/CaseStudyPage";
-import { useLocale } from "@/hooks/useLocale";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export default function WorkCaseStudy({ params }: Props) {
-  const { slug } = use(params);
-  const { locale } = useLocale();
-  const project = getProjectBySlug(slug, locale);
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getProjects("en")
+    .filter((project) => project.caseStudy)
+    .map((project) => ({ slug: project.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const locale = resolveLocale((await cookies()).get("locale")?.value);
+  const { slug } = await params;
+  const content = getContent(locale);
+  const project =
+    getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");
+
+  if (!project || !project.caseStudy) {
+    return {
+      title: "Case Study",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const title = `${project.name} Case Study`;
+  const description = project.caseStudy.subtitle || project.desc;
+  const firstScreenshot = project.caseStudy.screenshots[0]?.src;
+
+  return {
+    title,
+    description,
+    keywords: [...project.caseStudy.tags, project.type, ...project.highlights],
+    alternates: {
+      canonical: `/work/${project.slug}`,
+    },
+    openGraph: {
+      type: "article",
+      title: `${title} | ${content.meta.ogSiteName}`,
+      description,
+      url: `/work/${project.slug}`,
+      images: [
+        {
+          url: firstScreenshot || "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${content.meta.ogSiteName}`,
+      description,
+      images: [firstScreenshot || "/twitter-image"],
+    },
+  };
+}
+
+export default async function WorkCaseStudy({ params }: Props) {
+  const locale = resolveLocale((await cookies()).get("locale")?.value);
+  const { slug } = await params;
+  const project =
+    getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");
 
   if (!project || !project.caseStudy) {
     notFound();
@@ -29,5 +84,10 @@ export default function WorkCaseStudy({ params }: Props) {
     caseStudy: NonNullable<typeof project.caseStudy>;
   };
 
-  return <CaseStudyPage project={projectWithStudy} />;
+  return (
+    <>
+      <JsonLd data={buildCaseStudyJsonLd(projectWithStudy, locale)} />
+      <CaseStudyPage project={projectWithStudy} />
+    </>
+  );
 }
