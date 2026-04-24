@@ -54,6 +54,16 @@ export function buildWebsiteJsonLd(locale: Locale = DEFAULT_LOCALE) {
       "@type": "Person",
       name: content.meta.author,
     },
+    publisher: {
+      "@type": "Organization",
+      name: content.meta.ogSiteName,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/favicon.ico", locale),
+        width: 32,
+        height: 32,
+      },
+    },
   };
 }
 
