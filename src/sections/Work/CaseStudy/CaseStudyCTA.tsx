@@ -54,7 +54,7 @@ export function CaseStudyCTA({ cta, color, C, isMobile }: CaseStudyCTAProps) {
         </div>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontStyle: "italic",
             fontSize: isMobile ? 22 : 32,
             color: C.text,

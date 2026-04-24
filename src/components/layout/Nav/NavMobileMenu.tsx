@@ -106,7 +106,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
 
               <span
                 style={{
-                  fontFamily: "var(--font-serif)",
+                  fontFamily: "var(--font-display)",
                   fontSize: isArabic ? 30 : 38,
                   fontStyle: "italic",
                   color: C.text,

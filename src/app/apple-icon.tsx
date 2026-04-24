@@ -1,6 +1,6 @@
 /**
  * @file apple-icon.tsx
- * @description Apple touch icon generator — renders the "A." brand mark
+ * @description Apple touch icon generator — renders the AW brand mark
  * as a 180×180 PNG for iOS home screen and Safari bookmarks.
  */
 
@@ -11,71 +11,43 @@ export const contentType = "image/png";
 
 export default function Icon() {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          height: "100%",
-          background: "#0D1117",
-          borderRadius: "38px",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-          fontFamily: "Georgia, 'Times New Roman', serif",
-          position: "relative",
-        }}
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        background: "#0e1117",
+        borderRadius: "38px",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+      }}
+    >
+      <svg
+        width="120"
+        height="120"
+        viewBox="0 0 100 100"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        {/* A. */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            marginBottom: "4px",
-          }}
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#a855f7" />
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" rx="18" fill="#0e1117" />
+        <g
+          fill="none"
+          stroke="url(#g)"
+          strokeWidth="9.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          <span
-            style={{
-              fontSize: "110px",
-              fontWeight: 700,
-              color: "#E6EDF3",
-              lineHeight: 1,
-            }}
-          >
-            A
-          </span>
-          <span
-            style={{
-              fontSize: "110px",
-              fontWeight: 700,
-              color: "#38BDF8",
-              lineHeight: 1,
-            }}
-          >
-            .
-          </span>
-        </div>
-        {/* Cyan dashes */}
-        <div style={{ display: "flex", gap: "6px" }}>
-          <div
-            style={{
-              width: "36px",
-              height: "6px",
-              background: "#38BDF8",
-              borderRadius: "3px",
-            }}
-          />
-          <div
-            style={{
-              width: "22px",
-              height: "6px",
-              background: "#38BDF8",
-              borderRadius: "3px",
-            }}
-          />
-        </div>
-      </div>
-    ),
-    { ...size }
+          <path d="M8,82 L28,16 L50,82 L63,16 L76,82 L89,16" />
+          <path d="M17.5,53 L42,53" />
+        </g>
+      </svg>
+    </div>,
+    { ...size },
   );
 }

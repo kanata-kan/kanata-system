@@ -155,22 +155,26 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
           <div>
             <div
               style={{
-                fontFamily: "var(--font-serif)",
+                fontFamily: "var(--font-display)",
                 fontSize: 16,
                 fontStyle: "italic",
                 color: c.text,
                 letterSpacing: -0.3,
+                WebkitFontSmoothing: "antialiased",
+                MozOsxFontSmoothing: "grayscale",
               }}
             >
               {content.hero.avatar.displayName}
             </div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-body)",
                 fontSize: 9,
                 color: c.muted,
                 letterSpacing: 2,
                 marginTop: 3,
+                WebkitFontSmoothing: "antialiased",
+                MozOsxFontSmoothing: "grayscale",
               }}
             >
               {content.hero.avatar.tagline}
@@ -188,7 +192,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
                 width: 7,
                 height: 7,
                 borderRadius: "50%",
-                background: c.green,
+                background: c.cyan,
                 animation: "glow 2s ease-in-out infinite",
               }}
             />
@@ -196,7 +200,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 9,
-                color: c.green,
+                color: c.cyan,
                 letterSpacing: 1,
               }}
             >
@@ -290,11 +294,11 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             width: dotSize,
             height: dotSize,
             borderRadius: "50%",
-            background: c.green,
+            background: c.cyan,
             border: `2.5px solid ${c.bg}`,
             animation: "glow 2s ease-in-out infinite",
             zIndex: 2,
-            boxShadow: `0 0 10px ${c.green}80`,
+            boxShadow: `0 0 10px ${c.cyan}80`,
           }}
         />
       </button>

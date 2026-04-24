@@ -14,6 +14,7 @@ import { getContent } from "@/data/content";
 import { Avatar } from "@/components/ui/Avatar";
 import { HeroCTA } from "./HeroCTA";
 import { HeroAvatar } from "./HeroAvatar";
+import { TEXT } from "@/tokens/typography";
 
 export function HeroContent() {
   const { C } = useThemeContext();
@@ -55,8 +56,8 @@ export function HeroContent() {
           rowGap: 6,
           maxWidth: "100%",
           marginBottom: isMobile ? 28 : 36,
-          background: `${C.green}15`,
-          border: `1px solid ${C.green}35`,
+          background: `${C.cyan}15`,
+          border: `1px solid ${C.cyan}35`,
           borderRadius: 40,
           padding: "6px 16px",
           lineHeight: 1.4,
@@ -67,7 +68,7 @@ export function HeroContent() {
             width: 8,
             height: 8,
             borderRadius: "50%",
-            background: C.green,
+            background: C.cyan,
             display: "inline-block",
             animation: "glow 2s ease-in-out infinite",
           }}
@@ -76,7 +77,7 @@ export function HeroContent() {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 10,
-            color: C.green,
+            color: C.cyan,
             letterSpacing: isArabic ? 0 : 1.5,
           }}
         >
@@ -86,14 +87,14 @@ export function HeroContent() {
           style={{
             width: 1,
             height: 12,
-            background: `${C.green}40`,
+            background: `${C.cyan}40`,
           }}
         />
         <span
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 10,
-            color: C.green,
+            color: C.cyan,
             letterSpacing: isArabic ? 0 : 1,
           }}
         >
@@ -117,14 +118,7 @@ export function HeroContent() {
         <div style={{ minWidth: 0 }}>
           <h1
             style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: isMobile
-                ? "clamp(36px,10vw,52px)"
-                : "clamp(56px,5.5vw,80px)",
-              fontWeight: 700,
-              lineHeight: 0.93,
-              letterSpacing: isArabic ? 0 : "-.03em",
-              color: C.text,
+              ...TEXT.heroTitle(C, isMobile),
               paddingInlineEnd: 8,
               overflowWrap: "anywhere",
             }}
@@ -156,10 +150,9 @@ export function HeroContent() {
       >
         <p
           style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: isMobile ? 16 : 18,
+            ...TEXT.body(C),
             color: C.sub,
-            lineHeight: 1.6,
+            fontSize: isMobile ? 16 : 18,
             maxWidth: 620,
             margin: 0,
             fontWeight: 500,
@@ -251,9 +244,8 @@ export function HeroContent() {
       <p
         className="rv d5"
         style={{
-          fontFamily: "var(--font-sans)",
+          ...TEXT.bodySmall(C),
           fontSize: isMobile ? 14 : 15,
-          color: C.muted,
           lineHeight: 1.75,
           maxWidth: 540,
           marginBottom: 24,

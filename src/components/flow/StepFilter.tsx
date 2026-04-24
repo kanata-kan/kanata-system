@@ -32,7 +32,7 @@ export function StepFilter({ onNext, onBack }: Props) {
       <div style={{ maxWidth: 480 }}>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             lineHeight: 1.8,
             color: C.text,

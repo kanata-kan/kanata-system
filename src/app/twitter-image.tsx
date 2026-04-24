@@ -20,9 +20,10 @@ export default async function Image() {
     // fallback gradient shown below
   }
 
-  const accent = "#38bdf8";
-  const accentDim = "rgba(56,189,248,0.28)";
-  const accentFaint = "rgba(56,189,248,0.10)";
+  const accent = "#22d3ee";
+  const accent2 = "#a855f7";
+  const accentDim = "rgba(34,211,238,0.28)";
+  const accentFaint = "rgba(34,211,238,0.10)";
 
   return new ImageResponse(
     <div
@@ -75,7 +76,7 @@ export default async function Image() {
           height: 420,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(129,140,248,0.10) 0%, transparent 68%)",
+            "radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 68%)",
           display: "flex",
         }}
       />
@@ -88,16 +89,60 @@ export default async function Image() {
           left: 0,
           right: 0,
           height: 4,
-          background: `linear-gradient(90deg, transparent 0%, ${accent} 25%, #818cf8 65%, transparent 100%)`,
+          background: `linear-gradient(90deg, transparent 0%, ${accent} 25%, ${accent2} 65%, transparent 100%)`,
           display: "flex",
         }}
       />
 
       {/* Corner accents */}
-      <div style={{ position: "absolute", top: 22, left: 22, width: 24, height: 24, borderTop: `1.5px solid ${accentDim}`, borderLeft: `1.5px solid ${accentDim}`, display: "flex" }} />
-      <div style={{ position: "absolute", bottom: 22, left: 22, width: 24, height: 24, borderBottom: `1.5px solid ${accentDim}`, borderLeft: `1.5px solid ${accentDim}`, display: "flex" }} />
-      <div style={{ position: "absolute", top: 22, right: 22, width: 24, height: 24, borderTop: `1.5px solid ${accentDim}`, borderRight: `1.5px solid ${accentDim}`, display: "flex" }} />
-      <div style={{ position: "absolute", bottom: 22, right: 22, width: 24, height: 24, borderBottom: `1.5px solid ${accentDim}`, borderRight: `1.5px solid ${accentDim}`, display: "flex" }} />
+      <div
+        style={{
+          position: "absolute",
+          top: 22,
+          left: 22,
+          width: 24,
+          height: 24,
+          borderTop: `1.5px solid ${accentDim}`,
+          borderLeft: `1.5px solid ${accentDim}`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 22,
+          left: 22,
+          width: 24,
+          height: 24,
+          borderBottom: `1.5px solid ${accentDim}`,
+          borderLeft: `1.5px solid ${accentDim}`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 22,
+          right: 22,
+          width: 24,
+          height: 24,
+          borderTop: `1.5px solid ${accentDim}`,
+          borderRight: `1.5px solid ${accentDim}`,
+          display: "flex",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: 22,
+          right: 22,
+          width: 24,
+          height: 24,
+          borderBottom: `1.5px solid ${accentDim}`,
+          borderRight: `1.5px solid ${accentDim}`,
+          display: "flex",
+        }}
+      />
 
       {/* RIGHT PANEL — Full-bleed photo */}
       <div
@@ -125,16 +170,52 @@ export default async function Image() {
             }}
           />
         ) : (
-          <div style={{ width: "100%", height: "100%", background: `linear-gradient(135deg, #0f2132 0%, #0a0f2e 100%)`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 90, fontWeight: 800, color: accent }}>
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: `linear-gradient(135deg, #0f2132 0%, #0a0f2e 100%)`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 90,
+              fontWeight: 800,
+              color: accent,
+            }}
+          >
             {BRAND.monogram}
           </div>
         )}
 
         {/* Left fade */}
-        <div style={{ position: "absolute", top: 0, left: 0, width: 240, height: "100%", background: "linear-gradient(90deg, #060810 0%, rgba(6,8,16,0.55) 55%, transparent 100%)", zIndex: 3, display: "flex" }} />
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: 240,
+            height: "100%",
+            background:
+              "linear-gradient(90deg, #060810 0%, rgba(6,8,16,0.55) 55%, transparent 100%)",
+            zIndex: 3,
+            display: "flex",
+          }}
+        />
 
         {/* Bottom vignette */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 160, background: "linear-gradient(0deg, rgba(6,8,16,0.70) 0%, transparent 100%)", zIndex: 3, display: "flex" }} />
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 160,
+            background:
+              "linear-gradient(0deg, rgba(6,8,16,0.70) 0%, transparent 100%)",
+            zIndex: 3,
+            display: "flex",
+          }}
+        />
 
         {/* AW Monogram tile */}
         <div
@@ -153,7 +234,15 @@ export default async function Image() {
             zIndex: 10,
           }}
         >
-          <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1, color: "#f0f4ff" }}>
+          <span
+            style={{
+              fontSize: 22,
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              lineHeight: 1,
+              color: "#f0f4ff",
+            }}
+          >
             A<span style={{ color: accent }}>W</span>
           </span>
         </div>
@@ -174,30 +263,105 @@ export default async function Image() {
         }}
       >
         {/* Role badge */}
-        <div style={{ display: "flex", alignItems: "center", gap: 9, background: accentFaint, border: `1px solid ${accentDim}`, borderRadius: 100, padding: "7px 20px", marginBottom: 30, alignSelf: "flex-start" }}>
-          <div style={{ width: 7, height: 7, borderRadius: "50%", background: accent, boxShadow: `0 0 12px ${accent}, 0 0 4px ${accent}`, display: "flex" }} />
-          <span style={{ fontSize: 13, color: accent, letterSpacing: "0.12em", fontWeight: 600 }}>PRODUCT ENGINEER</span>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 9,
+            background: accentFaint,
+            border: `1px solid ${accentDim}`,
+            borderRadius: 100,
+            padding: "7px 20px",
+            marginBottom: 30,
+            alignSelf: "flex-start",
+          }}
+        >
+          <div
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: accent,
+              boxShadow: `0 0 12px ${accent}, 0 0 4px ${accent}`,
+              display: "flex",
+            }}
+          />
+          <span
+            style={{
+              fontSize: 13,
+              color: accent,
+              letterSpacing: "0.12em",
+              fontWeight: 600,
+            }}
+          >
+            PRODUCT ENGINEER
+          </span>
         </div>
 
         {/* Name */}
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 82, fontWeight: 800, color: "#f0f4ff", lineHeight: 0.93, letterSpacing: "-0.03em", marginBottom: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            fontSize: 82,
+            fontWeight: 800,
+            color: "#f0f4ff",
+            lineHeight: 0.93,
+            letterSpacing: "-0.03em",
+            marginBottom: 24,
+          }}
+        >
           {BRAND.name.split(" ").map((word, i) => (
-            <span key={i} style={{ color: i === 1 ? accent : "#f0f4ff" }}>{word}</span>
+            <span key={i} style={{ color: i === 1 ? accent : "#f0f4ff" }}>
+              {word}
+            </span>
           ))}
         </div>
 
         {/* Separator */}
-        <div style={{ display: "flex", width: 56, height: 2, background: `linear-gradient(90deg, ${accent}, transparent)`, borderRadius: 2, marginBottom: 24 }} />
+        <div
+          style={{
+            display: "flex",
+            width: 56,
+            height: 2,
+            background: `linear-gradient(90deg, ${accent}, transparent)`,
+            borderRadius: 2,
+            marginBottom: 24,
+          }}
+        />
 
         {/* Tagline */}
-        <div style={{ display: "flex", fontSize: 20, color: "rgba(200,215,245,0.72)", fontWeight: 300, letterSpacing: "0.01em", lineHeight: 1.45, marginBottom: 36 }}>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 20,
+            color: "rgba(200,215,245,0.72)",
+            fontWeight: 300,
+            letterSpacing: "0.01em",
+            lineHeight: 1.45,
+            marginBottom: 36,
+          }}
+        >
           Turning chaos into reliable systems.
         </div>
 
         {/* Skill pills */}
         <div style={{ display: "flex", gap: 10, marginBottom: 36 }}>
           {["Full-Stack", "SaaS", "Systems Design"].map((label) => (
-            <div key={label} style={{ display: "flex", padding: "5px 14px", borderRadius: 6, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)", fontSize: 12, color: "rgba(200,215,245,0.55)", letterSpacing: "0.06em", fontWeight: 500 }}>
+            <div
+              key={label}
+              style={{
+                display: "flex",
+                padding: "5px 14px",
+                borderRadius: 6,
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.10)",
+                fontSize: 12,
+                color: "rgba(200,215,245,0.55)",
+                letterSpacing: "0.06em",
+                fontWeight: 500,
+              }}
+            >
               {label}
             </div>
           ))}
@@ -205,16 +369,74 @@ export default async function Image() {
 
         {/* URL + Location */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <span style={{ fontFamily: "monospace", fontSize: 14, color: "rgba(56,189,248,0.70)", letterSpacing: "0.06em", fontWeight: 500 }}>abdelilahwajid.com</span>
-          <div style={{ width: 1, height: 14, background: "rgba(255,255,255,0.14)", display: "flex" }} />
-          <span style={{ fontFamily: "monospace", fontSize: 12, color: "rgba(200,210,240,0.35)", letterSpacing: "0.06em" }}>{BRAND.location}</span>
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 14,
+              color: "rgba(56,189,248,0.70)",
+              letterSpacing: "0.06em",
+              fontWeight: 500,
+            }}
+          >
+            abdelilahwajid.com
+          </span>
+          <div
+            style={{
+              width: 1,
+              height: 14,
+              background: "rgba(255,255,255,0.14)",
+              display: "flex",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 12,
+              color: "rgba(200,210,240,0.35)",
+              letterSpacing: "0.06em",
+            }}
+          >
+            {BRAND.location}
+          </span>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 38, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 72px", borderTop: "1px solid rgba(255,255,255,0.05)", zIndex: 6 }}>
-        <span style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.16)", letterSpacing: "0.10em" }}>PORTFOLIO · 2026</span>
-        <span style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.16)", letterSpacing: "0.10em" }}>CASE-STUDY DRIVEN · SYSTEM THINKING</span>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 38,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 72px",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          zIndex: 6,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 11,
+            color: "rgba(255,255,255,0.16)",
+            letterSpacing: "0.10em",
+          }}
+        >
+          PORTFOLIO · 2026
+        </span>
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 11,
+            color: "rgba(255,255,255,0.16)",
+            letterSpacing: "0.10em",
+          }}
+        >
+          CASE-STUDY DRIVEN · SYSTEM THINKING
+        </span>
       </div>
     </div>,
     OG_STYLES.dimensions,

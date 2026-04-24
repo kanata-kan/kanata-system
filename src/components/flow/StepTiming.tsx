@@ -44,7 +44,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
       <div>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             color: C.text,
             fontWeight: 500,

@@ -31,7 +31,7 @@ export function StepIntro({ onNext }: Props) {
       <div style={{ maxWidth: 560 }}>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 22 : 28,
             lineHeight: 1.7,
             color: C.text,

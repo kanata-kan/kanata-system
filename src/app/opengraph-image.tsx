@@ -19,9 +19,10 @@ export default async function Image() {
     // fallback gradient shown below
   }
 
-  const accent = "#38bdf8";
-  const accentDim = "rgba(56,189,248,0.28)";
-  const accentFaint = "rgba(56,189,248,0.10)";
+  const accent = "#22d3ee";
+  const accent2 = "#a855f7";
+  const accentDim = "rgba(34,211,238,0.28)";
+  const accentFaint = "rgba(34,211,238,0.10)";
 
   return new ImageResponse(
     <div
@@ -74,7 +75,7 @@ export default async function Image() {
           height: 420,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(129,140,248,0.10) 0%, transparent 68%)",
+            "radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 68%)",
           display: "flex",
         }}
       />
@@ -87,7 +88,7 @@ export default async function Image() {
           left: 0,
           right: 0,
           height: 4,
-          background: `linear-gradient(90deg, transparent 0%, ${accent} 25%, #818cf8 65%, transparent 100%)`,
+          background: `linear-gradient(90deg, transparent 0%, ${accent} 25%, ${accent2} 65%, transparent 100%)`,
           display: "flex",
         }}
       />
@@ -199,7 +200,8 @@ export default async function Image() {
             left: 0,
             width: 240,
             height: "100%",
-            background: "linear-gradient(90deg, #060810 0%, rgba(6,8,16,0.55) 55%, transparent 100%)",
+            background:
+              "linear-gradient(90deg, #060810 0%, rgba(6,8,16,0.55) 55%, transparent 100%)",
             zIndex: 3,
             display: "flex",
           }}
@@ -213,7 +215,8 @@ export default async function Image() {
             left: 0,
             right: 0,
             height: 160,
-            background: "linear-gradient(0deg, rgba(6,8,16,0.70) 0%, transparent 100%)",
+            background:
+              "linear-gradient(0deg, rgba(6,8,16,0.70) 0%, transparent 100%)",
             zIndex: 3,
             display: "flex",
           }}

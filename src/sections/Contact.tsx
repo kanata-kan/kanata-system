@@ -62,7 +62,7 @@ export function Contact() {
           <h2
             className="rv d1"
             style={{
-              fontFamily: "var(--font-serif)",
+              fontFamily: "var(--font-display)",
               fontStyle: "italic",
               fontSize: isMobile
                 ? "clamp(30px,8vw,50px)"
@@ -70,8 +70,10 @@ export function Contact() {
               letterSpacing: isArabic ? 0 : -2,
               color: C.text,
               marginBottom: 16,
-              lineHeight: 1.05,
+              lineHeight: 1.1,
               overflowWrap: "anywhere",
+              WebkitFontSmoothing: "antialiased",
+              MozOsxFontSmoothing: "grayscale",
             }}
           >
             {content.contact.headingLine1}
@@ -84,13 +86,15 @@ export function Contact() {
           <p
             className="rv d2"
             style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 14,
+              fontFamily: "var(--font-body)",
+              fontSize: 16,
               color: C.muted,
-              lineHeight: 1.85,
+              lineHeight: 1.7,
               marginBottom: 36,
-              fontWeight: 300,
+              fontWeight: 400,
               maxWidth: 460,
+              WebkitFontSmoothing: "antialiased",
+              MozOsxFontSmoothing: "grayscale",
             }}
           >
             {content.contact.paragraphLine1}
@@ -174,7 +178,7 @@ export function Contact() {
               maxWidth: 460,
               padding: "14px 20px",
               borderRadius: 12,
-              background: "#25D366",
+              background: `linear-gradient(135deg, ${C.cyan}, ${C.purple})`,
               color: "#fff",
               fontFamily: "var(--font-mono)",
               fontSize: 11,
@@ -188,13 +192,10 @@ export function Contact() {
               textAlign: "center",
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.background = "#1EBE5A";
               e.currentTarget.style.transform = "translateY(-1px)";
-              e.currentTarget.style.boxShadow =
-                "0 4px 20px rgba(37,211,102,.35)";
+              e.currentTarget.style.boxShadow = `0 4px 20px ${C.cyan}40`;
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.background = "#25D366";
               e.currentTarget.style.transform = "none";
               e.currentTarget.style.boxShadow = "none";
             }}

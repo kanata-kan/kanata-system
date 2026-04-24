@@ -243,7 +243,7 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
         {/* Headline */}
         <h1
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontStyle: "italic",
             fontSize: isMobile ? 30 : 52,
             letterSpacing: -2,
@@ -321,7 +321,7 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
               <div key={s.l} style={{ textAlign: "center", minWidth: 50 }}>
                 <div
                   style={{
-                    fontFamily: "var(--font-serif)",
+                    fontFamily: "var(--font-display)",
                     fontSize: isMobile ? 22 : 28,
                     fontStyle: "italic",
                     color,

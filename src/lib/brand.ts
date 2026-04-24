@@ -29,6 +29,14 @@ export const BRAND = {
    * Profile photo path (used in OG images)
    */
   profilePhoto: "Abdelilah-Wajid.png",
+
+  /**
+   * Brand colors - cyan to violet gradient
+   */
+  colors: {
+    cyan: "#22d3ee",
+    violet: "#a855f7",
+  },
 } as const;
 
 /**

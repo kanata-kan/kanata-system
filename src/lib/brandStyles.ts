@@ -11,19 +11,18 @@
 
 /* ── SHARED COLORS ── mirrors DARK theme in tokens/themes.ts ── */
 export const BRAND_COLORS = {
-  primary: "#38BDF8",   // Cyan — matches DARK.cyan
-
-  secondary: "#8B949E", // Matches DARK.muted
+  primary: "#22d3ee", // Cyan — matches DARK.cyan
+  secondary: "#a855f7", // Violet — matches DARK.purple
 
   text: {
-    light: "#F0F6FC",   // Matches DARK.text
-    muted: "#8B949E",   // Matches DARK.muted
-    dim:   "#3D444D",   // Matches DARK.faint
+    light: "#e2e8f0", // Matches DARK.text
+    muted: "#64748b", // Matches DARK.muted
+    dim: "#475569", // Matches DARK.faint
   },
 
   bg: {
-    darkStart: "#0D1117", // Matches DARK.bg
-    darkEnd:   "#161B22", // Matches DARK.bg2
+    darkStart: "#0e1117", // Matches DARK.bg
+    darkEnd: "#0d1b2a", // Matches DARK.bg2
   },
 } as const;
 
@@ -31,14 +30,14 @@ export const BRAND_COLORS = {
 export const NAV_STYLES = {
   monogram: {
     size: {
-      width: 32,   // Smaller = more confident
+      width: 32, // Smaller = more confident
       height: 32,
     },
     border: {
       radius: 6,
       width: "1px",
     },
-    gradientOpacity: 0,  // No gradient — flat bg with border only
+    gradientOpacity: 0, // No gradient — flat bg with border only
     hover: {
       gradientOpacity: 8,
       transition: "all 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -48,7 +47,7 @@ export const NAV_STYLES = {
   monogramText: {
     fontSize: 11,
     fontWeight: 600,
-    letterSpacing: 2,   // Tight mono feel
+    letterSpacing: 2, // Tight mono feel
   },
 
   spacing: {
@@ -58,7 +57,7 @@ export const NAV_STYLES = {
 
   name: {
     fontSize: 12,
-    fontWeight: 400,    // Light weight = editorial maturity
+    fontWeight: 400, // Light weight = editorial maturity
     letterSpacing: 0.2,
     lastName: {
       fontWeight: 600,
@@ -82,14 +81,14 @@ export const OG_STYLES = {
   },
 
   padding: {
-    horizontal: 96,    // More breathing room
+    horizontal: 96, // More breathing room
     vertical: 80,
   },
 
   background: {
     start: BRAND_COLORS.bg.darkStart,
-    end:   BRAND_COLORS.bg.darkEnd,
-    angle: 180,        // Straight vertical — no diagonal clichés
+    end: BRAND_COLORS.bg.darkEnd,
+    angle: 180, // Straight vertical — no diagonal clichés
   },
 
   /**
@@ -100,7 +99,7 @@ export const OG_STYLES = {
     position: { top: -80, right: -80 },
     size: 420,
     color: BRAND_COLORS.primary,
-    opacity: "17",  // 2-digit hex alpha ≈ 9% — appended directly to hex color
+    opacity: "17", // 2-digit hex alpha ≈ 9% — appended directly to hex color
   },
 
   /**
@@ -109,9 +108,9 @@ export const OG_STYLES = {
   monogram: {
     fontSize: 64,
     fontWeight: 900,
-    letterSpacing: -2,  // Tight = modern
+    letterSpacing: -2, // Tight = modern
     colors: {
-      first:  BRAND_COLORS.text.light,
+      first: BRAND_COLORS.text.light,
       second: BRAND_COLORS.primary,
     },
   },
@@ -131,7 +130,7 @@ export const OG_STYLES = {
     fontSize: 56,
     fontWeight: 800,
     color: BRAND_COLORS.text.light,
-    lineHeight: 0.95,   // Tight leading = magazine cover energy
+    lineHeight: 0.95, // Tight leading = magazine cover energy
     letterSpacing: -2,
     marginBottom: 20,
   },
@@ -140,13 +139,13 @@ export const OG_STYLES = {
     fontSize: 11,
     fontWeight: 500,
     color: BRAND_COLORS.text.muted,
-    letterSpacing: 6,   // All-caps stretched label
+    letterSpacing: 6, // All-caps stretched label
     marginBottom: 28,
   },
 
   tagline: {
     fontSize: 18,
-    fontWeight: 300,    // Thin weight = contrast with heavy name
+    fontWeight: 300, // Thin weight = contrast with heavy name
     color: BRAND_COLORS.text.muted,
     letterSpacing: 0.3,
   },
@@ -161,19 +160,19 @@ export const OG_STYLES = {
   photo: {
     size: 280,
     border: {
-      width: 1,         // Hair-thin border — restrained luxury
+      width: 1, // Hair-thin border — restrained luxury
       color: BRAND_COLORS.primary,
-      radius: "4px",    // Nearly square, not circular
+      radius: "4px", // Nearly square, not circular
     },
     shadow: {
       color: BRAND_COLORS.primary,
-      opacity: "1F",  // 2-digit hex alpha ≈ 12% — appended directly to hex color
+      opacity: "1F", // 2-digit hex alpha ≈ 12% — appended directly to hex color
       blur: 48,
     },
     fallback: {
       gradient: {
         start: BRAND_COLORS.bg.darkStart,
-        end:   BRAND_COLORS.bg.darkEnd,
+        end: BRAND_COLORS.bg.darkEnd,
         angle: 135,
       },
       text: {
@@ -185,12 +184,12 @@ export const OG_STYLES = {
   },
 
   spacing: {
-    monogramMarginBottom: 32,  // More air = more confidence
+    monogramMarginBottom: 32, // More air = more confidence
     photoPaddingLeft: 60,
   },
 } as const;
 
 /* ── TYPE DEFINITIONS ── */
 export type BrandColors = typeof BRAND_COLORS;
-export type NavStyles   = typeof NAV_STYLES;
-export type OgStyles    = typeof OG_STYLES;
+export type NavStyles = typeof NAV_STYLES;
+export type OgStyles = typeof OG_STYLES;

@@ -211,7 +211,7 @@ export const site: SiteData = {
   skillGroups: [
     {
       title: "Frontend",
-      color: "#38BDF8",
+      color: "#22d3ee",
       items: [
         "React / Next.js",
         "TypeScript",

@@ -17,6 +17,22 @@ import {
 } from "@/lib/seo";
 import { AppShell } from "./AppShell";
 import "./globals.css";
+import { Outfit } from "next/font/google";
+import { Inter } from "next/font/google";
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = await cookies();
@@ -48,6 +64,16 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
         "max-video-preview": -1,
       },
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
     },
     openGraph: {
       type: "website",
@@ -109,7 +135,12 @@ export default async function RootLayout({
   ];
 
   return (
-    <html lang={locale} dir={dir} data-scroll-behavior="smooth">
+    <html
+      lang={locale}
+      dir={dir}
+      data-scroll-behavior="smooth"
+      className={`${outfit.variable} ${inter.variable}`}
+    >
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content

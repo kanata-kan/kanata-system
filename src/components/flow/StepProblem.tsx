@@ -37,7 +37,7 @@ export function StepProblem({ onNext, onBack, formData, setField }: StepProps) {
       <div>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             color: C.text,
             fontWeight: 500,
@@ -107,7 +107,9 @@ export function StepProblem({ onNext, onBack, formData, setField }: StepProps) {
         )}
       </div>
 
-      <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
+      <div
+        style={{ display: "flex", gap: 12, justifyContent: "space-between" }}
+      >
         {onBack && (
           <button
             onClick={onBack}

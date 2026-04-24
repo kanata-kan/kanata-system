@@ -65,7 +65,7 @@ export function StepSubmit({ formData, onBack }: Props) {
 
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             color: C.text,
             fontWeight: 500,
@@ -130,7 +130,7 @@ export function StepSubmit({ formData, onBack }: Props) {
       <div>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             color: C.text,
             fontWeight: 500,

@@ -87,7 +87,7 @@ export function WorkSmallCards({
           </div>
           <div
             style={{
-              fontFamily: "var(--font-serif)",
+              fontFamily: "var(--font-display)",
               fontSize: 17,
               fontStyle: "italic",
               color: C.text,

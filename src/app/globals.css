@@ -5,21 +5,19 @@
 ────────────────────────────────────────────────── */
 
 :root {
-  --cyan: #38bdf8;
-  --purple: #a78bfa;
+  --cyan: #22d3ee;
+  --purple: #a855f7;
   --green: #3fb950;
   --amber: #f0883e;
 
   /* ✅ FIX: Navbar height (source of truth) */
   --navbar-height: 64px;
 
-  --font-serif:
-    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-display: var(--font-outfit), "Outfit", system-ui, sans-serif;
+  --font-body: var(--font-inter), "Inter", system-ui, sans-serif;
   --font-mono:
-    "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Consolas, "Liberation Mono",
-    Menlo, monospace;
-  --font-sans:
-    "Segoe UI", Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
+    "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Consolas,
+    "Liberation Mono", Menlo, monospace;
 }
 
 *,
@@ -93,25 +91,50 @@
 }
 
 /* Stagger */
-.d1 { transition-delay: 0.08s; }
-.d2 { transition-delay: 0.16s; }
-.d3 { transition-delay: 0.24s; }
-.d4 { transition-delay: 0.32s; }
-.d5 { transition-delay: 0.4s; }
-.d6 { transition-delay: 0.48s; }
-.d7 { transition-delay: 0.56s; }
+.d1 {
+  transition-delay: 0.08s;
+}
+.d2 {
+  transition-delay: 0.16s;
+}
+.d3 {
+  transition-delay: 0.24s;
+}
+.d4 {
+  transition-delay: 0.32s;
+}
+.d5 {
+  transition-delay: 0.4s;
+}
+.d6 {
+  transition-delay: 0.48s;
+}
+.d7 {
+  transition-delay: 0.56s;
+}
 
 /* Animations */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes glow {
-  0%,100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -121,7 +144,8 @@
   }
 }
 @keyframes avatarPulse {
-  0%,100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -129,8 +153,12 @@
   }
 }
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Hover */
@@ -159,7 +187,9 @@ html {
 body {
   overflow-x: hidden;
   width: 100%;
-  transition: background 0.35s, color 0.35s;
+  transition:
+    background 0.35s,
+    color 0.35s;
 }
 
 html[data-scroll-behavior="smooth"] {

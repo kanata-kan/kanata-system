@@ -704,7 +704,7 @@ function SubHeader({
       </div>
       <h3
         style={{
-          fontFamily: "var(--font-serif)",
+          fontFamily: "var(--font-display)",
           fontStyle: "italic",
           fontSize: isMobile ? 20 : 26,
           color: C.text,
@@ -762,7 +762,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         </div>
         <h2
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontStyle: "italic",
             fontSize: isMobile ? 26 : 38,
             color: C.text,

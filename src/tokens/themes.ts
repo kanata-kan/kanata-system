@@ -32,28 +32,28 @@ export interface Theme {
 }
 
 export const DARK: Theme = {
-  bg: "#0D1117",
-  bg2: "#161B22",
+  bg: "#0e1117",
+  bg2: "#0d1b2a",
   bg3: "#1C2333",
   card: "#21262D",
 
-  text: "#F0F6FC",
-  sub: "#C9D1D9",
-  muted: "#8B949E",
-  faint: "#7D8590",
+  text: "#e2e8f0",
+  sub: "#cbd5e1",
+  muted: "#64748b",
+  faint: "#475569",
 
-  cyan: "#38BDF8",
+  cyan: "#22d3ee",
   green: "#3FB950",
   amber: "#F0883E",
-  purple: "#A78BFA",
+  purple: "#a855f7",
 
-  border: "rgba(56,189,248,0.12)",
-  border2: "rgba(56,189,248,0.30)",
-  line: "rgba(240,246,252,0.06)",
+  border: "rgba(34,211,238,0.12)",
+  border2: "rgba(34,211,238,0.30)",
+  line: "rgba(226,232,240,0.06)",
 
-  gridLine: "rgba(56,189,248,0.10)",
-  glow1: "rgba(56,189,248,0.14)",
-  glow2: "rgba(167,139,250,0.10)",
+  gridLine: "rgba(34,211,238,0.10)",
+  glow1: "rgba(34,211,238,0.14)",
+  glow2: "rgba(168,85,247,0.10)",
   shadow: "0 24px 48px rgba(0,0,0,0.35)",
 };
 
@@ -76,27 +76,27 @@ export function resolveColor(C: Theme, key: string): string {
 }
 
 export const LIGHT: Theme = {
-  bg: "#F8F9FB",
-  bg2: "#FFFFFF",
-  bg3: "#EEF1F5",
-  card: "#E4E8EE",
+  bg: "#f8fafc",
+  bg2: "#ffffff",
+  bg3: "#f1f5f9",
+  card: "#e2e8f0",
 
-  text: "#1B1F24",
-  sub: "#2D333B",
-  muted: "#4D5562",
-  faint: "#6E7781",
+  text: "#0f172a",
+  sub: "#334155",
+  muted: "#64748b",
+  faint: "#94a3b8",
 
-  cyan: "#0550AE",
+  cyan: "#22d3ee",
   green: "#116329",
   amber: "#7D4E00",
-  purple: "#512EA8",
+  purple: "#a855f7",
 
-  border: "rgba(27,31,36,0.12)",
-  border2: "rgba(27,31,36,0.25)",
-  line: "rgba(27,31,36,0.08)",
+  border: "rgba(15,23,42,0.12)",
+  border2: "rgba(15,23,42,0.25)",
+  line: "rgba(15,23,42,0.08)",
 
-  gridLine: "rgba(27,31,36,0.04)",
-  glow1: "rgba(5,80,174,0.06)",
-  glow2: "rgba(81,46,168,0.05)",
-  shadow: "0 24px 48px rgba(27,31,36,0.08)",
+  gridLine: "rgba(15,23,42,0.04)",
+  glow1: "rgba(34,211,238,0.06)",
+  glow2: "rgba(168,85,247,0.05)",
+  shadow: "0 24px 48px rgba(15,23,42,0.08)",
 };

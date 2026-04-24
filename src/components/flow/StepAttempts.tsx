@@ -9,7 +9,12 @@ import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import type { StepProps } from "./types";
 
-export function StepAttempts({ onNext, onBack, formData, setField }: StepProps) {
+export function StepAttempts({
+  onNext,
+  onBack,
+  formData,
+  setField,
+}: StepProps) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
 
@@ -27,7 +32,7 @@ export function StepAttempts({ onNext, onBack, formData, setField }: StepProps) 
       <div>
         <p
           style={{
-            fontFamily: "var(--font-serif)",
+            fontFamily: "var(--font-display)",
             fontSize: isMobile ? 20 : 26,
             color: C.text,
             fontWeight: 500,
@@ -94,7 +99,9 @@ export function StepAttempts({ onNext, onBack, formData, setField }: StepProps) 
         }}
       />
 
-      <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
+      <div
+        style={{ display: "flex", gap: 12, justifyContent: "space-between" }}
+      >
         {onBack && (
           <button
             onClick={onBack}
