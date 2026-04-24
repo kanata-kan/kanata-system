@@ -49,6 +49,9 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
 
   const lightbox = open ? (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Profile photo"
       onClick={closeModal}
       style={{
         position: "fixed",
@@ -70,6 +73,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
     >
       {/* Close button */}
       <button
+        aria-label="Close photo"
         onClick={closeModal}
         style={{
           position: "absolute",
@@ -266,6 +270,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             alt="Abdelilah Wajid"
             width={size}
             height={size}
+            sizes={`${size}px`}
             style={{
               width: "100%",
               height: "100%",

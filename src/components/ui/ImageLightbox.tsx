@@ -47,6 +47,9 @@ export function ImageLightbox({ src, alt, caption, C, children }: ImageLightboxP
 
   const lightbox = open ? (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt}
       onClick={closeModal}
       style={{
         position: "fixed",
@@ -68,6 +71,7 @@ export function ImageLightbox({ src, alt, caption, C, children }: ImageLightboxP
     >
       {/* Close button */}
       <button
+        aria-label="Close"
         onClick={closeModal}
         style={{
           position: "absolute",

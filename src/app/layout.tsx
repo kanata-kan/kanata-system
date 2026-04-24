@@ -64,6 +64,9 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir} data-scroll-behavior="smooth">
       <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <AppShell>{children}</AppShell>
       </body>
     </html>

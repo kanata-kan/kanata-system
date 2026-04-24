@@ -13,6 +13,11 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
 
   return (
     <div
+      id="mobile-menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Navigation menu"
+      aria-hidden={!open}
       style={{
         position: "fixed",
         inset: 0,
@@ -20,10 +25,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         background: C.bg,
         display: "flex",
         flexDirection: "column",
-
-        // ✅ FIX هنا
         padding: "var(--navbar-height) 28px 48px",
-
         opacity: open ? 1 : 0,
         pointerEvents: open ? "all" : "none",
         transition: "opacity .28s",

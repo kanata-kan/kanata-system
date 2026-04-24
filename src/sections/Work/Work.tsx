@@ -60,10 +60,13 @@ export function Work() {
         </Stack>
 
         {hasMultipleProjects && (
-          <Stack
-            direction="row"
-            gap="xs"
+          <div
+            role="tablist"
+            aria-label="Projects"
             style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 4,
               marginBottom: 24,
               background: C.bg2,
               borderRadius: 10,
@@ -71,13 +74,15 @@ export function Work() {
               border: `1px solid ${C.border}`,
               overflowX: "auto",
               WebkitOverflowScrolling: "touch",
-              scrollbarWidth: "none",
+              scrollbarWidth: "none" as React.CSSProperties["scrollbarWidth"],
               transition: "background .35s",
             }}
           >
             {PROJECTS.map((pr, i) => (
               <button
                 key={pr.n}
+                role="tab"
+                aria-selected={active === i}
                 onClick={() => setActive(i)}
                 style={{
                   display: "flex",
@@ -129,7 +134,7 @@ export function Work() {
                 )}
               </button>
             ))}
-          </Stack>
+          </div>
         )}
 
         <WorkFeaturedCard C={C} p={p} isMobile={isMobile} />

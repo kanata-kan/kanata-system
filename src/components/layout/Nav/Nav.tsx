@@ -122,6 +122,9 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
           {isMobile && (
             <button
               onClick={() => setOpen((o) => !o)}
+              aria-label={open ? "Close navigation" : "Open navigation"}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
               style={{
                 width: 44,
                 height: 44,
