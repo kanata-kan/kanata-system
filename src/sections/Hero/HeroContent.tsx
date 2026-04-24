@@ -20,6 +20,7 @@ export function HeroContent() {
   const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
   const content = getContent(locale);
+  const isArabic = locale === "ar";
 
   const ROLES = content.hero.roles;
   const widestRole = ROLES.reduce(
@@ -42,7 +43,7 @@ export function HeroContent() {
   const avatarSize = isMobile ? 80 : 120;
 
   return (
-    <div>
+    <div style={{ width: "100%", minWidth: 0 }}>
       {/* Available badge with location */}
       <div
         className="rv d1"
@@ -50,11 +51,15 @@ export function HeroContent() {
           display: "inline-flex",
           alignItems: "center",
           gap: 8,
+          flexWrap: "wrap",
+          rowGap: 6,
+          maxWidth: "100%",
           marginBottom: isMobile ? 28 : 36,
           background: `${C.green}15`,
           border: `1px solid ${C.green}35`,
           borderRadius: 40,
           padding: "6px 16px",
+          lineHeight: 1.4,
         }}
       >
         <span
@@ -72,7 +77,7 @@ export function HeroContent() {
             fontFamily: "var(--font-mono)",
             fontSize: 10,
             color: C.green,
-            letterSpacing: 1.5,
+            letterSpacing: isArabic ? 0 : 1.5,
           }}
         >
           {content.hero.badge}
@@ -89,7 +94,7 @@ export function HeroContent() {
             fontFamily: "var(--font-mono)",
             fontSize: 10,
             color: C.green,
-            letterSpacing: 1,
+            letterSpacing: isArabic ? 0 : 1,
           }}
         >
           {content.hero.avatar.infoItems[0]}
@@ -102,6 +107,7 @@ export function HeroContent() {
         style={{
           display: "flex",
           alignItems: "center",
+          flexWrap: isMobile ? "wrap" : "nowrap",
           gap: isMobile ? 18 : 28,
           marginBottom: isMobile ? 16 : 20,
         }}
@@ -117,9 +123,10 @@ export function HeroContent() {
                 : "clamp(56px,5.5vw,80px)",
               fontWeight: 700,
               lineHeight: 0.93,
-              letterSpacing: "-.03em",
+              letterSpacing: isArabic ? 0 : "-.03em",
               color: C.text,
-              paddingRight: 8,
+              paddingInlineEnd: 8,
+              overflowWrap: "anywhere",
             }}
           >
             {content.hero.name.base}
@@ -128,7 +135,7 @@ export function HeroContent() {
               style={{
                 fontStyle: "italic",
                 fontWeight: 400,
-                paddingRight: 6,
+                paddingInlineEnd: 6,
               }}
             >
               {content.hero.name.highlight}
@@ -156,6 +163,7 @@ export function HeroContent() {
             maxWidth: 620,
             margin: 0,
             fontWeight: 500,
+            overflowWrap: "anywhere",
           }}
         >
           {content.hero.positioning}
@@ -170,6 +178,7 @@ export function HeroContent() {
           alignItems: "center",
           gap: 12,
           marginBottom: 18,
+          minWidth: 0,
         }}
       >
         <div
@@ -184,10 +193,14 @@ export function HeroContent() {
             fontFamily: "var(--font-mono)",
             fontSize: isMobile ? 11 : 13,
             color: C.sub,
-            letterSpacing: 1,
+            letterSpacing: isArabic ? 0 : 1,
             transition: "opacity 0.3s",
             display: "inline-grid",
             alignItems: "center",
+            minWidth: 0,
+            maxWidth: "100%",
+            direction: isArabic ? "rtl" : "ltr",
+            textAlign: isArabic ? "right" : "left",
           }}
         >
           <span
@@ -196,6 +209,7 @@ export function HeroContent() {
               gridArea: "1 / 1",
               visibility: "hidden",
               whiteSpace: "pre-wrap",
+              overflowWrap: "anywhere",
             }}
           >
             {widestRole}
@@ -204,11 +218,17 @@ export function HeroContent() {
                 display: "inline-block",
                 width: 2,
                 height: "0.9em",
-                marginLeft: 4,
+                marginInlineStart: 4,
               }}
             />
           </span>
-          <span style={{ gridArea: "1 / 1", whiteSpace: "pre-wrap" }}>
+          <span
+            style={{
+              gridArea: "1 / 1",
+              whiteSpace: "pre-wrap",
+              overflowWrap: "anywhere",
+            }}
+          >
             {content.hero.roles[ri]}
             <span
               style={{
@@ -217,7 +237,7 @@ export function HeroContent() {
                 height: "0.9em",
                 background: C.cyan,
                 verticalAlign: "middle",
-                marginLeft: 4,
+                marginInlineStart: 4,
                 borderRadius: 1,
                 opacity: cur ? 1 : 0,
                 transition: "opacity .1s",
@@ -238,6 +258,7 @@ export function HeroContent() {
           maxWidth: 540,
           marginBottom: 24,
           fontWeight: 300,
+          overflowWrap: "anywhere",
         }}
       >
         {content.hero.bio}

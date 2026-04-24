@@ -32,7 +32,7 @@ export function NavLinks({ C, onNavigate }: NavLinksProps) {
             cursor: "pointer",
           }}
         >
-          <span style={{ color: C.faint, marginRight: 4 }}>{l.n}</span>
+          <span style={{ color: C.faint, marginInlineEnd: 4 }}>{l.n}</span>
           {l.label}
         </button>
       ))}

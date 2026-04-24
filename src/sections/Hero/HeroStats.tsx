@@ -82,9 +82,9 @@ export function HeroStats() {
         <div
           key={m.label}
           style={{
-            paddingRight: 36,
-            marginRight: 36,
-            borderRight:
+            paddingInlineEnd: 36,
+            marginInlineEnd: 36,
+            borderInlineEnd:
               i < metrics.length - 1 ? `1px solid ${C.line}` : "none",
           }}
         >

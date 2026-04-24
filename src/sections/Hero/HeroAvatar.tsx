@@ -109,6 +109,7 @@ export function HeroAvatar() {
   const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
   const content = getContent(locale);
+  const isArabic = locale === "ar";
 
   const SOCIALS = content.hero.avatar.socials.map((s, i) => ({
     icon: SOCIAL_ICONS[i],
@@ -134,6 +135,7 @@ export function HeroAvatar() {
             display: "flex",
             gap: 8,
             justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
           {SOCIALS.map(({ icon, href, label }) => (
@@ -144,9 +146,10 @@ export function HeroAvatar() {
               rel="noopener noreferrer"
               aria-label={label}
               style={{
-                flex: 1,
-                maxWidth: 160,
-                height: 44,
+                flex: "1 1 140px",
+                minWidth: 0,
+                maxWidth: "100%",
+                minHeight: 44,
                 borderRadius: 10,
                 background: C.bg2,
                 border: `1px solid ${C.border}`,
@@ -154,6 +157,7 @@ export function HeroAvatar() {
                 alignItems: "center",
                 justifyContent: "center",
                 gap: 8,
+                padding: "8px 12px",
                 cursor: "pointer",
                 transition: "all .2s",
                 textDecoration: "none",
@@ -163,9 +167,12 @@ export function HeroAvatar() {
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: 10,
+                  fontSize: isArabic ? 9 : 10,
                   color: C.muted,
-                  letterSpacing: 1,
+                  letterSpacing: isArabic ? 0 : 1,
+                  textAlign: "center",
+                  lineHeight: 1.25,
+                  overflowWrap: "anywhere",
                 }}
               >
                 {label.toUpperCase()}
@@ -242,8 +249,8 @@ export function HeroAvatar() {
                     width: 24,
                     color: C.faint,
                     fontSize: 10,
-                    textAlign: "right",
-                    marginRight: 16,
+                    textAlign: isArabic ? "left" : "right",
+                    marginInlineEnd: 16,
                     userSelect: "none",
                   }}
                 >

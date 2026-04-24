@@ -263,24 +263,24 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
                   borderRadius: 12,
                   background: C.bg2,
                   borderTop: `1px solid ${C.line}`,
-                  borderRight: `1px solid ${C.line}`,
+                  borderInlineEnd: `1px solid ${C.line}`,
                   borderBottom: `1px solid ${C.line}`,
-                  borderLeft: `3px solid #3FB95060`,
+                  borderInlineStart: `3px solid #3FB95060`,
                   transition: "all .25s",
                   position: "relative",
                 }}
                 onMouseOver={(e) => {
                   e.currentTarget.style.background = C.bg3;
                   e.currentTarget.style.borderTopColor = `#3FB95030`;
-                  e.currentTarget.style.borderRightColor = `#3FB95030`;
+                  e.currentTarget.style.borderInlineEndColor = `#3FB95030`;
                   e.currentTarget.style.borderBottomColor = `#3FB95030`;
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.background = C.bg2;
                   e.currentTarget.style.borderTopColor = C.line;
-                  e.currentTarget.style.borderRightColor = C.line;
+                  e.currentTarget.style.borderInlineEndColor = C.line;
                   e.currentTarget.style.borderBottomColor = C.line;
-                  e.currentTarget.style.borderLeftColor = `#3FB95060`;
+                  e.currentTarget.style.borderInlineStartColor = `#3FB95060`;
                 }}
               >
                 <div

@@ -117,7 +117,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
         <div
           style={{
             padding: isMobile ? 22 : 36,
-            borderRight: isMobile ? "none" : `1px solid ${C.line}`,
+            borderInlineEnd: isMobile ? "none" : `1px solid ${C.line}`,
           }}
         >
           <span
@@ -258,7 +258,13 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                     >
                       {section.title}
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 8,
+                      }}
+                    >
                       {section.items.map((item) => (
                         <span
                           key={`${section.title}-${item}`}
@@ -400,7 +406,13 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   >
                     {section.title}
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                    }}
+                  >
                     {section.items.map((item) => (
                       <div
                         key={`${section.title}-${item}`}

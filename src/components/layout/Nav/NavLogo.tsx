@@ -1,8 +1,8 @@
 /**
  * @file NavLogo.tsx
  * @description Professional brand identity component with monogram, name, and tagline.
- * Hybrid styling: className for static styles, inline styles for theme integration.
- * Uses NAV_STYLES from brandStyles.ts for consistent styling.
+ * RTL fix: SVG is always LTR (dir="ltr" wrapper). Button layout flips via CSS flex
+ * so the icon appears on the correct side in both locales without manual x-position hacks.
  */
 
 import type { Theme } from "@/tokens/themes";
@@ -20,8 +20,8 @@ interface NavLogoProps {
 export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
   const { locale } = useLocale();
   const content = getContent(locale);
+  const isArabic = locale === "ar";
 
-  // Extract first name and last name for highlighting from BRAND
   const nameParts = BRAND.name.split(" ");
   const firstName = nameParts[0];
   const lastName = nameParts.slice(1).join(" ");
@@ -35,6 +35,11 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
       style={{
         display: "flex",
         alignItems: "center",
+        /*
+         * In RTL, flex-direction reverses so the icon naturally moves to
+         * the right side — no manual position hacks needed.
+         */
+        flexDirection: isArabic ? "row-reverse" : "row",
         gap: NAV_STYLES.spacing.gap,
         flexShrink: 0,
         cursor: "pointer",
@@ -43,90 +48,102 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
         padding: 0,
       }}
     >
-      {/* Monogram — inline SVG mirroring icon.svg identity */}
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ display: "block", flexShrink: 0 }}
-      >
-        <defs>
-          <linearGradient
-            id="navlogo-bg"
-            x1="0"
-            y1="0"
-            x2="32"
-            y2="32"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%" stopColor={C.bg} />
-            <stop offset="100%" stopColor={C.bg2} />
-          </linearGradient>
-          <radialGradient id="navlogo-glow" cx="80%" cy="15%" r="55%">
-            <stop offset="0%" stopColor={C.cyan} stopOpacity="0.13" />
-            <stop offset="100%" stopColor={C.cyan} stopOpacity="0" />
-          </radialGradient>
-          <pattern
-            id="navlogo-grid"
-            width="4"
-            height="4"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M 4 0 L 0 0 0 4"
-              fill="none"
-              stroke={C.faint}
-              strokeWidth="0.4"
-            />
-          </pattern>
-          <clipPath id="navlogo-clip">
-            <rect width="32" height="32" rx="7" />
-          </clipPath>
-        </defs>
-
-        <rect width="32" height="32" rx="7" fill="url(#navlogo-bg)" />
-        <rect
+      {/*
+       * SVG Monogram — always rendered LTR.
+       * Wrapping in a div with dir="ltr" isolates it from the parent
+       * RTL context so coordinates stay stable.
+       */}
+      <div style={{ direction: "ltr", flexShrink: 0, display: "flex" }}>
+        <svg
           width="32"
           height="32"
-          fill="url(#navlogo-grid)"
-          clipPath="url(#navlogo-clip)"
-          opacity={C.bg === "#0D1117" ? 0.55 : 0.3}
-        />
-        <rect width="32" height="32" rx="7" fill="url(#navlogo-glow)" />
-
-        {/* A — white italic serif */}
-        <text
-          x="3"
-          y="22"
-          fontFamily="Georgia, 'Times New Roman', serif"
-          fontStyle="italic"
-          fontWeight="700"
-          fontSize="14"
-          fill={C.text}
-          opacity={0.95}
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{ display: "block" }}
         >
-          {BRAND.monogram[0]}
-        </text>
+          <defs>
+            <linearGradient
+              id="navlogo-bg"
+              x1="0"
+              y1="0"
+              x2="32"
+              y2="32"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor={C.bg} />
+              <stop offset="100%" stopColor={C.bg2} />
+            </linearGradient>
 
-        {/* W — cyan upright serif */}
-        <text
-          x="13"
-          y="22"
-          fontFamily="Georgia, 'Times New Roman', serif"
-          fontStyle="normal"
-          fontWeight="700"
-          fontSize="14"
-          fill={C.cyan}
-        >
-          {BRAND.monogram[1]}
-        </text>
+            <radialGradient id="navlogo-glow" cx="80%" cy="15%" r="55%">
+              <stop offset="0%" stopColor={C.cyan} stopOpacity="0.13" />
+              <stop offset="100%" stopColor={C.cyan} stopOpacity="0" />
+            </radialGradient>
 
-        {/* Brand dot — signature mark */}
-        <circle cx="29" cy="9" r="1.5" fill={C.cyan} />
-      </svg>
+            <pattern
+              id="navlogo-grid"
+              width="4"
+              height="4"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 4 0 L 0 0 0 4"
+                fill="none"
+                stroke={C.faint}
+                strokeWidth="0.4"
+              />
+            </pattern>
 
-      {/* Name and Tagline - Desktop Only */}
+            <clipPath id="navlogo-clip">
+              <rect width="32" height="32" rx="7" />
+            </clipPath>
+          </defs>
+
+          {/* Background layers */}
+          <rect width="32" height="32" rx="7" fill="url(#navlogo-bg)" />
+          <rect
+            width="32"
+            height="32"
+            fill="url(#navlogo-grid)"
+            clipPath="url(#navlogo-clip)"
+            opacity={C.bg === "#0D1117" ? 0.55 : 0.3}
+          />
+          <rect width="32" height="32" rx="7" fill="url(#navlogo-glow)" />
+
+          {/*
+           * Monogram — fixed LTR positions always.
+           * A (italic, white) left | W (upright, cyan) right
+           */}
+          <text
+            x="3"
+            y="22"
+            fontFamily="Georgia, 'Times New Roman', serif"
+            fontStyle="italic"
+            fontWeight="700"
+            fontSize="14"
+            fill={C.text}
+            opacity={0.95}
+          >
+            {BRAND.monogram[0]}
+          </text>
+
+          <text
+            x="13"
+            y="22"
+            fontFamily="Georgia, 'Times New Roman', serif"
+            fontStyle="normal"
+            fontWeight="700"
+            fontSize="14"
+            fill={C.cyan}
+          >
+            {BRAND.monogram[1]}
+          </text>
+
+          {/* Brand dot — top-right corner, always fixed */}
+          <circle cx="28" cy="5" r="1.5" fill={C.cyan} />
+        </svg>
+      </div>
+
+      {/* Name + Tagline — desktop only */}
       {!isMobile && (
         <div
           className="nav-logo-text"
@@ -134,9 +151,13 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
             display: "flex",
             flexDirection: "column",
             gap: NAV_STYLES.spacing.textGap,
+            /*
+             * Text aligns to the reading direction naturally.
+             * No explicit textAlign needed — inherits from parent dir.
+             */
           }}
         >
-          {/* Name with highlighted last name */}
+          {/* Name */}
           <div
             className="nav-logo-name"
             style={{
@@ -147,6 +168,12 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
               fontWeight: NAV_STYLES.name.fontWeight,
               display: "flex",
               alignItems: "baseline",
+              /*
+               * In RTL, flex-direction reverses so lastName (cyan)
+               * appears first visually (right side), which is correct
+               * for Arabic reading order.
+               */
+              flexDirection: isArabic ? "row-reverse" : "row",
               gap: 4,
             }}
           >

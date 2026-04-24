@@ -22,6 +22,12 @@
     "Segoe UI", Inter, "Helvetica Neue", Arial, system-ui, sans-serif;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* ✅ Responsive navbar */
 @media (min-width: 768px) {
   :root {
@@ -148,9 +154,11 @@
 /* Prevent overflow */
 html {
   overflow-x: hidden;
+  width: 100%;
 }
 body {
   overflow-x: hidden;
+  width: 100%;
   transition: background 0.35s, color 0.35s;
 }
 
@@ -177,7 +185,7 @@ a:focus-visible,
 /* Skip to content */
 .skip-link {
   position: absolute;
-  left: -9999px;
+  inset-inline-start: -9999px;
   top: 8px;
   z-index: 10000;
   padding: 8px 20px;
@@ -191,7 +199,7 @@ a:focus-visible,
   text-decoration: none;
 }
 .skip-link:focus {
-  left: 16px;
+  inset-inline-start: 16px;
 }
 
 @media (prefers-reduced-motion: reduce) {

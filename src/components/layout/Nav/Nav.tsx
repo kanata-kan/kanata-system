@@ -57,11 +57,14 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
           top: 0,
           left: 0,
           right: 0,
+          width: "100%",
+          maxWidth: "100%",
           zIndex: 900,
 
           // ✅ FIX: بدل hardcode
           height: "var(--navbar-height)",
 
+          boxSizing: "border-box",
           padding: isMobile ? "0 16px" : "0 48px",
           background: scrolled ? `${C.bg}F5` : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",

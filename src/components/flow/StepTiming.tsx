@@ -10,11 +10,7 @@ import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import type { StepProps } from "./types";
 
-const TIMINGS = [
-  "محتاج حل عاجل",
-  "كنفكر من مدة",
-  "فرصة جديدة",
-] as const;
+const TIMINGS = ["محتاج حل عاجل", "كنفكر من مدة", "فرصة جديدة"] as const;
 
 export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
   const { C } = useThemeContext();
@@ -130,7 +126,9 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
         </p>
       )}
 
-      <div style={{ display: "flex", gap: 12, justifyContent: "space-between" }}>
+      <div
+        style={{ display: "flex", gap: 12, justifyContent: "space-between" }}
+      >
         {onBack && (
           <button
             onClick={onBack}
@@ -172,7 +170,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             border: "none",
             cursor: "pointer",
             transition: "all .2s",
-            marginLeft: "auto",
+            marginInlineStart: "auto",
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = "translateY(-1px)";

@@ -47,13 +47,15 @@ export function TechStrip() {
                 color: i % 4 === 0 ? C.cyan : C.muted,
                 padding: "0 28px",
                 textTransform: "uppercase",
-                borderRight: `1px solid ${C.line}`,
+                borderInlineEnd: `1px solid ${C.line}`,
                 whiteSpace: "nowrap",
                 transition: "color .35s",
               }}
             >
               {i % 6 === 0 && (
-                <span style={{ color: C.cyan, marginRight: 8, opacity: 0.5 }}>
+                <span
+                  style={{ color: C.cyan, marginInlineEnd: 8, opacity: 0.5 }}
+                >
                   ✦
                 </span>
               )}

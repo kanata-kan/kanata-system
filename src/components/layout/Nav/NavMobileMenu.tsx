@@ -10,6 +10,7 @@ interface NavMobileMenuProps {
 
 export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
   const { locale } = useLocale();
+  const isArabic = locale === "ar";
 
   if (!open) {
     return null;
@@ -28,18 +29,21 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         background: C.bg,
         display: "flex",
         flexDirection: "column",
-        padding: "var(--navbar-height) 28px 48px",
+        padding: "var(--navbar-height) 20px 40px",
+        boxSizing: "border-box",
+        overflowX: "hidden",
+        overflowY: "auto",
         opacity: 1,
         pointerEvents: "all",
         transition: "opacity .28s",
       }}
     >
-      {/* Glow decoration */}
       <div
         style={{
           position: "absolute",
           top: "20%",
-          right: "-10%",
+          right: isArabic ? "auto" : "-10%",
+          left: isArabic ? "-10%" : "auto",
           width: 220,
           height: 220,
           borderRadius: "50%",
@@ -48,7 +52,6 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         }}
       />
 
-      {/* Navigation */}
       <nav
         style={{
           flex: 1,
@@ -56,50 +59,64 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           flexDirection: "column",
           justifyContent: "center",
           gap: 4,
+          minWidth: 0,
         }}
       >
-        {getNavLinks(locale).map((l, i) => (
+        {getNavLinks(locale).map((link, i) => (
           <button
-            key={l.id}
+            key={link.id}
             type="button"
-            onClick={() => onNavigate(l.id)}
+            onClick={() => onNavigate(link.id)}
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              gap: 12,
+              width: "100%",
               padding: "18px 0",
               borderBottom: `1px solid ${C.line}`,
-              textAlign: "left",
+              textAlign: "start",
               opacity: 1,
               transform: "none",
               transition: `opacity .35s ease ${i * 0.07}s, transform .35s ease ${i * 0.07}s`,
               cursor: "pointer",
             }}
           >
-            <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 14,
+                minWidth: 0,
+                flex: 1,
+              }}
+            >
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
                   color: C.cyan,
-                  letterSpacing: 1,
+                  letterSpacing: isArabic ? 0 : 1,
                   opacity: 0.7,
+                  flexShrink: 0,
                 }}
               >
-                {l.n}
+                {link.n}
               </span>
 
               <span
                 style={{
                   fontFamily: "var(--font-serif)",
-                  fontSize: 38,
+                  fontSize: isArabic ? 30 : 38,
                   fontStyle: "italic",
                   color: C.text,
-                  letterSpacing: -1,
-                  lineHeight: 1,
+                  letterSpacing: isArabic ? 0 : -1,
+                  lineHeight: 1.1,
+                  overflowWrap: "anywhere",
+                  wordBreak: "break-word",
                 }}
               >
-                {l.label}
+                {link.label}
               </span>
             </div>
 
@@ -109,15 +126,15 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
                 fontSize: 18,
                 color: C.muted,
                 opacity: 0.5,
+                flexShrink: 0,
               }}
             >
-              →
+              {isArabic ? "\u2190" : "\u2192"}
             </span>
           </button>
         ))}
       </nav>
 
-      {/* Footer section */}
       <div
         style={{
           display: "flex",
@@ -133,7 +150,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 11,
-            letterSpacing: 3,
+            letterSpacing: isArabic ? 0 : 3,
             height: 52,
             borderRadius: 8,
             background: C.cyan,
@@ -143,24 +160,32 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           }}
         >
           {locale === "ar"
-            ? "تواصل معي →"
+            ? "\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u064a \u2190"
             : locale === "fr"
-              ? "CONTACTEZ-MOI →"
-              : "HIRE ME →"}
+              ? "CONTACTEZ-MOI \u2192"
+              : "HIRE ME \u2192"}
         </button>
 
-        <div style={{ display: "flex", gap: 28, justifyContent: "center" }}>
-          {["GitHub", "LinkedIn", "Email"].map((s) => (
+        <div
+          style={{
+            display: "flex",
+            gap: 16,
+            justifyContent: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          {["GitHub", "LinkedIn", "Email"].map((label) => (
             <span
-              key={s}
+              key={label}
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 9,
                 color: C.muted,
                 letterSpacing: 2,
+                overflowWrap: "anywhere",
               }}
             >
-              {s}
+              {label}
             </span>
           ))}
         </div>

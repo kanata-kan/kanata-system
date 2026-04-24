@@ -52,7 +52,7 @@ export function LocaleSwitch({ C }: Props) {
               background: active ? `${C.cyan}12` : "transparent",
               cursor: "pointer",
               border: "none",
-              borderRight: l !== "ar" ? `1px solid ${C.line}` : "none",
+              borderInlineEnd: l !== "ar" ? `1px solid ${C.line}` : "none",
               transition: "all .2s",
               lineHeight: 1,
             }}

@@ -10,10 +10,11 @@ export function HeroCTA() {
   const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
   const content = getContent(locale);
+  const isArabic = locale === "ar";
 
   const base = {
     fontFamily: "var(--font-mono)",
-    letterSpacing: isMobile ? 1.2 : 2,
+    letterSpacing: isArabic ? 0 : isMobile ? 1.2 : 2,
     borderRadius: 8,
     cursor: "pointer",
     transition: "all .2s",
@@ -23,6 +24,7 @@ export function HeroCTA() {
       width: "100%",
       justifyContent: "center",
     }),
+    minWidth: 0,
   } as React.CSSProperties;
 
   return (
@@ -53,6 +55,7 @@ export function HeroCTA() {
           display: "flex",
           alignItems: "center",
           gap: 8,
+          flexWrap: "wrap",
         }}
         onMouseOver={(e) => {
           e.currentTarget.style.boxShadow = `0 8px 28px ${C.cyan}50`;
@@ -87,6 +90,7 @@ export function HeroCTA() {
           display: "flex",
           alignItems: "center",
           gap: 8,
+          flexWrap: "wrap",
         }}
         onMouseOver={(e) => {
           e.currentTarget.style.borderColor = C.cyan;
@@ -126,6 +130,7 @@ export function HeroCTA() {
           display: "flex",
           alignItems: "center",
           gap: 8,
+          flexWrap: "wrap",
           textDecoration: "none",
         }}
         onMouseOver={(e) => {

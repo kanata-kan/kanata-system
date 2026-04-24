@@ -34,8 +34,10 @@ export function AppShell({
           <div
             style={{
               minHeight: "100vh",
+              width: "100%",
               background: C.bg,
               color: C.text,
+              overflowX: "hidden",
               transition: "background .35s, color .35s",
 
               // ✅ FIX: بدل hardcode

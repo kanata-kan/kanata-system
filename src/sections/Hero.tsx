@@ -150,7 +150,7 @@ export function Hero() {
         style={{
           position: "absolute",
           bottom: 24,
-          right: isMobile ? 20 : 48,
+          insetInlineEnd: isMobile ? 20 : 48,
           display: "flex",
           alignItems: "center",
           gap: 10,

@@ -51,7 +51,7 @@ export function ThemeToggle({ dark, onToggle, c }: ThemeToggleProps) {
           style={{
             position: "absolute",
             top: 2,
-            left: dark ? 18 : 2,
+            insetInlineStart: dark ? 18 : 2,
             width: 14,
             height: 14,
             borderRadius: "50%",
@@ -59,7 +59,8 @@ export function ThemeToggle({ dark, onToggle, c }: ThemeToggleProps) {
             boxShadow: dark
               ? `0 0 8px ${c.cyan}80`
               : "0 0 8px rgba(251,188,5,0.8)",
-            transition: "left .3s cubic-bezier(.4,0,.2,1), background .3s",
+            transition:
+              "inset-inline-start .3s cubic-bezier(.4,0,.2,1), background .3s",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

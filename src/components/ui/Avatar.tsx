@@ -56,7 +56,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
       style={{
         position: "fixed",
         top: 0,
-        left: 0,
+        insetInlineStart: 0,
         width: "100vw",
         height: "100vh",
         zIndex: 9999,
@@ -286,7 +286,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
           style={{
             position: "absolute",
             bottom: Math.round(size * 0.03),
-            right: Math.round(size * 0.03),
+            insetInlineEnd: Math.round(size * 0.03),
             width: dotSize,
             height: dotSize,
             borderRadius: "50%",

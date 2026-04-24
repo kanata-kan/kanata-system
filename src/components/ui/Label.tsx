@@ -14,7 +14,16 @@ interface LabelProps {
 
 export function Label({ children, c }: LabelProps) {
   return (
-    <div className="inline-flex items-center gap-2.5 mb-4">
+    <div
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 10,
+        flexWrap: "wrap",
+        maxWidth: "100%",
+        marginBottom: 16,
+      }}
+    >
       <div
         style={{ width: 18, height: 1.5, background: c.cyan, opacity: 0.7 }}
       />
@@ -22,10 +31,11 @@ export function Label({ children, c }: LabelProps) {
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: 10,
-          letterSpacing: 3,
+          letterSpacing: 1.5,
           color: c.cyan,
+          overflowWrap: "anywhere",
+          textTransform: "uppercase",
         }}
-        className="uppercase tracking-widest"
       >
         {children}
       </span>

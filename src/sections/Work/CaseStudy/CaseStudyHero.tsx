@@ -307,8 +307,8 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
               gap: isMobile ? 20 : 28,
               flexWrap: "wrap",
               alignItems: "center",
-              paddingRight: isMobile ? 0 : 24,
-              borderRight: isMobile ? "none" : `1px solid ${C.line}`,
+              paddingInlineEnd: isMobile ? 0 : 24,
+              borderInlineEnd: isMobile ? "none" : `1px solid ${C.line}`,
               paddingBottom: isMobile ? 12 : 0,
               borderBottom: isMobile ? `1px solid ${C.line}` : "none",
             }}

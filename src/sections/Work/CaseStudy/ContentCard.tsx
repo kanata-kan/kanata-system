@@ -42,23 +42,23 @@ export function ContentCard({
             borderRadius: 10,
             background: C.bg2,
             borderTop: `1px solid ${C.line}`,
-            borderRight: `1px solid ${C.line}`,
+            borderInlineEnd: `1px solid ${C.line}`,
             borderBottom: `1px solid ${C.line}`,
-            borderLeft: `3px solid ${accent}${variant === "danger" ? "80" : "50"}`,
+            borderInlineStart: `3px solid ${accent}${variant === "danger" ? "80" : "50"}`,
             transition: "all .25s",
             cursor: "default",
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.borderTopColor = `${accent}30`;
-            e.currentTarget.style.borderRightColor = `${accent}30`;
+            e.currentTarget.style.borderInlineEndColor = `${accent}30`;
             e.currentTarget.style.borderBottomColor = `${accent}30`;
             e.currentTarget.style.background = C.bg3;
           }}
           onMouseOut={(e) => {
             e.currentTarget.style.borderTopColor = C.line;
-            e.currentTarget.style.borderRightColor = C.line;
+            e.currentTarget.style.borderInlineEndColor = C.line;
             e.currentTarget.style.borderBottomColor = C.line;
-            e.currentTarget.style.borderLeftColor = `${accent}${variant === "danger" ? "80" : "50"}`;
+            e.currentTarget.style.borderInlineStartColor = `${accent}${variant === "danger" ? "80" : "50"}`;
             e.currentTarget.style.background = C.bg2;
           }}
         >

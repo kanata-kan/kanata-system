@@ -24,6 +24,7 @@ export function WorkSmallCards({
 }: WorkSmallCardsProps) {
   const { locale } = useLocale();
   const PROJECTS = getProjects(locale);
+  const isArabic = locale === "ar";
   return (
     <Stack
       direction={isMobile ? "column" : "row"}
@@ -44,7 +45,7 @@ export function WorkSmallCards({
             border: `1px solid ${C.border}`,
             borderRadius: 12,
             padding: 18,
-            textAlign: "left",
+            textAlign: isArabic ? "right" : "left",
             transition: "all .2s",
             cursor: "pointer",
           }}

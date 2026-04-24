@@ -166,7 +166,7 @@ export function About() {
                     <span
                       style={{
                         color: C.faint,
-                        marginRight: 12,
+                        marginInlineEnd: 12,
                         fontSize: 9,
                         minWidth: 14,
                         userSelect: "none",

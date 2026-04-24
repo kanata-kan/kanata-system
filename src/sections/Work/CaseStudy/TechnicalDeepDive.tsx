@@ -56,28 +56,30 @@ function EntityCard({
         padding: isMobile ? "14px 16px" : "16px 20px",
         borderRadius: 10,
         background: central ? `${accent}06` : C.bg2,
-        borderRight: central
+        borderInlineEnd: central
           ? `1.5px solid ${accent}30`
           : `1px solid ${C.line}`,
         borderBottom: central
           ? `1.5px solid ${accent}30`
           : `1px solid ${C.line}`,
-        borderLeft: central ? `1.5px solid ${accent}30` : `1px solid ${C.line}`,
+        borderInlineStart: central
+          ? `1.5px solid ${accent}30`
+          : `1px solid ${C.line}`,
         borderTop: `3px solid ${accent}${central ? "" : "60"}`,
         transition: "all .25s",
         cursor: "default",
         boxShadow: central ? `0 0 20px ${accent}08` : "none",
       }}
       onMouseOver={(e) => {
-        e.currentTarget.style.borderRightColor = `${accent}40`;
+        e.currentTarget.style.borderInlineEndColor = `${accent}40`;
         e.currentTarget.style.borderBottomColor = `${accent}40`;
-        e.currentTarget.style.borderLeftColor = `${accent}40`;
+        e.currentTarget.style.borderInlineStartColor = `${accent}40`;
         e.currentTarget.style.background = C.bg3;
       }}
       onMouseOut={(e) => {
-        e.currentTarget.style.borderRightColor = C.line;
+        e.currentTarget.style.borderInlineEndColor = C.line;
         e.currentTarget.style.borderBottomColor = C.line;
-        e.currentTarget.style.borderLeftColor = C.line;
+        e.currentTarget.style.borderInlineStartColor = C.line;
         e.currentTarget.style.borderTopColor = `${accent}60`;
         e.currentTarget.style.background = C.bg2;
       }}
@@ -268,23 +270,23 @@ function ArchBlock({
         borderRadius: 12,
         background: C.bg2,
         borderTop: `1px solid ${C.line}`,
-        borderRight: `1px solid ${C.line}`,
+        borderInlineEnd: `1px solid ${C.line}`,
         borderBottom: `1px solid ${C.line}`,
-        borderLeft: `3px solid ${color}50`,
+        borderInlineStart: `3px solid ${color}50`,
         transition: "all .25s",
       }}
       onMouseOver={(e) => {
         e.currentTarget.style.background = C.bg3;
         e.currentTarget.style.borderTopColor = `${color}30`;
-        e.currentTarget.style.borderRightColor = `${color}30`;
+        e.currentTarget.style.borderInlineEndColor = `${color}30`;
         e.currentTarget.style.borderBottomColor = `${color}30`;
       }}
       onMouseOut={(e) => {
         e.currentTarget.style.background = C.bg2;
         e.currentTarget.style.borderTopColor = C.line;
-        e.currentTarget.style.borderRightColor = C.line;
+        e.currentTarget.style.borderInlineEndColor = C.line;
         e.currentTarget.style.borderBottomColor = C.line;
-        e.currentTarget.style.borderLeftColor = `${color}50`;
+        e.currentTarget.style.borderInlineStartColor = `${color}50`;
       }}
     >
       <div
@@ -327,7 +329,7 @@ function ArchBlock({
             opacity: 0.8,
             fontStyle: "italic",
             marginBottom: 4,
-            paddingLeft: 28,
+            paddingInlineStart: 28,
           }}
         >
           → {why}
@@ -336,12 +338,12 @@ function ArchBlock({
       {impact && (
         <div
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-mono",
             fontSize: 9,
             color: C.faint,
             letterSpacing: 0.5,
             marginBottom: 12,
-            paddingLeft: 28,
+            paddingInlineStart: 28,
             opacity: 0.7,
           }}
         >
@@ -502,23 +504,23 @@ function GuaranteeCard({
         borderRadius: 12,
         background: C.bg2,
         borderTop: `1px solid ${C.line}`,
-        borderRight: `1px solid ${C.line}`,
+        borderInlineEnd: `1px solid ${C.line}`,
         borderBottom: `1px solid ${C.line}`,
-        borderLeft: "3px solid #10B98160",
+        borderInlineStart: "3px solid #10B98160",
         transition: "all .25s",
       }}
       onMouseOver={(e) => {
         e.currentTarget.style.background = C.bg3;
         e.currentTarget.style.borderTopColor = "#10B98130";
-        e.currentTarget.style.borderRightColor = "#10B98130";
+        e.currentTarget.style.borderInlineEndColor = "#10B98130";
         e.currentTarget.style.borderBottomColor = "#10B98130";
       }}
       onMouseOut={(e) => {
         e.currentTarget.style.background = C.bg2;
         e.currentTarget.style.borderTopColor = C.line;
-        e.currentTarget.style.borderRightColor = C.line;
+        e.currentTarget.style.borderInlineEndColor = C.line;
         e.currentTarget.style.borderBottomColor = C.line;
-        e.currentTarget.style.borderLeftColor = "#10B98160";
+        e.currentTarget.style.borderInlineStartColor = "#10B98160";
       }}
     >
       <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
@@ -1168,9 +1170,9 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
             borderRadius: 14,
             background: C.bg2,
             borderTop: `1px solid ${C.line}`,
-            borderRight: `1px solid ${C.line}`,
+            borderInlineEnd: `1px solid ${C.line}`,
             borderBottom: `1px solid ${C.line}`,
-            borderLeft: `3px solid ${color}`,
+            borderInlineStart: `3px solid ${color}`,
             position: "relative",
           }}
         >

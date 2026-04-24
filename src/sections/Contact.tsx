@@ -19,6 +19,7 @@ export function Contact() {
   const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
   const content = getContent(locale);
+  const isArabic = locale === "ar";
 
   const EMAIL = content.contact.email;
   const SOCIALS = content.contact.socials;
@@ -45,7 +46,7 @@ export function Contact() {
         style={{
           position: "absolute",
           bottom: "-20%",
-          right: "5%",
+          insetInlineEnd: "5%",
           width: 380,
           height: 380,
           borderRadius: "50%",
@@ -66,10 +67,11 @@ export function Contact() {
               fontSize: isMobile
                 ? "clamp(30px,8vw,50px)"
                 : "clamp(42px,5vw,66px)",
-              letterSpacing: -2,
+              letterSpacing: isArabic ? 0 : -2,
               color: C.text,
               marginBottom: 16,
               lineHeight: 1.05,
+              overflowWrap: "anywhere",
             }}
           >
             {content.contact.headingLine1}
@@ -104,6 +106,8 @@ export function Contact() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: 12,
               width: "100%",
               maxWidth: 460,
               padding: "16px 20px",
@@ -131,6 +135,8 @@ export function Contact() {
                 fontFamily: "var(--font-mono)",
                 fontSize: isMobile ? 12 : 13,
                 color: C.sub,
+                overflowWrap: "anywhere",
+                textAlign: "start",
               }}
             >
               {EMAIL}
@@ -173,11 +179,13 @@ export function Contact() {
               fontFamily: "var(--font-mono)",
               fontSize: 11,
               fontWeight: 600,
-              letterSpacing: 2,
+              letterSpacing: isArabic ? 0 : 2,
               textDecoration: "none",
               marginBottom: 24,
               transition: "all .25s",
               cursor: "pointer",
+              flexWrap: "wrap",
+              textAlign: "center",
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.background = "#1EBE5A";

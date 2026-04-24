@@ -33,7 +33,7 @@ export function ScrollToTop({ C }: Props) {
       style={{
         position: "fixed",
         bottom: 28,
-        right: 28,
+        insetInlineEnd: 28,
         zIndex: 999,
         width: 42,
         height: 42,
@@ -60,7 +60,9 @@ export function ScrollToTop({ C }: Props) {
       onMouseOut={(e) => {
         e.currentTarget.style.background = C.bg2;
         e.currentTarget.style.borderColor = C.line;
-        e.currentTarget.style.transform = visible ? "translateY(0)" : "translateY(12px)";
+        e.currentTarget.style.transform = visible
+          ? "translateY(0)"
+          : "translateY(12px)";
       }}
     >
       <svg
