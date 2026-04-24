@@ -11,7 +11,7 @@ import { join } from "node:path";
 import { BRAND } from "@/lib/brand";
 import { OG_STYLES } from "@/lib/brandStyles";
 
-export const alt = `${BRAND.name} — ${BRAND.role}`;
+export const alt = "Product Engineer Portfolio — Real Systems in Production";
 export const size = OG_STYLES.dimensions;
 export const contentType = "image/png";
 

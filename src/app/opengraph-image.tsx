@@ -1,9 +1,9 @@
 /**
  * @file opengraph-image.tsx
  * @description Dynamic OG image generator for social sharing (WhatsApp, Facebook, Twitter).
- * Composites the brand mark + user photo into a 1200×630 card.
- * Next.js auto-injects the corresponding <meta property="og:image"> tag.
- * Uses OG_STYLES from brandStyles.ts for consistent styling.
+ * Layout: Left = brand info | Right = full-bleed photo with AW monogram ring overlay.
+ * Note: ImageResponse generates a static PNG — animations are not supported.
+ * The rotating ring is rendered as a static decorative element at a fixed angle.
  */
 
 import { ImageResponse } from "next/og";
@@ -12,8 +12,8 @@ import { join } from "node:path";
 import { BRAND } from "@/lib/brand";
 import { OG_STYLES } from "@/lib/brandStyles";
 
-export const alt = `${BRAND.name} — ${BRAND.role}`;
-export const size = OG_STYLES.dimensions;
+export const alt = "Product Engineer Portfolio — Real Systems in Production";
+export const size = OG_STYLES.dimensions; // { width: 1200, height: 630 }
 export const contentType = "image/png";
 
 export default async function Image() {
@@ -25,8 +25,12 @@ export default async function Image() {
     photoSrc = `data:image/png;base64,${photoBuffer.toString("base64")}`;
   } catch (error) {
     console.error("Failed to load photo for OG image:", error);
-    // Fallback to a solid color or gradient if image fails to load
   }
+
+  // Accent color — pull from your brand or hardcode
+  const accent = "#38bdf8";
+  const accentDim = "rgba(56,189,248,0.25)";
+  const accentFaint = "rgba(56,189,248,0.10)";
 
   return new ImageResponse(
     <div
@@ -34,190 +38,413 @@ export default async function Image() {
         display: "flex",
         width: "100%",
         height: "100%",
-        background: `linear-gradient(${OG_STYLES.background.angle}deg, ${OG_STYLES.background.start} 0%, ${OG_STYLES.background.end} 100%)`,
-        padding: `${OG_STYLES.padding.vertical}px ${OG_STYLES.padding.horizontal}px`,
+        background: "#060810",
         fontFamily: "system-ui, -apple-system, sans-serif",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Subtle glow */}
+      {/* ── Grid texture ─────────────────────────────────────────── */}
       <div
         style={{
           position: "absolute",
-          top: OG_STYLES.glow.position.top,
-          right: OG_STYLES.glow.position.right,
-          width: OG_STYLES.glow.size,
-          height: OG_STYLES.glow.size,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, ${OG_STYLES.glow.color}${OG_STYLES.glow.opacity} 0%, transparent 70%)`,
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(rgba(99,179,237,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99,179,237,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
         }}
       />
 
-      {/* Left — Brand info */}
+      {/* ── Glow blob — top-left ──────────────────────────────────── */}
+      <div
+        style={{
+          position: "absolute",
+          top: -160,
+          left: -100,
+          width: 500,
+          height: 500,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(56,189,248,0.13) 0%, transparent 70%)",
+        }}
+      />
+
+      {/* ── Top gradient bar ─────────────────────────────────────── */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          background: `linear-gradient(90deg, transparent, ${accent} 30%, #818cf8 70%, transparent)`,
+        }}
+      />
+
+      {/* ── Corner accents ───────────────────────────────────────── */}
+      {/* TL */}
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          width: 22,
+          height: 22,
+          borderTop: `1.5px solid ${accentDim}`,
+          borderLeft: `1.5px solid ${accentDim}`,
+        }}
+      />
+      {/* BL */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 20,
+          left: 20,
+          width: 22,
+          height: 22,
+          borderBottom: `1.5px solid ${accentDim}`,
+          borderLeft: `1.5px solid ${accentDim}`,
+        }}
+      />
+      {/* TR — stop before photo area */}
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          right: 20,
+          width: 22,
+          height: 22,
+          borderTop: `1.5px solid ${accentDim}`,
+          borderRight: `1.5px solid ${accentDim}`,
+        }}
+      />
+      {/* BR */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 20,
+          right: 20,
+          width: 22,
+          height: 22,
+          borderBottom: `1.5px solid ${accentDim}`,
+          borderRight: `1.5px solid ${accentDim}`,
+        }}
+      />
+
+      {/* ════════════════════════════════════════════════════════════
+          LEFT PANEL — Brand info  (580px wide)
+      ══════════════════════════════════════════════════════════════ */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          flex: 1,
-          gap: "4px",
+          width: 580,
+          height: "100%",
+          padding: "0 72px",
+          position: "relative",
+          zIndex: 2,
+          gap: 0,
         }}
       >
-        {/* Brand mark: AW */}
+        {/* Badge */}
         <div
           style={{
             display: "flex",
-            alignItems: "baseline",
-            marginBottom: OG_STYLES.spacing.monogramMarginBottom,
+            alignItems: "center",
+            gap: 8,
+            background: accentFaint,
+            border: `1px solid ${accentDim}`,
+            borderRadius: 100,
+            padding: "6px 18px",
+            width: "fit-content",
+            marginBottom: 32,
           }}
         >
-          <span
-            style={{
-              fontSize: `${OG_STYLES.monogram.fontSize}px`,
-              fontWeight: OG_STYLES.monogram.fontWeight,
-              color: OG_STYLES.monogram.colors.first,
-              lineHeight: 1,
-            }}
-          >
-            {BRAND.monogram[0]}
-          </span>
-          <span
-            style={{
-              fontSize: `${OG_STYLES.monogram.fontSize}px`,
-              fontWeight: OG_STYLES.monogram.fontWeight,
-              color: OG_STYLES.monogram.colors.second,
-              lineHeight: 1,
-            }}
-          >
-            {BRAND.monogram[1]}
-          </span>
-          {/* Cyan dashes */}
+          {/* Dot */}
           <div
             style={{
-              display: "flex",
-              gap: `${OG_STYLES.dashes.gap}px`,
-              marginLeft: `${OG_STYLES.dashes.marginLeft}px`,
-              alignItems: "center",
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: accent,
+              boxShadow: `0 0 10px ${accent}`,
+            }}
+          />
+          <span
+            style={{
+              fontSize: 13,
+              color: accent,
+              letterSpacing: "0.1em",
+              fontWeight: 500,
             }}
           >
-            {OG_STYLES.dashes.items.map((item, index) => (
-              <div
-                key={index}
-                style={{
-                  width: `${item.width}px`,
-                  height: `${item.height}px`,
-                  background: OG_STYLES.dashes.color,
-                  borderRadius: `${OG_STYLES.dashes.radius}px`,
-                }}
-              />
-            ))}
-          </div>
+            PRODUCT ENGINEER
+          </span>
         </div>
 
         {/* Name */}
         <div
           style={{
-            fontSize: `${OG_STYLES.name.fontSize}px`,
-            fontWeight: OG_STYLES.name.fontWeight,
-            color: OG_STYLES.name.color,
-            lineHeight: OG_STYLES.name.lineHeight,
-            marginBottom: `${OG_STYLES.name.marginBottom}px`,
-            letterSpacing: `${OG_STYLES.name.letterSpacing}px`,
+            fontSize: 80,
+            fontWeight: 800,
+            color: "#f0f4ff",
+            lineHeight: 0.95,
+            letterSpacing: "-0.03em",
+            marginBottom: 28,
           }}
         >
-          {BRAND.name}
-        </div>
-
-        {/* Role */}
-        <div
-          style={{
-            fontSize: `${OG_STYLES.role.fontSize}px`,
-            color: OG_STYLES.role.color,
-            letterSpacing: `${OG_STYLES.role.letterSpacing}px`,
-            marginBottom: `${OG_STYLES.role.marginBottom}px`,
-            fontWeight: OG_STYLES.role.fontWeight,
-          }}
-        >
-          {BRAND.role}
+          {BRAND.name.split(" ").map((word, i) => (
+            <span
+              key={i}
+              style={{
+                display: "block",
+                color: i === 1 ? accent : "#f0f4ff",
+              }}
+            >
+              {word}
+            </span>
+          ))}
         </div>
 
         {/* Tagline */}
         <div
           style={{
-            fontSize: `${OG_STYLES.tagline.fontSize}px`,
-            color: OG_STYLES.tagline.color,
-            letterSpacing: `${OG_STYLES.tagline.letterSpacing}px`,
-            fontWeight: OG_STYLES.tagline.fontWeight,
+            fontSize: 21,
+            color: "rgba(200,210,240,0.5)",
+            fontWeight: 300,
+            letterSpacing: "0.01em",
+            lineHeight: 1.4,
+            marginBottom: 32,
           }}
         >
-          Turning chaos into reliable systems
+          Turning chaos into reliable systems.
         </div>
 
-        {/* Location */}
-        <div
-          style={{
-            fontSize: `${OG_STYLES.location.fontSize}px`,
-            color: OG_STYLES.location.color,
-            letterSpacing: `${OG_STYLES.location.letterSpacing}px`,
-            marginTop: `${OG_STYLES.location.marginTop}px`,
-          }}
-        >
-          {BRAND.location}
+        {/* URL + Location */}
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 14,
+              color: "rgba(56,189,248,0.6)",
+              letterSpacing: "0.05em",
+            }}
+          >
+            kanata-system.vercel.app
+          </span>
+          <div
+            style={{
+              width: 1,
+              height: 14,
+              background: "rgba(255,255,255,0.12)",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 13,
+              color: "rgba(200,210,240,0.28)",
+              letterSpacing: "0.05em",
+            }}
+          >
+            {BRAND.location}
+          </span>
         </div>
       </div>
 
-      {/* Right — Photo */}
+      {/* ════════════════════════════════════════════════════════════
+          RIGHT PANEL — Full-bleed photo  (620px wide)
+      ══════════════════════════════════════════════════════════════ */}
       <div
         style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: 620,
+          height: "100%",
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingLeft: `${OG_STYLES.spacing.photoPaddingLeft}px`,
+          overflow: "hidden",
         }}
       >
+        {/* Left fade so photo blends into dark left panel */}
         <div
           style={{
-            width: `${OG_STYLES.photo.size}px`,
-            height: `${OG_STYLES.photo.size}px`,
-            borderRadius: OG_STYLES.photo.border.radius,
-            overflow: "hidden",
-            border: `${OG_STYLES.photo.border.width}px solid ${OG_STYLES.photo.border.color}`,
-            boxShadow: `0 0 ${OG_STYLES.photo.shadow.blur}px ${OG_STYLES.photo.shadow.color}${OG_STYLES.photo.shadow.opacity}`,
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: 180,
+            height: "100%",
+            background: "linear-gradient(90deg, #060810 0%, transparent 100%)",
+            zIndex: 3,
+          }}
+        />
+
+        {/* Bottom fade */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 120,
+            background: "linear-gradient(0deg, #060810 0%, transparent 100%)",
+            zIndex: 3,
+          }}
+        />
+
+        {/* Photo */}
+        {photoSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoSrc}
+            alt=""
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center top",
+              filter: "brightness(0.85) contrast(1.05)",
+            }}
+          />
+        ) : (
+          /* Fallback gradient if no photo */
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: `linear-gradient(135deg, #0f2132 0%, #0a0f2e 100%)`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 80,
+              fontWeight: 800,
+              color: accent,
+            }}
+          >
+            {BRAND.monogram}
+          </div>
+        )}
+
+        {/* ── AW Monogram + Ring — overlaid bottom-left of photo ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 36,
+            left: 36,
+            width: 120,
+            height: 120,
             display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
           }}
         >
-          {photoSrc ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={photoSrc}
-              width={OG_STYLES.photo.size}
-              height={OG_STYLES.photo.size}
-              alt=""
-              style={{
-                objectFit: "cover",
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          ) : (
+          {/* Outer ring */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              border: `1px solid ${accentDim}`,
+              /* Static "rotation" — dot at ~30deg position */
+              transform: "rotate(30deg)",
+            }}
+          >
+            {/* Ring dot */}
             <div
               style={{
-                width: "100%",
-                height: "100%",
-                background: `linear-gradient(${OG_STYLES.photo.fallback.gradient.angle}deg, ${OG_STYLES.photo.fallback.gradient.start} 0%, ${OG_STYLES.photo.fallback.gradient.end} 100%)`,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: `${OG_STYLES.photo.fallback.text.fontSize}px`,
-                fontWeight: OG_STYLES.photo.fallback.text.fontWeight,
-                color: OG_STYLES.photo.fallback.text.color,
+                position: "absolute",
+                top: -4,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: accent,
+                boxShadow: `0 0 14px ${accent}`,
+              }}
+            />
+          </div>
+
+          {/* Inner ring */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 14,
+              borderRadius: "50%",
+              border: "1px solid rgba(129,140,248,0.15)",
+              transform: "rotate(-20deg)",
+            }}
+          />
+
+          {/* Monogram tile */}
+          <div
+            style={{
+              width: 70,
+              height: 70,
+              borderRadius: 14,
+              background: "rgba(56,189,248,0.08)",
+              border: `1px solid ${accentDim}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <span
+              style={{
+                fontSize: 26,
+                fontWeight: 800,
+                letterSpacing: "-0.03em",
+                lineHeight: 1,
+                color: "#f0f4ff",
               }}
             >
-              {BRAND.monogram}
-            </div>
-          )}
+              A<span style={{ color: accent }}>W</span>
+            </span>
+          </div>
         </div>
+      </div>
+
+      {/* ── Bottom bar ───────────────────────────────────────────── */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 38,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 72px",
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+          zIndex: 5,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 11,
+            color: "rgba(255,255,255,0.14)",
+            letterSpacing: "0.1em",
+          }}
+        >
+          PORTFOLIO · 2025
+        </span>
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 11,
+            color: "rgba(255,255,255,0.14)",
+            letterSpacing: "0.1em",
+          }}
+        >
+          CASE-STUDY DRIVEN · SYSTEM THINKING
+        </span>
       </div>
     </div>,
     OG_STYLES.dimensions,
