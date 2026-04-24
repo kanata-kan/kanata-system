@@ -1,11 +1,3 @@
-/**
- * @file opengraph-image.tsx
- * @description Dynamic OG image generator for social sharing (WhatsApp, Facebook, Twitter).
- * Layout: Left = brand info | Right = full-bleed photo with AW monogram ring overlay.
- * Note: ImageResponse generates a static PNG — animations are not supported.
- * The rotating ring is rendered as a static decorative element at a fixed angle.
- */
-
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -13,7 +5,7 @@ import { BRAND } from "@/lib/brand";
 import { OG_STYLES } from "@/lib/brandStyles";
 
 export const alt = "Product Engineer Portfolio — Real Systems in Production";
-export const size = OG_STYLES.dimensions; // { width: 1200, height: 630 }
+export const size = OG_STYLES.dimensions;
 export const contentType = "image/png";
 
 export default async function Image() {
@@ -23,13 +15,12 @@ export default async function Image() {
       join(process.cwd(), "public", BRAND.profilePhoto),
     );
     photoSrc = `data:image/png;base64,${photoBuffer.toString("base64")}`;
-  } catch (error) {
-    console.error("Failed to load photo for OG image:", error);
+  } catch {
+    // fallback gradient shown below
   }
 
-  // Accent color — pull from your brand or hardcode
   const accent = "#38bdf8";
-  const accentDim = "rgba(56,189,248,0.25)";
+  const accentDim = "rgba(56,189,248,0.28)";
   const accentFaint = "rgba(56,189,248,0.10)";
 
   return new ImageResponse(
@@ -50,11 +41,11 @@ export default async function Image() {
           position: "absolute",
           inset: 0,
           backgroundImage: `
-            linear-gradient(rgba(99,179,237,0.04) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(99,179,237,0.04) 1px, transparent 1px)
+            linear-gradient(rgba(99,179,237,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(99,179,237,0.035) 1px, transparent 1px)
           `,
           backgroundSize: "60px 60px",
-          display: "none",
+          display: "flex",
         }}
       />
 
@@ -63,13 +54,28 @@ export default async function Image() {
         style={{
           position: "absolute",
           top: -160,
-          left: -100,
-          width: 500,
-          height: 500,
+          left: -80,
+          width: 520,
+          height: 520,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(56,189,248,0.13) 0%, transparent 70%)",
-          display: "none",
+            "radial-gradient(circle, rgba(56,189,248,0.14) 0%, transparent 68%)",
+          display: "flex",
+        }}
+      />
+
+      {/* ── Glow blob — bottom-right (behind photo) ──────────────── */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: -120,
+          right: -80,
+          width: 420,
+          height: 420,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(129,140,248,0.10) 0%, transparent 68%)",
+          display: "flex",
         }}
       />
 
@@ -80,111 +86,216 @@ export default async function Image() {
           top: 0,
           left: 0,
           right: 0,
-          height: 3,
-          background: `linear-gradient(90deg, transparent, ${accent} 30%, #818cf8 70%, transparent)`,
-          display: "none",
+          height: 4,
+          background: `linear-gradient(90deg, transparent 0%, ${accent} 25%, #818cf8 65%, transparent 100%)`,
+          display: "flex",
         }}
       />
 
-      {/* ── Corner accents ───────────────────────────────────────── */}
-      {/* TL */}
+      {/* ── Corner accents — TL ──────────────────────────────────── */}
       <div
         style={{
           position: "absolute",
-          top: 20,
-          left: 20,
-          width: 22,
-          height: 22,
+          top: 22,
+          left: 22,
+          width: 24,
+          height: 24,
           borderTop: `1.5px solid ${accentDim}`,
           borderLeft: `1.5px solid ${accentDim}`,
-          display: "none",
+          display: "flex",
         }}
       />
       {/* BL */}
       <div
         style={{
           position: "absolute",
-          bottom: 20,
-          left: 20,
-          width: 22,
-          height: 22,
+          bottom: 22,
+          left: 22,
+          width: 24,
+          height: 24,
           borderBottom: `1.5px solid ${accentDim}`,
           borderLeft: `1.5px solid ${accentDim}`,
-          display: "none",
+          display: "flex",
         }}
       />
-      {/* TR — stop before photo area */}
+      {/* TR */}
       <div
         style={{
           position: "absolute",
-          top: 20,
-          right: 20,
-          width: 22,
-          height: 22,
+          top: 22,
+          right: 22,
+          width: 24,
+          height: 24,
           borderTop: `1.5px solid ${accentDim}`,
           borderRight: `1.5px solid ${accentDim}`,
-          display: "none",
+          display: "flex",
         }}
       />
       {/* BR */}
       <div
         style={{
           position: "absolute",
-          bottom: 20,
-          right: 20,
-          width: 22,
-          height: 22,
+          bottom: 22,
+          right: 22,
+          width: 24,
+          height: 24,
           borderBottom: `1.5px solid ${accentDim}`,
           borderRight: `1.5px solid ${accentDim}`,
-          display: "none",
+          display: "flex",
         }}
       />
 
       {/* ════════════════════════════════════════════════════════════
-          LEFT PANEL — Brand info  (580px wide)
+          RIGHT PANEL — Full-bleed photo  (600px)
+          Rendered first so left panel text sits above
+      ══════════════════════════════════════════════════════════════ */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: 600,
+          height: "100%",
+          display: "flex",
+          overflow: "hidden",
+        }}
+      >
+        {photoSrc ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={photoSrc}
+            alt=""
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center top",
+              filter: "brightness(0.80) contrast(1.08) saturate(0.95)",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: `linear-gradient(135deg, #0f2132 0%, #0a0f2e 100%)`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 90,
+              fontWeight: 800,
+              color: accent,
+            }}
+          >
+            {BRAND.monogram}
+          </div>
+        )}
+
+        {/* Left fade — blends photo into dark left panel */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: 240,
+            height: "100%",
+            background: "linear-gradient(90deg, #060810 0%, rgba(6,8,16,0.55) 55%, transparent 100%)",
+            zIndex: 3,
+            display: "flex",
+          }}
+        />
+
+        {/* Bottom vignette on photo */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 160,
+            background: "linear-gradient(0deg, rgba(6,8,16,0.70) 0%, transparent 100%)",
+            zIndex: 3,
+            display: "flex",
+          }}
+        />
+
+        {/* ── AW Monogram tile — bottom-left of photo ── */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 44,
+            left: 44,
+            width: 64,
+            height: 64,
+            borderRadius: 13,
+            background: "rgba(6,8,16,0.65)",
+            border: `1px solid ${accentDim}`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 10,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 22,
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              lineHeight: 1,
+              color: "#f0f4ff",
+            }}
+          >
+            A<span style={{ color: accent }}>W</span>
+          </span>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════════════════════════
+          LEFT PANEL — Brand info  (600px)
       ══════════════════════════════════════════════════════════════ */}
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          width: 580,
+          width: 600,
           height: "100%",
-          padding: "0 72px",
+          padding: "0 68px 0 72px",
           position: "relative",
-          zIndex: 2,
+          zIndex: 5,
           gap: 0,
         }}
       >
-        {/* Badge */}
+        {/* Role badge */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: 8,
+            gap: 9,
             background: accentFaint,
             border: `1px solid ${accentDim}`,
             borderRadius: 100,
-            padding: "6px 18px",
-            marginBottom: 32,
+            padding: "7px 20px",
+            marginBottom: 30,
+            width: "fit-content",
           }}
         >
-          {/* Dot */}
           <div
             style={{
               width: 7,
               height: 7,
               borderRadius: "50%",
               background: accent,
-              boxShadow: `0 0 10px ${accent}`,
+              boxShadow: `0 0 12px ${accent}, 0 0 4px ${accent}`,
+              display: "flex",
             }}
           />
           <span
             style={{
               fontSize: 13,
               color: accent,
-              letterSpacing: "0.1em",
-              fontWeight: 500,
+              letterSpacing: "0.12em",
+              fontWeight: 600,
             }}
           >
             PRODUCT ENGINEER
@@ -196,12 +307,12 @@ export default async function Image() {
           style={{
             display: "flex",
             flexDirection: "column",
-            fontSize: 80,
+            fontSize: 82,
             fontWeight: 800,
             color: "#f0f4ff",
-            lineHeight: 0.95,
+            lineHeight: 0.93,
             letterSpacing: "-0.03em",
-            marginBottom: 28,
+            marginBottom: 24,
           }}
         >
           {BRAND.name.split(" ").map((word, i) => (
@@ -216,29 +327,70 @@ export default async function Image() {
           ))}
         </div>
 
+        {/* Thin separator */}
+        <div
+          style={{
+            display: "flex",
+            width: 56,
+            height: 2,
+            background: `linear-gradient(90deg, ${accent}, transparent)`,
+            borderRadius: 2,
+            marginBottom: 24,
+          }}
+        />
+
         {/* Tagline */}
         <div
           style={{
             display: "flex",
-            fontSize: 21,
-            color: "rgba(200,210,240,0.5)",
+            fontSize: 20,
+            color: "rgba(200,215,245,0.72)",
             fontWeight: 300,
             letterSpacing: "0.01em",
-            lineHeight: 1.4,
-            marginBottom: 32,
+            lineHeight: 1.45,
+            marginBottom: 36,
           }}
         >
           Turning chaos into reliable systems.
         </div>
 
+        {/* Skill pills */}
+        <div
+          style={{
+            display: "flex",
+            gap: 10,
+            marginBottom: 36,
+          }}
+        >
+          {["Full-Stack", "SaaS", "Systems Design"].map((label) => (
+            <div
+              key={label}
+              style={{
+                display: "flex",
+                padding: "5px 14px",
+                borderRadius: 6,
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.10)",
+                fontSize: 12,
+                color: "rgba(200,215,245,0.55)",
+                letterSpacing: "0.06em",
+                fontWeight: 500,
+              }}
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+
         {/* URL + Location */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <span
             style={{
               fontFamily: "monospace",
               fontSize: 14,
-              color: "rgba(56,189,248,0.6)",
-              letterSpacing: "0.05em",
+              color: "rgba(56,189,248,0.70)",
+              letterSpacing: "0.06em",
+              fontWeight: 500,
             }}
           >
             abdelilahwajid.com
@@ -247,163 +399,20 @@ export default async function Image() {
             style={{
               width: 1,
               height: 14,
-              background: "rgba(255,255,255,0.12)",
+              background: "rgba(255,255,255,0.14)",
+              display: "flex",
             }}
           />
           <span
             style={{
               fontFamily: "monospace",
-              fontSize: 13,
-              color: "rgba(200,210,240,0.28)",
-              letterSpacing: "0.05em",
+              fontSize: 12,
+              color: "rgba(200,210,240,0.35)",
+              letterSpacing: "0.06em",
             }}
           >
             {BRAND.location}
           </span>
-        </div>
-      </div>
-
-      {/* ════════════════════════════════════════════════════════════
-          RIGHT PANEL — Full-bleed photo  (620px wide)
-      ══════════════════════════════════════════════════════════════ */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          width: 620,
-          height: "100%",
-          display: "flex",
-          overflow: "hidden",
-        }}
-      >
-        {/* Left fade so photo blends into dark left panel */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: 180,
-            height: "100%",
-            background: "linear-gradient(90deg, #060810 0%, transparent 100%)",
-            zIndex: 3,
-            display: "none",
-          }}
-        />
-
-        {/* Photo */}
-        {photoSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={photoSrc}
-            alt=""
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "center top",
-              filter: "brightness(0.85) contrast(1.05)",
-            }}
-          />
-        ) : (
-          /* Fallback gradient if no photo */
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              background: `linear-gradient(135deg, #0f2132 0%, #0a0f2e 100%)`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 80,
-              fontWeight: 800,
-              color: accent,
-            }}
-          >
-            {BRAND.monogram}
-          </div>
-        )}
-
-        {/* ── AW Monogram + Ring — overlaid bottom-left of photo ── */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 36,
-            left: 36,
-            width: 120,
-            height: 120,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 10,
-          }}
-        >
-          {/* Outer ring */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: "50%",
-              border: `1px solid ${accentDim}`,
-              /* Static "rotation" — dot at ~30deg position */
-              transform: "rotate(30deg)",
-              display: "none",
-            }}
-          >
-            {/* Ring dot */}
-            <div
-              style={{
-                position: "absolute",
-                top: -4,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 8,
-                height: 8,
-                borderRadius: "50%",
-                background: accent,
-                boxShadow: `0 0 14px ${accent}`,
-              }}
-            />
-          </div>
-
-          {/* Inner ring */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 14,
-              borderRadius: "50%",
-              border: "1px solid rgba(129,140,248,0.15)",
-              transform: "rotate(-20deg)",
-              display: "none",
-            }}
-          />
-
-          {/* Monogram tile */}
-          <div
-            style={{
-              width: 70,
-              height: 70,
-              borderRadius: 14,
-              background: "rgba(56,189,248,0.08)",
-              border: `1px solid ${accentDim}`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <span
-              style={{
-                fontSize: 26,
-                fontWeight: 800,
-                letterSpacing: "-0.03em",
-                lineHeight: 1,
-                color: "#f0f4ff",
-              }}
-            >
-              A<span style={{ color: accent }}>W</span>
-            </span>
-          </div>
         </div>
       </div>
 
@@ -419,26 +428,26 @@ export default async function Image() {
           alignItems: "center",
           justifyContent: "space-between",
           padding: "0 72px",
-          borderTop: "1px solid rgba(255,255,255,0.04)",
-          zIndex: 5,
+          borderTop: "1px solid rgba(255,255,255,0.05)",
+          zIndex: 6,
         }}
       >
         <span
           style={{
             fontFamily: "monospace",
             fontSize: 11,
-            color: "rgba(255,255,255,0.14)",
-            letterSpacing: "0.1em",
+            color: "rgba(255,255,255,0.16)",
+            letterSpacing: "0.10em",
           }}
         >
-          PORTFOLIO · 2025
+          PORTFOLIO · 2026
         </span>
         <span
           style={{
             fontFamily: "monospace",
             fontSize: 11,
-            color: "rgba(255,255,255,0.14)",
-            letterSpacing: "0.1em",
+            color: "rgba(255,255,255,0.16)",
+            letterSpacing: "0.10em",
           }}
         >
           CASE-STUDY DRIVEN · SYSTEM THINKING
