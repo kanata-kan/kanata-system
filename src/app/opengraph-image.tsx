@@ -282,19 +282,6 @@ export default async function Image() {
           }}
         />
 
-        {/* Bottom fade */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 120,
-            background: "linear-gradient(0deg, #060810 0%, transparent 100%)",
-            zIndex: 3,
-          }}
-        />
-
         {/* Photo */}
         {photoSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
