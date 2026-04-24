@@ -10,7 +10,7 @@ export const electroAbidin: ProjectContent = {
   status: "نشر خاص",
   statusColor: "#3FB950",
   link: "/work/electro-abidin",
-  liveUrl: "https://kanata-system.vercel.app/work/electro-abidin",
+  liveUrl: "https://abdelilahwajid.com/work/electro-abidin",
   desc: "عملية بيع بالتجزئة تعتمد على فحص يدوي للمخزون وتتبع ورقي وعملية دفع بطيئة كانت بحاجة لنظام واحد يثق فيه الموظفون في الوقت الفعلي.",
   longDesc:
     "حوّلت المخزون ونقطة البيع والفوترة وإدارة الضمان إلى سير عمل تشغيلي واحد بمنطق موثوق للمخزون والتسعير والأرباح.",
@@ -35,12 +35,7 @@ export const electroAbidin: ProjectContent = {
     headline: "استبدال عمليات البيع اليدوية بنظام يثق فيه الموظفون",
     subtitle:
       "دراسة حالة توضح كيف حوّلت فحص المخزون المنفصل وقرارات التسعير والفوترة إلى سير عمل تشغيلي واحد لمحل إلكترونيات.",
-    tags: [
-      "عمليات البيع",
-      "منطق المخزون",
-      "سير الدفع",
-      "قواعد الأعمال",
-    ],
+    tags: ["عمليات البيع", "منطق المخزون", "سير الدفع", "قواعد الأعمال"],
     problem: [
       "المحل كان يعتمد على فحص يدوي للمخزون في غرفة التخزين",
       "الموظفون كانوا يتحققون فعلياً من توفر المنتج عدة مرات يومياً",
@@ -157,19 +152,50 @@ export const electroAbidin: ProjectContent = {
         },
       ],
       relationships: [
-        { from: "Product", to: "InventoryLog", label: "دفعات FIFO", cardinality: "1 → N" },
-        { from: "Product", to: "Sale", label: "يُباع عبر", cardinality: "1 → N" },
-        { from: "Sale", to: "SalesTransactionItem", label: "كتابة مزدوجة", cardinality: "1 → 1" },
-        { from: "Order", to: "SalesTransactionItem", label: "لكل عنصر", cardinality: "1 → N" },
-        { from: "Sale", to: "Invoice", label: "يُنشئ", cardinality: "1 → 0..1" },
-        { from: "Invoice", to: "Guarantee", label: "ضمان", cardinality: "1 → 0..1" },
+        {
+          from: "Product",
+          to: "InventoryLog",
+          label: "دفعات FIFO",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Product",
+          to: "Sale",
+          label: "يُباع عبر",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Sale",
+          to: "SalesTransactionItem",
+          label: "كتابة مزدوجة",
+          cardinality: "1 → 1",
+        },
+        {
+          from: "Order",
+          to: "SalesTransactionItem",
+          label: "لكل عنصر",
+          cardinality: "1 → N",
+        },
+        {
+          from: "Sale",
+          to: "Invoice",
+          label: "يُنشئ",
+          cardinality: "1 → 0..1",
+        },
+        {
+          from: "Invoice",
+          to: "Guarantee",
+          label: "ضمان",
+          cardinality: "1 → 0..1",
+        },
       ],
       archTitle: "الهندسة الأساسية",
       archBlocks: [
         {
           title: "محرك تكلفة FIFO",
           why: "يضمن ربحاً دقيقاً لكل وحدة مباعة",
-          impact: "كل وحدة مباعة تحمل تكلفة شراء الدفعة، مما يجعل تتبع الهامش أكثر موثوقية من التقدير اليدوي",
+          impact:
+            "كل وحدة مباعة تحمل تكلفة شراء الدفعة، مما يجعل تتبع الهامش أكثر موثوقية من التقدير اليدوي",
           points: [
             "كل InventoryLog = دفعة واحدة مع remainingQty و purchasePrice",
             "عند البيع: أقدم الدفعات تُستهلك أولاً (sort: createdAt ASC)",
@@ -191,7 +217,8 @@ export const electroAbidin: ProjectContent = {
         {
           title: "التحقق ثلاثي الطبقات",
           why: "لا بيانات غير صالحة تصل لقاعدة البيانات — أبداً",
-          impact: "صفر سجلات تالفة في الإنتاج — كل إدخال يمر بـ 3 نقاط فحص مستقلة",
+          impact:
+            "صفر سجلات تالفة في الإنتاج — كل إدخال يمر بـ 3 نقاط فحص مستقلة",
           points: [
             "الطبقة 1: مخططات Zod عند حدود API (14 ملف تحقق)",
             "الطبقة 2: قواعد أعمال على مستوى الخدمة (مخزون، تسعير، علاقات)",
@@ -201,7 +228,8 @@ export const electroAbidin: ProjectContent = {
         {
           title: "هندسة اللقطات",
           why: "السجلات السابقة تبقى دقيقة بغض النظر عن التغييرات المستقبلية",
-          impact: "الفواتير السابقة تبقى مرتبطة ببيانات المنتج المسجلة وقت البيع",
+          impact:
+            "الفواتير السابقة تبقى مرتبطة ببيانات المنتج المسجلة وقت البيع",
           points: [
             "كل عملية بيع تلتقط لقطة للمنتج في لحظتها",
             "عناصر الفاتورة والضمان مضمّنة بالكامل — غير قابلة للتعديل بعد الإنشاء",
@@ -211,23 +239,71 @@ export const electroAbidin: ProjectContent = {
       ],
       flowTitle: "سير تنفيذ البيع",
       flowSteps: [
-        { step: "التحقق من المدخلات", desc: "productId, quantity, sellingPrice, cashierId — Zod + قواعد أعمال" },
-        { step: "حساب الضريبة", desc: "tvaAmount = priceHT × tvaRate, priceTTC = priceHT × (1 + tvaRate)" },
-        { step: "بدء معاملة MongoDB", desc: "كل العمليات اللاحقة ذرية — تأكيد أو تراجع" },
-        { step: "فحص المخزون (مؤقت + FIFO)", desc: "Product.stock ≥ qty ثم الفحص الرسمي: aggregate(InventoryLog.remainingQty) ≥ qty" },
-        { step: "استهلاك دفعات FIFO", desc: "حلقة من الأقدم → إنقاص remainingQty → تراكم التكلفة مع حارس $gte" },
-        { step: "إنشاء Sale + STI", desc: "كتابة مزدوجة: Sale (سير العمل) + SalesTransactionItem (الحقيقة المالية)" },
-        { step: "إنقاص Product.stock", desc: "adjustStock(-qty) يحدّث الإسقاط المؤقت — دفعات FIFO تبقى مصدر الحقيقة" },
-        { step: "تأكيد المعاملة", desc: "الكل أو لا شيء — أي فشل يتراجع عن كل العمليات" },
+        {
+          step: "التحقق من المدخلات",
+          desc: "productId, quantity, sellingPrice, cashierId — Zod + قواعد أعمال",
+        },
+        {
+          step: "حساب الضريبة",
+          desc: "tvaAmount = priceHT × tvaRate, priceTTC = priceHT × (1 + tvaRate)",
+        },
+        {
+          step: "بدء معاملة MongoDB",
+          desc: "كل العمليات اللاحقة ذرية — تأكيد أو تراجع",
+        },
+        {
+          step: "فحص المخزون (مؤقت + FIFO)",
+          desc: "Product.stock ≥ qty ثم الفحص الرسمي: aggregate(InventoryLog.remainingQty) ≥ qty",
+        },
+        {
+          step: "استهلاك دفعات FIFO",
+          desc: "حلقة من الأقدم → إنقاص remainingQty → تراكم التكلفة مع حارس $gte",
+        },
+        {
+          step: "إنشاء Sale + STI",
+          desc: "كتابة مزدوجة: Sale (سير العمل) + SalesTransactionItem (الحقيقة المالية)",
+        },
+        {
+          step: "إنقاص Product.stock",
+          desc: "adjustStock(-qty) يحدّث الإسقاط المؤقت — دفعات FIFO تبقى مصدر الحقيقة",
+        },
+        {
+          step: "تأكيد المعاملة",
+          desc: "الكل أو لا شيء — أي فشل يتراجع عن كل العمليات",
+        },
       ],
       guaranteesTitle: "ضمانات النظام",
       guarantees: [
-        { title: "لا بيع زائد", desc: "دفاع ثلاثي الطبقات: مخزون مؤقت → تجميع FIFO → حارس ذري ($gte). التعارض المتزامن يعيد 409.", category: "data" },
-        { title: "حالة متسقة", desc: "الإلغاء يحدّث ذرياً Sale + STI + Invoice + Guarantee + استرداد FIFO في معاملة واحدة.", category: "data" },
-        { title: "حساب أرباح دقيق", desc: "التكلفة تأتي من دفعات FIFO (وليس مستوى المنتج). كل وحدة مباعة تحمل سعر شرائها الدقيق.", category: "financial" },
-        { title: "سجلات مالية غير قابلة للتعديل", desc: "حقول STI المالية واللقطات اليومية لا يمكن تعديلها. التصحيحات تنشئ سجلات جديدة.", category: "financial" },
-        { title: "أمان المعاملات", desc: "كل عملية حرجة تستخدم معاملات MongoDB. الحالة الجزئية مستحيلة — تأكيد أو تراجع كامل.", category: "transaction" },
-        { title: "دقة تاريخية", desc: "لقطات لحظية عند كل بيع حتى تعديلات المنتج اللاحقة لا تعيد كتابة الفواتير أو التقارير السابقة.", category: "transaction" },
+        {
+          title: "لا بيع زائد",
+          desc: "دفاع ثلاثي الطبقات: مخزون مؤقت → تجميع FIFO → حارس ذري ($gte). التعارض المتزامن يعيد 409.",
+          category: "data",
+        },
+        {
+          title: "حالة متسقة",
+          desc: "الإلغاء يحدّث ذرياً Sale + STI + Invoice + Guarantee + استرداد FIFO في معاملة واحدة.",
+          category: "data",
+        },
+        {
+          title: "حساب أرباح دقيق",
+          desc: "التكلفة تأتي من دفعات FIFO (وليس مستوى المنتج). كل وحدة مباعة تحمل سعر شرائها الدقيق.",
+          category: "financial",
+        },
+        {
+          title: "سجلات مالية غير قابلة للتعديل",
+          desc: "حقول STI المالية واللقطات اليومية لا يمكن تعديلها. التصحيحات تنشئ سجلات جديدة.",
+          category: "financial",
+        },
+        {
+          title: "أمان المعاملات",
+          desc: "كل عملية حرجة تستخدم معاملات MongoDB. الحالة الجزئية مستحيلة — تأكيد أو تراجع كامل.",
+          category: "transaction",
+        },
+        {
+          title: "دقة تاريخية",
+          desc: "لقطات لحظية عند كل بيع حتى تعديلات المنتج اللاحقة لا تعيد كتابة الفواتير أو التقارير السابقة.",
+          category: "transaction",
+        },
       ],
       codeTitle: "سير البيانات",
       codeSnippets: [
@@ -259,13 +335,34 @@ export const electroAbidin: ProjectContent = {
           ],
         },
       ],
-      flowNote: "كل العمليات بين الخطوات 3-8 تنفذ ضمن معاملة MongoDB واحدة. أي فشل يؤدي لتراجع كامل.",
+      flowNote:
+        "كل العمليات بين الخطوات 3-8 تنفذ ضمن معاملة MongoDB واحدة. أي فشل يؤدي لتراجع كامل.",
       tradeoffsTitle: "المقايضات",
       tradeoffs: [
-        { chose: "تكلفة FIFO", over: "تسعير متوسط التكلفة", reason: "ربح دقيق لكل وحدة — ضروري لمحل أسعار الشراء فيه تتغير بين الدفعات" },
-        { chose: "كتابة مزدوجة (Sale + STI)", over: "مستند واحد", reason: "يفصل حالة سير العمل المتغيرة عن الحقيقة المالية الثابتة — التحليلات تبقى نظيفة" },
-        { chose: "لقطات مضمّنة", over: "بحث بالمرجع فقط", reason: "دقة تاريخية بدون استعلامات join ثقيلة — الفواتير السابقة تبقى مرتبطة بلقطات البيع" },
-        { chose: "مخزون مؤقت على Product", over: "تجميع مباشر فقط", reason: "قراءة سريعة للواجهة/نقطة البيع — تجميع FIFO يبقى المصدر الرسمي لكل عمليات الكتابة" },
+        {
+          chose: "تكلفة FIFO",
+          over: "تسعير متوسط التكلفة",
+          reason:
+            "ربح دقيق لكل وحدة — ضروري لمحل أسعار الشراء فيه تتغير بين الدفعات",
+        },
+        {
+          chose: "كتابة مزدوجة (Sale + STI)",
+          over: "مستند واحد",
+          reason:
+            "يفصل حالة سير العمل المتغيرة عن الحقيقة المالية الثابتة — التحليلات تبقى نظيفة",
+        },
+        {
+          chose: "لقطات مضمّنة",
+          over: "بحث بالمرجع فقط",
+          reason:
+            "دقة تاريخية بدون استعلامات join ثقيلة — الفواتير السابقة تبقى مرتبطة بلقطات البيع",
+        },
+        {
+          chose: "مخزون مؤقت على Product",
+          over: "تجميع مباشر فقط",
+          reason:
+            "قراءة سريعة للواجهة/نقطة البيع — تجميع FIFO يبقى المصدر الرسمي لكل عمليات الكتابة",
+        },
       ],
       principlesTitle: "مبادئ النظام",
       principles: [

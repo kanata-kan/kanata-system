@@ -17,7 +17,7 @@ export const site: SiteData = {
     author: "Abdelilah Wajid",
     keywords:
       "Abdelilah Wajid, product engineer, fullstack developer, case study portfolio, react, next.js, typescript, operational systems, marrakech, morocco",
-    siteUrl: "https://kanata-system.vercel.app",
+    siteUrl: "https://abdelilahwajid.com",
     ogType: "website",
     ogSiteName: "Abdelilah Wajid",
     twitterHandle: "",

@@ -96,7 +96,7 @@ export function HeroCTA() {
             ? "/Abdelilah_Wajid_CV_AR.pdf"
             : locale === "fr"
               ? "/Abdelilah_Wajid_CV_FR.pdf"
-              : "/Abdelilah_Wajid_CV.pdf"
+              : "/Abdelilah_Wajid_CV_EN.pdf"
         }
         download
         style={{

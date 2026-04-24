@@ -10,7 +10,7 @@ export const electroAbidin: ProjectContent = {
   status: "Déploiement privé",
   statusColor: "#3FB950",
   link: "/work/electro-abidin",
-  liveUrl: "https://kanata-system.vercel.app/work/electro-abidin",
+  liveUrl: "https://abdelilahwajid.com/work/electro-abidin",
   desc: "Une operation retail avec des controles de stock manuels, du suivi papier, et une caisse lente avait besoin d'un systeme unique que l'equipe pouvait vraiment faire confiance en temps reel.",
   longDesc:
     "J'ai reuni stock, caisse, facturation, et gestion de garantie dans un seul flux operationnel avec des regles fiables pour le stock, le pricing, et la marge.",

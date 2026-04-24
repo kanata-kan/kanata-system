@@ -241,7 +241,7 @@ export default async function Image() {
               letterSpacing: "0.05em",
             }}
           >
-            kanata-system.vercel.app
+            abdelilahwajid.com
           </span>
           <div
             style={{
