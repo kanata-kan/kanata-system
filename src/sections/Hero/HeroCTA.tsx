@@ -37,6 +37,7 @@ export function HeroCTA() {
     >
       {/* Primary — See work */}
       <button
+        type="button"
         onClick={() =>
           document.getElementById("work")?.scrollIntoView({ behavior: "smooth" })
         }
@@ -71,6 +72,7 @@ export function HeroCTA() {
 
       {/* Secondary — Contact */}
       <button
+        type="button"
         onClick={() =>
           document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
         }

@@ -4,8 +4,9 @@
  */
 
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getContent } from "@/data/content";
+import type { Locale } from "@/data/content";
 import { AppShell } from "./AppShell";
 import "./globals.css";
 
@@ -58,8 +59,27 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const locale = cookieStore.get("locale")?.value || "en";
+  const headerStore = await headers();
+  const localeCookie = cookieStore.get("locale")?.value;
+  const locale: Locale =
+    localeCookie === "fr" || localeCookie === "ar" || localeCookie === "en"
+      ? localeCookie
+      : "en";
   const dir = locale === "ar" ? "rtl" : "ltr";
+  const themeCookie = cookieStore.get("portfolio-theme")?.value;
+  const initialDark = themeCookie !== "light";
+  const viewportWidthHint = Number(headerStore.get("viewport-width") ?? "");
+  const mobileHint = headerStore.get("sec-ch-ua-mobile");
+  const userAgent = headerStore.get("user-agent") ?? "";
+  const isLikelyMobile =
+    mobileHint === "?1" ||
+    /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(userAgent);
+  const initialViewportWidth =
+    Number.isFinite(viewportWidthHint) && viewportWidthHint > 0
+      ? viewportWidthHint
+      : isLikelyMobile
+        ? 390
+        : 1280;
 
   return (
     <html lang={locale} dir={dir} data-scroll-behavior="smooth">
@@ -67,7 +87,13 @@ export default async function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <AppShell>{children}</AppShell>
+        <AppShell
+          initialLocale={locale}
+          initialDark={initialDark}
+          initialViewportWidth={initialViewportWidth}
+        >
+          {children}
+        </AppShell>
       </body>
     </html>
   );

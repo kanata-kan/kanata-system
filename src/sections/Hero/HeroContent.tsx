@@ -22,6 +22,10 @@ export function HeroContent() {
   const content = getContent(locale);
 
   const ROLES = content.hero.roles;
+  const widestRole = ROLES.reduce(
+    (longest, role) => (role.length > longest.length ? role : longest),
+    ROLES[0] ?? "",
+  );
   const [cur, setCur] = useState(true);
   const [ri, setRi] = useState(0);
 
@@ -84,7 +88,7 @@ export function HeroContent() {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 10,
-            color: `${C.green}BB`,
+            color: C.green,
             letterSpacing: 1,
           }}
         >
@@ -182,22 +186,44 @@ export function HeroContent() {
             color: C.sub,
             letterSpacing: 1,
             transition: "opacity 0.3s",
+            display: "inline-grid",
+            alignItems: "center",
           }}
         >
-          {content.hero.roles[ri]}
           <span
+            aria-hidden="true"
             style={{
-              display: "inline-block",
-              width: 2,
-              height: "0.9em",
-              background: C.cyan,
-              verticalAlign: "middle",
-              marginLeft: 4,
-              borderRadius: 1,
-              opacity: cur ? 1 : 0,
-              transition: "opacity .1s",
+              gridArea: "1 / 1",
+              visibility: "hidden",
+              whiteSpace: "pre-wrap",
             }}
-          />
+          >
+            {widestRole}
+            <span
+              style={{
+                display: "inline-block",
+                width: 2,
+                height: "0.9em",
+                marginLeft: 4,
+              }}
+            />
+          </span>
+          <span style={{ gridArea: "1 / 1", whiteSpace: "pre-wrap" }}>
+            {content.hero.roles[ri]}
+            <span
+              style={{
+                display: "inline-block",
+                width: 2,
+                height: "0.9em",
+                background: C.cyan,
+                verticalAlign: "middle",
+                marginLeft: 4,
+                borderRadius: 1,
+                opacity: cur ? 1 : 0,
+                transition: "opacity .1s",
+              }}
+            />
+          </span>
         </span>
       </div>
 

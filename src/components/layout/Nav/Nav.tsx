@@ -91,6 +91,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
 
           {!isMobile && (
             <button
+              type="button"
               onClick={() => go("contact")}
               style={{
                 fontFamily: "var(--font-mono)",
@@ -121,6 +122,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
 
           {isMobile && (
             <button
+              type="button"
               onClick={() => setOpen((o) => !o)}
               aria-label={open ? "Close navigation" : "Open navigation"}
               aria-expanded={open}

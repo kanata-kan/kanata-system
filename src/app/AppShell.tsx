@@ -4,18 +4,31 @@ import { useTheme, ThemeContext } from "@/hooks/useTheme";
 import { useResponsive, ResponsiveContext } from "@/hooks/useResponsive";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { LocaleProvider } from "@/hooks/useLocale";
+import type { Locale } from "@/data/content/types";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
-export function AppShell({ children }: { children: React.ReactNode }) {
-  const { dark, toggle, C } = useTheme();
-  const responsive = useResponsive();
+interface AppShellProps {
+  children: React.ReactNode;
+  initialLocale: Locale;
+  initialDark: boolean;
+  initialViewportWidth: number;
+}
+
+export function AppShell({
+  children,
+  initialLocale,
+  initialDark,
+  initialViewportWidth,
+}: AppShellProps) {
+  const { dark, toggle, C } = useTheme(initialDark);
+  const responsive = useResponsive(initialViewportWidth);
 
   useScrollReveal();
 
   return (
-    <LocaleProvider>
+    <LocaleProvider initialLocale={initialLocale}>
       <ThemeContext.Provider value={{ dark, toggle, C }}>
         <ResponsiveContext.Provider value={responsive}>
           <div

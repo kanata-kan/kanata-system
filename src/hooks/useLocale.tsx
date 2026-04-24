@@ -7,7 +7,12 @@
 
 "use client";
 
-import React, { createContext, useContext, useSyncExternalStore } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+} from "react";
 import type { Locale } from "@/data/content/types";
 
 interface LocaleContextValue {
@@ -18,13 +23,33 @@ interface LocaleContextValue {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 const LOCALE_STORAGE_KEY = "locale";
 
-function getLocaleSnapshot(): Locale {
+function getCookie(name: string) {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name.replace(/[$()*+.?[\\\]^{|}]/g, "\\$&")}=([^;]*)`),
+  );
+
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function resolveLocale(value: string | null | undefined, fallback: Locale): Locale {
+  return value === "en" || value === "fr" || value === "ar" ? value : fallback;
+}
+
+function getLocaleSnapshot(initialLocale: Locale): Locale {
   if (typeof window === "undefined") {
-    return "en";
+    return initialLocale;
   }
 
   const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-  return stored === "en" || stored === "fr" || stored === "ar" ? stored : "en";
+  if (stored === "en" || stored === "fr" || stored === "ar") {
+    return stored;
+  }
+
+  return resolveLocale(getCookie(LOCALE_STORAGE_KEY), initialLocale);
 }
 
 function subscribe(onStoreChange: () => void) {
@@ -42,17 +67,29 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
+export function LocaleProvider({
+  children,
+  initialLocale,
+}: {
+  children: React.ReactNode;
+  initialLocale: Locale;
+}) {
   const locale = useSyncExternalStore<Locale>(
     subscribe,
-    getLocaleSnapshot,
-    () => "en",
+    () => getLocaleSnapshot(initialLocale),
+    () => initialLocale,
   );
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
+  }, [locale]);
 
   const setLocale = (newLocale: Locale) => {
     if (typeof window === "undefined") return;
 
     window.localStorage.setItem(LOCALE_STORAGE_KEY, newLocale);
+    document.cookie = `${LOCALE_STORAGE_KEY}=${newLocale}; path=/; max-age=31536000; samesite=lax`;
     window.dispatchEvent(new Event("locale-change"));
   };
 

@@ -30,11 +30,10 @@ export function useResponsiveContext(): ResponsiveContextValue {
   return ctx;
 }
 
-/** SSR-safe default — always desktop so server & client first render match. */
-const SSR_WIDTH = 1024;
+const DEFAULT_WIDTH = 1280;
 
-function getWidthSnapshot() {
-  return typeof window === "undefined" ? SSR_WIDTH : window.innerWidth;
+function getWidthSnapshot(initialWidth: number) {
+  return typeof window === "undefined" ? initialWidth : window.innerWidth;
 }
 
 function subscribe(onStoreChange: () => void) {
@@ -57,11 +56,11 @@ function subscribe(onStoreChange: () => void) {
   };
 }
 
-export function useResponsive(): ResponsiveContextValue {
+export function useResponsive(initialWidth = DEFAULT_WIDTH): ResponsiveContextValue {
   const width = useSyncExternalStore(
     subscribe,
-    getWidthSnapshot,
-    () => SSR_WIDTH,
+    () => getWidthSnapshot(initialWidth),
+    () => initialWidth,
   );
 
   return {

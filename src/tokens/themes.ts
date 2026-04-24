@@ -40,7 +40,7 @@ export const DARK: Theme = {
   text: "#F0F6FC",
   sub: "#C9D1D9",
   muted: "#8B949E",
-  faint: "#3D444D",
+  faint: "#7D8590",
 
   cyan: "#38BDF8",
   green: "#3FB950",
@@ -84,7 +84,7 @@ export const LIGHT: Theme = {
   text: "#1B1F24",
   sub: "#2D333B",
   muted: "#4D5562",
-  faint: "#8C95A1",
+  faint: "#6E7781",
 
   cyan: "#0550AE",
   green: "#116329",

@@ -17,6 +17,7 @@ import {
 import { DARK, LIGHT, type Theme } from "@/tokens/themes";
 
 const CSS_VARS: (keyof Theme)[] = ["cyan", "purple", "green", "amber"];
+const THEME_STORAGE_KEY = "portfolio-theme";
 
 function applyToDom(theme: Theme) {
   const root = document.documentElement;
@@ -51,29 +52,55 @@ function subscribe(cb: () => void): () => void {
   return () => listeners.delete(cb);
 }
 
-function getSnapshot(): boolean {
-  const saved = localStorage.getItem("portfolio-theme");
-  if (saved) return saved === "dark";
-  return true; // Default to dark mode
+function getCookie(name: string) {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name.replace(/[$()*+.?[\\\]^{|}]/g, "\\$&")}=([^;]*)`),
+  );
+
+  return match ? decodeURIComponent(match[1]) : null;
 }
 
-function getServerSnapshot(): boolean {
-  return true;
+function getSnapshot(initialDark: boolean): boolean {
+  if (typeof window === "undefined") {
+    return initialDark;
+  }
+
+  const saved = localStorage.getItem(THEME_STORAGE_KEY);
+  if (saved === "dark" || saved === "light") {
+    return saved === "dark";
+  }
+
+  const cookieTheme = getCookie(THEME_STORAGE_KEY);
+  if (cookieTheme === "dark" || cookieTheme === "light") {
+    return cookieTheme === "dark";
+  }
+
+  return initialDark;
 }
 
 function writeTheme(dark: boolean): void {
-  localStorage.setItem("portfolio-theme", dark ? "dark" : "light");
+  const nextTheme = dark ? "dark" : "light";
+  localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  document.cookie = `${THEME_STORAGE_KEY}=${nextTheme}; path=/; max-age=31536000; samesite=lax`;
   listeners.forEach((cb) => cb());
 }
 
-export function useTheme() {
-  const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+export function useTheme(initialDark = true) {
+  const dark = useSyncExternalStore(
+    subscribe,
+    () => getSnapshot(initialDark),
+    () => initialDark,
+  );
 
   useEffect(() => {
     applyToDom(dark ? DARK : LIGHT);
   }, [dark]);
 
-  const toggle = useCallback(() => writeTheme(!getSnapshot()), []);
+  const toggle = useCallback(() => writeTheme(!dark), [dark]);
 
   return { dark, toggle, C: dark ? DARK : LIGHT };
 }

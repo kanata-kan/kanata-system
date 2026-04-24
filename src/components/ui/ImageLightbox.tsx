@@ -71,31 +71,32 @@ export function ImageLightbox({ src, alt, caption, C, children }: ImageLightboxP
     >
       {/* Close button */}
       <button
+        type="button"
         aria-label="Close"
         onClick={closeModal}
         style={{
           position: "absolute",
           top: 20,
           right: 24,
-          background: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(255,255,255,0.14)",
+          border: "1px solid rgba(255,255,255,0.24)",
           borderRadius: 8,
           padding: "6px 14px",
           fontFamily: "var(--font-mono)",
           fontSize: 11,
-          color: "rgba(255,255,255,0.5)",
+          color: "rgba(255,255,255,0.82)",
           letterSpacing: 1.5,
           cursor: "pointer",
           transition: "all .2s",
           zIndex: 10,
         }}
         onMouseOver={(e) => {
-          e.currentTarget.style.background = "rgba(255,255,255,0.15)";
-          e.currentTarget.style.color = "rgba(255,255,255,0.8)";
+          e.currentTarget.style.background = "rgba(255,255,255,0.22)";
+          e.currentTarget.style.color = "#FFFFFF";
         }}
         onMouseOut={(e) => {
-          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-          e.currentTarget.style.color = "rgba(255,255,255,0.5)";
+          e.currentTarget.style.background = "rgba(255,255,255,0.14)";
+          e.currentTarget.style.color = "rgba(255,255,255,0.82)";
         }}
       >
         ESC
@@ -179,18 +180,21 @@ export function ImageLightbox({ src, alt, caption, C, children }: ImageLightboxP
 
   return (
     <>
-      <div
+      <button
+        type="button"
         onClick={openModal}
-        role="button"
-        tabIndex={0}
         aria-label={`View ${alt}`}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") openModal();
+        style={{
+          cursor: "zoom-in",
+          border: "none",
+          background: "transparent",
+          padding: 0,
+          display: "block",
+          width: "100%",
         }}
-        style={{ cursor: "zoom-in" }}
       >
         {children}
-      </div>
+      </button>
       {isBrowser && lightbox && createPortal(lightbox, document.body)}
     </>
   );

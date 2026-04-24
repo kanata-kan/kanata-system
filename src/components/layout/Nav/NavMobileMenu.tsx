@@ -11,13 +11,16 @@ interface NavMobileMenuProps {
 export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
   const { locale } = useLocale();
 
+  if (!open) {
+    return null;
+  }
+
   return (
     <div
       id="mobile-menu"
       role="dialog"
       aria-modal="true"
       aria-label="Navigation menu"
-      aria-hidden={!open}
       style={{
         position: "fixed",
         inset: 0,
@@ -26,8 +29,8 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         display: "flex",
         flexDirection: "column",
         padding: "var(--navbar-height) 28px 48px",
-        opacity: open ? 1 : 0,
-        pointerEvents: open ? "all" : "none",
+        opacity: 1,
+        pointerEvents: "all",
         transition: "opacity .28s",
       }}
     >
@@ -58,6 +61,7 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
         {getNavLinks(locale).map((l, i) => (
           <button
             key={l.id}
+            type="button"
             onClick={() => onNavigate(l.id)}
             style={{
               display: "flex",
@@ -66,8 +70,8 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
               padding: "18px 0",
               borderBottom: `1px solid ${C.line}`,
               textAlign: "left",
-              opacity: open ? 1 : 0,
-              transform: open ? "none" : "translateY(12px)",
+              opacity: 1,
+              transform: "none",
               transition: `opacity .35s ease ${i * 0.07}s, transform .35s ease ${i * 0.07}s`,
               cursor: "pointer",
             }}
@@ -119,11 +123,12 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           display: "flex",
           flexDirection: "column",
           gap: 14,
-          opacity: open ? 1 : 0,
+          opacity: 1,
           transition: "opacity .35s ease .28s",
         }}
       >
         <button
+          type="button"
           onClick={() => onNavigate("contact")}
           style={{
             fontFamily: "var(--font-mono)",

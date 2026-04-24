@@ -27,6 +27,7 @@ export function ScrollToTop({ C }: Props) {
 
   return (
     <button
+      type="button"
       aria-label="Scroll to top"
       onClick={scrollUp}
       style={{

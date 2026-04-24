@@ -20,6 +20,7 @@ export function NavLinks({ C, onNavigate }: NavLinksProps) {
       {getNavLinks(locale).map((l) => (
         <button
           key={l.id}
+          type="button"
           onClick={() => onNavigate(l.id)}
           className="hover-cyan"
           style={{

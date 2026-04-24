@@ -36,6 +36,7 @@ export function WorkSmallCards({
       {PROJECTS.filter((_, i) => i !== active).map((pr) => (
         <button
           key={pr.n}
+          type="button"
           onClick={() => onSelect(PROJECTS.indexOf(pr))}
           className={`rv d${Math.min(PROJECTS.indexOf(pr) + 1, 6)}`}
           style={{

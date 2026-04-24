@@ -37,6 +37,7 @@ export function LocaleSwitch({ C }: Props) {
         return (
           <button
             key={l}
+            type="button"
             role="radio"
             aria-checked={active}
             aria-label={l}

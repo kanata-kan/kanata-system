@@ -73,31 +73,32 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
     >
       {/* Close button */}
       <button
+        type="button"
         aria-label="Close photo"
         onClick={closeModal}
         style={{
           position: "absolute",
           top: 20,
           right: 24,
-          background: "rgba(255,255,255,0.08)",
-          border: "1px solid rgba(255,255,255,0.15)",
+          background: "rgba(255,255,255,0.14)",
+          border: "1px solid rgba(255,255,255,0.24)",
           borderRadius: 8,
           padding: "6px 14px",
           fontFamily: "var(--font-mono)",
           fontSize: 11,
-          color: "rgba(255,255,255,0.5)",
+          color: "rgba(255,255,255,0.82)",
           letterSpacing: 1.5,
           cursor: "pointer",
           transition: "all .2s",
           zIndex: 10,
         }}
         onMouseOver={(e) => {
-          e.currentTarget.style.background = "rgba(255,255,255,0.15)";
-          e.currentTarget.style.color = "rgba(255,255,255,0.8)";
+          e.currentTarget.style.background = "rgba(255,255,255,0.22)";
+          e.currentTarget.style.color = "#FFFFFF";
         }}
         onMouseOut={(e) => {
-          e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-          e.currentTarget.style.color = "rgba(255,255,255,0.5)";
+          e.currentTarget.style.background = "rgba(255,255,255,0.14)";
+          e.currentTarget.style.color = "rgba(255,255,255,0.82)";
         }}
       >
         ESC
@@ -210,14 +211,10 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
   return (
     <>
       {/* Avatar circle */}
-      <div
+      <button
+        type="button"
         onClick={openModal}
-        role="button"
-        tabIndex={0}
         aria-label="View full photo"
-        onKeyDown={(e) => {
-          if (e.key === "Enter") openModal();
-        }}
         style={{
           position: "relative",
           width: size,
@@ -227,6 +224,9 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
           animation: "avatarPulse 4s ease-in-out infinite",
           transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
           cursor: "pointer",
+          border: "none",
+          background: "transparent",
+          padding: 0,
         }}
         onMouseOver={(e) => {
           e.currentTarget.style.transform = "scale(1.05)";
@@ -297,7 +297,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             boxShadow: `0 0 10px ${c.green}80`,
           }}
         />
-      </div>
+      </button>
 
       {/* Portal: render lightbox in document.body to escape transform parents */}
       {isBrowser && lightbox && createPortal(lightbox, document.body)}

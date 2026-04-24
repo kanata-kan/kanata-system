@@ -28,7 +28,9 @@ export function NavLogo({ C, isMobile, onNavigate }: NavLogoProps) {
 
   return (
     <button
+      type="button"
       onClick={() => onNavigate("top")}
+      aria-label="Go to top of page"
       className="nav-logo-button"
       style={{
         display: "flex",

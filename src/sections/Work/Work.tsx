@@ -81,6 +81,7 @@ export function Work() {
             {PROJECTS.map((pr, i) => (
               <button
                 key={pr.n}
+                type="button"
                 role="tab"
                 aria-selected={active === i}
                 onClick={() => setActive(i)}

@@ -15,7 +15,10 @@ interface ThemeToggleProps {
 export function ThemeToggle({ dark, onToggle, c }: ThemeToggleProps) {
   return (
     <button
+      type="button"
       onClick={onToggle}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={dark}
       title={dark ? "Switch to light mode" : "Switch to dark mode"}
       style={{
         display: "flex",

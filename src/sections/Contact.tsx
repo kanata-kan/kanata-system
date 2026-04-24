@@ -98,6 +98,7 @@ export function Contact() {
           </p>
 
           <button
+            type="button"
             onClick={copy}
             style={{
               display: "flex",
