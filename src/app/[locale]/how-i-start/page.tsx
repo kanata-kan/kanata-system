@@ -27,8 +27,7 @@ const PAGE_COPY: Record<Locale, { title: string; description: string }> = {
   },
   ar: {
     title: "كيف كنبدأ الخدمة",
-    description:
-      "مسار موجه باش نفهم الحاجة والقيود ونبداو التعاون بشكل واضح.",
+    description: "مسار موجه باش نفهم الحاجة والقيود ونبداو التعاون بشكل واضح.",
   },
 };
 
@@ -43,6 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const alt = getAlternates("how-i-start", siteUrl);
 
   return {
+    metadataBase: new URL(siteUrl),
     title,
     description,
     alternates: {

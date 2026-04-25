@@ -8,6 +8,7 @@ import { LocaleSwitch } from "./LocaleSwitch";
 import { NavLogo } from "./NavLogo";
 import { NavLinks } from "./NavLinks";
 import { NavMobileMenu } from "./NavMobileMenu";
+import { stripLocalePrefix } from "@/lib/i18n";
 
 interface NavProps {
   C: Theme;
@@ -40,7 +41,9 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
         }
       };
 
-      if (pathname === "/") {
+      const pathWithoutLocale = stripLocalePrefix(pathname);
+
+      if (pathWithoutLocale === "/") {
         setTimeout(scrollTo, open ? 250 : 0);
       } else {
         router.push(`/#${id}`);

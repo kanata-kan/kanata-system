@@ -86,17 +86,17 @@ export const LIGHT: Theme = {
   muted: "#64748b",
   faint: "#94a3b8",
 
-  cyan: "#22d3ee",
-  green: "#116329",
-  amber: "#7D4E00",
-  purple: "#a855f7",
+  cyan: "#0e7490",
+  green: "#15803d",
+  amber: "#b45309",
+  purple: "#7c3aed",
 
-  border: "rgba(15,23,42,0.12)",
-  border2: "rgba(15,23,42,0.25)",
-  line: "rgba(15,23,42,0.08)",
+  border: "rgba(15,23,42,0.20)",
+  border2: "rgba(15,23,42,0.40)",
+  line: "rgba(15,23,42,0.10)",
 
-  gridLine: "rgba(15,23,42,0.04)",
-  glow1: "rgba(34,211,238,0.06)",
-  glow2: "rgba(168,85,247,0.05)",
-  shadow: "0 24px 48px rgba(15,23,42,0.08)",
+  gridLine: "rgba(15,23,42,0.06)",
+  glow1: "rgba(14,116,144,0.12)",
+  glow2: "rgba(124,58,237,0.10)",
+  shadow: "0 24px 48px rgba(15,23,42,0.12)",
 };

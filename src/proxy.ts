@@ -1,6 +1,6 @@
 /**
- * @file middleware.ts
- * @description Next.js middleware for locale-based routing.
+ * @file proxy.ts
+ * @description Next.js proxy for locale-based routing.
  *
  * Responsibilities:
  * 1. If the URL already has a valid locale prefix → pass through, sync cookie.
@@ -11,7 +11,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
-/* ── Inlined constants (middleware runs on Edge — keep imports minimal) ── */
+/* ── Inlined constants (proxy runs on Edge — keep imports minimal) ── */
 const LOCALES = ["en", "fr", "ar"] as const;
 type Locale = (typeof LOCALES)[number];
 const DEFAULT_LOCALE: Locale = "en";
@@ -35,7 +35,7 @@ function detectLocale(req: NextRequest): Locale {
   return DEFAULT_LOCALE;
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ── Skip static assets, API routes, Next internals ──

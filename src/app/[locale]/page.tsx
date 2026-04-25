@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const alt = getAlternates("", siteUrl);
 
   return {
+    metadataBase: new URL(siteUrl),
     title: { absolute: content.meta.title },
     description: content.meta.description,
     alternates: {

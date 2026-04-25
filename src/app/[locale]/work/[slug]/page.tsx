@@ -43,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!project || !project.caseStudy) {
     return {
+      metadataBase: new URL(siteUrl),
       title: copy.meta.fallbackTitle,
       robots: { index: false, follow: false },
     };
@@ -58,13 +59,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const alt = getAlternates(`work/${slug}`, siteUrl);
 
   return {
+    metadataBase: new URL(siteUrl),
     title,
     description,
-    keywords: [
-      ...project.caseStudy.tags,
-      project.type,
-      ...project.highlights,
-    ],
+    keywords: [...project.caseStudy.tags, project.type, ...project.highlights],
     authors: [{ name: content.meta.author }],
     alternates: {
       canonical: alt.canonical,
