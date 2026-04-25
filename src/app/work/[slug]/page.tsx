@@ -23,6 +23,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = resolveLocale((await cookies()).get("locale")?.value);
   const { slug } = await params;
   const content = getContent(locale);
+  const siteUrl = content.meta.siteUrl;
+
   const project =
     getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");
 
@@ -36,22 +38,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const title = `${project.name} Case Study`;
-  const description = project.caseStudy.subtitle || project.desc;
+  const title = `How I Built ${project.name} — A Real System Case Study`;
+
+  const description = `Case study: ${project.name}. ${
+    project.caseStudy.subtitle || project.desc
+  }. Built to solve real operational problems.`;
+
   const firstScreenshot = project.caseStudy.screenshots[0]?.src;
 
   return {
     title,
     description,
     keywords: [...project.caseStudy.tags, project.type, ...project.highlights],
+    authors: [{ name: content.meta.author }],
+
     alternates: {
-      canonical: `/work/${project.slug}`,
+      canonical: `${siteUrl}/work/${project.slug}`,
     },
+
     openGraph: {
       type: "article",
       title: `${title} | ${content.meta.ogSiteName}`,
       description,
-      url: `/work/${project.slug}`,
+      url: `${siteUrl}/work/${project.slug}`,
       images: [
         {
           url: firstScreenshot || "/opengraph-image",
@@ -61,6 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       ],
     },
+
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${content.meta.ogSiteName}`,
@@ -73,6 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkCaseStudy({ params }: Props) {
   const locale = resolveLocale((await cookies()).get("locale")?.value);
   const { slug } = await params;
+
   const project =
     getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");
 

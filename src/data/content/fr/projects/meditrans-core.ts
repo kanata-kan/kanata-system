@@ -4,16 +4,26 @@ export const meditransCore: ProjectContent = {
   n: "03",
   slug: "meditrans-core",
   year: "2025",
-  name: "MediTrans Core",
+
+  // 🔥 SEO NAME
+  name: "Plateforme SaaS pour la gestion du transport médical",
+
   type: "Plateforme SaaS — En Développement",
   color: "#10B981",
+
   status: "Phase 1 terminée",
   statusColor: "#F59E0B",
+
   link: "/work/meditrans-core",
   repoUrl: "https://github.com/kanata-kan/meditrans-core",
-  desc: "Les opérateurs de transport médical et soins à domicile au Maroc manquent d'un système unifié pour la planification, tarification, facturation et gestion de flotte.",
+
+  // 🔥 HOOK
+  desc: "Les entreprises de transport médical utilisent encore des tableurs et des processus manuels pour gérer leurs opérations. Cette plateforme centralise la planification, la tarification et la facturation dans un système unique et fiable.",
+
+  // 🔥 VALUE
   longDesc:
-    "Je construis une plateforme SaaS modulaire avec des frontières domain-driven, un moteur de tarification déterministe, et une couverture de tests complète dès le départ.",
+    "Je développe une plateforme SaaS modulaire pour gérer les opérations de transport médical — de la planification à la facturation — avec une logique claire, testée et traçable. L'objectif est de réduire les erreurs et d'apporter un contrôle total sur les opérations.",
+
   stack: {
     core: ["Next.js 14", "TypeScript (strict)"],
     backend: ["PostgreSQL", "Prisma 5", "Zod", "NextAuth"],
@@ -26,62 +36,71 @@ export const meditransCore: ProjectContent = {
     system: ["Tailwind CSS", "Recharts", "Vercel"],
     testing: ["Vitest", "@vitest/coverage-v8"],
   },
+
   highlights: [
-    "Conçu une architecture modulaire avec des frontières claires service, repository et schema par domaine",
-    "Construit un moteur de tarification déterministe en 7 étapes : résolution catalogue, frais distance, modificateurs, TVA, et persistance snapshot immuable",
-    "Implémenté couverture de tests Vitest pour les modules tarification, facturation et paiement dès le début",
-    "Structuré le codebase pour la maintenabilité à long terme avec TypeScript strict et validation en couches",
+    "Moteur de tarification en 7 étapes, clair et traçable",
+    "Snapshots immuables pour garantir la cohérence financière",
+    "Couverture de tests dès le début pour sécuriser la logique métier",
+    "Architecture modulaire pensée pour évoluer sans casser le système",
   ],
+
   caseStudy: {
+    // 🔥 STRONG STORY
     headline:
-      "Concevoir une plateforme SaaS production-grade pour les opérations de transport médical",
+      "Construire une plateforme SaaS pour des opérations médicales complexes",
+
     subtitle:
-      "Ce case study montre comment j'ai architecturé une plateforme modulaire avec un moteur de tarification déterministe, 146 tests automatisés, et des frontières domain-driven — conçue pour le marché marocain du transport médical.",
+      "Comment j'ai conçu un système qui regroupe la planification, la tarification et la facturation dans une plateforme fiable, avec une logique testée et contrôlée.",
+
     tags: [
       "Architecture SaaS",
+      "Système Médical",
       "Moteur de Tarification",
-      "Modules par Domaine",
-      "Couverture de Tests",
+      "Test-Driven",
     ],
+
     problem: [
-      "Les opérateurs de transport médical au Maroc gèrent la planification, tarification et facturation via des tableurs déconnectés et des processus manuels",
-      "Aucun système unifié n'existe pour le dispatch ambulance, les visites infirmières et la coordination des soins à domicile",
-      "La tarification implique des règles complexes : niveaux d'urgence, types de personnel, zones de distance, modificateurs horaires et jours fériés",
-      "La génération de factures et le suivi des paiements sont manuels — la réconciliation est sujette aux erreurs",
-      "Aucune piste d'audit ou contrôle d'accès basé sur les rôles pour les données sensibles patients et financières",
+      "Les opérations sont gérées via Excel et des processus manuels",
+      "Aucun système centralisé pour coordonner les services",
+      "La tarification est complexe et difficile à calculer manuellement",
+      "La facturation et les paiements sont sources d'erreurs",
+      "Aucun suivi fiable ni audit des opérations",
     ],
+
     impact: [
-      "Erreurs de tarification dues au calcul manuel de piles de modificateurs complexes (nuit, weekend, férié)",
-      "Revenus perdus à cause de services non suivis et d'une facturation incohérente",
-      "Aucune visibilité sur la performance business — revenus, taux de recouvrement, distribution des services",
-      "Risque de conformité lié à l'absence de pistes d'audit sur les opérations médicales sensibles",
-      "Épuisement des opérateurs à cause de tâches admin répétitives qui pourraient être automatisées",
+      "Erreurs fréquentes dans les prix et les factures",
+      "Perte de revenus due à un suivi insuffisant",
+      "Manque de visibilité sur les performances",
+      "Risque élevé sur des données sensibles",
+      "Fatigue opérationnelle liée aux tâches répétitives",
     ],
+
     decisions: [
-      "Architecture modulaire style DDD : chaque module suit schema → types → repository → service → actions",
-      "Server Actions pour toutes les mutations — pas de routes API REST pour les opérations CRUD",
-      "Moteur de tarification déterministe avec 7 étapes explicites et persistance snapshot immuable",
-      "Suite de tests Vitest dès la Phase 0 — moteur de tarification à 100% de couverture avant toute UI",
-      "RBAC avec rôles admin/assistant appliqué à chaque frontière de server action",
-      "Moteur PDF de facturation professionnel avec @react-pdf/renderer (11 composants modulaires)",
-      "Sécurité en couches : middleware → requireSession → requireAdmin → validation Zod → log d'audit",
+      "Construire une architecture modulaire avec des frontières claires",
+      "Créer un moteur de tarification explicite et non implicite",
+      "Utiliser Server Actions pour simplifier la logique backend",
+      "Mettre en place un système de rôles pour sécuriser les opérations",
+      "Penser le système pour évoluer dès le départ",
     ],
+
     architecture: [
-      "8 modules métier (clients, patients, services, factures, paiements, tarification, utilisateurs, dashboard) chacun avec des frontières claires",
-      "Le moteur de tarification résout en 7 étapes : lookup catalogue → prix de base → frais distance → modificateurs → override manuel → TVA → snapshot",
-      "Tous les snapshots de tarification sont immuables — les factures passées reflètent toujours les règles actives au moment du service",
-      "Design System custom avec 10+ composants réutilisables, tokens cohérents, et système de layout",
-      "PostgreSQL avec Prisma ORM — 11 tables, intégrité relationnelle, et requêtes sélectives pour éviter le sur-fetching",
+      "Organisation du système en modules métier indépendants",
+      "Moteur de tarification basé sur des étapes explicites",
+      "Stockage des données avec historique préservé",
+      "PostgreSQL pour garantir la cohérence des relations",
     ],
+
     results: [
-      "146 tests automatisés répartis sur 9 fichiers de test — moteur de tarification à 100% de couverture",
-      "128+ fichiers source organisés à travers 8 modules métier avec des frontières claires",
-      "10 phases de développement complétées avec documentation complète à chaque étape",
-      "Le dashboard charge 15 requêtes en parallèle via Promise.all — bundle réduit de 96% avec imports dynamiques",
-      "Factures PDF professionnelles avec lignes détaillées, ventilation des prix, et badges de statut",
+      "Réduction des erreurs de tarification",
+      "Meilleure fiabilité des factures",
+      "Base solide pour évoluer vers la production",
+      "Système plus clair et contrôlable",
     ],
+
     screenshots: [],
-    cta: "Ce n'est pas un projet tutoriel. C'est un SaaS production-grade construit avec la même rigueur que j'appliquerais à un codebase d'équipe.",
+
+    cta: "La vraie valeur n'est pas le nombre de fonctionnalités, mais la fiabilité du système dans des opérations réelles.",
+
     technicalDeepDive: {
       sectionTitle: "Analyse Technique",
       sectionSubtitle:

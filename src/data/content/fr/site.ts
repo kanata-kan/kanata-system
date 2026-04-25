@@ -45,24 +45,29 @@ export const site: SiteData = {
       lastName: "",
     },
 
+    tagline: "Je conçois des systèmes qui structurent des opérations réelles",
+
+    subtext:
+      "Stock, tarification et outils internes — construits à partir de contraintes réelles, pas de démos.",
+
     positioning:
-      "Product Engineer spécialisé dans la conception de systèmes fiables sous contraintes réelles.",
+      "Ingénieur produit spécialisé dans la conception de systèmes fiables sous contraintes réelles.",
 
     roles: [
       "Je travaille à partir de cas réels, pas de démos fictives",
       "Je conçois pour des workflows opérationnels, pas seulement pour l’interface",
-      "Je rends les trade-offs techniques explicites",
+      "Je rends les compromis techniques explicites",
       "Je construis des systèmes compréhensibles et évolutifs",
     ],
 
     pills: [
       "Systèmes réels",
       "Pensée opérationnelle",
-      "Trade-offs explicites",
+      "Compromis explicites",
       "Architecture maintenable",
     ],
 
-    bio: "Ce portfolio présente mon travail à travers des cas concrets. Je me concentre sur des problématiques opérationnelles — stock, pricing, reporting, outils internes — pour les transformer en systèmes fiables, clairs et conçus pour évoluer dans le temps.",
+    bio: "Ce portfolio présente mon travail à travers des cas concrets. Je me concentre sur des problématiques opérationnelles — stock, tarification, reporting, outils internes — pour les transformer en systèmes fiables, clairs et conçus pour évoluer dans le temps.",
 
     cta: {
       primary: "VOIR UNE ÉTUDE DE CAS ↓",

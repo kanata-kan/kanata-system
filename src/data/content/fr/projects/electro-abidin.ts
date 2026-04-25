@@ -4,16 +4,26 @@ export const electroAbidin: ProjectContent = {
   n: "01",
   slug: "electro-abidin",
   year: "2025",
-  name: "Electro Abidin eSystem",
+
+  // 🔥 SEO NAME
+  name: "Système de gestion de stock et point de vente",
+
   type: "Système de Gestion de Vente au Détail",
   color: "#3B82F6",
+
   status: "Déploiement privé",
   statusColor: "#3FB950",
+
   link: "/work/electro-abidin",
   liveUrl: "https://abdelilahwajid.com/work/electro-abidin",
-  desc: "Une operation retail avec des controles de stock manuels, du suivi papier, et une caisse lente avait besoin d'un systeme unique que l'equipe pouvait vraiment faire confiance en temps reel.",
+
+  // 🔥 HOOK
+  desc: "Un magasin d'électronique travaillait avec des vérifications de stock manuelles et une caisse lente, ce qui causait des erreurs et des retards. Ce système a apporté une visibilité en temps réel et un flux de vente fiable.",
+
+  // 🔥 VALUE
   longDesc:
-    "J'ai reuni stock, caisse, facturation, et gestion de garantie dans un seul flux operationnel avec des regles fiables pour le stock, le pricing, et la marge.",
+    "J'ai conçu un système complet qui relie le stock, la caisse, la facturation et la gestion des garanties dans un seul flux clair. L'objectif était d'éliminer les approximations et de garantir un suivi précis du stock, des prix et des marges.",
+
   stack: {
     core: ["Next.js", "React", "JavaScript (ES6+)"],
     backend: ["MongoDB", "Mongoose", "Zod", "JWT Auth", "bcrypt"],
@@ -25,60 +35,70 @@ export const electroAbidin: ProjectContent = {
     system: ["Styled Components", "Nodemailer", "Sharp"],
     testing: ["Jest", "Supertest"],
   },
+
   highlights: [
-    "Relie la disponibilite stock directement a la caisse pour eviter les ventes a l'aveugle",
-    "Utilise le cout par lot FIFO pour un suivi de marge base sur le vrai prix d'achat",
-    "Separe l'etat workflow de la verite financiere avec des enregistrements immuables",
-    "Couvre facturation, TVA, retours, et garanties dans le meme workflow retail",
+    "Connexion directe entre stock et caisse pour éviter les ventes à l'aveugle",
+    "Utilisation du FIFO pour calculer les marges à partir des vrais coûts d'achat",
+    "Séparation entre logique métier et données financières pour plus de fiabilité",
+    "Unification de la facturation, TVA, retours et garanties dans un seul système",
   ],
+
   caseStudy: {
-    headline:
-      "Remplacer des operations retail manuelles par un systeme fiable en caisse",
+    // 🔥 STRONG STORY
+    headline: "Du stock vérifié manuellement à un système en temps réel",
+
     subtitle:
-      "Ce case study montre comment j'ai transforme des verifications de stock deconnectees, des decisions de pricing, et la facturation en un workflow operationnel unique pour un magasin d'electronique.",
+      "Comment j'ai transformé la gestion du stock, des prix et de la caisse en un système unique et fiable pour un magasin d'électronique.",
+
     tags: [
-      "Operations Retail",
+      "Opérations Retail",
       "Logique Stock",
       "Flux de Caisse",
-      "Business Rules",
+      "Règles Métier",
     ],
+
     problem: [
-      "Le magasin dépendait de vérifications de stock manuelles dans la réserve",
-      "Les employés devaient vérifier physiquement la disponibilité plusieurs fois par jour",
-      "Erreurs de vente fréquentes (produits non disponibles)",
-      "Processus de caisse lent dû au manque de visibilité en temps réel",
-      "Aucun suivi financier ou de précision de stock clair",
+      "Le magasin dépendait de vérifications de stock manuelles",
+      "Les employés devaient aller constamment en réserve",
+      "Des erreurs de vente fréquentes (produits non disponibles)",
+      "Un passage en caisse lent et peu fiable",
+      "Aucune vision claire du stock ou des revenus",
     ],
+
     impact: [
-      "Ventes perdues dues à des produits indisponibles non détectés jusqu'à la caisse",
-      "Temps et effort physique gaspillés pour les employés sur vérifications répétitives",
-      "Mauvaise expérience client causée par de longues attentes en magasin",
-      "Compréhension inexacte des niveaux d'inventaire et des revenus réels",
-      "Chaos opérationnel affectant la performance quotidienne et la prise de décision",
+      "Perte de ventes à cause de produits indisponibles",
+      "Perte de temps pour les employés",
+      "Mauvaise expérience client en magasin",
+      "Données de stock et de revenus peu fiables",
+      "Organisation interne difficile à gérer",
     ],
+
     decisions: [
-      "Connecté directement l'inventaire au processus de vente (sync temps réel)",
-      "Introduit un système de commande multi-produits au lieu de caisse mono-produit",
-      "Ajouté des alertes de seuil de stock pour meilleure anticipation",
-      "Implémenté une tarification flexible (min/max) pour supporter la vraie négociation",
-      "Conçu un système de facturation supportant particuliers et entreprises",
-      "Rendu la TVA optionnelle selon scénarios business réels",
-      "Intégré une logique de garantie automatique par produit",
+      "Connexion du stock à la caisse en temps réel",
+      "Support des commandes multi-produits",
+      "Ajout d'alertes pour anticiper les ruptures",
+      "Tarification flexible adaptée aux négociations réelles",
+      "Système de facturation pour particuliers et entreprises",
+      "Gestion optionnelle de la TVA selon les cas",
+      "Ajout automatique des garanties par produit",
     ],
+
     architecture: [
-      "Séparé l'entité produit de l'entité stock pour éviter la duplication de données",
-      "Chaque lot de stock a son propre prix d'achat pour une comptabilité précise",
-      "Implémenté une logique FIFO pour un calcul de profit précis",
-      "Utilisé des opérations basées sur statut pour annulation/retour avec récupération automatique de stock",
-      "Conçu le système avec cohérence des données et intégrité transactionnelle en tête",
+      "Séparation entre produit et stock pour éviter les duplications",
+      "Chaque lot possède son propre prix d'achat",
+      "FIFO pour un calcul de marge précis",
+      "Gestion des retours et annulations avec restauration automatique du stock",
+      "Système conçu pour garantir la cohérence des données",
     ],
+
     results: [
-      "La disponibilite stock devient visible pendant le checkout au lieu d'un aller-retour manuel vers la reserve",
-      "Les caissiers peuvent traiter des commandes multi-produits dans un seul flux coherent",
-      "Le suivi de marge passe de l'approximation a un calcul base sur les lots",
-      "Les retours et annulations restaurent le stock via des regles systeme explicites",
-      "Le proprietaire obtient une vision plus claire des ventes, du mouvement stock, et de la facturation",
+      "Disponibilité du stock visible instantanément en caisse",
+      "Traitement rapide des commandes multi-produits",
+      "Calcul des marges fiable et basé sur les données réelles",
+      "Gestion automatique des retours et annulations",
+      "Meilleure visibilité globale pour le propriétaire",
     ],
+
     screenshots: [
       {
         src: "/electro-abidin/pos.webp",
@@ -111,7 +131,9 @@ export const electroAbidin: ProjectContent = {
           "Génération factures automatiques avec support TVA et types clients",
       },
     ],
-    cta: "La valeur n'etait pas un dashboard plus joli. C'etait un workflow sur lequel le magasin pouvait compter pendant de vraies ventes.",
+
+    cta: "La valeur n'était pas dans l'interface, mais dans un système fiable pour les opérations réelles.",
+
     technicalDeepDive: {
       sectionTitle: "Analyse Technique",
       sectionSubtitle:

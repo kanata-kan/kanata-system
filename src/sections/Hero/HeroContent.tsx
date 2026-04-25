@@ -15,6 +15,7 @@ import { Avatar } from "@/components/ui/Avatar";
 import { HeroCTA } from "./HeroCTA";
 import { HeroAvatar } from "./HeroAvatar";
 import { TEXT } from "@/tokens/typography";
+import Link from "next/link";
 
 export function HeroContent() {
   const { C } = useThemeContext();
@@ -117,6 +118,7 @@ export function HeroContent() {
 
         <div style={{ minWidth: 0 }}>
           <h1
+            aria-label={`${content.hero.name.base} ${content.hero.name.highlight}`}
             style={{
               ...TEXT.heroTitle(C, isMobile),
               paddingInlineEnd: 8,
@@ -141,9 +143,59 @@ export function HeroContent() {
         </div>
       </div>
 
+      {/* Tagline */}
+      {content.hero.tagline && (
+        <div
+          className="rv d3"
+          style={{
+            marginBottom: isMobile ? 14 : 16,
+          }}
+        >
+          <h2
+            style={{
+              ...TEXT.body(C),
+              color: C.text,
+              fontSize: isMobile ? 20 : 22,
+              maxWidth: 620,
+              margin: 0,
+              fontWeight: 700,
+              overflowWrap: "anywhere",
+              lineHeight: 1.3,
+            }}
+          >
+            {content.hero.tagline}
+          </h2>
+        </div>
+      )}
+
+      {/* Subtext */}
+      {content.hero.subtext && (
+        <div
+          className="rv d4"
+          style={{
+            marginBottom: isMobile ? 18 : 20,
+          }}
+        >
+          <p
+            style={{
+              ...TEXT.bodySmall(C),
+              color: C.sub,
+              fontSize: isMobile ? 15 : 16,
+              maxWidth: 620,
+              margin: 0,
+              fontWeight: 400,
+              overflowWrap: "anywhere",
+              lineHeight: 1.6,
+            }}
+          >
+            {content.hero.subtext}
+          </p>
+        </div>
+      )}
+
       {/* Rotating role */}
       <div
-        className="rv d3"
+        className="rv d5"
         style={{
           marginBottom: 18,
         }}
@@ -151,11 +203,11 @@ export function HeroContent() {
         <p
           style={{
             ...TEXT.body(C),
-            color: C.sub,
+            color: C.text,
             fontSize: isMobile ? 16 : 18,
             maxWidth: 620,
             margin: 0,
-            fontWeight: 500,
+            fontWeight: 600,
             overflowWrap: "anywhere",
           }}
         >
@@ -165,7 +217,7 @@ export function HeroContent() {
 
       {/* Rotating role */}
       <div
-        className="rv d4"
+        className="rv d6"
         style={{
           display: "flex",
           alignItems: "center",
@@ -242,19 +294,57 @@ export function HeroContent() {
 
       {/* Bio */}
       <p
-        className="rv d5"
+        className="rv d7"
         style={{
           ...TEXT.bodySmall(C),
           fontSize: isMobile ? 14 : 15,
           lineHeight: 1.75,
           maxWidth: 540,
-          marginBottom: 24,
+          marginBottom: 20,
           fontWeight: 300,
           overflowWrap: "anywhere",
         }}
       >
         {content.hero.bio}
       </p>
+
+      {/* Internal Link */}
+      <div
+        style={{
+          marginBottom: 24,
+        }}
+      >
+        <Link
+          href="/work/electro-abidin"
+          style={{
+            ...TEXT.bodySmall(C),
+            fontSize: isMobile ? 14 : 15,
+            color: C.cyan,
+            fontWeight: 500,
+            textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            transition: "opacity 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = "0.8";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = "1";
+          }}
+        >
+          See how I built a real retail system
+          <span
+            style={{
+              fontSize: isMobile ? 12 : 14,
+              fontWeight: 600,
+            }}
+          >
+            →
+          </span>
+        </Link>
+      </div>
 
       <HeroCTA />
 

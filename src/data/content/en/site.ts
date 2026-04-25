@@ -35,7 +35,6 @@ export const site: SiteData = {
   },
 
   /* ── Hero ── */
-  /* ── Hero ── */
   hero: {
     badge: "OPEN TO WORK",
 
@@ -45,6 +44,14 @@ export const site: SiteData = {
       lastName: "",
     },
 
+    // 🔥 NEW (entry point)
+    tagline: "I design systems that solve real operational problems",
+
+    // 🔥 NEW (quick clarity)
+    subtext:
+      "Inventory, pricing, and internal tools — built from real constraints, not demos.",
+
+    // 🧠 existing deep layer (keep)
     positioning:
       "Product Engineer building systems that survive real constraints.",
 
@@ -73,7 +80,10 @@ export const site: SiteData = {
 
     avatar: {
       displayName: "Abdelilah Wajid",
-      tagline: "From messy workflows to reliable systems",
+
+      // 🔥 small improvement
+      tagline: "Turning messy workflows into reliable systems",
+
       locationShort: "Marrakech · Open to remote",
 
       infoItems: ["Marrakech, Morocco", "UTC+1 — GMT+1", "Open to remote"],

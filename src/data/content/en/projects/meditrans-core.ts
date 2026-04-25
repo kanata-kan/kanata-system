@@ -4,16 +4,26 @@ export const meditransCore: ProjectContent = {
   n: "03",
   slug: "meditrans-core",
   year: "2025",
-  name: "MediTrans Core",
+
+  // 🔥 SEO NAME
+  name: "Medical Transport SaaS Platform & Pricing Engine",
+
   type: "SaaS Platform — In Development",
   color: "#10B981",
+
   status: "Phase 1 complete",
   statusColor: "#F59E0B",
+
   link: "/work/meditrans-core",
   repoUrl: "https://github.com/kanata-kan/meditrans-core",
-  desc: "Medical transport and home care operators in Morocco lack a unified system for scheduling, pricing, invoicing, and fleet management.",
+
+  // 🔥 HOOK
+  desc: "Medical transport operators rely on spreadsheets and manual calculations for scheduling, pricing, and invoicing. This platform introduces a unified system with deterministic pricing and full operational control.",
+
+  // 🔥 VALUE
   longDesc:
-    "I am building a modular SaaS platform with domain-driven boundaries, a deterministic pricing engine, and comprehensive test coverage from day one.",
+    "I am building a modular SaaS platform designed to handle complex healthcare operations — including scheduling, pricing, invoicing, and payments — with deterministic logic, auditability, and test-driven guarantees from day one.",
+
   stack: {
     core: ["Next.js 14", "TypeScript (strict)"],
     backend: ["PostgreSQL", "Prisma 5", "Zod", "NextAuth"],
@@ -26,62 +36,74 @@ export const meditransCore: ProjectContent = {
     system: ["Tailwind CSS", "Recharts", "Vercel"],
     testing: ["Vitest", "@vitest/coverage-v8"],
   },
+
   highlights: [
-    "Designed modular architecture with clear service, repository, and schema boundaries per domain",
-    "Built a deterministic 7-step pricing engine: catalog resolution, distance fees, modifiers, VAT, and immutable snapshot persistence",
-    "Implemented Vitest test coverage for pricing, invoicing, and payment modules from the start",
-    "Structured the codebase for long-term maintainability with strict TypeScript and layered validation",
+    "Designed a modular SaaS architecture with clear domain boundaries",
+    "Built a deterministic 7-step pricing engine with immutable snapshots",
+    "Implemented full test coverage for pricing and invoicing logic from the start",
+    "Structured the system for long-term scalability and maintainability",
   ],
+
   caseStudy: {
+    // 🔥 STORY
     headline:
-      "Designing a production-grade SaaS for medical transport operations",
+      "Designing a SaaS platform for complex medical transport operations",
+
     subtitle:
-      "This case study shows how I architected a modular platform with a deterministic pricing engine, 146 automated tests, and domain-driven boundaries — built for the Moroccan medical transport market.",
+      "How I built a modular system with deterministic pricing, auditability, and 146 automated tests — designed for real healthcare workflows.",
+
     tags: [
       "SaaS Architecture",
+      "Healthcare System",
       "Pricing Engine",
-      "Domain Modules",
-      "Test Coverage",
+      "Test-Driven",
     ],
+
     problem: [
-      "Medical transport operators in Morocco manage scheduling, pricing, and invoicing through disconnected spreadsheets and manual processes",
-      "No unified system exists for ambulance dispatch, nursing visits, and home care coordination",
-      "Pricing involves complex rules: urgency levels, staff types, distance zones, time-of-day modifiers, and holidays",
-      "Invoice generation and payment tracking are manual — reconciliation is error-prone",
-      "No audit trail or role-based access control for sensitive patient and financial data",
+      "Medical transport operators manage scheduling, pricing, and invoicing through disconnected spreadsheets",
+      "No unified system exists for ambulance dispatch, home care visits, and coordination",
+      "Pricing rules are complex — urgency, staff type, distance, time, and holidays",
+      "Manual invoice generation leads to frequent errors and inconsistencies",
+      "No audit trail or role-based access control for sensitive operations",
     ],
+
     impact: [
-      "Pricing errors due to manual calculation of complex modifier stacks (night, weekend, holiday)",
-      "Lost revenue from untracked services and inconsistent invoicing",
-      "No visibility into business performance — revenue, collection rates, service distribution",
-      "Compliance risk from missing audit trails on sensitive medical operations",
-      "Operator burnout from repetitive admin tasks that could be automated",
+      "Frequent pricing errors due to manual calculations",
+      "Revenue loss from inconsistent invoicing and tracking",
+      "No visibility into operational performance or financial metrics",
+      "Compliance risks due to lack of audit logs",
+      "Operational fatigue caused by repetitive manual tasks",
     ],
+
     decisions: [
-      "Modular DDD-style architecture: each module follows schema → types → repository → service → actions",
-      "Server Actions for all mutations — no REST API routes for CRUD operations",
-      "Deterministic pricing engine with 7 explicit steps and immutable snapshot persistence",
-      "Vitest test suite from Phase 0 — pricing engine at 100% coverage before any UI was built",
-      "RBAC with admin/assistant roles enforced at every server action boundary",
-      "Professional PDF invoice engine with @react-pdf/renderer (11 modular components)",
-      "Layered security: middleware → requireSession → requireAdmin → Zod validation → audit log",
+      "Adopted modular DDD-style architecture with strict boundaries per domain",
+      "Used Server Actions as the only mutation layer (no REST API complexity)",
+      "Built a deterministic pricing engine with 7 explicit steps",
+      "Introduced immutable snapshots to preserve financial history",
+      "Implemented RBAC with enforced access control at every mutation point",
+      "Designed a full PDF invoice system with structured pricing breakdown",
     ],
+
     architecture: [
-      "8 business modules (clients, patients, services, invoices, payments, pricing, users, dashboard) each with clear boundaries",
-      "Pricing engine resolves in 7 steps: catalog lookup → base price → distance fees → modifiers → manual override → VAT → snapshot",
-      "All pricing snapshots are immutable — past invoices always reflect the rules active at service time",
-      "Custom Design System with 10+ reusable components, consistent tokens, and layout system",
-      "PostgreSQL with Prisma ORM — 11 tables, relational integrity, and selective queries to prevent over-fetching",
+      "8 modular domains (clients, patients, services, invoices, payments, pricing, users, dashboard)",
+      "Deterministic pricing engine resolving through 7 steps with full traceability",
+      "Immutable pricing snapshots stored alongside services",
+      "PostgreSQL with Prisma ORM ensuring relational integrity",
+      "Custom design system with reusable components and layout consistency",
     ],
+
     results: [
-      "146 automated tests across 9 test files — pricing engine at 100% coverage",
-      "128+ source files organized across 8 business modules with clean boundaries",
-      "10 development phases completed with full documentation at each stage",
-      "Dashboard loads 15 queries concurrently via Promise.all — bundle reduced 96% with dynamic imports",
-      "Professional invoice PDFs with itemized lines, pricing breakdown, and status badges",
+      "146 automated tests ensuring reliability of pricing and invoicing logic",
+      "Clean modular codebase with clear domain boundaries",
+      "Scalable foundation ready for production deployment",
+      "Deterministic pricing system eliminating calculation ambiguity",
+      "Professional invoice generation with consistent structure",
     ],
+
     screenshots: [],
-    cta: "This is not a tutorial project. It is a production-grade SaaS being built with the same rigor I would apply to a team codebase.",
+
+    cta: "This is not a demo project — it is a production-grade SaaS platform designed to handle real-world healthcare operations.",
+
     technicalDeepDive: {
       sectionTitle: "Technical Deep Dive",
       sectionSubtitle:

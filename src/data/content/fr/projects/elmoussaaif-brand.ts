@@ -4,16 +4,26 @@ export const elmoussaaifBrand: ProjectContent = {
   n: "02",
   slug: "elmoussaaif-brand",
   year: "2025",
-  name: "Elmoussaaif Abdelghafour Brand",
+
+  // 🔥 SEO NAME
+  name: "Plateforme web multilingue avec CMS",
+
   type: "Projet Client — Production",
   color: "#8B5CF6",
+
   status: "En production",
   statusColor: "#3FB950",
+
   link: "/work/elmoussaaif-brand",
   liveUrl: "https://elmoussaif.com",
-  desc: "Un client avait besoin d'un site de marque personnelle professionnel avec gestion de contenu complète, support multilingue, et un design soigné reflétant son identité.",
+
+  // 🔥 HOOK
+  desc: "Cette entreprise de transport fonctionnait uniquement via WhatsApp et le bouche-à-oreille, sans aucune présence en ligne. Cette plateforme a introduit un site professionnel multilingue avec un système de gestion de contenu autonome.",
+
+  // 🔥 VALUE
   longDesc:
-    "J'ai conçu et construit la plateforme entière — du schéma base de données et authentification au CMS, SEO, et déploiement — livrée en production.",
+    "J'ai conçu et développé une plateforme digitale complète incluant un site web, un CMS et un système d'administration. L'objectif était de transformer une activité offline en présence en ligne structurée, avec un contrôle total sur le contenu et l'évolution du service.",
+
   stack: {
     core: ["Next.js 16", "React 19", "TypeScript"],
     backend: ["MongoDB", "Mongoose", "Zod", "JWT Auth", "bcrypt"],
@@ -26,62 +36,71 @@ export const elmoussaaifBrand: ProjectContent = {
     system: ["Tailwind CSS 4", "Framer Motion"],
     testing: [],
   },
+
   highlights: [
-    "Construit un CMS complet avec tri drag-and-drop, optimisation d'images via Cloudinary + Sharp, et tableau de bord admin protégé",
-    "Implémenté authentification JWT + bcrypt avec contrôle d'accès basé sur les rôles pour les routes admin",
-    "Livré gestion de contenu multilingue et métadonnées SEO structurées pour la visibilité",
-    "Conçu une UI responsive avec animations Framer Motion et Tailwind CSS 4",
+    "Création d'un CMS permettant au client de gérer son contenu sans dépendre d'un développeur",
+    "Mise en place d'un système multilingue couvrant 4 langues",
+    "Implémentation d'un système d'authentification sécurisé avec gestion des rôles",
+    "Interface moderne et responsive adaptée à l'identité du service",
   ],
+
   caseStudy: {
+    // 🔥 STRONG STORY
     headline:
-      "Construire une plateforme de marque multilingue de zéro présence digitale à la production",
+      "D'une activité basée sur WhatsApp à une plateforme digitale complète",
+
     subtitle:
-      "Ce case study montre comment j'ai accompagné un client de messages WhatsApp éparpillés et zéro visibilité en ligne vers une plateforme multilingue professionnelle et autogérée — en production sur elmoussaif.com.",
+      "Comment j'ai transformé un service de transport sans présence en ligne en une plateforme multilingue professionnelle, entièrement gérée par le client.",
+
     tags: [
       "Livraison Client",
       "Multilingue (4 locales)",
       "CMS & Admin",
       "Production",
     ],
+
     problem: [
-      "Le client opérait un service de transport privé réussi mais n'avait aucune présence digitale",
-      "Toutes les réservations passaient par des messages WhatsApp éparpillés et le bouche-à-oreille",
-      "Aucun outil de crédibilité — les partenaires B2B potentiels (riads, villas, hôtels) ne pouvaient pas évaluer le service",
-      "Photos, tarifs et descriptions de services éparpillés dans les applications de messagerie sans propriété de contenu",
-      "Les clients et partenaires opèrent en 4 langues (EN, FR, ES, AR) — aucun support multilingue n'existait",
-      "Le client devait gérer le contenu de manière indépendante avec zéro connaissance technique",
+      "Aucune présence en ligne malgré une activité existante",
+      "Toutes les réservations passaient par WhatsApp",
+      "Aucun moyen de présenter les services ou inspirer confiance",
+      "Contenu (photos, prix, services) dispersé et difficile à gérer",
+      "Absence de support multilingue pour des clients internationaux",
+      "Le client ne pouvait pas gérer son contenu de manière autonome",
     ],
+
     impact: [
-      "Aucune découvrabilité en ligne — l'entreprise était invisible pour les clients internationaux potentiels",
-      "Les partenariats B2B étaient plus difficiles à établir sans interface professionnelle",
-      "Le contenu était perdu ou dupliqué entre les plateformes de messagerie",
-      "Aucune présence SEO signifiait zéro trafic organique des moteurs de recherche",
-      "Chaque mise à jour de contenu nécessitait l'intervention d'un développeur",
+      "Invisibilité totale sur les moteurs de recherche",
+      "Difficulté à établir des partenariats professionnels",
+      "Perte ou duplication du contenu",
+      "Zéro trafic organique",
+      "Dépendance constante au développeur pour chaque modification",
     ],
+
     decisions: [
-      "Server Components par défaut — composants client uniquement là où l'interactivité l'exige (formulaires, animations, drag-and-drop)",
-      "Server Actions pour toutes les mutations — pas de couche API REST séparée nécessaire",
-      "Connexion MongoDB singleton pour éviter l'épuisement du pool en environnement serverless",
-      "Système de design tokens HSL avec propriétés CSS custom pour variantes de thème (light, dark, luxury)",
-      "Séparation stricte des préoccupations — pas de logique base de données dans les composants ; accès données via modules server-only",
-      "Architecture de routage 4 locales avec contenu culturellement adapté (pas de traductions littérales)",
-      "Support RTL complet pour l'arabe avec stack de polices dédiée (Noto Sans Arabic)",
+      "Construire un CMS simple et accessible pour un utilisateur non technique",
+      "Supporter plusieurs langues dès le départ",
+      "Séparer clairement la logique métier de l'interface",
+      "Créer une base solide pour évoluer avec le business",
     ],
+
     architecture: [
-      "Next.js App Router avec SSR/SSG pour les pages publiques et Server Actions pour le dashboard admin",
-      "Couche /lib partagée pour db, auth, i18n, validateurs, SEO, email, et intégration Cloudinary",
-      "MongoDB Atlas pour les données, Cloudinary pour CDN image avec transforms, Resend pour email transactionnel",
-      "Modèles de données modulaires : Settings, HomePage, AboutPage, ServicePage, Fleet, Tour, ContactMessage, Admin",
-      "Tous les modèles de contenu supportent des champs localisés 4 langues stockés comme objets imbriqués en MongoDB",
+      "Next.js App Router avec pages optimisées pour SEO",
+      "Server Actions pour gérer les opérations côté serveur",
+      "MongoDB pour une gestion flexible du contenu",
+      "Cloudinary pour la gestion et l'optimisation des images",
+      "Structure de données supportant le multilingue",
     ],
+
     results: [
-      "Le client est passé de zéro visibilité en ligne à une plateforme multilingue professionnelle (0 → 1)",
-      "Couverture 4 langues servant l'ensemble du marché touristique de Marrakech (EN, FR, ES, AR)",
-      "Admin self-service — le client gère tout le contenu de manière indépendante sans intervention développeur",
-      "Les partenaires B2B (riads, villas, hôtels) peuvent maintenant évaluer les services via une interface professionnelle",
-      "Infrastructure SEO en place : données structurées (JSON-LD), métadonnées par locale, HTML sémantique, assets optimisés",
+      "Passage de zéro présence digitale à une plateforme professionnelle",
+      "Accès à des clients internationaux grâce au multilingue",
+      "Autonomie complète du client dans la gestion du contenu",
+      "Amélioration de la crédibilité auprès des partenaires",
+      "Base solide pour le référencement et la croissance future",
     ],
+
     screenshots: [],
-    cta: "La valeur n'était pas un plus beau site web. C'était donner à une vraie entreprise l'infrastructure digitale pour croître au-delà du bouche-à-oreille.",
+
+    cta: "La valeur n'était pas seulement dans le site, mais dans la capacité du business à exister et évoluer en ligne.",
   },
 };

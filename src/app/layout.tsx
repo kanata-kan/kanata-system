@@ -17,8 +17,7 @@ import {
 } from "@/lib/seo";
 import { AppShell } from "./AppShell";
 import "./globals.css";
-import { Outfit } from "next/font/google";
-import { Inter } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -131,6 +130,7 @@ export default async function RootLayout({
       : isLikelyMobile
         ? 390
         : 1280;
+
   const structuredData = [
     buildWebsiteJsonLd(locale),
     buildPersonJsonLd(locale),

@@ -1,8 +1,14 @@
+/**
+ * @file page.tsx
+ * @description Homepage. Overrides only title/description — all OG/Twitter
+ *              structure (images, card, siteName, locale…) is inherited from layout.
+ */
+
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/data/content";
-import { buildHomepageJsonLd, resolveLocale } from "@/lib/seo";
+import { buildHomepageJsonLd, getSiteUrl, resolveLocale } from "@/lib/seo";
 import { Hero } from "@/sections/Hero";
 import { TechStrip } from "@/sections/TechStrip";
 import { Work } from "@/sections/Work";
@@ -13,31 +19,29 @@ import { Contact } from "@/sections/Contact";
 export async function generateMetadata(): Promise<Metadata> {
   const locale = resolveLocale((await cookies()).get("locale")?.value);
   const content = getContent(locale);
+  // ✅ نفس الدالة المستخدمة في layout — مصدر واحد للـ canonical
+  const siteUrl = getSiteUrl(locale);
 
   return {
-    title: "Portfolio",
+    // ✅ absolute يكسر الـ template في layout بشكل صحيح للـ homepage
+    title: {
+      absolute: content.meta.title,
+    },
     description: content.meta.description,
     alternates: {
-      canonical: "/",
+      canonical: siteUrl,
     },
     openGraph: {
+      // ✅ title + description فقط
+      // type / siteName / locale / url / images كلها موروثة من layout
       title: content.meta.title,
       description: content.meta.description,
-      url: "/",
-      images: [
-        {
-          url: "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: content.meta.title,
-        },
-      ],
     },
     twitter: {
-      card: "summary_large_image",
+      // ✅ title + description فقط
+      // card + images موروثتان من layout
       title: content.meta.title,
       description: content.meta.description,
-      images: ["/twitter-image"],
     },
   };
 }

@@ -58,6 +58,8 @@ export interface HeroAvatarContent {
 export interface HeroContent {
   badge: string;
   name: HeroNameContent;
+  tagline?: string;
+  subtext?: string;
   positioning: string;
   roles: string[];
   pills: string[];

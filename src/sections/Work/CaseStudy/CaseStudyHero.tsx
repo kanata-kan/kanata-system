@@ -21,6 +21,7 @@ interface CaseStudyHeroProps {
 export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
   const cs = project.caseStudy;
   const color = project.color;
+  const quickHighlights = project.highlights.slice(0, 3);
 
   return (
     <section
@@ -264,12 +265,89 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
             color: C.sub,
             lineHeight: 1.7,
             maxWidth: 620,
-            marginBottom: 28,
+            marginBottom: quickHighlights.length > 0 ? 18 : 28,
             fontWeight: 300,
           }}
         >
           {cs.subtitle}
         </p>
+
+        {quickHighlights.length > 0 && (
+          <div
+            style={{
+              maxWidth: 760,
+              marginBottom: 28,
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 9,
+                letterSpacing: 2,
+                color: C.faint,
+                textTransform: "uppercase",
+                marginBottom: 12,
+              }}
+            >
+              Quick Highlights
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile
+                  ? "1fr"
+                  : "repeat(3, minmax(0, 1fr))",
+                gap: 10,
+              }}
+            >
+              {quickHighlights.map((highlight, index) => (
+                <div
+                  key={highlight}
+                  style={{
+                    padding: isMobile ? "14px 16px" : "16px 18px",
+                    borderRadius: 10,
+                    border: `1px solid ${C.line}`,
+                    background: C.bg2,
+                    transition: "background .35s",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 9,
+                        color,
+                        fontWeight: 700,
+                        marginTop: 3,
+                        opacity: 0.8,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: isMobile ? 13 : 14,
+                        color: C.text,
+                        lineHeight: 1.6,
+                        margin: 0,
+                      }}
+                    >
+                      {highlight}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Tags */}
         <div

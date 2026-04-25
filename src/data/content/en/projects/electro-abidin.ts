@@ -4,16 +4,26 @@ export const electroAbidin: ProjectContent = {
   n: "01",
   slug: "electro-abidin",
   year: "2025",
-  name: "Electro Abidin eSystem",
+
+  // 🔥 SEO NAME
+  name: "Retail Inventory & POS System",
+
   type: "Retail Management System",
   color: "#3B82F6",
+
   status: "Private deployment",
   statusColor: "#3FB950",
+
   link: "/work/electro-abidin",
   liveUrl: "https://abdelilahwajid.com/work/electro-abidin",
-  desc: "A retail operation with manual stock checks, paper-based tracking, and slow checkout needed one system that staff could trust in real time.",
+
+  // 🔥 HOOK
+  desc: "An electronics store struggled with manual stock checks, slow checkout, and frequent sales errors. This system introduced real-time inventory and a reliable checkout flow.",
+
+  // 🔥 VALUE
   longDesc:
-    "I turned inventory, checkout, invoicing, and warranty handling into a single operational flow with reliable stock, pricing, and profit logic.",
+    "I built a complete retail system that connects inventory, checkout, invoicing, and warranty handling into one reliable operational flow — ensuring accurate stock, pricing, and profit tracking in real time.",
+
   stack: {
     core: ["Next.js", "React", "JavaScript (ES6+)"],
     backend: ["MongoDB", "Mongoose", "Zod", "JWT Auth", "bcrypt"],
@@ -25,66 +35,76 @@ export const electroAbidin: ProjectContent = {
     system: ["Styled Components", "Nodemailer", "Sharp"],
     testing: ["Jest", "Supertest"],
   },
+
   highlights: [
     "Connected stock availability directly to checkout so sales staff stop guessing what is available",
-    "Used FIFO batch costing to keep profit reporting tied to real purchase prices",
-    "Separated workflow state from financial truth with immutable transaction records",
-    "Supported invoices, VAT handling, returns, and warranty tracking in one retail workflow",
+    "Implemented FIFO batch costing to keep profit reporting tied to real purchase prices",
+    "Separated workflow state from financial truth using immutable transaction records",
+    "Unified invoicing, VAT handling, returns, and warranty tracking in one operational workflow",
   ],
+
   caseStudy: {
-    headline:
-      "Replacing manual retail operations with a system staff could trust",
+    // 🔥 STRONG STORY
+    headline: "From manual stock checks to a real-time retail system",
+
     subtitle:
-      "This case study shows how I turned disconnected stock checks, pricing decisions, and invoicing into one operational workflow for an electronics store.",
+      "How I transformed inventory tracking, pricing decisions, and checkout into one consistent system for a real electronics store.",
+
     tags: [
       "Retail Operations",
-      "Inventory Logic",
-      "Checkout Flow",
-      "Business Rules",
+      "Inventory System",
+      "Checkout System",
+      "Business Logic",
     ],
+
     problem: [
-      "The store relied on manual stock checking inside the storage room",
+      "The store relied on manual stock checks inside the storage room",
       "Employees had to physically verify product availability multiple times per day",
-      "Frequent sales errors (selling unavailable products)",
+      "Frequent sales errors caused by selling unavailable products",
       "Slow checkout process due to lack of real-time visibility",
       "No clear financial tracking or stock accuracy",
     ],
+
     impact: [
-      "Lost sales due to unavailable products going undetected until checkout",
-      "Wasted time and physical effort for employees on repetitive stock verification",
-      "Poor customer experience caused by long wait times inside the store",
-      "Inaccurate understanding of inventory levels and actual revenue",
-      "Operational chaos affecting daily performance and decision-making",
+      "Lost sales when unavailable products were only discovered at checkout",
+      "Time wasted on repetitive stock verification tasks",
+      "Poor customer experience due to long waiting times",
+      "Unreliable understanding of inventory levels and actual revenue",
+      "Daily operations became chaotic and hard to manage",
     ],
+
     decisions: [
-      "Connected inventory directly to the sales process (real-time sync)",
-      "Introduced multi-product order system instead of single-product checkout",
-      "Added stock threshold alerts for better anticipation",
-      "Implemented flexible pricing (min/max) to support real negotiation",
-      "Designed invoice system supporting both individuals and companies",
-      "Made VAT (TVA) optional based on real business scenarios",
+      "Connected inventory directly to the checkout process (real-time sync)",
+      "Introduced multi-product orders instead of single-product checkout",
+      "Added stock threshold alerts to anticipate shortages",
+      "Implemented flexible pricing (min/max) to support negotiation scenarios",
+      "Designed invoice system supporting individuals and companies",
+      "Made VAT optional to match real business cases",
       "Integrated automatic warranty logic per product",
     ],
+
     architecture: [
-      "Separated product entity from stock entity to avoid data duplication",
-      "Each stock batch has its own purchase price for accurate accounting",
+      "Separated product entity from stock entity to prevent data duplication",
+      "Each stock batch stores its own purchase price for accurate accounting",
       "Implemented FIFO logic for precise profit calculation",
       "Used status-based operations for cancel/return with automatic stock recovery",
-      "Designed system with data consistency and transactional integrity in mind",
+      "Designed system around data consistency and transactional integrity",
     ],
+
     results: [
-      "Stock availability became visible during checkout instead of after a manual trip to storage",
-      "Cashiers could process multi-product orders inside one consistent flow",
-      "Profit tracking moved from approximation to batch-based calculation",
-      "Returns and cancellations restored stock through defined system rules",
-      "The owner gained a clearer daily view of sales, stock movement, and invoicing",
+      "Stock availability became visible instantly during checkout",
+      "Cashiers could process multi-product orders within a single flow",
+      "Profit tracking moved from estimation to precise batch-based calculation",
+      "Returns and cancellations restored stock through system-defined rules",
+      "The store owner gained real-time visibility over sales, stock, and invoices",
     ],
+
     screenshots: [
       {
         src: "/electro-abidin/pos.webp",
         alt: "POS system with real-time stock visibility",
         caption:
-          "Real-time product search and stock visibility — no more manual checks",
+          "Real-time product search and stock visibility — eliminating manual checks",
       },
       {
         src: "/electro-abidin/checkout.webp",
@@ -95,69 +115,74 @@ export const electroAbidin: ProjectContent = {
       {
         src: "/electro-abidin/dashboard.webp",
         alt: "Admin dashboard with sales and stock analytics",
-        caption: "Full operational visibility with real-time business insights",
+        caption:
+          "Real-time insights into operations, sales, and stock movement",
       },
       {
         src: "/electro-abidin/catalogue.webp",
         alt: "Product and inventory management system",
         caption:
-          "Structured product and stock separation for accurate data handling",
+          "Clear separation between product data and stock for reliable tracking",
       },
       {
         src: "/electro-abidin/invoice.webp",
         alt: "Invoice generation system with VAT support",
         caption:
-          "Automatic invoice generation with support for VAT and client types",
+          "Automated invoice generation supporting VAT and multiple client types",
       },
     ],
-    cta: "The value was not a prettier dashboard. It was a workflow the store could rely on during real sales.",
+
+    cta: "The real value was not the interface — it was a system the business could trust during real operations.",
+
     technicalDeepDive: {
       sectionTitle: "Technical Deep Dive",
       sectionSubtitle:
-        "How the system is designed under the hood — architecture, data model, and guarantees.",
+        "Architecture, data model, and guarantees behind the system.",
+
       erdTitle: "Data Model",
+
       entities: [
         {
           name: "Product",
-          desc: "Catalog entry with cached stock (synced from FIFO)",
+          desc: "Catalog entity with cached stock projection",
           type: "core",
         },
         {
           name: "InventoryLog",
-          desc: "FIFO batch — single source of truth for stock & cost",
+          desc: "FIFO batch — source of truth for stock and cost",
           type: "core",
           ssot: "Stock Source of Truth",
           central: true,
         },
         {
           name: "Sale",
-          desc: "Single-product workflow document (UI entry point)",
+          desc: "Single-product transaction (UI workflow entry)",
           type: "transaction",
         },
         {
           name: "Order",
-          desc: "Multi-product sale with embedded OrderItems",
+          desc: "Multi-product transaction with embedded items",
           type: "transaction",
         },
         {
           name: "SalesTransactionItem",
-          desc: "Canonical financial record — immutable after creation",
+          desc: "Immutable financial record",
           type: "financial",
           ssot: "Financial Source of Truth",
         },
         {
           name: "Invoice",
-          desc: "Legal document (FACTURE / BON DE VENTE) with embedded items",
+          desc: "Legal document with embedded items",
           type: "financial",
         },
         {
           name: "Guarantee",
-          desc: "Warranty document with lifecycle tracking",
+          desc: "Warranty lifecycle tracking",
           type: "financial",
         },
         {
           name: "STIDailySnapshot",
-          desc: "Immutable daily aggregates for drift detection",
+          desc: "Daily immutable aggregates for audit",
           type: "audit",
         },
       ],
