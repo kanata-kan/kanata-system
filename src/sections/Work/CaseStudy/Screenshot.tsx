@@ -6,6 +6,8 @@
 
 import Image from "next/image";
 import { ImageLightbox } from "@/components/ui/ImageLightbox";
+import { useLocale } from "@/hooks/useLocale";
+import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import type { Theme } from "@/tokens/themes";
 import type { CaseStudyScreenshot } from "@/data/content";
 
@@ -17,6 +19,9 @@ interface ScreenshotProps {
 }
 
 export function Screenshot({ screenshot, color, C, isMobile }: ScreenshotProps) {
+  const { locale } = useLocale();
+  const copy = getCaseStudyCopy(locale);
+
   return (
     <ImageLightbox
       src={screenshot.src}
@@ -87,7 +92,7 @@ export function Screenshot({ screenshot, color, C, isMobile }: ScreenshotProps) 
               opacity: 0.5,
             }}
           >
-            CLICK TO EXPAND
+            {copy.screenshot.clickToExpand}
           </span>
         </div>
         {/* Image */}

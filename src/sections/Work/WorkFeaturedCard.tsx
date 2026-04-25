@@ -6,6 +6,7 @@
 import Link from "next/link";
 import type { Theme } from "@/tokens/themes";
 import type { Project } from "@/data/projects";
+import { useLocale } from "@/hooks/useLocale";
 import { WindowDots } from "@/components/ui/WindowDots";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
@@ -17,25 +18,71 @@ interface WorkFeaturedCardProps {
 }
 
 export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
+  const { locale } = useLocale();
+  const copy =
+    locale === "ar"
+      ? {
+          problem: "المشكلة",
+          solution: "الحل",
+          decisions: "القرارات",
+          impact: "الأثر",
+          techStack: "التقنيات",
+          projectSnapshot: "لمحة عن المشروع",
+          recruiterSnapshot: "خلاصة سريعة",
+          whyItMatters: "لماذا هذا المشروع مهم",
+          viewCaseStudy: "عرض دراسة الحالة",
+          structureNote: "منظم حول المشكلة والحل والقرارات والأثر",
+          viewProject: "عرض المشروع",
+        }
+      : locale === "fr"
+        ? {
+            problem: "Probleme",
+            solution: "Solution",
+            decisions: "Decisions",
+            impact: "Impact",
+            techStack: "Tech Stack",
+            projectSnapshot: "Apercu Projet",
+            recruiterSnapshot: "Apercu Rapide",
+            whyItMatters: "Pourquoi Ce Projet Compte",
+            viewCaseStudy: "Voir l'etude de cas",
+            structureNote:
+              "Structure autour du probleme, de la solution, des decisions et de l'impact",
+            viewProject: "Voir le projet",
+          }
+        : {
+            problem: "Problem",
+            solution: "Solution",
+            decisions: "Key Decisions",
+            impact: "Impact",
+            techStack: "Tech Stack",
+            projectSnapshot: "Project Snapshot",
+            recruiterSnapshot: "Recruiter Snapshot",
+            whyItMatters: "Why This Project Matters",
+            viewCaseStudy: "View Case Study",
+            structureNote:
+              "Structured around problem, solution, decisions, and impact",
+            viewProject: "View Project",
+          };
+
   const snapshotSections = p.caseStudy
     ? [
         {
-          title: "Problem",
+          title: copy.problem,
           items: p.caseStudy.problem.slice(0, 2),
           accent: "#E5484D",
         },
         {
-          title: "Solution",
+          title: copy.solution,
           items: [p.longDesc, p.caseStudy.architecture[0]].filter(Boolean),
           accent: p.color,
         },
         {
-          title: "Key Decisions",
+          title: copy.decisions,
           items: p.caseStudy.decisions.slice(0, 2),
           accent: C.cyan,
         },
         {
-          title: "Impact",
+          title: copy.impact,
           items: p.caseStudy.results.slice(0, 2),
           accent: p.statusColor,
         },
@@ -171,7 +218,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                 marginBottom: 12,
               }}
             >
-              Tech Stack
+              {copy.techStack}
             </div>
             <Stack direction="column" gap="sm">
               {Object.entries(p.stack).map(([group, items]) => (
@@ -227,7 +274,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   marginBottom: 12,
                 }}
               >
-                Project Snapshot
+                {copy.projectSnapshot}
               </div>
               <div
                 style={{
@@ -295,6 +342,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
             >
               <Link
                 href={`/work/${p.slug}`}
+                prefetch={false}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -373,7 +421,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                 marginBottom: 2,
               }}
             >
-              Recruiter Snapshot
+              {copy.recruiterSnapshot}
             </div>
 
             <div
@@ -463,7 +511,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   marginBottom: 10,
                 }}
               >
-                Why This Project Matters
+                {copy.whyItMatters}
               </div>
               <p
                 style={{

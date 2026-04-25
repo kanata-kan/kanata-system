@@ -7,8 +7,11 @@
 import { useState } from "react";
 import { Container } from "@/components/layout/Container";
 import { ReadingProgress } from "@/components/ui/ReadingProgress";
+import { getProjectBySlug } from "@/data/projects";
+import { useLocale } from "@/hooks/useLocale";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import type { ProjectContent } from "@/data/content";
 import { CaseStudyHero } from "./CaseStudy/CaseStudyHero";
 import { CaseStudySections } from "./CaseStudy/CaseStudySections";
@@ -22,24 +25,32 @@ interface Props {
 }
 
 export function CaseStudyPage({ project }: Props) {
+  const { locale } = useLocale();
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const copy = getCaseStudyCopy(locale);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
+  const localizedProject =
+    getProjectBySlug(project.slug, locale) ?? getProjectBySlug(project.slug, "en");
+  const activeProject =
+    localizedProject && localizedProject.caseStudy
+      ? (localizedProject as typeof project)
+      : project;
 
   return (
     <div style={{ minHeight: "100vh" }}>
-      <ReadingProgress color={project.color} />
-      <CaseStudyHero project={project} C={C} isMobile={isMobile} />
+      <ReadingProgress color={activeProject.color} />
+      <CaseStudyHero project={activeProject} C={C} isMobile={isMobile} />
       <div style={{ height: 1, background: C.line }} />
-      <CaseStudySections project={project} C={C} isMobile={isMobile} />
+      <CaseStudySections project={activeProject} C={C} isMobile={isMobile} />
       <CaseStudyCTA
-        cta={project.caseStudy.cta}
-        color={project.color}
-        currentSlug={project.slug}
+        cta={activeProject.caseStudy.cta}
+        color={activeProject.color}
+        currentSlug={activeProject.slug}
         C={C}
         isMobile={isMobile}
       />
-      {project.caseStudy.technicalDeepDive && (
+      {activeProject.caseStudy.technicalDeepDive && (
         <>
           <div style={{ height: 1, background: C.line }} />
           <section
@@ -66,7 +77,7 @@ export function CaseStudyPage({ project }: Props) {
                     textTransform: "uppercase",
                   }}
                 >
-                  Technical Deep Dive
+                  {copy.page.technicalEyebrow}
                 </div>
                 <p
                   style={{
@@ -77,8 +88,7 @@ export function CaseStudyPage({ project }: Props) {
                     margin: 0,
                   }}
                 >
-                  Detailed architecture, guarantees, and code paths stay
-                  available for engineers without overwhelming the main story.
+                  {copy.page.technicalBody}
                 </p>
                 <button
                   type="button"
@@ -93,24 +103,24 @@ export function CaseStudyPage({ project }: Props) {
                     letterSpacing: 1.4,
                     padding: "10px 18px",
                     borderRadius: 999,
-                    border: `1px solid ${project.color}35`,
-                    color: project.color,
+                    border: `1px solid ${activeProject.color}35`,
+                    color: activeProject.color,
                     background: "transparent",
                     cursor: "pointer",
                     transition: "all .2s",
                   }}
                   onMouseOver={(e) => {
-                    e.currentTarget.style.background = `${project.color}10`;
-                    e.currentTarget.style.borderColor = `${project.color}55`;
+                    e.currentTarget.style.background = `${activeProject.color}10`;
+                    e.currentTarget.style.borderColor = `${activeProject.color}55`;
                   }}
                   onMouseOut={(e) => {
                     e.currentTarget.style.background = "transparent";
-                    e.currentTarget.style.borderColor = `${project.color}35`;
+                    e.currentTarget.style.borderColor = `${activeProject.color}35`;
                   }}
                 >
                   {showTechnicalDetails
-                    ? "Hide Technical Details"
-                    : "View Technical Details"}
+                    ? copy.page.hideTechnical
+                    : copy.page.viewTechnical}
                 </button>
               </div>
             </Container>
@@ -119,8 +129,8 @@ export function CaseStudyPage({ project }: Props) {
             <>
               <div style={{ height: 1, background: C.line }} />
               <TechnicalDeepDive
-                data={project.caseStudy.technicalDeepDive}
-                color={project.color}
+                data={activeProject.caseStudy.technicalDeepDive}
+                color={activeProject.color}
                 C={C}
                 isMobile={isMobile}
               />

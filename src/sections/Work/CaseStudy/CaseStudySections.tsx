@@ -9,6 +9,8 @@ import { useState } from "react";
 import { Section } from "@/components/layout/Section";
 import { Container } from "@/components/layout/Container";
 import { Label } from "@/components/ui/Label";
+import { useLocale } from "@/hooks/useLocale";
+import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import { TEXT } from "@/tokens/typography";
 import type { Theme } from "@/tokens/themes";
 import type { ProjectContent } from "@/data/content";
@@ -88,13 +90,13 @@ function SectionHeader({
 }
 
 function ToggleButton({
-  expanded,
   onToggle,
   color,
+  label,
 }: {
-  expanded: boolean;
   onToggle: () => void;
   color: string;
+  label: string;
 }) {
   return (
     <button
@@ -122,7 +124,7 @@ function ToggleButton({
         e.currentTarget.style.borderColor = `${color}35`;
       }}
     >
-      {expanded ? "Show less" : "Show more"}
+      {label}
     </button>
   );
 }
@@ -186,6 +188,8 @@ function BlockIntro({
 }
 
 export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
+  const { locale } = useLocale();
+  const copy = getCaseStudyCopy(locale);
   const cs = project.caseStudy;
   const color = project.color;
   const [expandedSections, setExpandedSections] = useState<
@@ -228,9 +232,9 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
           <SectionHeader
             num="01"
             numColor={color}
-            label="CONTEXT"
-            heading="Start with the situation before the implementation"
-            sub={`${contextCount} signals frame the real scope before the solution appears`}
+            label={copy.sections.context.label}
+            heading={copy.sections.context.heading}
+            sub={copy.sections.context.sub(contextCount)}
             C={C}
             isMobile={isMobile}
           />
@@ -244,9 +248,9 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <BlockIntro
                 id="problem"
-                label="Problem"
-                heading="What needed to change"
-                sub={`${cs.problem.length} friction points identified before moving into execution`}
+                label={copy.sections.problem.label}
+                heading={copy.sections.problem.heading}
+                sub={copy.sections.problem.sub(cs.problem.length)}
                 C={C}
                 isMobile={isMobile}
               />
@@ -258,9 +262,13 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
               />
               {cs.problem.length > DEFAULT_VISIBLE_ITEMS && (
                 <ToggleButton
-                  expanded={expandedSections.problem}
                   onToggle={() => toggleSection("problem")}
                   color={color}
+                  label={
+                    expandedSections.problem
+                      ? copy.sections.toggleLess
+                      : copy.sections.toggleMore
+                  }
                 />
               )}
               {cs.screenshots[0] && (
@@ -283,9 +291,9 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
                 >
                   <BlockIntro
                     id="impact"
-                    label="Impact"
-                    heading="Why it mattered to the business"
-                    sub={`${cs.impact.length} business consequences made the problem impossible to ignore`}
+                    label={copy.sections.impact.label}
+                    heading={copy.sections.impact.heading}
+                    sub={copy.sections.impact.sub(cs.impact.length)}
                     C={C}
                     isMobile={isMobile}
                   />
@@ -298,9 +306,13 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
                   />
                   {cs.impact.length > DEFAULT_VISIBLE_ITEMS && (
                     <ToggleButton
-                      expanded={expandedSections.impact}
                       onToggle={() => toggleSection("impact")}
                       color="#E5484D"
+                      label={
+                        expandedSections.impact
+                          ? copy.sections.toggleLess
+                          : copy.sections.toggleMore
+                      }
                     />
                   )}
                   {cs.screenshots[1] && (
@@ -325,18 +337,18 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
           <SectionHeader
             num="02"
             numColor={color}
-            label="SOLUTION"
-            heading="Move from diagnosis into deliberate decisions"
-            sub={`${cs.decisions.length} trade-offs explain how the solution took shape`}
+            label={copy.sections.solution.label}
+            heading={copy.sections.solution.heading}
+            sub={copy.sections.solution.sub(cs.decisions.length)}
             C={C}
             isMobile={isMobile}
           />
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             <BlockIntro
               id="decisions"
-              label="Decisions"
-              heading="Why these choices held up"
-              sub="A focused view of the structural decisions that shaped the final system."
+              label={copy.sections.decisions.label}
+              heading={copy.sections.decisions.heading}
+              sub={copy.sections.decisions.sub}
               C={C}
               isMobile={isMobile}
             />
@@ -348,9 +360,13 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
             />
             {cs.decisions.length > DEFAULT_VISIBLE_ITEMS && (
               <ToggleButton
-                expanded={expandedSections.decisions}
                 onToggle={() => toggleSection("decisions")}
                 color={color}
+                label={
+                  expandedSections.decisions
+                    ? copy.sections.toggleLess
+                    : copy.sections.toggleMore
+                }
               />
             )}
             {cs.screenshots[2] && (
@@ -372,18 +388,18 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
           <SectionHeader
             num="03"
             numColor={color}
-            label="SYSTEM"
-            heading="Keep the architecture readable at a glance"
-            sub="A shorter systems view up front, with deeper engineering details available later."
+            label={copy.sections.system.label}
+            heading={copy.sections.system.heading}
+            sub={copy.sections.system.sub}
             C={C}
             isMobile={isMobile}
           />
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             <BlockIntro
               id="architecture"
-              label="Architecture"
-              heading="How the core pieces fit together"
-              sub={`${cs.architecture.length} structural patterns describe the blueprint without dropping into full technical depth`}
+              label={copy.sections.architecture.label}
+              heading={copy.sections.architecture.heading}
+              sub={copy.sections.architecture.sub(cs.architecture.length)}
               C={C}
               isMobile={isMobile}
             />
@@ -417,9 +433,13 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
             </div>
             {cs.architecture.length > DEFAULT_VISIBLE_ITEMS && (
               <ToggleButton
-                expanded={expandedSections.architecture}
                 onToggle={() => toggleSection("architecture")}
                 color={color}
+                label={
+                  expandedSections.architecture
+                    ? copy.sections.toggleLess
+                    : copy.sections.toggleMore
+                }
               />
             )}
           </div>
@@ -453,18 +473,18 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
           <SectionHeader
             num="04"
             numColor="#3FB950"
-            label="RESULTS"
-            heading="What changed after shipping"
-            sub={`${cs.results.length} measurable improvements surface the outcome without forcing a deep read`}
+            label={copy.sections.results.label}
+            heading={copy.sections.results.heading}
+            sub={copy.sections.results.sub(cs.results.length)}
             C={C}
             isMobile={isMobile}
           />
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
             <BlockIntro
               id="results-summary"
-              label="Results"
-              heading="What improved after launch"
-              sub="A concise outcome layer first, with the full set available on demand."
+              label={copy.sections.results.label}
+              heading={copy.sections.results.summaryHeading}
+              sub={copy.sections.results.summarySub}
               C={C}
               isMobile={isMobile}
             />
@@ -552,9 +572,13 @@ export function CaseStudySections({ project, C, isMobile }: SectionsProps) {
             </div>
             {cs.results.length > DEFAULT_VISIBLE_ITEMS && (
               <ToggleButton
-                expanded={expandedSections.results}
                 onToggle={() => toggleSection("results")}
                 color="#3FB950"
+                label={
+                  expandedSections.results
+                    ? copy.sections.toggleLess
+                    : copy.sections.toggleMore
+                }
               />
             )}
             {cs.screenshots[4] && (

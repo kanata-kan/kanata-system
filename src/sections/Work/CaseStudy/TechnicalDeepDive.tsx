@@ -8,6 +8,8 @@
 
 import { Container } from "@/components/layout/Container";
 import { Label } from "@/components/ui/Label";
+import { useLocale } from "@/hooks/useLocale";
+import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import type { Theme } from "@/tokens/themes";
 import type { TechnicalDeepDive as TDD } from "@/data/content/types";
 import { SNum } from "./SNum";
@@ -36,6 +38,7 @@ function EntityCard({
   name,
   desc,
   type,
+  typeLabel,
   ssot,
   central,
   C,
@@ -44,6 +47,7 @@ function EntityCard({
   name: string;
   desc: string;
   type: string;
+  typeLabel: string;
   ssot?: string;
   central?: boolean;
   C: Theme;
@@ -116,7 +120,7 @@ function EntityCard({
             borderRadius: 4,
           }}
         >
-          {type}
+          {typeLabel}
         </span>
       </div>
       <p
@@ -723,6 +727,9 @@ function SubHeader({
    MAIN COMPONENT
    ══════════════════════════════════════════ */
 export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
+  const { locale } = useLocale();
+  const copy = getCaseStudyCopy(locale);
+
   return (
     <section
       id="technical-deep-dive"
@@ -758,7 +765,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
           }}
         >
           <SNum n="06" color={color} />
-          <Label c={C}>ENGINEERING</Label>
+          <Label c={C}>{copy.technical.label}</Label>
         </div>
         <h2
           style={{
@@ -790,7 +797,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div style={{ marginBottom: isMobile ? 40 : 56 }}>
           <SubHeader
             num="6.1"
-            label="DATA MODEL"
+            label={copy.technical.dataModel}
             color={color}
             C={C}
             isMobile={isMobile}
@@ -814,6 +821,11 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
                 name={e.name}
                 desc={e.desc}
                 type={e.type}
+                typeLabel={
+                  copy.technical.types[
+                    e.type as keyof typeof copy.technical.types
+                  ] ?? e.type
+                }
                 ssot={e.ssot}
                 central={e.central}
                 C={C}
@@ -841,7 +853,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
                 marginBottom: 10,
               }}
             >
-              Relationships
+              {copy.technical.relationships}
             </div>
             {data.relationships.map((r, i) => (
               <RelationshipRow
@@ -861,7 +873,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div style={{ marginBottom: isMobile ? 40 : 56 }}>
           <SubHeader
             num="6.2"
-            label="ARCHITECTURE"
+            label={copy.technical.architecture}
             color={color}
             C={C}
             isMobile={isMobile}
@@ -894,7 +906,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div style={{ marginBottom: isMobile ? 40 : 56 }}>
           <SubHeader
             num="6.3"
-            label="EXECUTION FLOW"
+            label={copy.technical.executionFlow}
             color={color}
             C={C}
             isMobile={isMobile}
@@ -944,7 +956,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
                 flexShrink: 0,
               }}
             >
-              NOTE
+              {copy.technical.note}
             </span>
             <span
               style={{
@@ -963,7 +975,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div style={{ marginBottom: isMobile ? 40 : 56 }}>
           <SubHeader
             num="6.4"
-            label="GUARANTEES"
+            label={copy.technical.guarantees}
             color="#10B981"
             C={C}
             isMobile={isMobile}
@@ -974,10 +986,10 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
             if (items.length === 0) return null;
             const catLabel =
               cat === "data"
-                ? "DATA INTEGRITY"
+                ? copy.technical.dataIntegrity
                 : cat === "financial"
-                  ? "FINANCIAL ACCURACY"
-                  : "TRANSACTION SAFETY";
+                  ? copy.technical.financialAccuracy
+                  : copy.technical.transactionSafety;
             const catColor =
               cat === "data"
                 ? "#3B82F6"
@@ -1037,7 +1049,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div>
           <SubHeader
             num="6.5"
-            label="DATA FLOW"
+            label={copy.technical.dataFlow}
             color={color}
             C={C}
             isMobile={isMobile}
@@ -1066,7 +1078,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
         <div style={{ marginBottom: isMobile ? 40 : 56 }}>
           <SubHeader
             num="6.6"
-            label="TRADE-OFFS"
+            label={copy.technical.tradeoffs}
             color={color}
             C={C}
             isMobile={isMobile}
@@ -1129,7 +1141,7 @@ export function TechnicalDeepDive({ data, color, C, isMobile }: Props) {
                       opacity: 0.5,
                     }}
                   >
-                    over
+                    {copy.technical.over}
                   </span>
                   <span
                     style={{

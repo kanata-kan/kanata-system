@@ -1,19 +1,20 @@
 /**
- * @file useLocale.ts
- * @description Locale context and hook for React components.
- * Follows clean architecture: useLocale() returns ONLY locale.
- * Content is retrieved via getContent(locale) function.
+ * @file useLocale.tsx
+ * @description URL-based locale context for React components.
+ *
+ * Architecture:
+ * - Locale is determined by the URL segment (/en, /fr, /ar).
+ * - The server layout passes `initialLocale` from params.
+ * - `setLocale()` navigates to the equivalent page in the new locale.
+ * - No localStorage, no cookies, no custom events — the URL is the truth.
  */
 
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useSyncExternalStore,
-} from "react";
+import React, { createContext, useContext, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import type { Locale } from "@/data/content/types";
+import { switchLocaleInPath } from "@/lib/i18n";
 
 interface LocaleContextValue {
   locale: Locale;
@@ -21,51 +22,6 @@ interface LocaleContextValue {
 }
 
 const LocaleContext = createContext<LocaleContextValue | null>(null);
-const LOCALE_STORAGE_KEY = "locale";
-
-function getCookie(name: string) {
-  if (typeof document === "undefined") {
-    return null;
-  }
-
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${name.replace(/[$()*+.?[\\\]^{|}]/g, "\\$&")}=([^;]*)`),
-  );
-
-  return match ? decodeURIComponent(match[1]) : null;
-}
-
-function resolveLocale(value: string | null | undefined, fallback: Locale): Locale {
-  return value === "en" || value === "fr" || value === "ar" ? value : fallback;
-}
-
-function getLocaleSnapshot(initialLocale: Locale): Locale {
-  if (typeof window === "undefined") {
-    return initialLocale;
-  }
-
-  const stored = window.localStorage.getItem(LOCALE_STORAGE_KEY);
-  if (stored === "en" || stored === "fr" || stored === "ar") {
-    return stored;
-  }
-
-  return resolveLocale(getCookie(LOCALE_STORAGE_KEY), initialLocale);
-}
-
-function subscribe(onStoreChange: () => void) {
-  if (typeof window === "undefined") {
-    return () => {};
-  }
-
-  const handleChange = () => onStoreChange();
-  window.addEventListener("storage", handleChange);
-  window.addEventListener("locale-change", handleChange as EventListener);
-
-  return () => {
-    window.removeEventListener("storage", handleChange);
-    window.removeEventListener("locale-change", handleChange as EventListener);
-  };
-}
 
 export function LocaleProvider({
   children,
@@ -74,27 +30,20 @@ export function LocaleProvider({
   children: React.ReactNode;
   initialLocale: Locale;
 }) {
-  const locale = useSyncExternalStore<Locale>(
-    subscribe,
-    () => getLocaleSnapshot(initialLocale),
-    () => initialLocale,
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const setLocale = useCallback(
+    (newLocale: Locale) => {
+      if (newLocale === initialLocale) return;
+      const newPath = switchLocaleInPath(pathname, newLocale);
+      router.push(newPath);
+    },
+    [initialLocale, pathname, router],
   );
 
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
-  }, [locale]);
-
-  const setLocale = (newLocale: Locale) => {
-    if (typeof window === "undefined") return;
-
-    window.localStorage.setItem(LOCALE_STORAGE_KEY, newLocale);
-    document.cookie = `${LOCALE_STORAGE_KEY}=${newLocale}; path=/; max-age=31536000; samesite=lax`;
-    window.dispatchEvent(new Event("locale-change"));
-  };
-
   return (
-    <LocaleContext.Provider value={{ locale, setLocale }}>
+    <LocaleContext.Provider value={{ locale: initialLocale, setLocale }}>
       {children}
     </LocaleContext.Provider>
   );

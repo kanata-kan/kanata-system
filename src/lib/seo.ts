@@ -1,32 +1,25 @@
 import { getContent } from "@/data/content";
 import type { Locale, ProjectContent } from "@/data/content";
+import {
+  DEFAULT_LOCALE,
+  resolveLocale as _resolveLocale,
+  getMetadataLocale,
+} from "@/lib/i18n";
 
-const DEFAULT_LOCALE: Locale = "en";
-
-export function resolveLocale(value?: string | null): Locale {
-  return value === "fr" || value === "ar" || value === "en"
-    ? value
-    : DEFAULT_LOCALE;
-}
+// Re-export from centralized i18n for backward compatibility
+export const resolveLocale = _resolveLocale;
+export { getMetadataLocale };
 
 export function getSiteUrl(locale: Locale = DEFAULT_LOCALE) {
   return getContent(locale).meta.siteUrl.replace(/\/$/, "");
 }
 
+/** Build an absolute URL. Now includes /{locale}/ prefix for SEO. */
 export function absoluteUrl(path = "/", locale: Locale = DEFAULT_LOCALE) {
   const baseUrl = getSiteUrl(locale);
-
-  if (!path || path === "/") {
-    return baseUrl;
-  }
-
-  return `${baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
-}
-
-export function getMetadataLocale(locale: Locale) {
-  if (locale === "fr") return "fr_FR";
-  if (locale === "ar") return "ar_MA";
-  return "en_US";
+  const clean =
+    path === "/" || !path ? "" : path.startsWith("/") ? path : `/${path}`;
+  return `${baseUrl}/${locale}${clean}`;
 }
 
 function getSocialLinks(locale: Locale = DEFAULT_LOCALE) {

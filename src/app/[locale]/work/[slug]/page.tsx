@@ -1,31 +1,42 @@
+/**
+ * @file [locale]/work/[slug]/page.tsx
+ * @description Case study page. Locale from URL segment.
+ */
+
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getContent } from "@/data/content";
+import type { Locale } from "@/data/content/types";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
-import { buildCaseStudyJsonLd, resolveLocale } from "@/lib/seo";
+import { buildCaseStudyJsonLd } from "@/lib/seo";
+import { LOCALES, isValidLocale, getAlternates } from "@/lib/i18n";
 import { CaseStudyPage } from "@/sections/Work/CaseStudyPage";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getProjects("en")
-    .filter((project) => project.caseStudy)
-    .map((project) => ({ slug: project.slug }));
+  // Generate all locale × slug combinations
+  return LOCALES.flatMap((locale) =>
+    getProjects(locale)
+      .filter((p) => p.caseStudy)
+      .map((p) => ({ locale, slug: p.slug })),
+  );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const locale = resolveLocale((await cookies()).get("locale")?.value);
+  const { locale: raw, slug } = await params;
+  if (!isValidLocale(raw)) return {};
+  const locale = raw as Locale;
+
   const copy = getCaseStudyCopy(locale);
-  const { slug } = await params;
   const content = getContent(locale);
-  const siteUrl = content.meta.siteUrl;
+  const siteUrl = content.meta.siteUrl.replace(/\/$/, "");
 
   const project =
     getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");
@@ -33,10 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project || !project.caseStudy) {
     return {
       title: copy.meta.fallbackTitle,
-      robots: {
-        index: false,
-        follow: false,
-      },
+      robots: { index: false, follow: false },
     };
   }
 
@@ -47,20 +55,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     desc: project.desc,
   });
   const firstScreenshot = project.caseStudy.screenshots[0]?.src;
+  const alt = getAlternates(`work/${slug}`, siteUrl);
 
   return {
     title,
     description,
-    keywords: [...project.caseStudy.tags, project.type, ...project.highlights],
+    keywords: [
+      ...project.caseStudy.tags,
+      project.type,
+      ...project.highlights,
+    ],
     authors: [{ name: content.meta.author }],
     alternates: {
-      canonical: `${siteUrl}/work/${project.slug}`,
+      canonical: alt.canonical,
+      languages: alt.languages,
     },
     openGraph: {
       type: "article",
       title: `${title} | ${content.meta.ogSiteName}`,
       description,
-      url: `${siteUrl}/work/${project.slug}`,
+      url: `${siteUrl}/${locale}/work/${project.slug}`,
       images: [
         {
           url: firstScreenshot || "/opengraph-image",
@@ -80,8 +94,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function WorkCaseStudy({ params }: Props) {
-  const locale = resolveLocale((await cookies()).get("locale")?.value);
-  const { slug } = await params;
+  const { locale: raw, slug } = await params;
+  if (!isValidLocale(raw)) notFound();
+  const locale = raw as Locale;
 
   const project =
     getProjectBySlug(slug, locale) ?? getProjectBySlug(slug, "en");

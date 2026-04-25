@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { getProjects } from "@/data/projects";
 import { useLocale } from "@/hooks/useLocale";
+import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import type { Theme } from "@/tokens/themes";
 
 interface CaseStudyCTAProps {
@@ -26,6 +27,7 @@ export function CaseStudyCTA({
   isMobile,
 }: CaseStudyCTAProps) {
   const { locale } = useLocale();
+  const copy = getCaseStudyCopy(locale);
   const localeProjects = getProjects(locale).filter((project) => project.caseStudy);
   const sourceProjects = localeProjects.some(
     (project) => project.slug === currentSlug,
@@ -76,7 +78,7 @@ export function CaseStudyCTA({
             marginBottom: 20,
           }}
         >
-          What&apos;s next?
+          {copy.cta.eyebrow}
         </div>
         <p
           style={{
@@ -104,6 +106,7 @@ export function CaseStudyCTA({
           {nextProjectLink && (
             <Link
               href={`/work/${nextProjectLink.slug}`}
+              prefetch={false}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -131,7 +134,7 @@ export function CaseStudyCTA({
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              {`NEXT PROJECT: ${nextProjectLink.name}`}
+              {copy.cta.nextProject(nextProjectLink.name)}
             </Link>
           )}
           <Link
@@ -159,7 +162,7 @@ export function CaseStudyCTA({
               e.currentTarget.style.color = C.muted;
             }}
           >
-            BACK TO HOMEPAGE
+            {copy.cta.backHome}
           </Link>
           <Link
             href="/#contact"
@@ -186,7 +189,7 @@ export function CaseStudyCTA({
               e.currentTarget.style.color = C.muted;
             }}
           >
-            START A CONVERSATION
+            {copy.cta.startConversation}
           </Link>
         </div>
       </Container>
