@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Theme } from "@/tokens/themes";
 import { getNavLinks } from "@/data/nav";
 import { useLocale } from "@/hooks/useLocale";
@@ -62,77 +63,96 @@ export function NavMobileMenu({ C, open, onNavigate }: NavMobileMenuProps) {
           minWidth: 0,
         }}
       >
-        {getNavLinks(locale).map((link, i) => (
-          <button
-            key={link.id}
-            type="button"
-            onClick={() => onNavigate(link.id)}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 12,
-              width: "100%",
-              padding: "18px 0",
-              borderBottom: `1px solid ${C.line}`,
-              textAlign: "start",
-              opacity: 1,
-              transform: "none",
-              transition: `opacity .35s ease ${i * 0.07}s, transform .35s ease ${i * 0.07}s`,
-              cursor: "pointer",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                gap: 14,
-                minWidth: 0,
-                flex: 1,
-              }}
-            >
+        {getNavLinks(locale).map((link, i) => {
+          const isPageLink = link.id.startsWith("/");
+          const innerContent = (
+            <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 14,
+                  minWidth: 0,
+                  flex: 1,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 11,
+                    color: C.cyan,
+                    letterSpacing: isArabic ? 0 : 1,
+                    opacity: 0.7,
+                    flexShrink: 0,
+                  }}
+                >
+                  {link.n}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: isArabic ? 30 : 38,
+                    fontStyle: "italic",
+                    color: C.text,
+                    letterSpacing: isArabic ? 0 : -1,
+                    lineHeight: 1.1,
+                    overflowWrap: "anywhere",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {link.label}
+                </span>
+              </div>
               <span
                 style={{
                   fontFamily: "var(--font-mono)",
-                  fontSize: 11,
-                  color: C.cyan,
-                  letterSpacing: isArabic ? 0 : 1,
-                  opacity: 0.7,
+                  fontSize: 18,
+                  color: C.muted,
+                  opacity: 0.5,
                   flexShrink: 0,
                 }}
               >
-                {link.n}
+                {isArabic ? "\u2190" : "\u2192"}
               </span>
+            </>
+          );
 
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: isArabic ? 30 : 38,
-                  fontStyle: "italic",
-                  color: C.text,
-                  letterSpacing: isArabic ? 0 : -1,
-                  lineHeight: 1.1,
-                  overflowWrap: "anywhere",
-                  wordBreak: "break-word",
-                }}
-              >
-                {link.label}
-              </span>
-            </div>
+          const sharedStyle: React.CSSProperties = {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            width: "100%",
+            padding: "18px 0",
+            borderBottom: `1px solid ${C.line}`,
+            textAlign: "start",
+            opacity: 1,
+            transform: "none",
+            transition: `opacity .35s ease ${i * 0.07}s, transform .35s ease ${i * 0.07}s`,
+            cursor: "pointer",
+            textDecoration: "none",
+          };
 
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 18,
-                color: C.muted,
-                opacity: 0.5,
-                flexShrink: 0,
-              }}
+          return isPageLink ? (
+            <Link
+              key={link.id}
+              href={`/${locale}${link.id}`}
+              onClick={() => onNavigate("")}
+              style={sharedStyle}
             >
-              {isArabic ? "\u2190" : "\u2192"}
-            </span>
-          </button>
-        ))}
+              {innerContent}
+            </Link>
+          ) : (
+            <button
+              key={link.id}
+              type="button"
+              onClick={() => onNavigate(link.id)}
+              style={sharedStyle}
+            >
+              {innerContent}
+            </button>
+          );
+        })}
       </nav>
 
       <div

@@ -239,6 +239,7 @@ export interface ContactContent {
     label: string;
     message: string;
   };
+  intakeCta: string;
   socials: SocialLinkContent[];
 }
 

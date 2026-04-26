@@ -167,7 +167,7 @@ export function CaseStudyCTA({
             {copy.cta.backHome}
           </Link>
           <Link
-            href={`/${locale}#contact`}
+            href={`/${locale}/how-i-start`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -177,18 +177,23 @@ export function CaseStudyCTA({
               letterSpacing: 2,
               padding: "11px 24px",
               borderRadius: 8,
-              border: `1px solid ${C.line}`,
-              color: C.muted,
+              border: `1px solid ${C.cyan}50`,
+              color: C.cyan,
+              background: `${C.cyan}08`,
               textDecoration: "none",
               transition: "all .25s",
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.borderColor = `${color}40`;
-              e.currentTarget.style.color = color;
+              e.currentTarget.style.background = C.cyan;
+              e.currentTarget.style.color = C.bg;
+              e.currentTarget.style.borderColor = C.cyan;
+              e.currentTarget.style.boxShadow = `0 4px 16px ${C.cyan}30`;
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.borderColor = C.line;
-              e.currentTarget.style.color = C.muted;
+              e.currentTarget.style.background = `${C.cyan}08`;
+              e.currentTarget.style.color = C.cyan;
+              e.currentTarget.style.borderColor = `${C.cyan}50`;
+              e.currentTarget.style.boxShadow = "none";
             }}
           >
             {copy.cta.startConversation}

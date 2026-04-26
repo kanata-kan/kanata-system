@@ -5,6 +5,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
@@ -205,6 +206,47 @@ export function Contact() {
             </svg>
             {content.contact.whatsapp.label}
           </a>
+
+          <Link
+            href={`/${locale}/how-i-start`}
+            className="rv d5"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              width: "100%",
+              maxWidth: 460,
+              padding: "14px 20px",
+              borderRadius: 12,
+              background: C.bg,
+              border: `1px solid ${C.cyan}40`,
+              color: C.cyan,
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: isArabic ? 0 : 2,
+              textDecoration: "none",
+              marginBottom: 24,
+              transition: "all .25s",
+              cursor: "pointer",
+              textAlign: "center",
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = `${C.cyan}12`;
+              e.currentTarget.style.borderColor = C.cyan;
+              e.currentTarget.style.transform = "translateY(-1px)";
+              e.currentTarget.style.boxShadow = `0 4px 20px ${C.cyan}25`;
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = C.bg;
+              e.currentTarget.style.borderColor = `${C.cyan}40`;
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            {content.contact.intakeCta}
+          </Link>
 
           <div style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
             {SOCIALS.map((social) => (

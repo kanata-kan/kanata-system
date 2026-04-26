@@ -31,7 +31,8 @@ export const site: SiteData = {
       { id: "work", n: "01", label: "دراسات الحالة" },
       { id: "about", n: "02", label: "المنهجية" },
       { id: "skills", n: "03", label: "Stack" },
-      { id: "contact", n: "04", label: "تواصل" },
+      { id: "/how-i-start", n: "04", label: "كيف نبدأ" },
+      { id: "contact", n: "05", label: "تواصل" },
     ],
   },
 
@@ -175,6 +176,7 @@ export const site: SiteData = {
       message:
         "مرحباً عبد الإله، أتواصل معك من خلال البورتفوليو الخاص بك. أود مناقشة تعاون محتمل.",
     },
+    intakeCta: "← ابدأ عملية التواصل",
     socials: [
       { href: "https://github.com/kanata-kan", label: "GitHub" },
       {

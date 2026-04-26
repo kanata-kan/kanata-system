@@ -30,7 +30,8 @@ export const site: SiteData = {
       { id: "work", n: "01", label: "Case Studies" },
       { id: "about", n: "02", label: "Approach" },
       { id: "skills", n: "03", label: "Stack" },
-      { id: "contact", n: "04", label: "Contact" },
+      { id: "/how-i-start", n: "04", label: "How I Start" },
+      { id: "contact", n: "05", label: "Contact" },
     ],
   },
 
@@ -183,6 +184,7 @@ export const site: SiteData = {
       message:
         "Hello Abdelilah, I'm reaching out from your portfolio. I'd like to discuss a potential collaboration.",
     },
+    intakeCta: "Start the intake process →",
     socials: [
       { href: "https://github.com/kanata-kan", label: "GitHub" },
       {
