@@ -181,6 +181,18 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       data-scroll-behavior="smooth"
       className={`${outfit.variable} ${inter.variable} ${cairo.variable}`}
     >
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta
+          name="theme-color"
+          content={initialDark ? "#0e1117" : "#f8fafc"}
+        />
+      </head>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content

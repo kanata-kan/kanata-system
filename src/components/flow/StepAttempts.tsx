@@ -143,7 +143,7 @@ export function StepAttempts({
             border: "none",
             cursor: "pointer",
             transition: "all .2s",
-            marginLeft: "auto",
+            marginInlineStart: "auto",
           }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = "translateY(-1px)";

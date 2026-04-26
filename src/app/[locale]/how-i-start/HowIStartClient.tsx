@@ -108,8 +108,35 @@ export function HowIStartClient() {
           textAlign: "center",
           padding: "20px 0",
           borderTop: `1px solid ${C.line}`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
         }}
       >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 100 100"
+          aria-hidden="true"
+          style={{ opacity: 0.4 }}
+        >
+          <path
+            d="M8,82 L28,16 L50,82 L63,16 L76,82 L89,16"
+            fill="none"
+            stroke={C.cyan}
+            strokeWidth="12"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M17.5,53 L42,53"
+            fill="none"
+            stroke={C.cyan}
+            strokeWidth="12"
+            strokeLinecap="round"
+          />
+        </svg>
         <span
           style={{
             fontFamily: "var(--font-mono)",
@@ -118,7 +145,7 @@ export function HowIStartClient() {
             letterSpacing: 2,
           }}
         >
-          KANATA SYSTEM | CLIENT QUALIFICATION
+          AW | CLIENT INTAKE
         </span>
       </div>
     </div>
