@@ -6,7 +6,7 @@
 
 import type { SiteContent } from "../types";
 
-export type SiteData = Omit<SiteContent, "projects">;
+export type SiteData = Omit<SiteContent, "projects" | "flow">;
 
 export const site: SiteData = {
   /* ── Meta ── */

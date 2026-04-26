@@ -10,17 +10,19 @@ import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import type { StepProps } from "./types";
 
-const GOALS = [
-  "نزيد المبيعات",
-  "نحسن تجربة المستخدم",
-  "نبني presence ديالي",
-  "مازال ما واضحش",
-] as const;
-
-export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
+export function StepGoal({
+  onNext,
+  onBack,
+  formData,
+  setField,
+  flow,
+  isRtl,
+}: StepProps) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
   const [error, setError] = useState("");
+  const dir = isRtl ? "rtl" : "ltr";
+  const c = flow.goal;
 
   const handleSelect = (goal: string) => {
     setField("goal", goal);
@@ -29,7 +31,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
 
   const handleNext = () => {
     if (!formData.goal) {
-      setError("اختار الهدف باش نكملو");
+      setError(c.error);
       return;
     }
     onNext();
@@ -54,11 +56,11 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
             color: C.text,
             fontWeight: 500,
             lineHeight: 1.5,
-            direction: "rtl",
+            direction: dir,
             marginBottom: 8,
           }}
         >
-          شنو الهدف الحقيقي من هاد المشروع؟
+          {c.question}
         </p>
         <p
           style={{
@@ -68,18 +70,12 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
             letterSpacing: 1.5,
           }}
         >
-          STEP 2 / 7
+          {flow.nav.stepOf(2, 7)}
         </p>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-        }}
-      >
-        {GOALS.map((goal) => {
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {c.options.map((goal) => {
           const selected = formData.goal === goal;
           return (
             <button
@@ -93,8 +89,8 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
                 color: selected ? C.cyan : C.sub,
                 fontFamily: "var(--font-sans)",
                 fontSize: isMobile ? 15 : 16,
-                textAlign: "right",
-                direction: "rtl",
+                textAlign: isRtl ? "right" : "left",
+                direction: dir,
                 cursor: "pointer",
                 transition: "all .2s",
                 outline: "none",
@@ -124,7 +120,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
             fontFamily: "var(--font-sans)",
             fontSize: 13,
             color: C.amber,
-            direction: "rtl",
+            direction: dir,
           }}
         >
           {error}
@@ -140,7 +136,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 12,
-              letterSpacing: 1,
+              letterSpacing: isRtl ? 0 : 1,
               padding: "12px 28px",
               borderRadius: 8,
               background: "transparent",
@@ -158,7 +154,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
               e.currentTarget.style.color = C.muted;
             }}
           >
-            ← رجوع
+            {flow.nav.back}
           </button>
         )}
         <button
@@ -166,7 +162,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 12,
-            letterSpacing: 1,
+            letterSpacing: isRtl ? 0 : 1,
             padding: "12px 36px",
             borderRadius: 8,
             background: C.cyan,
@@ -184,7 +180,7 @@ export function StepGoal({ onNext, onBack, formData, setField }: StepProps) {
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          التالي →
+          {flow.nav.next}
         </button>
       </div>
     </div>

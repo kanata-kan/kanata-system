@@ -1,20 +1,26 @@
 /**
  * @file StepIntro.tsx
  * @description Step 1 — Mindset intro. Sets the tone for the qualification flow.
- * Displays a strong message in Darija about understanding before execution.
  */
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import type { FlowContent } from "@/data/content/types";
 
 interface Props {
   onNext: () => void;
+  flow: FlowContent;
+  isRtl: boolean;
 }
 
-export function StepIntro({ onNext }: Props) {
+export function StepIntro({ onNext, flow, isRtl }: Props) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const dir = isRtl ? "rtl" : "ltr";
+  const c = flow.intro;
+
+  const parts = c.headline.split("\n");
 
   return (
     <div
@@ -36,15 +42,18 @@ export function StepIntro({ onNext }: Props) {
             lineHeight: 1.7,
             color: C.text,
             fontWeight: 500,
-            direction: "rtl",
+            direction: dir,
           }}
         >
-          أغلب الناس كيجيو بطلب واضح…
-          <br />
-          ولكن غالبًا هاد الطلب{" "}
-          <span style={{ color: C.cyan, fontStyle: "italic" }}>
-            ماشي هو المشكل الحقيقي.
-          </span>
+          {parts[0]}
+          {parts[1] && (
+            <>
+              <br />
+              <span style={{ color: C.cyan, fontStyle: "italic" }}>
+                {parts[1]}
+              </span>
+            </>
+          )}
         </p>
 
         <div
@@ -62,10 +71,10 @@ export function StepIntro({ onNext }: Props) {
             fontSize: isMobile ? 15 : 17,
             color: C.muted,
             lineHeight: 1.6,
-            direction: "rtl",
+            direction: dir,
           }}
         >
-          كنبدأ بالفهم قبل التنفيذ.
+          {c.subtext}
         </p>
       </div>
 
@@ -74,7 +83,7 @@ export function StepIntro({ onNext }: Props) {
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: 13,
-          letterSpacing: 1.5,
+          letterSpacing: isRtl ? 0 : 1.5,
           padding: "14px 48px",
           borderRadius: 8,
           background: C.cyan,
@@ -93,7 +102,7 @@ export function StepIntro({ onNext }: Props) {
           e.currentTarget.style.boxShadow = "none";
         }}
       >
-        نبدا ←
+        {c.cta}
       </button>
     </div>
   );

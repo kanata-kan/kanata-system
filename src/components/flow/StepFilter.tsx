@@ -1,21 +1,25 @@
 /**
  * @file StepFilter.tsx
  * @description Step 6 — Filter message. Intentional friction point.
- * Displays a strong filtering statement before the final submit.
  */
 "use client";
 
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import type { FlowContent } from "@/data/content/types";
 
 interface Props {
   onNext: () => void;
   onBack?: () => void;
+  flow: FlowContent;
+  isRtl: boolean;
 }
 
-export function StepFilter({ onNext, onBack }: Props) {
+export function StepFilter({ onNext, onBack, flow, isRtl }: Props) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const dir = isRtl ? "rtl" : "ltr";
+  const c = flow.filter;
 
   return (
     <div
@@ -37,12 +41,11 @@ export function StepFilter({ onNext, onBack }: Props) {
             lineHeight: 1.8,
             color: C.text,
             fontWeight: 500,
-            direction: "rtl",
+            direction: dir,
           }}
         >
-          ما كنخدمش مع أي واحد.
+          {c.headline}
         </p>
-
         <div
           style={{
             width: 40,
@@ -51,18 +54,16 @@ export function StepFilter({ onNext, onBack }: Props) {
             margin: "24px auto",
           }}
         />
-
         <p
           style={{
             fontFamily: "var(--font-sans)",
             fontSize: isMobile ? 15 : 17,
             color: C.muted,
             lineHeight: 1.7,
-            direction: "rtl",
+            direction: dir,
           }}
         >
-          كنخدم مع الناس اللي باغيين{" "}
-          <span style={{ color: C.cyan }}>يفهمو</span> قبل ما يطلبو.
+          {c.subtext}
         </p>
       </div>
 
@@ -73,7 +74,7 @@ export function StepFilter({ onNext, onBack }: Props) {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 12,
-              letterSpacing: 1,
+              letterSpacing: isRtl ? 0 : 1,
               padding: "12px 28px",
               borderRadius: 8,
               background: "transparent",
@@ -91,7 +92,7 @@ export function StepFilter({ onNext, onBack }: Props) {
               e.currentTarget.style.color = C.muted;
             }}
           >
-            ← رجوع
+            {flow.nav.back}
           </button>
         )}
         <button
@@ -99,7 +100,7 @@ export function StepFilter({ onNext, onBack }: Props) {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 13,
-            letterSpacing: 1.5,
+            letterSpacing: isRtl ? 0 : 1.5,
             padding: "14px 48px",
             borderRadius: 8,
             background: C.cyan,
@@ -118,7 +119,7 @@ export function StepFilter({ onNext, onBack }: Props) {
             e.currentTarget.style.boxShadow = "none";
           }}
         >
-          كمل ←
+          {c.cta}
         </button>
       </div>
     </div>

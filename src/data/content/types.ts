@@ -249,6 +249,76 @@ export interface FooterContent {
   tagline: string;
 }
 
+/* ── Client Intake Flow (how-i-start) ── */
+export interface FlowStepIntroContent {
+  headline: string;
+  subtext: string;
+  cta: string;
+}
+
+export interface FlowStepGoalContent {
+  question: string;
+  options: string[];
+  error: string;
+}
+
+export interface FlowStepProblemContent {
+  question: string;
+  placeholder: string;
+  error: string;
+}
+
+export interface FlowStepAttemptsContent {
+  question: string;
+  placeholder: string;
+  optionalLabel: string;
+}
+
+export interface FlowStepTimingContent {
+  question: string;
+  options: string[];
+  error: string;
+}
+
+export interface FlowStepFilterContent {
+  headline: string;
+  subtext: string;
+  cta: string;
+}
+
+export interface FlowStepSubmitContent {
+  title: string;
+  labels: {
+    goal: string;
+    problem: string;
+    attempts: string;
+    timing: string;
+  };
+  submitCta: string;
+  successTitle: string;
+  successSubtext: string;
+  backHome: string;
+  whatsappGreeting: string;
+  whatsappIntro: string;
+  whatsappClosing: string;
+}
+
+export interface FlowContent {
+  intro: FlowStepIntroContent;
+  goal: FlowStepGoalContent;
+  problem: FlowStepProblemContent;
+  attempts: FlowStepAttemptsContent;
+  timing: FlowStepTimingContent;
+  filter: FlowStepFilterContent;
+  submit: FlowStepSubmitContent;
+  nav: {
+    next: string;
+    back: string;
+    stepOf: (current: number, total: number) => string;
+  };
+  footer: string;
+}
+
 /* ── Full Site Content ── */
 export interface SiteContent {
   meta: MetaContent;
@@ -263,4 +333,5 @@ export interface SiteContent {
   techStrip: string[];
   projects: ProjectContent[];
   skillGroups: SkillGroupContent[];
+  flow: FlowContent;
 }

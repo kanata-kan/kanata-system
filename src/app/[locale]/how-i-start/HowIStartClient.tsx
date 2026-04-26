@@ -3,6 +3,8 @@
 import { useState, useCallback } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
+import { useLocale } from "@/hooks/useLocale";
+import { getContent } from "@/data/content";
 import {
   StepIntro,
   StepGoal,
@@ -19,6 +21,11 @@ const TOTAL_STEPS = 7;
 export function HowIStartClient() {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const { locale } = useLocale();
+
+  const content = getContent(locale);
+  const flow = content.flow;
+  const isRtl = locale === "ar";
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
@@ -41,7 +48,14 @@ export function HowIStartClient() {
     [],
   );
 
-  const stepProps = { formData, setField, onNext: next, onBack: back };
+  const shared = {
+    formData,
+    setField,
+    onNext: next,
+    onBack: back,
+    flow,
+    isRtl,
+  };
 
   return (
     <div
@@ -93,13 +107,22 @@ export function HowIStartClient() {
             animation: "fadeUp .35s ease both",
           }}
         >
-          {step === 0 && <StepIntro onNext={next} />}
-          {step === 1 && <StepGoal {...stepProps} />}
-          {step === 2 && <StepProblem {...stepProps} />}
-          {step === 3 && <StepAttempts {...stepProps} />}
-          {step === 4 && <StepTiming {...stepProps} />}
-          {step === 5 && <StepFilter onNext={next} onBack={back} />}
-          {step === 6 && <StepSubmit formData={formData} onBack={back} />}
+          {step === 0 && <StepIntro onNext={next} flow={flow} isRtl={isRtl} />}
+          {step === 1 && <StepGoal {...shared} />}
+          {step === 2 && <StepProblem {...shared} />}
+          {step === 3 && <StepAttempts {...shared} />}
+          {step === 4 && <StepTiming {...shared} />}
+          {step === 5 && (
+            <StepFilter onNext={next} onBack={back} flow={flow} isRtl={isRtl} />
+          )}
+          {step === 6 && (
+            <StepSubmit
+              formData={formData}
+              onBack={back}
+              flow={flow}
+              isRtl={isRtl}
+            />
+          )}
         </div>
       </div>
 
@@ -145,7 +168,7 @@ export function HowIStartClient() {
             letterSpacing: 2,
           }}
         >
-          AW | CLIENT INTAKE
+          {flow.footer}
         </span>
       </div>
     </div>

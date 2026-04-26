@@ -1,7 +1,6 @@
 /**
  * @file StepAttempts.tsx
- * @description Step 4 — Previous attempts. User describes what they've tried
- * before. Optional textarea field.
+ * @description Step 4 — Previous attempts. Optional textarea field.
  */
 "use client";
 
@@ -14,9 +13,13 @@ export function StepAttempts({
   onBack,
   formData,
   setField,
+  flow,
+  isRtl,
 }: StepProps) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
+  const dir = isRtl ? "rtl" : "ltr";
+  const c = flow.attempts;
 
   return (
     <div
@@ -37,11 +40,11 @@ export function StepAttempts({
             color: C.text,
             fontWeight: 500,
             lineHeight: 1.5,
-            direction: "rtl",
+            direction: dir,
             marginBottom: 8,
           }}
         >
-          شنو جربتي تدير قبل باش تحل هاد المشكل؟
+          {c.question}
         </p>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <p
@@ -52,7 +55,7 @@ export function StepAttempts({
               letterSpacing: 1.5,
             }}
           >
-            STEP 4 / 7
+            {flow.nav.stepOf(4, 7)}
           </p>
           <span
             style={{
@@ -65,7 +68,7 @@ export function StepAttempts({
               letterSpacing: 0.5,
             }}
           >
-            OPTIONAL
+            {c.optionalLabel}
           </span>
         </div>
       </div>
@@ -73,7 +76,7 @@ export function StepAttempts({
       <textarea
         value={formData.attempts ?? ""}
         onChange={(e) => setField("attempts", e.target.value)}
-        placeholder="إلا جربتي شي حاجة قبل، قولها لنا هنا..."
+        placeholder={c.placeholder}
         rows={5}
         style={{
           width: "100%",
@@ -85,7 +88,7 @@ export function StepAttempts({
           fontFamily: "var(--font-sans)",
           fontSize: 15,
           lineHeight: 1.7,
-          direction: "rtl",
+          direction: dir,
           resize: "vertical",
           outline: "none",
           transition: "border-color .2s",
@@ -108,7 +111,7 @@ export function StepAttempts({
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 12,
-              letterSpacing: 1,
+              letterSpacing: isRtl ? 0 : 1,
               padding: "12px 28px",
               borderRadius: 8,
               background: "transparent",
@@ -126,7 +129,7 @@ export function StepAttempts({
               e.currentTarget.style.color = C.muted;
             }}
           >
-            ← رجوع
+            {flow.nav.back}
           </button>
         )}
         <button
@@ -134,7 +137,7 @@ export function StepAttempts({
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 12,
-            letterSpacing: 1,
+            letterSpacing: isRtl ? 0 : 1,
             padding: "12px 36px",
             borderRadius: 8,
             background: C.cyan,
@@ -152,7 +155,7 @@ export function StepAttempts({
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          التالي →
+          {flow.nav.next}
         </button>
       </div>
     </div>

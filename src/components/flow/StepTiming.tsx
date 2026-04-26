@@ -1,7 +1,6 @@
 /**
  * @file StepTiming.tsx
- * @description Step 5 — Timing selection. User picks why now is the right time.
- * Required selection field.
+ * @description Step 5 — Timing selection. Required selection field.
  */
 "use client";
 
@@ -10,12 +9,19 @@ import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import type { StepProps } from "./types";
 
-const TIMINGS = ["محتاج حل عاجل", "كنفكر من مدة", "فرصة جديدة"] as const;
-
-export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
+export function StepTiming({
+  onNext,
+  onBack,
+  formData,
+  setField,
+  flow,
+  isRtl,
+}: StepProps) {
   const { C } = useThemeContext();
   const { isMobile } = useResponsiveContext();
   const [error, setError] = useState("");
+  const dir = isRtl ? "rtl" : "ltr";
+  const c = flow.timing;
 
   const handleSelect = (timing: string) => {
     setField("timing", timing);
@@ -24,7 +30,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
 
   const handleNext = () => {
     if (!formData.timing) {
-      setError("اختار التوقيت باش نكملو");
+      setError(c.error);
       return;
     }
     onNext();
@@ -49,11 +55,11 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             color: C.text,
             fontWeight: 500,
             lineHeight: 1.5,
-            direction: "rtl",
+            direction: dir,
             marginBottom: 8,
           }}
         >
-          علاش دابا بالضبط؟
+          {c.question}
         </p>
         <p
           style={{
@@ -63,18 +69,12 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             letterSpacing: 1.5,
           }}
         >
-          STEP 5 / 7
+          {flow.nav.stepOf(5, 7)}
         </p>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-        }}
-      >
-        {TIMINGS.map((timing) => {
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {c.options.map((timing) => {
           const selected = formData.timing === timing;
           return (
             <button
@@ -88,8 +88,8 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
                 color: selected ? C.cyan : C.sub,
                 fontFamily: "var(--font-sans)",
                 fontSize: isMobile ? 15 : 16,
-                textAlign: "right",
-                direction: "rtl",
+                textAlign: isRtl ? "right" : "left",
+                direction: dir,
                 cursor: "pointer",
                 transition: "all .2s",
                 outline: "none",
@@ -119,7 +119,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             fontFamily: "var(--font-sans)",
             fontSize: 13,
             color: C.amber,
-            direction: "rtl",
+            direction: dir,
           }}
         >
           {error}
@@ -135,7 +135,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 12,
-              letterSpacing: 1,
+              letterSpacing: isRtl ? 0 : 1,
               padding: "12px 28px",
               borderRadius: 8,
               background: "transparent",
@@ -153,7 +153,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
               e.currentTarget.style.color = C.muted;
             }}
           >
-            ← رجوع
+            {flow.nav.back}
           </button>
         )}
         <button
@@ -161,7 +161,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 12,
-            letterSpacing: 1,
+            letterSpacing: isRtl ? 0 : 1,
             padding: "12px 36px",
             borderRadius: 8,
             background: C.cyan,
@@ -179,7 +179,7 @@ export function StepTiming({ onNext, onBack, formData, setField }: StepProps) {
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          التالي →
+          {flow.nav.next}
         </button>
       </div>
     </div>

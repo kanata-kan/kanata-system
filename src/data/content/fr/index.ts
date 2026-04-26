@@ -8,8 +8,10 @@
 import type { SiteContent } from "../types";
 import { site } from "./site";
 import { projects } from "./projects";
+import { flow } from "./flow";
 
 export const fr: SiteContent = {
   ...site,
   projects,
+  flow,
 };

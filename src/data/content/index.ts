@@ -44,4 +44,5 @@ export type {
   MetricContent,
   ContactContent,
   FooterContent,
+  FlowContent,
 } from "./types";
