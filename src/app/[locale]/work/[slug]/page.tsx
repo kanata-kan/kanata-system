@@ -55,7 +55,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     subtitle: project.caseStudy.subtitle,
     desc: project.desc,
   });
-  const firstScreenshot = project.caseStudy.screenshots[0]?.src;
   const alt = getAlternates(`work/${slug}`, siteUrl);
 
   return {
@@ -73,20 +72,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${title} | ${content.meta.ogSiteName}`,
       description,
       url: `${siteUrl}/${locale}/work/${project.slug}`,
-      images: [
-        {
-          url: firstScreenshot || "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${content.meta.ogSiteName}`,
       description,
-      images: [firstScreenshot || "/twitter-image"],
     },
   };
 }
