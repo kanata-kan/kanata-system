@@ -13,7 +13,7 @@
   /* ✅ FIX: Navbar height (source of truth) */
   --navbar-height: 64px;
 
-  --font-arabic: "Noto Sans Arabic", sans-serif;
+  --font-arabic: "Cairo", sans-serif;
   --font-display: var(--font-outfit), "Outfit", system-ui, sans-serif;
   --font-body: var(--font-inter), "Inter", system-ui, sans-serif;
   --font-mono:
