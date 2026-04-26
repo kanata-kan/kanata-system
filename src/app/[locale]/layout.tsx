@@ -8,8 +8,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies, headers } from "next/headers";
-import { Outfit, Inter } from "next/font/google";
-import { Noto_Sans_Arabic } from "next/font/google";
+import { Outfit, Inter, Cairo } from "next/font/google";
 import { getContent } from "@/data/content";
 import type { Locale } from "@/data/content/types";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -39,9 +38,9 @@ const inter = Inter({
   display: "swap",
 });
 
-const notoArabic = Noto_Sans_Arabic({
+const cairo = Cairo({
   subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700", "900"],
   variable: "--font-arabic",
   display: "swap",
 });
@@ -180,7 +179,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       lang={locale}
       dir={dir}
       data-scroll-behavior="smooth"
-      className={`${outfit.variable} ${inter.variable} ${notoArabic.variable}`}
+      className={`${outfit.variable} ${inter.variable} ${cairo.variable}`}
     >
       <body>
         <a href="#main-content" className="skip-link">
