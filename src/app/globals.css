@@ -258,3 +258,32 @@ a:focus-visible,
     transform: none !important;
   }
 }
+
+/* ──────────────────────────────────────────────────
+   ARABIC TYPOGRAPHY FIX (IMPORTANT)
+────────────────────────────────────────────────── */
+
+/* Arabic (RTL) */
+html[lang="ar"] body {
+  font-family: var(--font-arabic);
+  line-height: 1.8;
+  letter-spacing: 0.2px;
+}
+
+/* Arabic headings */
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] h4,
+html[lang="ar"] h5,
+html[lang="ar"] h6 {
+  font-family: var(--font-arabic);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* EN + FR keep clean system */
+html[lang="en"] body,
+html[lang="fr"] body {
+  font-family: var(--font-body);
+}
