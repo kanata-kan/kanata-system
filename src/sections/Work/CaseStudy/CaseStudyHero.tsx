@@ -63,7 +63,7 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
 
       <Container>
         <Link
-          href="/#work"
+          href={`/${locale}#work`}
           style={{
             display: "inline-flex",
             alignItems: "center",

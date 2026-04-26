@@ -8,6 +8,7 @@ import type { Locale } from "@/data/content/types";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
+import { IntroSplash } from "@/components/ui/IntroSplash";
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -55,6 +56,7 @@ export function AppShell({
 
             <Footer C={C} isMobile={responsive.isMobile} />
             <ScrollToTop C={C} />
+            <IntroSplash />
           </div>
         </ResponsiveContext.Provider>
       </ThemeContext.Provider>

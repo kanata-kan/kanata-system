@@ -9,6 +9,7 @@ import { NavLogo } from "./NavLogo";
 import { NavLinks } from "./NavLinks";
 import { NavMobileMenu } from "./NavMobileMenu";
 import { stripLocalePrefix } from "@/lib/i18n";
+import { useLocale } from "@/hooks/useLocale";
 
 interface NavProps {
   C: Theme;
@@ -22,6 +23,7 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { locale } = useLocale();
 
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 48);
@@ -46,10 +48,10 @@ export function Nav({ C, dark, onToggle, isMobile }: NavProps) {
       if (pathWithoutLocale === "/") {
         setTimeout(scrollTo, open ? 250 : 0);
       } else {
-        router.push(`/#${id}`);
+        router.push(`/${locale}#${id}`);
       }
     },
-    [pathname, router, open],
+    [pathname, router, open, locale],
   );
 
   return (

@@ -315,7 +315,7 @@ export function HeroContent() {
         }}
       >
         <Link
-          href="/work/electro-abidin"
+          href={`/${locale}/work/electro-abidin`}
           style={{
             ...TEXT.bodySmall(C),
             fontSize: isMobile ? 14 : 15,

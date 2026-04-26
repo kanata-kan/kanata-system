@@ -28,7 +28,9 @@ export function CaseStudyCTA({
 }: CaseStudyCTAProps) {
   const { locale } = useLocale();
   const copy = getCaseStudyCopy(locale);
-  const localeProjects = getProjects(locale).filter((project) => project.caseStudy);
+  const localeProjects = getProjects(locale).filter(
+    (project) => project.caseStudy,
+  );
   const sourceProjects = localeProjects.some(
     (project) => project.slug === currentSlug,
   )
@@ -105,7 +107,7 @@ export function CaseStudyCTA({
         >
           {nextProjectLink && (
             <Link
-              href={`/work/${nextProjectLink.slug}`}
+              href={`/${locale}/work/${nextProjectLink.slug}`}
               prefetch={false}
               style={{
                 display: "inline-flex",
@@ -138,7 +140,7 @@ export function CaseStudyCTA({
             </Link>
           )}
           <Link
-            href="/"
+            href={`/${locale}`}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -165,7 +167,7 @@ export function CaseStudyCTA({
             {copy.cta.backHome}
           </Link>
           <Link
-            href="/#contact"
+            href={`/${locale}#contact`}
             style={{
               display: "inline-flex",
               alignItems: "center",
