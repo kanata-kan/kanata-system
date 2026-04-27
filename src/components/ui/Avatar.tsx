@@ -213,27 +213,14 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             }}
             priority
           />
-
-          {/* Subtle vignette at bottom */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "40%",
-              background: `linear-gradient(to top, ${c.bg}dd 0%, transparent 100%)`,
-              pointerEvents: "none",
-            }}
-          />
         </div>
 
-        {/* Info bar */}
+        {/* Info bar — always dark since lightbox backdrop is dark */}
         <div
           style={{
             padding: "18px 24px",
-            borderTop: `1px solid ${c.line}`,
-            background: `${c.bg}e8`,
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+            background: "rgba(10,15,20,0.92)",
             backdropFilter: "blur(16px)",
             WebkitBackdropFilter: "blur(16px)",
             display: "flex",
@@ -248,7 +235,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
                 fontFamily: "var(--font-display)",
                 fontSize: 18,
                 fontStyle: "italic",
-                color: c.text,
+                color: "rgba(255,255,255,0.95)",
                 letterSpacing: -0.4,
                 fontWeight: 500,
                 WebkitFontSmoothing: "antialiased",
@@ -261,7 +248,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: 10,
-                color: c.muted,
+                color: "rgba(255,255,255,0.5)",
                 letterSpacing: 1.6,
                 marginTop: 5,
                 lineHeight: 1.5,
@@ -282,8 +269,8 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               gap: 8,
               padding: "7px 16px",
               borderRadius: 999,
-              background: `${c.green}10`,
-              border: `1px solid ${c.green}28`,
+              background: "rgba(63,185,80,0.12)",
+              border: "1px solid rgba(63,185,80,0.25)",
               flexShrink: 0,
             }}
           >
@@ -292,7 +279,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
                 width: 7,
                 height: 7,
                 borderRadius: "50%",
-                background: c.green,
+                background: "#3FB950",
                 animation: "pulse-dot 2.2s ease-in-out infinite",
                 display: "inline-block",
               }}
@@ -301,7 +288,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               style={{
                 fontFamily: "var(--font-mono)",
                 fontSize: 9,
-                color: c.green,
+                color: "#3FB950",
                 letterSpacing: 1.2,
                 fontWeight: 600,
                 textTransform: "uppercase",
