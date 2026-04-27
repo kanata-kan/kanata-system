@@ -138,7 +138,6 @@ export function HeroContent() {
             </span>
             <br />
             {content.hero.name.lastName}
-            <span style={{ color: C.cyan }}>.</span>
           </h1>
         </div>
       </div>

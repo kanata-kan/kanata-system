@@ -19,7 +19,13 @@ interface ImageLightboxProps {
   children: React.ReactNode;
 }
 
-export function ImageLightbox({ src, alt, caption, C, children }: ImageLightboxProps) {
+export function ImageLightbox({
+  src,
+  alt,
+  caption,
+  C,
+  children,
+}: ImageLightboxProps) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const isBrowser = typeof window !== "undefined";
