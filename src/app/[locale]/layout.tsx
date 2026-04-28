@@ -116,14 +116,6 @@ export async function generateMetadata({
       siteName: content.meta.ogSiteName,
       url: `${siteUrl}/${locale}`,
       locale: getMetadataLocale(locale),
-      images: [
-        {
-          url: "/opengraph-image",
-          width: 1200,
-          height: 630,
-          alt: content.meta.title,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
@@ -135,7 +127,6 @@ export async function generateMetadata({
             site: content.meta.twitterHandle,
           }
         : {}),
-      images: ["/twitter-image"],
     },
   };
 }
