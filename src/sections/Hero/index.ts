@@ -7,3 +7,4 @@ export { HeroContent } from "./HeroContent";
 export { HeroStats } from "./HeroStats";
 export { HeroAvatar } from "./HeroAvatar";
 export { HeroCTA } from "./HeroCTA";
+export { HeroSystemTransform } from "./HeroSystemTransform";

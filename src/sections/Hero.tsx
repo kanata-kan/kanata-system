@@ -9,14 +9,15 @@
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
-import { HeroContent, HeroStats, HeroAvatar } from "./Hero/index";
+import { HeroContent, HeroStats, HeroSystemTransform } from "./Hero/index";
 import { Container } from "@/components/layout/Container";
 import { SECTION_SPACING } from "@/tokens/spacing";
 import { getContent } from "@/data/content";
 
 export function Hero() {
   const { C } = useThemeContext();
-  const { isMobile } = useResponsiveContext();
+  const { isMobile, width } = useResponsiveContext();
+  const showTransform = width >= 1100;
   const { locale } = useLocale();
   const content = getContent(locale);
 
@@ -94,18 +95,18 @@ export function Hero() {
             <HeroContent />
           </div>
 
-          {/* RIGHT — code card (desktop) / social bar (mobile) */}
-          {!isMobile && (
+          {/* RIGHT — system transform visualization (wide desktop only) */}
+          {showTransform && (
             <div
               style={{
-                flex: "0.9 1 0%",
-                minWidth: 300,
-                maxWidth: 400,
+                flex: "0.85 1 0%",
+                minWidth: 280,
+                maxWidth: 420,
                 display: "flex",
                 justifyContent: "flex-end",
               }}
             >
-              <HeroAvatar />
+              <HeroSystemTransform />
             </div>
           )}
         </div>

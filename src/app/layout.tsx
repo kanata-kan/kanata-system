@@ -6,6 +6,12 @@
  * special route files (robots.ts, sitemap.ts, opengraph-image.tsx) sit here.
  */
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  metadataBase: new URL("https://abdelilahwajid.com"),
+};
+
 export default function RootLayout({
   children,
 }: {

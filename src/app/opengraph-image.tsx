@@ -1,15 +1,28 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "fs/promises";
+import { join } from "path";
 import { BRAND } from "@/lib/brand";
 
 export const alt = "Abdelilah Wajid — Product Engineer Portfolio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
   const accent = BRAND.colors.cyan;
   const accent2 = BRAND.colors.violet;
   const accentDim = `rgba(34,211,238,0.2)`;
   const accentFaint = `rgba(34,211,238,0.08)`;
+
+  /* Load profile photo as base64 */
+  let photoSrc = "";
+  try {
+    const buf = await readFile(
+      join(process.cwd(), "public", BRAND.profilePhoto),
+    );
+    photoSrc = `data:image/png;base64,${buf.toString("base64")}`;
+  } catch {
+    /* graceful fallback — monogram will show instead */
+  }
 
   return new ImageResponse(
     <div
@@ -44,7 +57,7 @@ export default function Image() {
           height: 520,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(34,211,238,0.14) 0%, transparent 70%)",
           display: "flex",
         }}
       />
@@ -58,7 +71,7 @@ export default function Image() {
           height: 420,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%)",
           display: "flex",
         }}
       />
@@ -72,12 +85,12 @@ export default function Image() {
           height: 300,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(251,113,133,0.05) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(251,113,133,0.06) 0%, transparent 70%)",
           display: "flex",
         }}
       />
 
-      {/* Top bar */}
+      {/* Top bar — gradient accent stripe */}
       <div
         style={{
           position: "absolute",
@@ -151,7 +164,7 @@ export default function Image() {
           height: "100%",
           alignItems: "center",
           padding: "0 90px",
-          gap: 80,
+          gap: 72,
           position: "relative",
           zIndex: 5,
         }}
@@ -172,27 +185,27 @@ export default function Image() {
               alignItems: "center",
               gap: 8,
               background: accentFaint,
-              border: `1px solid rgba(34,211,238,0.22)`,
+              border: `1px solid rgba(34,211,238,0.25)`,
               borderRadius: 100,
-              padding: "6px 16px",
+              padding: "7px 18px",
               marginBottom: 28,
               alignSelf: "flex-start",
             }}
           >
             <div
               style={{
-                width: 6,
-                height: 6,
+                width: 7,
+                height: 7,
                 borderRadius: "50%",
                 background: accent,
-                boxShadow: `0 0 10px ${accent}`,
+                boxShadow: `0 0 12px ${accent}`,
                 display: "flex",
               }}
             />
             <span
               style={{
                 fontFamily: "monospace",
-                fontSize: 13,
+                fontSize: 14,
                 color: accent,
                 letterSpacing: "0.08em",
                 fontWeight: 600,
@@ -207,28 +220,28 @@ export default function Image() {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 76,
+              fontSize: 80,
               fontWeight: 800,
               lineHeight: 0.95,
               letterSpacing: "-0.03em",
-              marginBottom: 24,
+              marginBottom: 22,
             }}
           >
             <span style={{ color: "#f0f4ff" }}>Abdelilah</span>
             <span style={{ color: accent }}>Wajid</span>
           </div>
 
-          {/* Tagline */}
+          {/* Tagline — higher contrast for WhatsApp */}
           <div
             style={{
               display: "flex",
-              fontSize: 21,
-              fontWeight: 300,
-              color: "rgba(200,210,240,0.55)",
+              fontSize: 22,
+              fontWeight: 400,
+              color: "rgba(200,210,240,0.72)",
               letterSpacing: "0.01em",
               lineHeight: 1.4,
-              maxWidth: 460,
-              marginBottom: 32,
+              maxWidth: 480,
+              marginBottom: 30,
             }}
           >
             Turning chaos into reliable systems.
@@ -240,7 +253,7 @@ export default function Image() {
               style={{
                 fontFamily: "monospace",
                 fontSize: 14,
-                color: `rgba(34,211,238,0.62)`,
+                color: `rgba(34,211,238,0.72)`,
                 letterSpacing: "0.05em",
                 fontWeight: 500,
               }}
@@ -251,7 +264,7 @@ export default function Image() {
               style={{
                 width: 1,
                 height: 14,
-                background: "rgba(255,255,255,0.10)",
+                background: "rgba(255,255,255,0.12)",
                 display: "flex",
               }}
             />
@@ -259,24 +272,24 @@ export default function Image() {
               style={{
                 fontFamily: "monospace",
                 fontSize: 12,
-                color: "rgba(200,210,240,0.30)",
+                color: "rgba(200,210,240,0.35)",
                 letterSpacing: "0.04em",
               }}
             >
-              MARRAKECH, MA
+              {BRAND.location}
             </span>
           </div>
         </div>
 
-        {/* Right panel — monogram + rings */}
+        {/* Right panel — profile photo + rings */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             position: "relative",
-            width: 240,
-            height: 240,
+            width: 260,
+            height: 260,
             flexShrink: 0,
           }}
         >
@@ -289,7 +302,7 @@ export default function Image() {
               right: 0,
               bottom: 0,
               borderRadius: "50%",
-              border: "1px solid rgba(34,211,238,0.16)",
+              border: "1.5px solid rgba(34,211,238,0.18)",
               display: "flex",
             }}
           />
@@ -297,12 +310,12 @@ export default function Image() {
           <div
             style={{
               position: "absolute",
-              top: 20,
-              left: 20,
-              right: 20,
-              bottom: 20,
+              top: 18,
+              left: 18,
+              right: 18,
+              bottom: 18,
               borderRadius: "50%",
-              border: "1px solid rgba(168,85,247,0.12)",
+              border: "1px solid rgba(168,85,247,0.14)",
               display: "flex",
             }}
           />
@@ -311,41 +324,78 @@ export default function Image() {
             style={{
               position: "absolute",
               top: -4,
-              left: 117,
-              width: 8,
-              height: 8,
+              left: 126,
+              width: 9,
+              height: 9,
               borderRadius: "50%",
               background: accent,
-              boxShadow: `0 0 14px ${accent}, 0 0 6px ${accent}`,
+              boxShadow: `0 0 16px ${accent}, 0 0 6px ${accent}`,
+              display: "flex",
+            }}
+          />
+          {/* Ring dot at bottom-right */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 20,
+              right: 8,
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: accent2,
+              boxShadow: `0 0 10px ${accent2}`,
               display: "flex",
             }}
           />
 
-          {/* Monogram box */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: 140,
-              height: 140,
-              borderRadius: 24,
-              background: "rgba(34,211,238,0.06)",
-              border: "1px solid rgba(34,211,238,0.16)",
-            }}
-          >
-            <span
+          {/* Photo or monogram fallback */}
+          {photoSrc ? (
+            <div
               style={{
-                fontSize: 52,
-                fontWeight: 800,
-                letterSpacing: "-0.04em",
-                color: "#f0f4ff",
-                lineHeight: 1,
+                display: "flex",
+                width: 160,
+                height: 160,
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: `2px solid rgba(34,211,238,0.25)`,
+                boxShadow: `0 0 30px rgba(34,211,238,0.15)`,
               }}
             >
-              A<span style={{ color: accent }}>W</span>
-            </span>
-          </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt={BRAND.name}
+                src={photoSrc}
+                width={160}
+                height={160}
+                style={{ objectFit: "cover", width: 160, height: 160 }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 150,
+                height: 150,
+                borderRadius: 28,
+                background: "rgba(34,211,238,0.06)",
+                border: "1px solid rgba(34,211,238,0.18)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: 56,
+                  fontWeight: 800,
+                  letterSpacing: "-0.04em",
+                  color: "#f0f4ff",
+                  lineHeight: 1,
+                }}
+              >
+                A<span style={{ color: accent }}>W</span>
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -356,12 +406,12 @@ export default function Image() {
           bottom: 0,
           left: 0,
           right: 0,
-          height: 40,
+          height: 42,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           padding: "0 90px",
-          borderTop: "1px solid rgba(255,255,255,0.04)",
+          borderTop: "1px solid rgba(255,255,255,0.05)",
           zIndex: 6,
         }}
       >
@@ -369,17 +419,17 @@ export default function Image() {
           style={{
             fontFamily: "monospace",
             fontSize: 11,
-            color: "rgba(255,255,255,0.15)",
+            color: "rgba(255,255,255,0.18)",
             letterSpacing: "0.10em",
           }}
         >
-          PORTFOLIO · 2026
+          PORTFOLIO · 2025
         </span>
         <span
           style={{
             fontFamily: "monospace",
             fontSize: 11,
-            color: "rgba(255,255,255,0.15)",
+            color: "rgba(255,255,255,0.18)",
             letterSpacing: "0.10em",
           }}
         >
