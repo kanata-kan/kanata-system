@@ -15,6 +15,7 @@ interface AppShellProps {
   initialLocale: Locale;
   initialDark: boolean;
   initialViewportWidth: number;
+  initialIntroSeen: boolean;
 }
 
 export function AppShell({
@@ -22,6 +23,7 @@ export function AppShell({
   initialLocale,
   initialDark,
   initialViewportWidth,
+  initialIntroSeen,
 }: AppShellProps) {
   const { dark, toggle, C } = useTheme(initialDark);
   const responsive = useResponsive(initialViewportWidth);
@@ -56,7 +58,7 @@ export function AppShell({
 
             <Footer C={C} isMobile={responsive.isMobile} />
             <ScrollToTop C={C} />
-            <IntroSplash />
+            <IntroSplash initialSeen={initialIntroSeen} />
           </div>
         </ResponsiveContext.Provider>
       </ThemeContext.Provider>

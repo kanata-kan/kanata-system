@@ -23,19 +23,19 @@ export const TEXT = {
 
   /** Label mono minuscule (9px, uppercase, letterSpacing 2) */
   monoLabel: (C: Theme): CSSProperties => ({
-    fontFamily: "var(--font-body)",
+    fontFamily: "var(--font-ui)",
     fontSize: 9,
-    letterSpacing: 2,
-    color: C.faint,
+    letterSpacing: "var(--ui-tracking)",
+    color: C.muted,
     textTransform: "uppercase",
     fontWeight: 500,
   }),
 
   /** Label mono cyan (Label composant, nav items) */
   monoCyan: (C: Theme): CSSProperties => ({
-    fontFamily: "var(--font-body)",
+    fontFamily: "var(--font-ui)",
     fontSize: 10,
-    letterSpacing: 3,
+    letterSpacing: "var(--ui-wide-tracking)",
     color: C.cyan,
     fontWeight: 600,
   }),
@@ -44,7 +44,7 @@ export const TEXT = {
   body: (C: Theme): CSSProperties => ({
     fontFamily: "var(--font-body)",
     fontSize: 16,
-    color: C.muted,
+    color: C.sub,
     lineHeight: 1.7,
     fontWeight: 400,
     WebkitFontSmoothing: "antialiased",
@@ -55,7 +55,7 @@ export const TEXT = {
   bodySmall: (C: Theme): CSSProperties => ({
     fontFamily: "var(--font-body)",
     fontSize: 14,
-    color: C.muted,
+    color: C.sub,
     lineHeight: 1.7,
     fontWeight: 400,
     WebkitFontSmoothing: "antialiased",
@@ -83,9 +83,9 @@ export const TEXT = {
 
   /** Nav link */
   navLink: (C: Theme): CSSProperties => ({
-    fontFamily: "var(--font-body)",
+    fontFamily: "var(--font-ui)",
     fontSize: 11,
-    letterSpacing: 1.5,
+    letterSpacing: "var(--ui-tracking)",
     color: C.muted,
     textTransform: "uppercase",
     fontWeight: 500,
@@ -105,10 +105,10 @@ export const TEXT = {
 
   /** Metric label (Inter, small, muted) */
   metricLabel: (C: Theme): CSSProperties => ({
-    fontFamily: "var(--font-body)",
+    fontFamily: "var(--font-ui)",
     fontSize: 9,
     color: C.muted,
-    letterSpacing: 2,
+    letterSpacing: "var(--ui-tracking)",
     textTransform: "uppercase",
     fontWeight: 500,
   }),

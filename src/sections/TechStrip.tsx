@@ -1,22 +1,20 @@
-/**
- * @file TechStrip.tsx
- * @description Bande défilante (marquee) de technologies.
- * Utilise useThemeContext pour accéder aux tokens de couleur.
- * Inclut : bordures haut/bas, background bg2, ✦ décoratifs,
- * couleurs alternées, et séparateurs entre items.
- */
 "use client";
 
 import { getTechStrip } from "@/data/skills";
-import { useThemeContext } from "@/hooks/useTheme";
-import { useLocale } from "@/hooks/useLocale";
 import { Container } from "@/components/layout/Container";
+import { useLocale } from "@/hooks/useLocale";
+import { useThemeContext } from "@/hooks/useTheme";
+
+function containsArabic(text: string) {
+  return /[\u0600-\u06FF]/.test(text);
+}
 
 export function TechStrip() {
   const { locale } = useLocale();
-  const techStrip = getTechStrip(locale);
   const { C } = useThemeContext();
+  const techStrip = getTechStrip(locale);
   const items = [...techStrip, ...techStrip];
+  const isArabic = locale === "ar";
 
   return (
     <div
@@ -32,36 +30,67 @@ export function TechStrip() {
       <Container variant="wide">
         <div
           style={{
-            display: "flex",
-            width: "max-content",
-            animation: "marquee 30s linear infinite",
+            width: "100%",
+            overflow: "hidden",
           }}
         >
-          {items.map((t, i) => (
-            <span
-              key={`${t}-${i}`}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 10,
-                letterSpacing: 2.5,
-                color: i % 4 === 0 ? C.cyan : C.muted,
-                padding: "0 28px",
-                textTransform: "uppercase",
-                borderInlineEnd: `1px solid ${C.line}`,
-                whiteSpace: "nowrap",
-                transition: "color .35s",
-              }}
-            >
-              {i % 6 === 0 && (
+          <div
+            dir="ltr"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "nowrap",
+              width: "max-content",
+              minWidth: "100%",
+              animation: "marquee 30s linear infinite",
+              willChange: "transform",
+            }}
+          >
+            {items.map((text, index) => {
+              const hasArabic = containsArabic(text);
+
+              return (
                 <span
-                  style={{ color: C.cyan, marginInlineEnd: 8, opacity: 0.5 }}
+                  key={`${text}-${index}`}
+                  dir={isArabic && hasArabic ? "rtl" : "ltr"}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    flex: "0 0 auto",
+                    fontFamily:
+                      isArabic && hasArabic
+                        ? "var(--font-arabic)"
+                        : "var(--font-mono)",
+                    fontSize: hasArabic ? 11 : 10,
+                    fontWeight: hasArabic ? 600 : 500,
+                    letterSpacing: hasArabic ? 0 : 2.5,
+                    color: index % 4 === 0 ? C.cyan : C.muted,
+                    padding: isArabic ? "0 22px" : "0 28px",
+                    textTransform: hasArabic ? "none" : "uppercase",
+                    borderInlineEnd: `1px solid ${C.line}`,
+                    whiteSpace: "nowrap",
+                    transition: "color .35s",
+                    unicodeBidi: "isolate",
+                  }}
                 >
-                  ✦
+                  {index % 6 === 0 && (
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        color: C.cyan,
+                        marginInlineEnd: 8,
+                        opacity: 0.5,
+                        flexShrink: 0,
+                      }}
+                    >
+                      *
+                    </span>
+                  )}
+                  {text}
                 </span>
-              )}
-              {t}
-            </span>
-          ))}
+              );
+            })}
+          </div>
         </div>
       </Container>
     </div>

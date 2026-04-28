@@ -6,18 +6,34 @@
  */
 "use client";
 
+import dynamic from "next/dynamic";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
-import { HeroContent, HeroStats, HeroSystemTransform } from "./Hero/index";
+import { HeroContent, HeroStats } from "./Hero/index";
+import {
+  HeroSystemTransformMobile,
+  HeroSystemTransformPlaceholder,
+} from "./Hero/HeroSystemTransformMobile";
 import { Container } from "@/components/layout/Container";
 import { SECTION_SPACING } from "@/tokens/spacing";
 import { getContent } from "@/data/content";
 
+const DesktopHeroSystemTransform = dynamic(
+  () =>
+    import("./Hero/HeroSystemTransform").then(
+      (mod) => mod.HeroSystemTransform,
+    ),
+  {
+    ssr: false,
+    loading: () => <HeroSystemTransformPlaceholder />,
+  },
+);
+
 export function Hero() {
   const { C } = useThemeContext();
   const { isMobile, width } = useResponsiveContext();
-  const showTransform = width >= 1100;
+  const showDesktopTransform = width >= 1100;
   const { locale } = useLocale();
   const content = getContent(locale);
 
@@ -93,20 +109,26 @@ export function Hero() {
           {/* LEFT — identity + content */}
           <div style={{ flex: isMobile ? "unset" : "1.1 1 0%", minWidth: 0 }}>
             <HeroContent />
+
+            {!showDesktopTransform && (
+              <div style={{ marginTop: isMobile ? 24 : 28 }}>
+                <HeroSystemTransformMobile />
+              </div>
+            )}
           </div>
 
           {/* RIGHT — system transform visualization (wide desktop only) */}
-          {showTransform && (
+          {showDesktopTransform && (
             <div
               style={{
                 flex: "0.85 1 0%",
-                minWidth: 280,
-                maxWidth: 420,
+                minWidth: 320,
+                maxWidth: 468,
                 display: "flex",
                 justifyContent: "flex-end",
               }}
             >
-              <HeroSystemTransform />
+              <DesktopHeroSystemTransform />
             </div>
           )}
         </div>

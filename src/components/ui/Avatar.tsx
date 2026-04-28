@@ -18,6 +18,7 @@ import { content } from "@/data/content";
 interface AvatarProps {
   c: Theme;
   size?: number;
+  animated?: boolean;
 }
 
 const KEYFRAMES = `
@@ -39,7 +40,7 @@ const KEYFRAMES = `
   }
 `;
 
-export function Avatar({ c, size = 110 }: AvatarProps) {
+export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -326,8 +327,8 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
           padding: 0,
           outline: "none",
           transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-          transform: hovered ? "scale(1.08)" : "scale(1)",
-          animation: "avatar-float 5s ease-in-out infinite",
+          transform: animated && hovered ? "scale(1.08)" : "scale(1)",
+          animation: animated ? "avatar-float 5s ease-in-out infinite" : "none",
         }}
       >
         {/* Outer glow when hovered */}
@@ -337,7 +338,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             inset: -10,
             borderRadius: "50%",
             background: `radial-gradient(circle, ${c.cyan}28 0%, transparent 70%)`,
-            opacity: hovered ? 1 : 0,
+            opacity: animated && hovered ? 1 : 0,
             transition: "opacity 0.4s ease",
             pointerEvents: "none",
             filter: "blur(8px)",
@@ -361,7 +362,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               inset: 0,
               borderRadius: "50%",
               background: `conic-gradient(from 0deg, ${c.cyan}, ${c.purple}, ${c.cyan}88, ${c.purple}60, ${c.cyan})`,
-              animation: "spin-ring 4s linear infinite",
+              animation: animated ? "spin-ring 4s linear infinite" : "none",
             }}
           />
           {/* Inner cutout to create ring shape */}
@@ -398,8 +399,8 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
               display: "block",
               transition:
                 "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease",
-              transform: hovered ? "scale(1.08)" : "scale(1)",
-              filter: hovered
+              transform: animated && hovered ? "scale(1.08)" : "scale(1)",
+              filter: animated && hovered
                 ? "brightness(1.06) saturate(1.12)"
                 : "brightness(1) saturate(1)",
             }}
@@ -418,7 +419,7 @@ export function Avatar({ c, size = 110 }: AvatarProps) {
             borderRadius: "50%",
             background: c.green,
             border: `2.5px solid ${c.bg}`,
-            animation: "pulse-dot 2.2s ease-in-out infinite",
+            animation: animated ? "pulse-dot 2.2s ease-in-out infinite" : "none",
             display: "block",
             zIndex: 2,
           }}

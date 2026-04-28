@@ -29,9 +29,9 @@ export function Label({ children, c }: LabelProps) {
       />
       <span
         style={{
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-ui)",
           fontSize: 10,
-          letterSpacing: 1.5,
+          letterSpacing: "var(--ui-tracking)",
           color: c.cyan,
           overflowWrap: "anywhere",
           textTransform: "uppercase",

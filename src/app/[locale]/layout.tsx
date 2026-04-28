@@ -8,11 +8,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cookies, headers } from "next/headers";
-import { Outfit, Inter, Cairo } from "next/font/google";
+import { Outfit, Inter, Tajawal } from "next/font/google";
 import { getContent } from "@/data/content";
 import type { Locale } from "@/data/content/types";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/seo";
+import { hasSeenIntroSplash, INTRO_SPLASH_COOKIE } from "@/lib/introSplash";
 import {
   LOCALES,
   isValidLocale,
@@ -38,9 +39,19 @@ const inter = Inter({
   display: "swap",
 });
 
-const cairo = Cairo({
-  subsets: ["arabic"],
-  weight: ["300", "400", "500", "600", "700", "900"],
+/**
+ * ── Arabic Font: Tajawal ──
+ * Modern, digital-first Arabic font optimized for tech/engineering content.
+ * Chosen over IBM Plex Sans Arabic for:
+ * - Cleaner, more geometric letterforms suitable for UI/technical content
+ * - Better readability on screens at smaller sizes
+ * - Contemporary aesthetic that aligns with modern software engineering sites
+ * - Excellent legibility for code snippets, technical documentation, and UI text
+ * Weights: 300 (Light), 400 (Regular), 500 (Medium), 700 (Bold), 800 (Extra Bold)
+ */
+const tajawal = Tajawal({
+  subsets: ["arabic", "latin"],
+  weight: ["300", "400", "500", "700", "800"],
   variable: "--font-arabic",
   display: "swap",
 });
@@ -146,6 +157,9 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const cookieStore = await cookies();
   const headerStore = await headers();
   const themeCookie = cookieStore.get("portfolio-theme")?.value;
+  const initialIntroSeen = hasSeenIntroSplash(
+    cookieStore.get(INTRO_SPLASH_COOKIE)?.value,
+  );
   const initialDark = themeCookie !== "light";
   const viewportWidthHint = Number(headerStore.get("viewport-width") ?? "");
   const mobileHint = headerStore.get("sec-ch-ua-mobile");
@@ -170,7 +184,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       lang={locale}
       dir={dir}
       data-scroll-behavior="smooth"
-      className={`${outfit.variable} ${inter.variable} ${cairo.variable}`}
+      className={`${outfit.variable} ${inter.variable} ${tajawal.variable}`}
     >
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -193,6 +207,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           initialLocale={locale}
           initialDark={initialDark}
           initialViewportWidth={initialViewportWidth}
+          initialIntroSeen={initialIntroSeen}
         >
           {children}
         </AppShell>

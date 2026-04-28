@@ -6,7 +6,7 @@
  */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
@@ -25,17 +25,15 @@ export function HeroContent() {
   const isArabic = locale === "ar";
 
   const ROLES = content.hero.roles;
-  const widestRole = ROLES.reduce(
-    (longest, role) => (role.length > longest.length ? role : longest),
-    ROLES[0] ?? "",
+  const widestRole = useMemo(
+    () =>
+      ROLES.reduce(
+        (longest, role) => (role.length > longest.length ? role : longest),
+        ROLES[0] ?? "",
+      ),
+    [ROLES],
   );
-  const [cur, setCur] = useState(true);
   const [ri, setRi] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setCur((c) => !c), 530);
-    return () => clearInterval(t);
-  }, []);
 
   useEffect(() => {
     const t = setInterval(() => setRi((r) => (r + 1) % ROLES.length), 2800);
@@ -114,7 +112,7 @@ export function HeroContent() {
           marginBottom: isMobile ? 16 : 20,
         }}
       >
-        <Avatar size={avatarSize} c={C} />
+        <Avatar size={avatarSize} c={C} animated={!isMobile} />
 
         <div style={{ minWidth: 0 }}>
           <h1
@@ -283,8 +281,7 @@ export function HeroContent() {
                 verticalAlign: "middle",
                 marginInlineStart: 4,
                 borderRadius: 1,
-                opacity: cur ? 1 : 0,
-                transition: "opacity .1s",
+                animation: "cursorBlink 1.06s step-end infinite",
               }}
             />
           </span>
@@ -300,7 +297,7 @@ export function HeroContent() {
           lineHeight: 1.75,
           maxWidth: 540,
           marginBottom: 20,
-          fontWeight: 300,
+          fontWeight: 400,
           overflowWrap: "anywhere",
         }}
       >

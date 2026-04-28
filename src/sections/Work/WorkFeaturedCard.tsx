@@ -203,7 +203,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               fontSize: 13,
               color: C.muted,
               lineHeight: 1.75,
-              fontWeight: 300,
+              fontWeight: 400,
               fontStyle: "italic",
               marginBottom: 24,
             }}

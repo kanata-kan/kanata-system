@@ -264,7 +264,7 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
             lineHeight: 1.7,
             maxWidth: 620,
             marginBottom: quickHighlights.length > 0 ? 18 : 28,
-            fontWeight: 300,
+            fontWeight: 400,
           }}
         >
           {cs.subtitle}
