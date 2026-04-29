@@ -165,13 +165,16 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const cookieStore = await cookies();
   const headerStore = await headers();
   const themeCookie = cookieStore.get("portfolio-theme")?.value;
-  const initialIntroSeen = hasSeenIntroSplash(
-    cookieStore.get(INTRO_SPLASH_COOKIE)?.value,
-  );
+  const userAgent = headerStore.get("user-agent") ?? "";
+  const isBot =
+    /bot|crawl|spider|lighthouse|pagespeed|headlesschrome|prerender/i.test(
+      userAgent,
+    );
+  const initialIntroSeen =
+    isBot || hasSeenIntroSplash(cookieStore.get(INTRO_SPLASH_COOKIE)?.value);
   const initialDark = themeCookie !== "light";
   const viewportWidthHint = Number(headerStore.get("viewport-width") ?? "");
   const mobileHint = headerStore.get("sec-ch-ua-mobile");
-  const userAgent = headerStore.get("user-agent") ?? "";
   const isLikelyMobile =
     mobileHint === "?1" ||
     /Android|iPhone|iPad|iPod|Mobile|Opera Mini|IEMobile/i.test(userAgent);

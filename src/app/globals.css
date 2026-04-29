@@ -389,11 +389,9 @@ html[lang="fr"] body {
 
 @keyframes pageIn {
   from {
-    opacity: 0;
     transform: translateY(8px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -401,6 +399,16 @@ html[lang="fr"] body {
 main,
 [data-page] {
   animation: pageIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Above-fold hero: visible immediately for LCP — no JS dependency */
+#top .rv,
+#top .rv-l,
+#top .rv-r,
+#top .rv-s {
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 /* ──────────────────────────────────────────────────

@@ -12,11 +12,7 @@ import type { Locale } from "@/data/content/types";
 import { buildHomepageJsonLd } from "@/lib/seo";
 import { isValidLocale, getAlternates } from "@/lib/i18n";
 import { Hero } from "@/sections/Hero";
-import { TechStrip } from "@/sections/TechStrip";
-import { Work } from "@/sections/Work";
-import { About } from "@/sections/About";
-import { Skills } from "@/sections/Skills";
-import { Contact } from "@/sections/Contact";
+import { BelowFold } from "@/sections/BelowFold";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -61,11 +57,7 @@ export default async function Home({ params }: Props) {
     <main id="main-content">
       <JsonLd data={buildHomepageJsonLd(locale)} />
       <Hero />
-      <TechStrip />
-      <Work />
-      <About />
-      <Skills />
-      <Contact />
+      <BelowFold />
     </main>
   );
 }
