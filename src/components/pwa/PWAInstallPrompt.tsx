@@ -24,7 +24,7 @@ export function PWAInstallPrompt() {
   const [installStatus, setInstallStatus] = useState<
     "prompt" | "installing" | "success" | null
   >(null);
-  const currentTimeRef = useRef(Date.now());
+  const currentTimeRef = useRef(0);
 
   // Update current time periodically
   useEffect(() => {
@@ -96,7 +96,7 @@ export function PWAInstallPrompt() {
   // Determine if we should show the prompt
   useEffect(() => {
     if (!isInstallable || isInstalled) {
-      setIsVisible(false);
+      setTimeout(() => setIsVisible(false), 0);
       return;
     }
 
@@ -200,8 +200,8 @@ export function PWAInstallPrompt() {
           <div className="bg-[#0e1117] border border-[#22d3ee]/20 rounded-2xl p-5 shadow-2xl shadow-[#22d3ee]/10 backdrop-blur-xl">
             <div className="flex items-start gap-4">
               {/* Icon */}
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-gradient-to-br from-[#22d3ee] to-[#0891b2] rounded-xl flex items-center justify-center">
+              <div className="shrink-0">
+                <div className="w-12 h-12 bg-linear-to-br from-[#22d3ee] to-[#0891b2] rounded-xl flex items-center justify-center">
                   {installStatus === "success" ? (
                     <Sparkles className="w-6 h-6 text-white" />
                   ) : (
@@ -248,7 +248,7 @@ export function PWAInstallPrompt() {
               {installStatus !== "success" && (
                 <button
                   onClick={handleDismiss}
-                  className="flex-shrink-0 text-gray-400 hover:text-white transition-colors"
+                  className="shrink-0 text-gray-400 hover:text-white transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>

@@ -128,6 +128,14 @@ export async function generateMetadata({
       siteName: content.meta.ogSiteName,
       url: `${siteUrl}/${locale}`,
       locale: getMetadataLocale(locale),
+      images: [
+        {
+          url: "/Abdelilah-Wajid.png",
+          width: 400,
+          height: 400,
+          alt: content.meta.author,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
