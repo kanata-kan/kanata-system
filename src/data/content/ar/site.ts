@@ -203,12 +203,12 @@ export const site: SiteData = {
 
   /* Tech Strip */
   techStrip: [
-    "Case-study driven",
-    "Workflows تشغيلية",
-    "Typed content",
+    "مبني على دراسات حالة",
+    "سير عمل تشغيلي",
+    "محتوى مُهيكل",
     "مقايضات واضحة",
-    "UI متجاوب",
-    "Business rules first",
+    "واجهات متجاوبة",
+    "قواعد العمل أولاً",
     "منطق المخزون",
     "هندسة واضحة",
     "قراءة سريعة",

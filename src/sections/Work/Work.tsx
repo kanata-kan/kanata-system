@@ -66,11 +66,11 @@ export function Work() {
             style={{
               display: "flex",
               flexDirection: "row",
-              gap: 4,
+              gap: 3,
               marginBottom: 24,
               background: C.bg2,
               borderRadius: 10,
-              padding: 4,
+              padding: 3,
               border: `1px solid ${C.border}`,
               overflowX: "auto",
               WebkitOverflowScrolling: "touch",
@@ -78,63 +78,72 @@ export function Work() {
               transition: "background .35s",
             }}
           >
-            {PROJECTS.map((pr, i) => (
-              <button
-                key={pr.n}
-                type="button"
-                role="tab"
-                aria-selected={active === i}
-                onClick={() => setActive(i)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: isMobile ? "9px 12px" : "10px 18px",
-                  borderRadius: 7,
-                  whiteSpace: "nowrap",
-                  background: active === i ? C.bg3 : "transparent",
-                  border:
-                    active === i
-                      ? `1px solid ${pr.color}35`
+            {PROJECTS.map((pr, i) => {
+              const isActive = active === i;
+              return (
+                <button
+                  key={pr.n}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActive(i)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: isMobile ? "10px 14px" : "10px 18px",
+                    borderRadius: 8,
+                    whiteSpace: "nowrap",
+                    background: isActive
+                      ? `linear-gradient(135deg, ${pr.color}14, ${pr.color}08)`
+                      : "transparent",
+                    border: isActive
+                      ? `1px solid ${pr.color}30`
                       : "1px solid transparent",
-                  transition: "all .2s",
-                  flexShrink: 0,
-                  cursor: "pointer",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 9,
-                    color: active === i ? pr.color : C.faint,
-                    letterSpacing: 1,
+                    boxShadow: isActive ? `0 2px 8px ${pr.color}15` : "none",
+                    transition: "all .25s cubic-bezier(.4,0,.2,1)",
+                    flexShrink: 0,
+                    cursor: "pointer",
+                    position: "relative" as const,
                   }}
                 >
-                  {pr.n}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: 13,
-                    color: active === i ? C.text : C.muted,
-                    fontWeight: active === i ? 500 : 300,
-                  }}
-                >
-                  {pr.name}
-                </span>
-                {active === i && (
-                  <div
+                  <span
                     style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: pr.color,
-                      flexShrink: 0,
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 9,
+                      color: isActive ? pr.color : C.faint,
+                      letterSpacing: 1,
+                      transition: "color .2s",
                     }}
-                  />
-                )}
-              </button>
-            ))}
+                  >
+                    {pr.n}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 13,
+                      color: isActive ? C.text : C.muted,
+                      fontWeight: isActive ? 600 : 400,
+                      transition: "color .2s, font-weight .2s",
+                    }}
+                  >
+                    {pr.name}
+                  </span>
+                  {isActive && (
+                    <div
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: pr.color,
+                        flexShrink: 0,
+                        boxShadow: `0 0 6px ${pr.color}60`,
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         )}
 

@@ -276,21 +276,30 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               >
                 {copy.projectSnapshot}
               </div>
+              {/* Horizontal snap-scroll carousel — reduces vertical scroll */}
               <div
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr",
+                  display: "flex",
                   gap: 10,
+                  overflowX: "auto",
+                  scrollSnapType: "x mandatory",
+                  WebkitOverflowScrolling: "touch",
+                  paddingBottom: 8,
+                  scrollbarWidth:
+                    "none" as React.CSSProperties["scrollbarWidth"],
                 }}
               >
                 {snapshotSections.map((section) => (
                   <div
                     key={section.title}
                     style={{
+                      flex: "0 0 78%",
+                      scrollSnapAlign: "start",
                       padding: "14px 16px",
                       borderRadius: 10,
                       background: C.bg,
                       border: `1px solid ${C.line}`,
+                      borderTop: `2px solid ${section.accent}`,
                     }}
                   >
                     <div
@@ -301,8 +310,20 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                         color: section.accent,
                         textTransform: "uppercase",
                         marginBottom: 10,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
                       }}
                     >
+                      <span
+                        style={{
+                          width: 5,
+                          height: 5,
+                          borderRadius: "50%",
+                          background: section.accent,
+                          flexShrink: 0,
+                        }}
+                      />
                       {section.title}
                     </div>
                     <div
@@ -328,6 +349,28 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   </div>
                 ))}
               </div>
+              {/* Scroll hint dots */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: 6,
+                  marginTop: 10,
+                }}
+              >
+                {snapshotSections.map((s, i) => (
+                  <div
+                    key={s.title}
+                    style={{
+                      width: i === 0 ? 16 : 5,
+                      height: 5,
+                      borderRadius: 3,
+                      background: i === 0 ? p.color : C.line,
+                      transition: "all .2s",
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           )}
 
@@ -350,27 +393,30 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
                   letterSpacing: 2,
-                  padding: "12px 28px",
+                  padding: isMobile ? "14px 24px" : "12px 28px",
                   borderRadius: 8,
                   border: `1px solid ${p.color}60`,
                   color: p.color,
-                  background: p.color + "12",
+                  background: `linear-gradient(135deg, ${p.color}12, ${p.color}08)`,
                   transition: "all .25s",
                   textDecoration: "none",
                   fontWeight: 600,
+                  width: isMobile ? "100%" : "auto",
+                  justifyContent: "center",
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = p.color + "28";
+                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}28, ${p.color}18)`;
                   e.currentTarget.style.boxShadow = `0 6px 24px ${p.color}35`;
                   e.currentTarget.style.transform = "translateY(-1px)";
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = p.color + "12";
+                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}12, ${p.color}08)`;
                   e.currentTarget.style.boxShadow = "none";
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                VIEW CASE STUDY <span style={{ fontSize: 15 }}>→</span>
+                {copy.viewCaseStudy.toUpperCase()}{" "}
+                <span style={{ fontSize: 15 }}>→</span>
               </Link>
               <span
                 style={{
@@ -378,9 +424,10 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   fontSize: 9,
                   letterSpacing: 1,
                   color: C.faint,
+                  textAlign: isMobile ? "center" : undefined,
                 }}
               >
-                Structured around problem, solution, decisions, and impact
+                {copy.structureNote}
               </span>
             </div>
           ) : (
@@ -392,16 +439,19 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                 fontFamily: "var(--font-mono)",
                 fontSize: 10,
                 letterSpacing: 2,
-                padding: "10px 20px",
+                padding: isMobile ? "14px 24px" : "10px 20px",
                 borderRadius: 6,
                 border: `1px solid ${p.color}50`,
                 color: p.color,
                 background: p.color + "10",
                 transition: "all .2s",
                 cursor: "pointer",
+                width: isMobile ? "100%" : "auto",
+                justifyContent: "center",
               }}
             >
-              VIEW PROJECT <span style={{ fontSize: 14 }}>↗</span>
+              {copy.viewProject.toUpperCase()}{" "}
+              <span style={{ fontSize: 14 }}>↗</span>
             </button>
           )}
         </div>
