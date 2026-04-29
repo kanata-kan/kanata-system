@@ -227,42 +227,51 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                 <div
                   key={group}
                   style={{
-                    display: "flex",
-                    gap: 8,
-                    alignItems: "center",
-                    flexWrap: "wrap",
+                    padding: isMobile ? "12px 14px" : "10px 0",
+                    borderRadius: isMobile ? 8 : 0,
+                    background: isMobile ? C.bg2 : "transparent",
+                    border: isMobile ? `1px solid ${C.line}` : "none",
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: 9,
+                      fontSize: 10,
                       letterSpacing: 1,
                       color: p.color,
                       textTransform: "uppercase",
-                      minWidth: 52,
-                      flexShrink: 0,
+                      fontWeight: 600,
+                      display: "block",
+                      marginBottom: isMobile ? 8 : 4,
                     }}
                   >
                     {group}
                   </span>
-                  {items.map((t) => (
-                    <span
-                      key={t}
-                      style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 10,
-                        padding: "3px 9px",
-                        borderRadius: 4,
-                        border: `1px solid ${C.line}`,
-                        color: C.muted,
-                        background: C.bg,
-                        transition: "background .35s",
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 6,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {items.map((t) => (
+                      <span
+                        key={t}
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: isMobile ? 10 : 9,
+                          padding: "4px 8px",
+                          borderRadius: 4,
+                          border: `1px solid ${C.line}`,
+                          color: C.text,
+                          background: C.bg,
+                          transition: "background .35s",
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
             </Stack>
@@ -278,43 +287,67 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               >
                 {copy.projectSnapshot}
               </div>
-              {/* Snapshot sections — vertical stack for clarity on mobile */}
+              {/* Snapshot sections — compact cards with strong visual hierarchy */}
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr",
-                  gap: 10,
+                  gap: 8,
                 }}
               >
-                {snapshotSections.map((section) => (
+                {snapshotSections.map((section, idx) => (
                   <div
                     key={section.title}
                     style={{
-                      padding: "14px 16px",
+                      padding: "12px 14px",
                       borderRadius: 8,
-                      background: `${section.accent}12`,
-                      border: `1px solid ${section.accent}40`,
+                      background: C.bg2,
+                      border: `1px solid ${section.accent}50`,
                       borderLeft: `3px solid ${section.accent}`,
                     }}
                   >
                     <div
                       style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 11,
-                        letterSpacing: 1.5,
-                        color: section.accent,
-                        textTransform: "uppercase",
-                        marginBottom: 10,
-                        fontWeight: 600,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                        marginBottom: 8,
                       }}
                     >
-                      {section.title}
+                      <span
+                        style={{
+                          width: 16,
+                          height: 16,
+                          borderRadius: 4,
+                          background: section.accent,
+                          color: "#fff",
+                          fontSize: 10,
+                          display: "grid",
+                          placeItems: "center",
+                          fontFamily: "var(--font-mono)",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {idx + 1}
+                      </span>
+                      <div
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: 10,
+                          letterSpacing: 1.5,
+                          color: section.accent,
+                          textTransform: "uppercase",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {section.title}
+                      </div>
                     </div>
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: 6,
+                        gap: 4,
                       }}
                     >
                       {section.items.map((item) => (
@@ -322,13 +355,13 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                           key={`${section.title}-${item}`}
                           style={{
                             fontFamily: "var(--font-sans)",
-                            fontSize: 14,
+                            fontSize: 13,
                             lineHeight: 1.5,
                             color: C.text,
                             display: "block",
                           }}
                         >
-                          {item}
+                          • {item}
                         </span>
                       ))}
                     </div>
