@@ -154,6 +154,7 @@ const ScanBeam = memo(function ScanBeam({
         boxShadow: `0 0 16px 4px ${C.cyan}80`,
         pointerEvents: "none",
         zIndex: 10,
+        willChange: "top, opacity",
       }}
     />
   );
@@ -200,7 +201,7 @@ const EdgeLine = memo(function EdgeLine({
         pathLength: { duration: 0.45, delay: index * 0.07, ease: "easeOut" },
         opacity: { duration: 0.2, delay: index * 0.07 },
       }}
-      style={{ willChange: "auto" }}
+      style={{ willChange: "stroke-dashoffset, opacity" }}
     />
   );
 });
@@ -262,6 +263,7 @@ const SystemNode = memo(function SystemNode({
             borderRadius: 14,
             border: `1px solid ${C.cyan}`,
             pointerEvents: "none",
+            willChange: "transform, opacity",
           }}
         />
       )}
@@ -283,6 +285,7 @@ const SystemNode = memo(function SystemNode({
           border: "1px solid",
           position: "relative",
           overflow: "hidden",
+          willChange: "border-color, background-color, box-shadow",
         }}
       >
         {/* Top accent bar */}
@@ -300,6 +303,7 @@ const SystemNode = memo(function SystemNode({
             borderRadius: 999,
             background: `linear-gradient(90deg, ${C.cyan}, ${C.purple})`,
             transformOrigin: "left center",
+            willChange: "transform, opacity",
           }}
         />
 
@@ -323,6 +327,7 @@ const SystemNode = memo(function SystemNode({
               fontWeight: 600,
               letterSpacing: 0.45,
               userSelect: "none",
+              willChange: "color",
             }}
           >
             {node.label}
@@ -345,6 +350,7 @@ const SystemNode = memo(function SystemNode({
               inset: 0,
               background: `linear-gradient(105deg, transparent 30%, ${C.cyan}50 50%, transparent 70%)`,
               pointerEvents: "none",
+              willChange: "transform, opacity",
             }}
           />
         )}
@@ -398,6 +404,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
               background: `radial-gradient(circle at 30% 30%, ${C.cyan}18, transparent 50%), radial-gradient(circle at 78% 70%, ${C.purple}12, transparent 45%)`,
               filter: "blur(22px)",
               pointerEvents: "none",
+              willChange: "opacity",
             }}
           />
 
@@ -590,6 +597,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     gap: 8,
                     pointerEvents: "none",
                     zIndex: 6,
+                    willChange: "transform, opacity",
                   }}
                 >
                   <div
@@ -668,6 +676,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                       boxShadow: "0 10px 24px rgba(15, 23, 42, 0.08)",
                       pointerEvents: "none",
                       zIndex: 6,
+                      willChange: "transform, opacity",
                     }}
                   >
                     <span
