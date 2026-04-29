@@ -135,9 +135,7 @@ function hasSeenIntroSplashClient() {
   if (typeof window === "undefined") return false;
 
   try {
-    return hasSeenIntroSplash(
-      sessionStorage.getItem(INTRO_SPLASH_STORAGE_KEY),
-    );
+    return hasSeenIntroSplash(sessionStorage.getItem(INTRO_SPLASH_STORAGE_KEY));
   } catch {
     // Ignore sessionStorage failures in private or restricted contexts.
     return false;
@@ -190,13 +188,7 @@ function BrandMark({
         style={{ display: "block", overflow: "visible" }}
       >
         <defs>
-          <linearGradient
-            id={gradientId}
-            x1="0%"
-            y1="0%"
-            x2="100%"
-            y2="0%"
-          >
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={accentStart} />
             <stop offset="100%" stopColor={accentEnd} />
           </linearGradient>
@@ -248,12 +240,29 @@ function BrandMark({
   );
 }
 
-export function IntroSplash({ initialSeen = false }: { initialSeen?: boolean }) {
+export function IntroSplash({
+  initialSeen = false,
+}: {
+  initialSeen?: boolean;
+}) {
   const { dark, C } = useThemeContext();
   const { locale } = useLocale();
   const { isMobile } = useResponsiveContext();
   const content = useMemo(() => getContent(locale), [locale]);
-  const [visible, setVisible] = useState(!initialSeen);
+  const [visible, setVisible] = useState(() => {
+    if (initialSeen) return false;
+    if (typeof window === "undefined") return false;
+    const reduce = shouldReduceSplashMotion();
+    const isNarrow = window.innerWidth < 768;
+    const nav = navigator as Navigator & {
+      connection?: { effectiveType?: string; saveData?: boolean };
+    };
+    const slowConn =
+      Boolean(nav.connection?.saveData) ||
+      /(^|\b)(2g|3g)\b/i.test(nav.connection?.effectiveType ?? "");
+    // Only show on wider screens, fast connections, and when motion is allowed
+    return !reduce && !isNarrow && !slowConn;
+  });
   const [phase, setPhase] = useState<IntroPhase>("idle");
   const [mode, setMode] = useState<IntroMode>(isMobile ? "mobile" : "desktop");
 
@@ -337,9 +346,9 @@ export function IntroSplash({ initialSeen = false }: { initialSeen?: boolean }) 
   if (!visible) return null;
 
   const timing = TIMINGS[mode];
-  const stageWidth = mode === "desktop" ? "min(72vw, 540px)" : "min(90vw, 380px)";
-  const stagePadding =
-    mode === "desktop" ? "76px 34px 34px" : "64px 22px 24px";
+  const stageWidth =
+    mode === "desktop" ? "min(72vw, 540px)" : "min(90vw, 380px)";
+  const stagePadding = mode === "desktop" ? "76px 34px 34px" : "64px 22px 24px";
   const stageRadius = mode === "desktop" ? 28 : 24;
   const overlayOpacity = exiting ? 0 : 1;
 
@@ -453,7 +462,8 @@ export function IntroSplash({ initialSeen = false }: { initialSeen?: boolean }) 
                 inset: 0,
                 backgroundImage: `linear-gradient(${palette.grid} 1px, transparent 1px), linear-gradient(90deg, ${palette.grid} 1px, transparent 1px)`,
                 backgroundSize: mode === "desktop" ? "28px 28px" : "24px 24px",
-                opacity: active && mode !== "reduced" ? (dark ? 0.34 : 0.26) : 0,
+                opacity:
+                  active && mode !== "reduced" ? (dark ? 0.34 : 0.26) : 0,
                 transition: `opacity ${timing.haloDuration}ms ease ${timing.haloDelay}ms`,
               }}
             />
@@ -500,7 +510,9 @@ export function IntroSplash({ initialSeen = false }: { initialSeen?: boolean }) 
                 justifyContent: "space-between",
                 alignItems: "center",
                 opacity: active ? 1 : 0,
-                transform: active ? "translate3d(0, 0, 0)" : "translate3d(0, -6px, 0)",
+                transform: active
+                  ? "translate3d(0, 0, 0)"
+                  : "translate3d(0, -6px, 0)",
                 transition: `opacity ${timing.copyDuration}ms ease ${timing.copyDelay - 160}ms, transform ${timing.copyDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${timing.copyDelay - 160}ms`,
               }}
             >
@@ -521,7 +533,9 @@ export function IntroSplash({ initialSeen = false }: { initialSeen?: boolean }) 
                   fontFamily: "var(--font-mono)",
                   fontSize: 8,
                   letterSpacing: 1.2,
-                  color: dark ? "rgba(203,213,225,0.55)" : "rgba(51,65,85,0.62)",
+                  color: dark
+                    ? "rgba(203,213,225,0.55)"
+                    : "rgba(51,65,85,0.62)",
                   textTransform: "uppercase",
                 }}
               >
