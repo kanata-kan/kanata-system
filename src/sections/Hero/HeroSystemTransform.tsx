@@ -223,6 +223,7 @@ const SystemNode = memo(function SystemNode({
 
   return (
     <m.div
+      initial={false}
       animate={{
         x: organized ? base.x : base.x + node.chaos.x,
         y: organized ? base.y : base.y + node.chaos.y,
@@ -270,6 +271,7 @@ const SystemNode = memo(function SystemNode({
 
       {/* Card body */}
       <m.div
+        initial={false}
         animate={{
           borderColor: organized ? C.border2 : C.border,
           backgroundColor: organized ? C.bg3 : C.card,
@@ -290,6 +292,7 @@ const SystemNode = memo(function SystemNode({
       >
         {/* Top accent bar */}
         <m.div
+          initial={false}
           animate={{
             scaleX: organized ? 1 : 0.25,
             opacity: organized ? 1 : 0.15,
@@ -319,6 +322,7 @@ const SystemNode = memo(function SystemNode({
           }}
         >
           <m.span
+            initial={false}
             animate={{ color: organized ? C.text : C.muted }}
             transition={{ duration: 0.35 }}
             style={{
@@ -395,6 +399,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
         <div style={{ position: "relative" }}>
           {/* Ambient glow backdrop */}
           <m.div
+            initial={false}
             animate={{ opacity: organized ? 1 : 0.3 }}
             transition={{ duration: 0.5 }}
             style={{
@@ -580,6 +585,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
 
                 {/* "Hover to transform" cue */}
                 <m.div
+                  initial={false}
                   animate={{
                     opacity: organized ? 0 : 1,
                     y: organized ? 10 : 0,

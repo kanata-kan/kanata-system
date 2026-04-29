@@ -206,6 +206,8 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
             alt="Abdelilah Wajid — Full photo"
             width={440}
             height={587}
+            fetchPriority="high"
+            sizes="(max-width: 768px) 100vw, 440px"
             style={{
               width: "100%",
               height: "100%",
@@ -391,7 +393,8 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
             alt="Abdelilah Wajid"
             width={size}
             height={size}
-            sizes={`${size}px`}
+            sizes={`(max-width: 768px) ${size}px, ${size}px`}
+            fetchPriority="high"
             style={{
               width: "100%",
               height: "100%",
@@ -400,9 +403,10 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
               transition:
                 "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease",
               transform: animated && hovered ? "scale(1.08)" : "scale(1)",
-              filter: animated && hovered
-                ? "brightness(1.06) saturate(1.12)"
-                : "brightness(1) saturate(1)",
+              filter:
+                animated && hovered
+                  ? "brightness(1.06) saturate(1.12)"
+                  : "brightness(1) saturate(1)",
             }}
             priority
           />
@@ -419,7 +423,9 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
             borderRadius: "50%",
             background: c.green,
             border: `2.5px solid ${c.bg}`,
-            animation: animated ? "pulse-dot 2.2s ease-in-out infinite" : "none",
+            animation: animated
+              ? "pulse-dot 2.2s ease-in-out infinite"
+              : "none",
             display: "block",
             zIndex: 2,
           }}
