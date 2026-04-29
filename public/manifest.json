@@ -1,34 +1,34 @@
 {
-  "name": "Abdelilah Wajid - Product Engineer",
-  "short_name": "AW Portfolio",
-  "description": "Product Engineer specializing in building reliable systems and operational tools",
+  "name": "Abdelilah Wajid — Product Engineer",
+  "short_name": "Wajid",
+  "description": "Building real-world systems — inventory, pricing, reporting, and internal tools.",
   "start_url": "/",
   "scope": "/",
-  "id": "/",
+  "id": "abdelilah-wajid-portfolio",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
   "background_color": "#0e1117",
   "theme_color": "#22d3ee",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "lang": "en",
   "dir": "auto",
+  "prefer_related_applications": false,
+
   "icons": [
     {
       "src": "/favicon-16x16.png",
       "sizes": "16x16",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/favicon-32x32.png",
       "sizes": "32x32",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/apple-touch-icon.png",
       "sizes": "180x180",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/favicon-192.png",
@@ -55,5 +55,47 @@
       "purpose": "maskable"
     }
   ],
+
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile-home.png",
+      "sizes": "390x844",
+      "type": "image/png"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "View Work",
+      "short_name": "Work",
+      "description": "Explore case studies and projects",
+      "url": "/work",
+      "icons": [
+        {
+          "src": "/favicon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch",
+      "url": "/contact",
+      "icons": [
+        {
+          "src": "/favicon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+
   "categories": ["portfolio", "technology", "engineering"]
 }

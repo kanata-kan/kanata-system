@@ -22,6 +22,7 @@ import {
   getAlternates,
 } from "@/lib/i18n";
 import { AppShell } from "../AppShell";
+import { PWAInstallPrompt } from "@/components/pwa/PWAInstallPrompt";
 import "../globals.css";
 
 /* ── Fonts ── */
@@ -211,6 +212,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         >
           {children}
         </AppShell>
+        <PWAInstallPrompt />
       </body>
     </html>
   );
