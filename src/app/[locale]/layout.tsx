@@ -205,14 +205,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           name="theme-color"
           content={initialDark ? "#0e1117" : "#f8fafc"}
         />
-        <link
-          rel="preload"
-          as="image"
-          href="/Abdelilah-Wajid.png"
-          // For modern browsers, let the browser choose best size
-          imageSrcSet="/Abdelilah-Wajid.png 400w"
-          fetchPriority="high"
-        />
       </head>
       <body>
         <a href="#main-content" className="skip-link">

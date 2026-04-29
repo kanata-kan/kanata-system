@@ -249,20 +249,7 @@ export function IntroSplash({
   const { locale } = useLocale();
   const { isMobile } = useResponsiveContext();
   const content = useMemo(() => getContent(locale), [locale]);
-  const [visible, setVisible] = useState(() => {
-    if (initialSeen) return false;
-    if (typeof window === "undefined") return false;
-    const reduce = shouldReduceSplashMotion();
-    const isNarrow = window.innerWidth < 768;
-    const nav = navigator as Navigator & {
-      connection?: { effectiveType?: string; saveData?: boolean };
-    };
-    const slowConn =
-      Boolean(nav.connection?.saveData) ||
-      /(^|\b)(2g|3g)\b/i.test(nav.connection?.effectiveType ?? "");
-    // Only show on wider screens, fast connections, and when motion is allowed
-    return !reduce && !isNarrow && !slowConn;
-  });
+  const [visible, setVisible] = useState(!initialSeen);
   const [phase, setPhase] = useState<IntroPhase>("idle");
   const [mode, setMode] = useState<IntroMode>(isMobile ? "mobile" : "desktop");
 

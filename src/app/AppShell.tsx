@@ -59,14 +59,7 @@ export function AppShell({
               onToggle={toggle}
               isMobile={responsive.isMobile}
             />
-            <div
-              style={{
-                contentVisibility: "auto",
-                containIntrinsicSize: "1px 2000px",
-              }}
-            >
-              {children}
-            </div>
+            {children}
 
             <div
               style={{
