@@ -9,6 +9,12 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { IntroSplash } from "@/components/ui/IntroSplash";
+import dynamic from "next/dynamic";
+const PWAInstallPromptDynamic = dynamic(
+  () =>
+    import("@/components/pwa/PWAInstallPrompt").then((m) => m.PWAInstallPrompt),
+  { ssr: false },
+);
 
 interface AppShellProps {
   children: React.ReactNode;
@@ -53,10 +59,24 @@ export function AppShell({
               onToggle={toggle}
               isMobile={responsive.isMobile}
             />
+            <div
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "1px 2000px",
+              }}
+            >
+              {children}
+            </div>
 
-            {children}
-
-            <Footer C={C} isMobile={responsive.isMobile} />
+            <div
+              style={{
+                contentVisibility: "auto",
+                containIntrinsicSize: "1px 400px",
+              }}
+            >
+              <Footer C={C} isMobile={responsive.isMobile} />
+            </div>
+            <PWAInstallPromptDynamic />
             <ScrollToTop C={C} />
             <IntroSplash initialSeen={initialIntroSeen} />
           </div>
