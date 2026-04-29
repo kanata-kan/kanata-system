@@ -92,11 +92,13 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
   return (
     <div
       style={{
-        background: C.bg2,
-        border: `1px solid ${p.color}30`,
+        background: isMobile ? `${C.bg}ee` : C.bg2,
+        border: isMobile ? `2px solid ${p.color}40` : `1px solid ${p.color}30`,
         borderRadius: 16,
         overflow: "hidden",
-        boxShadow: `0 0 40px ${p.color}06`,
+        boxShadow: isMobile
+          ? `0 4px 24px ${p.color}12`
+          : `0 0 40px ${p.color}06`,
         transition: "border-color .3s,background .35s",
         marginBottom: 14,
       }}
@@ -163,7 +165,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
       >
         <div
           style={{
-            padding: isMobile ? 22 : 36,
+            padding: isMobile ? 26 : 36,
             borderInlineEnd: isMobile ? "none" : `1px solid ${C.line}`,
           }}
         >
@@ -276,69 +278,53 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               >
                 {copy.projectSnapshot}
               </div>
-              {/* Horizontal snap-scroll carousel — reduces vertical scroll */}
+              {/* Snapshot sections — vertical stack for clarity on mobile */}
               <div
                 style={{
-                  display: "flex",
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
                   gap: 10,
-                  overflowX: "auto",
-                  scrollSnapType: "x mandatory",
-                  WebkitOverflowScrolling: "touch",
-                  paddingBottom: 8,
-                  scrollbarWidth:
-                    "none" as React.CSSProperties["scrollbarWidth"],
                 }}
               >
                 {snapshotSections.map((section) => (
                   <div
                     key={section.title}
                     style={{
-                      flex: "0 0 78%",
-                      scrollSnapAlign: "start",
                       padding: "14px 16px",
-                      borderRadius: 10,
-                      background: C.bg,
-                      border: `1px solid ${C.line}`,
-                      borderTop: `2px solid ${section.accent}`,
+                      borderRadius: 8,
+                      background: `${section.accent}12`,
+                      border: `1px solid ${section.accent}40`,
+                      borderLeft: `3px solid ${section.accent}`,
                     }}
                   >
                     <div
                       style={{
                         fontFamily: "var(--font-mono)",
-                        fontSize: 9,
+                        fontSize: 11,
                         letterSpacing: 1.5,
                         color: section.accent,
                         textTransform: "uppercase",
                         marginBottom: 10,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
+                        fontWeight: 600,
                       }}
                     >
-                      <span
-                        style={{
-                          width: 5,
-                          height: 5,
-                          borderRadius: "50%",
-                          background: section.accent,
-                          flexShrink: 0,
-                        }}
-                      />
                       {section.title}
                     </div>
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
-                        gap: 8,
+                        gap: 6,
                       }}
                     >
                       {section.items.map((item) => (
                         <span
                           key={`${section.title}-${item}`}
                           style={{
-                            ...TEXT.bodySmall(C),
-                            color: C.sub,
+                            fontFamily: "var(--font-sans)",
+                            fontSize: 14,
+                            lineHeight: 1.5,
+                            color: C.text,
                             display: "block",
                           }}
                         >
@@ -347,28 +333,6 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                       ))}
                     </div>
                   </div>
-                ))}
-              </div>
-              {/* Scroll hint dots */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: 6,
-                  marginTop: 10,
-                }}
-              >
-                {snapshotSections.map((s, i) => (
-                  <div
-                    key={s.title}
-                    style={{
-                      width: i === 0 ? 16 : 5,
-                      height: 5,
-                      borderRadius: 3,
-                      background: i === 0 ? p.color : C.line,
-                      transition: "all .2s",
-                    }}
-                  />
                 ))}
               </div>
             </div>
