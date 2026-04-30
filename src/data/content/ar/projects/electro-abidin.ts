@@ -1,4 +1,5 @@
 import type { ProjectContent } from "../../types";
+import { ELECTRO_ABIDIN_SCREENSHOTS } from "@/lib/publicAssets";
 
 export const electroAbidin: ProjectContent = {
   n: "01",
@@ -42,6 +43,12 @@ export const electroAbidin: ProjectContent = {
     "فصلت بين سير العمل والحقيقة المالية لضمان دقة التقارير",
     "جمعت الفوترة والضريبة والمرتجعات والضمان في نظام واحد متكامل",
   ],
+
+  demo: {
+    posterSrc: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
+    animatedSrc: ELECTRO_ABIDIN_SCREENSHOTS.demo,
+    alt: "Animated walkthrough of the Electro Abidin stock-aware checkout flow",
+  },
 
   caseStudy: {
     // 🔥 STRONG STORY
@@ -96,27 +103,27 @@ export const electroAbidin: ProjectContent = {
 
     screenshots: [
       {
-        src: "/electro-abidin/pos.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.pos,
         alt: "نظام نقطة البيع مع رؤية المخزون الفوري",
         caption: "بحث فوري عن المنتجات ورؤية المخزون — لا مزيد من الفحص اليدوي",
       },
       {
-        src: "/electro-abidin/checkout.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
         alt: "نظام الدفع مع حساب التسعير والضريبة",
         caption: "دفع متعدد المنتجات مع حسابات تلقائية وتسعير مرن",
       },
       {
-        src: "/electro-abidin/dashboard.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.dashboard,
         alt: "لوحة تحكم إدارية مع تحليلات المبيعات والمخزون",
         caption: "رؤية تشغيلية كاملة مع إحصائيات الأعمال الفورية",
       },
       {
-        src: "/electro-abidin/catalogue.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.catalogue,
         alt: "نظام إدارة المنتجات والمخزون",
         caption: "فصل منظم للمنتجات والمخزون لمعالجة دقيقة للبيانات",
       },
       {
-        src: "/electro-abidin/invoice.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.invoice,
         alt: "نظام إنشاء الفواتير مع دعم الضريبة",
         caption: "إنشاء فواتير تلقائي مع دعم الضريبة وأنواع العملاء",
       },

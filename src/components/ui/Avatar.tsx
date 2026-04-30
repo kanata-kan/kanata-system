@@ -14,6 +14,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import type { Theme } from "@/tokens/themes";
 import { content } from "@/data/content";
+import { PROFILE_PHOTO_URL } from "@/lib/publicAssets";
 
 interface AvatarProps {
   c: Theme;
@@ -202,7 +203,7 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
 
         <div style={{ aspectRatio: "3 / 4", position: "relative" }}>
           <Image
-            src="/Abdelilah-Wajid.png"
+            src={PROFILE_PHOTO_URL}
             alt="Abdelilah Wajid — Full photo"
             width={440}
             height={587}
@@ -389,7 +390,7 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
           }}
         >
           <Image
-            src="/Abdelilah-Wajid.png"
+            src={PROFILE_PHOTO_URL}
             alt="Abdelilah Wajid"
             width={size}
             height={size}

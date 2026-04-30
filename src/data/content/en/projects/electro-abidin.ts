@@ -1,4 +1,5 @@
 import type { ProjectContent } from "../../types";
+import { ELECTRO_ABIDIN_SCREENSHOTS } from "@/lib/publicAssets";
 
 export const electroAbidin: ProjectContent = {
   n: "01",
@@ -42,6 +43,12 @@ export const electroAbidin: ProjectContent = {
     "Separated workflow state from financial truth using immutable transaction records",
     "Unified invoicing, VAT handling, returns, and warranty tracking in one operational workflow",
   ],
+
+  demo: {
+    posterSrc: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
+    animatedSrc: ELECTRO_ABIDIN_SCREENSHOTS.demo,
+    alt: "Animated walkthrough of the Electro Abidin stock-aware checkout flow",
+  },
 
   caseStudy: {
     // 🔥 STRONG STORY
@@ -101,31 +108,31 @@ export const electroAbidin: ProjectContent = {
 
     screenshots: [
       {
-        src: "/electro-abidin/pos.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.pos,
         alt: "POS system with real-time stock visibility",
         caption:
           "Real-time product search and stock visibility — eliminating manual checks",
       },
       {
-        src: "/electro-abidin/checkout.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
         alt: "Checkout system with pricing and VAT calculation",
         caption:
           "Multi-product checkout with automatic calculations and flexible pricing",
       },
       {
-        src: "/electro-abidin/dashboard.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.dashboard,
         alt: "Admin dashboard with sales and stock analytics",
         caption:
           "Real-time insights into operations, sales, and stock movement",
       },
       {
-        src: "/electro-abidin/catalogue.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.catalogue,
         alt: "Product and inventory management system",
         caption:
           "Clear separation between product data and stock for reliable tracking",
       },
       {
-        src: "/electro-abidin/invoice.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.invoice,
         alt: "Invoice generation system with VAT support",
         caption:
           "Automated invoice generation supporting VAT and multiple client types",

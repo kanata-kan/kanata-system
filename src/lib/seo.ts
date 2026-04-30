@@ -5,6 +5,7 @@ import {
   resolveLocale as _resolveLocale,
   getMetadataLocale,
 } from "@/lib/i18n";
+import { PROFILE_PHOTO_URL } from "@/lib/publicAssets";
 
 // Re-export from centralized i18n for backward compatibility
 export const resolveLocale = _resolveLocale;
@@ -20,6 +21,13 @@ export function absoluteUrl(path = "/", locale: Locale = DEFAULT_LOCALE) {
   const clean =
     path === "/" || !path ? "" : path.startsWith("/") ? path : `/${path}`;
   return `${baseUrl}/${locale}${clean}`;
+}
+
+export function absoluteAssetUrl(path = "/", locale: Locale = DEFAULT_LOCALE) {
+  const baseUrl = getSiteUrl(locale);
+  const clean =
+    path === "/" || !path ? "" : path.startsWith("/") ? path : `/${path}`;
+  return `${baseUrl}${clean}`;
 }
 
 function getSocialLinks(locale: Locale = DEFAULT_LOCALE) {
@@ -52,7 +60,7 @@ export function buildWebsiteJsonLd(locale: Locale = DEFAULT_LOCALE) {
       name: content.meta.ogSiteName,
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/favicon.ico", locale),
+        url: absoluteAssetUrl("/favicon.ico", locale),
         width: 32,
         height: 32,
       },
@@ -68,7 +76,7 @@ export function buildPersonJsonLd(locale: Locale = DEFAULT_LOCALE) {
     "@type": "Person",
     name: content.meta.author,
     url: getSiteUrl(locale),
-    image: absoluteUrl("/Abdelilah-Wajid.png", locale),
+    image: absoluteAssetUrl(PROFILE_PHOTO_URL, locale),
     jobTitle: "Product Engineer",
     description: content.meta.description,
     email: content.contact.email,
@@ -155,6 +163,8 @@ export function buildCaseStudyJsonLd(
       url: getSiteUrl(locale),
     },
     about: [project.type, ...(project.caseStudy?.tags ?? [])],
-    image: firstScreenshot ? [absoluteUrl(firstScreenshot, locale)] : undefined,
+    image: firstScreenshot
+      ? [absoluteAssetUrl(firstScreenshot, locale)]
+      : undefined,
   };
 }

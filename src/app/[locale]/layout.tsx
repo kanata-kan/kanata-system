@@ -14,6 +14,7 @@ import type { Locale } from "@/data/content/types";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildPersonJsonLd, buildWebsiteJsonLd } from "@/lib/seo";
 import { hasSeenIntroSplash, INTRO_SPLASH_COOKIE } from "@/lib/introSplash";
+import { PROFILE_PHOTO_URL } from "@/lib/publicAssets";
 import {
   LOCALES,
   isValidLocale,
@@ -129,7 +130,7 @@ export async function generateMetadata({
       locale: getMetadataLocale(locale),
       images: [
         {
-          url: "/Abdelilah-Wajid.png",
+          url: PROFILE_PHOTO_URL,
           width: 400,
           height: 400,
           alt: content.meta.author,

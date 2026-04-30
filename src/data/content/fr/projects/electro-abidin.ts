@@ -1,4 +1,5 @@
 import type { ProjectContent } from "../../types";
+import { ELECTRO_ABIDIN_SCREENSHOTS } from "@/lib/publicAssets";
 
 export const electroAbidin: ProjectContent = {
   n: "01",
@@ -42,6 +43,12 @@ export const electroAbidin: ProjectContent = {
     "Séparation entre logique métier et données financières pour plus de fiabilité",
     "Unification de la facturation, TVA, retours et garanties dans un seul système",
   ],
+
+  demo: {
+    posterSrc: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
+    animatedSrc: ELECTRO_ABIDIN_SCREENSHOTS.demo,
+    alt: "Animated walkthrough of the Electro Abidin stock-aware checkout flow",
+  },
 
   caseStudy: {
     // 🔥 STRONG STORY
@@ -101,31 +108,31 @@ export const electroAbidin: ProjectContent = {
 
     screenshots: [
       {
-        src: "/electro-abidin/pos.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.pos,
         alt: "Système POS avec visibilité stock temps réel",
         caption:
           "Recherche produit et visibilité stock temps réel - plus de vérifications manuelles",
       },
       {
-        src: "/electro-abidin/checkout.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.checkout,
         alt: "Système de caisse avec calculs prix et TVA",
         caption:
           "Caisse multi-produits avec calculs automatiques et tarification flexible",
       },
       {
-        src: "/electro-abidin/dashboard.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.dashboard,
         alt: "Dashboard admin avec analytics ventes et stock",
         caption:
           "Visibilité opérationnelle complète avec insights business temps réel",
       },
       {
-        src: "/electro-abidin/catalogue.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.catalogue,
         alt: "Système gestion produits et inventaire",
         caption:
           "Séparation structurée produit/stock pour une gestion précise des données",
       },
       {
-        src: "/electro-abidin/invoice.webp",
+        src: ELECTRO_ABIDIN_SCREENSHOTS.invoice,
         alt: "Système génération factures avec support TVA",
         caption:
           "Génération factures automatiques avec support TVA et types clients",

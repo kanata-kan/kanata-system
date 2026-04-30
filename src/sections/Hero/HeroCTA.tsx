@@ -4,6 +4,7 @@ import { useThemeContext } from "@/hooks/useTheme";
 import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
 import { getContent } from "@/data/content";
+import { CV_DOWNLOADS } from "@/lib/publicAssets";
 
 export function HeroCTA() {
   const { C } = useThemeContext();
@@ -11,6 +12,12 @@ export function HeroCTA() {
   const { locale } = useLocale();
   const content = getContent(locale);
   const isArabic = locale === "ar";
+  const cvDownloadHref =
+    locale === "ar"
+      ? CV_DOWNLOADS.ar
+      : locale === "fr"
+        ? CV_DOWNLOADS.fr
+        : CV_DOWNLOADS.en;
 
   const base = {
     fontFamily: "var(--font-mono)",
@@ -134,13 +141,7 @@ export function HeroCTA() {
 
       {/* CV download */}
       <a
-        href={
-          locale === "ar"
-            ? "/Abdelilah_Wajid_CV_AR.pdf"
-            : locale === "fr"
-              ? "/Abdelilah_Wajid_CV_FR.pdf"
-              : "/Abdelilah_Wajid_CV_EN.pdf"
-        }
+        href={cvDownloadHref}
         download
         style={{
           ...base,

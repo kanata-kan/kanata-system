@@ -10,6 +10,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { WindowDots } from "@/components/ui/WindowDots";
 import { Stack } from "@/components/layout/Stack";
 import { TEXT } from "@/tokens/typography";
+import { ProjectDemoSpotlight } from "./ProjectDemoSpotlight";
 
 interface WorkFeaturedCardProps {
   C: Theme;
@@ -212,6 +213,19 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
           >
             “{p.longDesc}”
           </p>
+
+          {isMobile && p.demo && (
+            <div style={{ marginBottom: 24 }}>
+              <ProjectDemoSpotlight
+                demo={p.demo}
+                summary={p.highlights[0] ?? p.desc}
+                chips={p.caseStudy?.tags ?? []}
+                color={p.color}
+                C={C}
+                isMobile={isMobile}
+              />
+            </div>
+          )}
 
           <div style={{ marginBottom: 24 }}>
             <div
@@ -462,6 +476,17 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
               gap: 18,
             }}
           >
+            {p.demo && (
+              <ProjectDemoSpotlight
+                demo={p.demo}
+                summary={p.highlights[0] ?? p.desc}
+                chips={p.caseStudy?.tags ?? []}
+                color={p.color}
+                C={C}
+                isMobile={isMobile}
+              />
+            )}
+
             <div
               style={{
                 ...TEXT.monoLabel(C),

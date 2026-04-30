@@ -1,3 +1,5 @@
+import { PROFILE_PHOTO_FILE } from "@/lib/publicAssets";
+
 /**
  * @file brand.ts
  * @description Shared brand identity constants used across the application.
@@ -28,7 +30,7 @@ export const BRAND = {
   /**
    * Profile photo path (used in OG images)
    */
-  profilePhoto: "Abdelilah-Wajid.png",
+  profilePhoto: PROFILE_PHOTO_FILE,
 
   /**
    * Brand colors - cyan to violet gradient

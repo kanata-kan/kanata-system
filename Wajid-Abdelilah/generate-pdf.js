@@ -25,10 +25,19 @@ const HTML_FILE = path.resolve(__dirname, requestedHtmlFile);
 const PDF_CSS = path.resolve(__dirname, "css", "pdf.css");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const PUBLIC_DIR = path.resolve(__dirname, "..", "public");
+const PUBLIC_CV_DIR = path.resolve(PUBLIC_DIR, "assets", "documents", "cv");
 const isAr = requestedHtmlFile.includes("-ar");
 const isFr = requestedHtmlFile.includes("-fr");
 const langSuffix = isAr ? "_AR" : isFr ? "_FR" : "";
 const OUTPUT_PDF = path.join(OUTPUT_DIR, `Abdelilah_Wajid_CV${langSuffix}.pdf`);
+const PUBLIC_PDF = path.join(
+  PUBLIC_CV_DIR,
+  isAr
+    ? "abdelilah-wajid-ar.pdf"
+    : isFr
+      ? "abdelilah-wajid-fr.pdf"
+      : "abdelilah-wajid.pdf",
+);
 
 /* ── Helpers ─────────────────────────────────────────────── */
 function ensureDir(dir) {
@@ -124,14 +133,14 @@ async function generatePDF() {
     console.log(`✅  PDF saved → ${OUTPUT_PDF}  (${sizeKB} KB)`);
 
     /* 8 ─ Copy to public folder */
-    ensureDir(PUBLIC_DIR);
-    const publicPdf = path.join(PUBLIC_DIR, `Abdelilah_Wajid_CV${langSuffix}.pdf`);
+    ensureDir(PUBLIC_CV_DIR);
+    const publicPdf = PUBLIC_PDF;
     fs.copyFileSync(OUTPUT_PDF, publicPdf);
     console.log(`📂  Copied → ${publicPdf}`);
 
     /* 9 ─ Also save _EN copy when generating the main (English) CV */
     if (!isAr && !isFr) {
-      const enPdf = path.join(PUBLIC_DIR, "Abdelilah_Wajid_CV_EN.pdf");
+      const enPdf = path.join(PUBLIC_CV_DIR, "abdelilah-wajid-en.pdf");
       fs.copyFileSync(OUTPUT_PDF, enPdf);
       console.log(`📂  Copied → ${enPdf}`);
     }

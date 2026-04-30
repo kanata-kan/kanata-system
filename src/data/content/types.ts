@@ -104,6 +104,12 @@ export interface CaseStudyScreenshot {
   caption: string;
 }
 
+export interface ProjectDemoMedia {
+  posterSrc: string;
+  animatedSrc: string;
+  alt: string;
+}
+
 /* ── Technical Deep Dive ── */
 export interface TechEntity {
   name: string;
@@ -201,6 +207,7 @@ export interface ProjectContent {
   repoUrl?: string;
   highlights: string[];
   color: string;
+  demo?: ProjectDemoMedia;
   caseStudy?: CaseStudyContent;
 }
 

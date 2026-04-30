@@ -11,6 +11,7 @@ import { useLocale } from "@/hooks/useLocale";
 import { getCaseStudyCopy } from "@/lib/caseStudyCopy";
 import type { Theme } from "@/tokens/themes";
 import type { ProjectContent } from "@/data/content";
+import { ProjectDemoSpotlight } from "../ProjectDemoSpotlight";
 
 interface CaseStudyHeroProps {
   project: ProjectContent & {
@@ -365,104 +366,129 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "auto 1fr",
-            gap: isMobile ? 16 : 24,
-            padding: isMobile ? 16 : 24,
-            borderRadius: 14,
-            border: `1px solid ${C.line}`,
-            background: C.bg2,
-            transition: "background .35s",
+            gridTemplateColumns:
+              !isMobile && project.demo
+                ? "minmax(0, 1.15fr) minmax(320px, 0.85fr)"
+                : "1fr",
+            gap: isMobile ? 18 : 22,
+            alignItems: "start",
           }}
         >
           <div
             style={{
-              display: "flex",
-              gap: isMobile ? 20 : 28,
-              flexWrap: "wrap",
-              alignItems: "center",
-              paddingInlineEnd: isMobile ? 0 : 24,
-              borderInlineEnd: isMobile ? "none" : `1px solid ${C.line}`,
-              paddingBottom: isMobile ? 12 : 0,
-              borderBottom: isMobile ? `1px solid ${C.line}` : "none",
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "auto 1fr",
+              gap: isMobile ? 16 : 24,
+              padding: isMobile ? 16 : 24,
+              borderRadius: 14,
+              border: `1px solid ${C.line}`,
+              background: C.bg2,
+              transition: "background .35s",
             }}
           >
-            {[
-              { v: cs.problem.length, l: copy.hero.stats.problems },
-              { v: cs.decisions.length, l: copy.hero.stats.decisions },
-              { v: cs.results.length, l: copy.hero.stats.results },
-            ].map((s) => (
-              <div key={s.l} style={{ textAlign: "center", minWidth: 50 }}>
-                <div
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: isMobile ? 22 : 28,
-                    fontStyle: "italic",
-                    color,
-                    lineHeight: 1,
-                  }}
-                >
-                  {s.v}
-                </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 8,
-                    letterSpacing: 2,
-                    color: C.faint,
-                    textTransform: "uppercase",
-                    marginTop: 4,
-                  }}
-                >
-                  {s.l}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            {Object.entries(project.stack).map(([group, items]) => (
-              <div
-                key={group}
-                style={{
-                  display: "flex",
-                  gap: 6,
-                  alignItems: "center",
-                  flexWrap: "wrap",
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 8,
-                    letterSpacing: 1.5,
-                    color,
-                    textTransform: "uppercase",
-                    minWidth: 52,
-                    opacity: 0.7,
-                  }}
-                >
-                  {group}
-                </span>
-                {items.map((t) => (
-                  <span
-                    key={t}
+            <div
+              style={{
+                display: "flex",
+                gap: isMobile ? 20 : 28,
+                flexWrap: "wrap",
+                alignItems: "center",
+                paddingInlineEnd: isMobile ? 0 : 24,
+                borderInlineEnd: isMobile ? "none" : `1px solid ${C.line}`,
+                paddingBottom: isMobile ? 12 : 0,
+                borderBottom: isMobile ? `1px solid ${C.line}` : "none",
+              }}
+            >
+              {[
+                { v: cs.problem.length, l: copy.hero.stats.problems },
+                { v: cs.decisions.length, l: copy.hero.stats.decisions },
+                { v: cs.results.length, l: copy.hero.stats.results },
+              ].map((s) => (
+                <div key={s.l} style={{ textAlign: "center", minWidth: 50 }}>
+                  <div
                     style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 10,
-                      padding: "2px 8px",
-                      borderRadius: 4,
-                      border: `1px solid ${C.line}`,
-                      color: C.muted,
-                      background: C.bg3,
-                      transition: "background .35s",
+                      fontFamily: "var(--font-display)",
+                      fontSize: isMobile ? 22 : 28,
+                      fontStyle: "italic",
+                      color,
+                      lineHeight: 1,
                     }}
                   >
-                    {t}
+                    {s.v}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 8,
+                      letterSpacing: 2,
+                      color: C.faint,
+                      textTransform: "uppercase",
+                      marginTop: 4,
+                    }}
+                  >
+                    {s.l}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {Object.entries(project.stack).map(([group, items]) => (
+                <div
+                  key={group}
+                  style={{
+                    display: "flex",
+                    gap: 6,
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 8,
+                      letterSpacing: 1.5,
+                      color,
+                      textTransform: "uppercase",
+                      minWidth: 52,
+                      opacity: 0.7,
+                    }}
+                  >
+                    {group}
                   </span>
-                ))}
-              </div>
-            ))}
+                  {items.map((t) => (
+                    <span
+                      key={t}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: 10,
+                        padding: "2px 8px",
+                        borderRadius: 4,
+                        border: `1px solid ${C.line}`,
+                        color: C.muted,
+                        background: C.bg3,
+                        transition: "background .35s",
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
+
+          {project.demo && (
+            <ProjectDemoSpotlight
+              demo={project.demo}
+              summary={project.desc}
+              chips={cs.tags}
+              color={color}
+              C={C}
+              isMobile={isMobile}
+              mode="hero"
+              autoPlayWhenVisible
+            />
+          )}
         </div>
       </Container>
     </section>
