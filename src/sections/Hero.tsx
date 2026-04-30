@@ -21,9 +21,7 @@ import { getContent } from "@/data/content";
 
 const DesktopHeroSystemTransform = dynamic(
   () =>
-    import("./Hero/HeroSystemTransform").then(
-      (mod) => mod.HeroSystemTransform,
-    ),
+    import("./Hero/HeroSystemTransform").then((mod) => mod.HeroSystemTransform),
   {
     ssr: false,
     loading: () => <HeroSystemTransformPlaceholder />,

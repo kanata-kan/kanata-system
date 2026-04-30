@@ -1,7 +1,13 @@
 "use client";
 
-import { memo, useState, useCallback } from "react";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { memo, useState, useCallback, useEffect, useRef } from "react";
+import {
+  LazyMotion,
+  domAnimation,
+  m,
+  useReducedMotion,
+  steps,
+} from "framer-motion";
 import { useLocale } from "@/hooks/useLocale";
 import { useThemeContext } from "@/hooks/useTheme";
 import type { Theme } from "@/tokens/themes";
@@ -69,7 +75,6 @@ const NODES: NodeData[] = [
   },
 ];
 
-// Edges as [fromCol, fromRow, toCol, toRow]
 const EDGES: [number, number, number, number][] = [
   [0, 0, 1, 0],
   [1, 0, 2, 0],
@@ -78,6 +83,19 @@ const EDGES: [number, number, number, number][] = [
   [0, 1, 1, 1],
   [1, 1, 2, 1],
 ];
+
+// Particle seed positions (chaos offsets) – deterministic
+const PARTICLES = Array.from({ length: 16 }, (_, i) => ({
+  id: i,
+  // pseudo-random but stable
+  cx: ((i * 73 + 41) % 280) + 20,
+  cy: ((i * 47 + 19) % 180) + 20,
+  // aligned grid target (evenly distributed)
+  gx: (i % 8) * 38 + 14,
+  gy: Math.floor(i / 8) * 90 + 55,
+  size: i % 3 === 0 ? 3 : i % 3 === 1 ? 2 : 1.5,
+  delay: i * 0.04,
+}));
 
 const COPY = {
   en: {
@@ -89,6 +107,9 @@ const COPY = {
     statusLive: "ORGANIZED",
     aria: "Hover to transform chaos into system",
     message: "I turn chaos into reliable systems",
+    metricA: "nodes",
+    metricB: "edges",
+    metricC: "uptime",
   },
   fr: {
     headerIdle: "mode chaos",
@@ -99,6 +120,9 @@ const COPY = {
     statusLive: "ORGANISE",
     aria: "Survolez pour transformer le chaos en systeme",
     message: "Je transforme le chaos en systemes fiables",
+    metricA: "nœuds",
+    metricB: "arêtes",
+    metricC: "activité",
   },
   ar: {
     headerIdle: "وضع فوضى",
@@ -109,6 +133,9 @@ const COPY = {
     statusLive: "منظم",
     aria: "مرر لتحويل الفوضى إلى نظام",
     message: "أحول الفوضى إلى أنظمة موثوقة",
+    metricA: "عقد",
+    metricB: "حواف",
+    metricC: "وقت التشغيل",
   },
 } as const;
 
@@ -128,41 +155,138 @@ function gridCenter(col: number, row: number) {
   return { x: x + NODE_W / 2, y: y + NODE_H / 2 };
 }
 
-// ─── ScanBeam ─────────────────────────────────────────────────────────────────
+function edgeToPath(fc: number, fr: number, tc: number, tr: number) {
+  const a = gridCenter(fc, fr);
+  const b = gridCenter(tc, tr);
+  return `M ${a.x} ${a.y} L ${b.x} ${b.y}`;
+}
 
-/** One-shot downward sweep that fires when the widget becomes "organized". */
-const ScanBeam = memo(function ScanBeam({
+// ─── NoiseFilter ──────────────────────────────────────────────────────────────
+
+/** SVG filter definition for film-grain texture – rendered once, reused. */
+const NoiseFilter = memo(function NoiseFilter() {
+  return (
+    <svg width="0" height="0" style={{ position: "absolute" }}>
+      <defs>
+        <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.72"
+            numOctaves="4"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+          <feBlend in="SourceGraphic" mode="overlay" />
+        </filter>
+        <filter id="edge-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+    </svg>
+  );
+});
+
+// ─── ParticleField ────────────────────────────────────────────────────────────
+
+/** Floating ambient particles that snap to grid when organized. */
+const ParticleField = memo(function ParticleField({
+  organized,
+  C,
+}: {
+  organized: boolean;
+  C: Theme;
+}) {
+  return (
+    <svg
+      viewBox={`0 0 ${CANVAS_W} ${CANVAS_H}`}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        pointerEvents: "none",
+        overflow: "visible",
+        zIndex: 1,
+      }}
+    >
+      {PARTICLES.map((p) => (
+        <m.circle
+          key={p.id}
+          r={p.size}
+          fill={p.id % 4 === 0 ? C.purple : C.cyan}
+          initial={false}
+          animate={{
+            cx: organized ? p.gx : p.cx,
+            cy: organized ? p.gy : p.cy,
+            opacity: organized ? 0.55 : 0.2,
+            scale: organized ? 1.2 : 1,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 160,
+            damping: 20,
+            delay: p.delay,
+          }}
+          style={{ willChange: "transform, opacity" }}
+        />
+      ))}
+    </svg>
+  );
+});
+
+// ─── TripleScanBeam ──────────────────────────────────────────────────────────
+
+/** Three sweep beams at staggered speeds for a premium scanner feel. */
+const TripleScanBeam = memo(function TripleScanBeam({
   scanKey,
   C,
 }: {
   scanKey: number;
   C: Theme;
 }) {
+  const beams = [
+    { delay: 0, height: 3, opacity: 1, duration: 0.55 },
+    { delay: 0.08, height: 1, opacity: 0.5, duration: 0.62 },
+    { delay: 0.16, height: 1, opacity: 0.3, duration: 0.7 },
+  ];
+
   return (
-    <m.div
-      key={scanKey}
-      initial={{ top: "5%", opacity: 1 }}
-      animate={{ top: "100%", opacity: [1, 1, 0] }}
-      transition={{ duration: 0.55, ease: "easeIn" }}
-      style={{
-        position: "absolute",
-        left: 12,
-        right: 12,
-        height: 3,
-        borderRadius: 999,
-        background: `linear-gradient(90deg, transparent, ${C.cyan}, ${C.purple}aa, ${C.cyan}, transparent)`,
-        boxShadow: `0 0 16px 4px ${C.cyan}80`,
-        pointerEvents: "none",
-        zIndex: 10,
-        willChange: "top, opacity",
-      }}
-    />
+    <>
+      {beams.map((beam, i) => (
+        <m.div
+          key={`${scanKey}-${i}`}
+          initial={{ top: "5%", opacity: beam.opacity }}
+          animate={{ top: "100%", opacity: [beam.opacity, beam.opacity, 0] }}
+          transition={{
+            duration: beam.duration,
+            delay: beam.delay,
+            ease: "easeIn",
+          }}
+          style={{
+            position: "absolute",
+            left: 12,
+            right: 12,
+            height: beam.height,
+            borderRadius: 999,
+            background:
+              i === 0
+                ? `linear-gradient(90deg, transparent, ${C.cyan}, ${C.purple}aa, ${C.cyan}, transparent)`
+                : `linear-gradient(90deg, transparent, ${C.cyan}60, transparent)`,
+            boxShadow: i === 0 ? `0 0 18px 5px ${C.cyan}70` : "none",
+            pointerEvents: "none",
+            zIndex: 10,
+            willChange: "top, opacity",
+          }}
+        />
+      ))}
+    </>
   );
 });
 
-// ─── Connection Lines (path-length draw) ─────────────────────────────────────
+// ─── EdgeLine + FlowDot ───────────────────────────────────────────────────────
 
-interface EdgeLineProps {
+interface EdgeProps {
   fromCol: number;
   fromRow: number;
   toCol: number;
@@ -180,33 +304,104 @@ const EdgeLine = memo(function EdgeLine({
   organized,
   index,
   C,
-}: EdgeLineProps) {
+}: EdgeProps) {
+  const d = edgeToPath(fromCol, fromRow, toCol, toRow);
+  return (
+    <>
+      {/* Glow trail */}
+      <m.path
+        d={d}
+        stroke={C.cyan}
+        strokeWidth="4"
+        strokeLinecap="round"
+        fill="none"
+        filter="url(#edge-glow)"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{
+          pathLength: organized ? 1 : 0,
+          opacity: organized ? 0.18 : 0,
+        }}
+        transition={{
+          pathLength: { duration: 0.45, delay: index * 0.07, ease: "easeOut" },
+          opacity: { duration: 0.2, delay: index * 0.07 },
+        }}
+        style={{ willChange: "stroke-dashoffset, opacity" }}
+      />
+      {/* Sharp line */}
+      <m.path
+        d={d}
+        stroke={C.cyan}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        fill="none"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{
+          pathLength: organized ? 1 : 0,
+          opacity: organized ? 0.7 : 0,
+        }}
+        transition={{
+          pathLength: { duration: 0.4, delay: index * 0.07, ease: "easeOut" },
+          opacity: { duration: 0.15, delay: index * 0.07 },
+        }}
+        style={{ willChange: "stroke-dashoffset, opacity" }}
+      />
+    </>
+  );
+});
+
+/** Animated data-packet dot flowing along an edge. */
+const FlowDot = memo(function FlowDot({
+  fromCol,
+  fromRow,
+  toCol,
+  toRow,
+  organized,
+  index,
+  C,
+}: EdgeProps) {
   const a = gridCenter(fromCol, fromRow);
   const b = gridCenter(toCol, toRow);
-  const d = `M ${a.x} ${a.y} L ${b.x} ${b.y}`;
 
   return (
-    <m.path
-      d={d}
-      stroke={C.cyan}
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      fill="none"
-      initial={{ pathLength: 0, opacity: 0 }}
-      animate={{
-        pathLength: organized ? 1 : 0,
-        opacity: organized ? 0.65 : 0,
-      }}
-      transition={{
-        pathLength: { duration: 0.45, delay: index * 0.07, ease: "easeOut" },
-        opacity: { duration: 0.2, delay: index * 0.07 },
-      }}
-      style={{ willChange: "stroke-dashoffset, opacity" }}
+    <m.circle
+      r={2.5}
+      fill={index % 2 === 0 ? C.cyan : C.purple}
+      initial={false}
+      animate={
+        organized
+          ? {
+              cx: [a.x, b.x, a.x],
+              cy: [a.y, b.y, a.y],
+              opacity: [0, 1, 1, 0],
+            }
+          : { opacity: 0, cx: a.x, cy: a.y }
+      }
+      transition={
+        organized
+          ? {
+              duration: 1.6,
+              delay: index * 0.22 + 0.5,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 0.8,
+            }
+          : { duration: 0.15 }
+      }
+      style={{ willChange: "transform, opacity" }}
     />
   );
 });
 
 // ─── SystemNode ───────────────────────────────────────────────────────────────
+
+const NODE_STATUS_COLORS = [
+  "#22d3ee",
+  "#a78bfa",
+  "#34d399",
+  "#f59e0b",
+  "#f87171",
+  "#818cf8",
+];
 
 const SystemNode = memo(function SystemNode({
   node,
@@ -220,6 +415,7 @@ const SystemNode = memo(function SystemNode({
   index: number;
 }) {
   const base = gridPos(node.col, node.row);
+  const statusColor = NODE_STATUS_COLORS[index % NODE_STATUS_COLORS.length];
 
   return (
     <m.div
@@ -232,9 +428,9 @@ const SystemNode = memo(function SystemNode({
       }}
       transition={{
         type: "spring",
-        stiffness: 220,
-        damping: 22,
-        delay: index * 0.07,
+        stiffness: 240,
+        damping: 24,
+        delay: index * 0.06,
       }}
       style={{
         position: "absolute",
@@ -246,28 +442,46 @@ const SystemNode = memo(function SystemNode({
         willChange: "transform",
       }}
     >
-      {/* Pulse ring – appears once nodes are settled */}
+      {/* Pulse ring */}
       {organized && (
         <m.div
-          key={`ring-${node.id}`}
-          initial={{ opacity: 0.7, scale: 1 }}
-          animate={{ opacity: 0, scale: 1.5 }}
+          key={`ring-${node.id}-${index}`}
+          initial={{ opacity: 0.8, scale: 1 }}
+          animate={{ opacity: 0, scale: 1.6 }}
           transition={{
-            duration: 1.1,
-            delay: index * 0.07 + 0.3,
+            duration: 1.2,
+            delay: index * 0.06 + 0.25,
             ease: "easeOut",
-            repeat: 0,
           }}
           style={{
             position: "absolute",
             inset: -4,
             borderRadius: 14,
-            border: `1px solid ${C.cyan}`,
+            border: `1px solid ${statusColor}`,
             pointerEvents: "none",
             willChange: "transform, opacity",
           }}
         />
       )}
+
+      {/* Outer glow */}
+      <m.div
+        initial={false}
+        animate={{
+          opacity: organized ? 1 : 0,
+          boxShadow: organized
+            ? `0 0 28px 4px ${statusColor}28, 0 0 8px 2px ${statusColor}18`
+            : "none",
+        }}
+        transition={{ duration: 0.4, delay: index * 0.06 }}
+        style={{
+          position: "absolute",
+          inset: -2,
+          borderRadius: 12,
+          pointerEvents: "none",
+          willChange: "opacity, box-shadow",
+        }}
+      />
 
       {/* Card body */}
       <m.div
@@ -275,11 +489,8 @@ const SystemNode = memo(function SystemNode({
         animate={{
           borderColor: organized ? C.border2 : C.border,
           backgroundColor: organized ? C.bg3 : C.card,
-          boxShadow: organized
-            ? `0 0 0 1px ${C.cyan}18, 0 0 22px ${C.cyan}22`
-            : "none",
         }}
-        transition={{ duration: 0.35, delay: index * 0.07 }}
+        transition={{ duration: 0.35, delay: index * 0.06 }}
         style={{
           width: "100%",
           height: "100%",
@@ -287,9 +498,53 @@ const SystemNode = memo(function SystemNode({
           border: "1px solid",
           position: "relative",
           overflow: "hidden",
-          willChange: "border-color, background-color, box-shadow",
+          willChange: "border-color, background-color",
         }}
       >
+        {/* Corner ticks – top-left */}
+        <m.div
+          initial={false}
+          animate={{ opacity: organized ? 1 : 0 }}
+          transition={{ duration: 0.3, delay: index * 0.06 + 0.2 }}
+          style={{
+            position: "absolute",
+            top: 4,
+            left: 4,
+            pointerEvents: "none",
+          }}
+        >
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+            <path
+              d="M0 7 L0 0 L7 0"
+              stroke={statusColor}
+              strokeWidth="1.5"
+              opacity="0.7"
+            />
+          </svg>
+        </m.div>
+
+        {/* Corner ticks – bottom-right */}
+        <m.div
+          initial={false}
+          animate={{ opacity: organized ? 1 : 0 }}
+          transition={{ duration: 0.3, delay: index * 0.06 + 0.25 }}
+          style={{
+            position: "absolute",
+            bottom: 4,
+            right: 4,
+            pointerEvents: "none",
+          }}
+        >
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+            <path
+              d="M8 1 L8 8 L1 8"
+              stroke={statusColor}
+              strokeWidth="1.5"
+              opacity="0.7"
+            />
+          </svg>
+        </m.div>
+
         {/* Top accent bar */}
         <m.div
           initial={false}
@@ -297,16 +552,35 @@ const SystemNode = memo(function SystemNode({
             scaleX: organized ? 1 : 0.25,
             opacity: organized ? 1 : 0.15,
           }}
-          transition={{ duration: 0.4, delay: index * 0.07 + 0.1 }}
+          transition={{ duration: 0.4, delay: index * 0.06 + 0.1 }}
           style={{
             position: "absolute",
             insetInline: 12,
             top: 8,
             height: 2,
             borderRadius: 999,
-            background: `linear-gradient(90deg, ${C.cyan}, ${C.purple})`,
+            background: `linear-gradient(90deg, ${statusColor}, ${C.purple})`,
             transformOrigin: "left center",
             willChange: "transform, opacity",
+          }}
+        />
+
+        {/* Status dot */}
+        <m.div
+          initial={false}
+          animate={{
+            opacity: organized ? 1 : 0,
+            backgroundColor: organized ? statusColor : "transparent",
+          }}
+          transition={{ duration: 0.3, delay: index * 0.06 + 0.3 }}
+          style={{
+            position: "absolute",
+            top: 6,
+            right: 6,
+            width: 4,
+            height: 4,
+            borderRadius: "50%",
+            willChange: "opacity, background-color",
           }}
         />
 
@@ -338,21 +612,21 @@ const SystemNode = memo(function SystemNode({
           </m.span>
         </div>
 
-        {/* Shimmer overlay on organize */}
+        {/* Shimmer */}
         {organized && (
           <m.div
             key={`shimmer-${node.id}`}
-            initial={{ x: "-100%", opacity: 0.45 }}
+            initial={{ x: "-100%", opacity: 0.5 }}
             animate={{ x: "200%", opacity: 0 }}
             transition={{
-              duration: 0.55,
-              delay: index * 0.07 + 0.15,
+              duration: 0.6,
+              delay: index * 0.06 + 0.12,
               ease: "easeOut",
             }}
             style={{
               position: "absolute",
               inset: 0,
-              background: `linear-gradient(105deg, transparent 30%, ${C.cyan}50 50%, transparent 70%)`,
+              background: `linear-gradient(105deg, transparent 25%, ${statusColor}45 50%, transparent 75%)`,
               pointerEvents: "none",
               willChange: "transform, opacity",
             }}
@@ -363,14 +637,120 @@ const SystemNode = memo(function SystemNode({
   );
 });
 
+// ─── AnimatedMetric ───────────────────────────────────────────────────────────
+
+/** Counts up from 0 to `value` when `run` becomes true. */
+const AnimatedMetric = memo(function AnimatedMetric({
+  value,
+  label,
+  organized,
+  C,
+  delay = 0,
+}: {
+  value: string;
+  label: string;
+  organized: boolean;
+  C: Theme;
+  delay?: number;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const frame = useRef<number | null>(null);
+  const start = useRef<number | null>(null);
+  const numericEnd = parseInt(value, 10);
+  const isNumeric = !isNaN(numericEnd);
+  const duration = 600;
+
+  useEffect(() => {
+    if (!isNumeric || !ref.current) return;
+    if (!organized) {
+      if (frame.current) cancelAnimationFrame(frame.current);
+      ref.current.textContent = "0";
+      return;
+    }
+    const timeout = setTimeout(() => {
+      start.current = null;
+      const animate = (ts: number) => {
+        if (!start.current) start.current = ts;
+        const progress = Math.min((ts - start.current) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        if (ref.current)
+          ref.current.textContent = String(Math.round(eased * numericEnd));
+        if (progress < 1) frame.current = requestAnimationFrame(animate);
+      };
+      frame.current = requestAnimationFrame(animate);
+    }, delay * 1000);
+    return () => {
+      clearTimeout(timeout);
+      if (frame.current) cancelAnimationFrame(frame.current);
+    };
+  }, [organized, numericEnd, isNumeric, delay]);
+
+  return (
+    <m.div
+      initial={false}
+      animate={{ opacity: organized ? 1 : 0.3 }}
+      transition={{ duration: 0.4, delay }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 2,
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: 13,
+          fontWeight: 700,
+          color: organized ? C.cyan : C.faint,
+          letterSpacing: 0.5,
+        }}
+      >
+        {isNumeric ? <span ref={ref}>0</span> : value}
+      </span>
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: 7.5,
+          color: C.muted,
+          letterSpacing: 0.8,
+        }}
+      >
+        {label.toUpperCase()}
+      </span>
+    </m.div>
+  );
+});
+
+// ─── BlinkCursor ──────────────────────────────────────────────────────────────
+
+const BlinkCursor = memo(function BlinkCursor({ C }: { C: Theme }) {
+  return (
+    <m.span
+      animate={{ opacity: [1, 0, 1] }}
+      transition={{ duration: 1, repeat: Infinity, ease: steps(1) }}
+      style={{
+        display: "inline-block",
+        width: 6,
+        height: 11,
+        backgroundColor: C.cyan,
+        borderRadius: 1,
+        marginLeft: 2,
+        verticalAlign: "middle",
+      }}
+    />
+  );
+});
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export const HeroSystemTransform = memo(function HeroSystemTransform() {
   const { locale } = useLocale();
   const { C } = useThemeContext();
+  const shouldReduce = useReducedMotion();
+
   const [hovered, setHovered] = useState(false);
   const [locked, setLocked] = useState(false);
-  // scanKey increments each time we transition to "organized" to retrigger the beam
   const [scanKey, setScanKey] = useState(0);
 
   const organized = hovered || locked;
@@ -382,9 +762,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
     setHovered(true);
     setScanKey((k) => k + 1);
   }, []);
-
   const handleLeave = useCallback(() => setHovered(false), []);
-
   const handleClick = useCallback(() => {
     setLocked((prev) => {
       const next = !prev;
@@ -395,41 +773,56 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
 
   return (
     <LazyMotion features={domAnimation} strict>
+      <NoiseFilter />
+
       <div className="rv d4" style={{ width: "100%" }}>
         <div style={{ position: "relative" }}>
-          {/* Ambient glow backdrop */}
+          {/* ── Layered ambient backdrop ── */}
           <m.div
             initial={false}
-            animate={{ opacity: organized ? 1 : 0.3 }}
-            transition={{ duration: 0.5 }}
+            animate={{ opacity: organized ? 1 : 0.35 }}
+            transition={{ duration: 0.6 }}
             style={{
               position: "absolute",
-              inset: -20,
-              borderRadius: 28,
-              background: `radial-gradient(circle at 30% 30%, ${C.cyan}18, transparent 50%), radial-gradient(circle at 78% 70%, ${C.purple}12, transparent 45%)`,
-              filter: "blur(22px)",
+              inset: -24,
+              borderRadius: 32,
+              background: [
+                `radial-gradient(ellipse at 25% 25%, ${C.cyan}22, transparent 55%)`,
+                `radial-gradient(ellipse at 80% 75%, ${C.purple}18, transparent 50%)`,
+                `radial-gradient(ellipse at 60% 10%, ${C.cyan}10, transparent 40%)`,
+              ].join(", "),
+              filter: "blur(28px)",
               pointerEvents: "none",
               willChange: "opacity",
             }}
           />
 
-          <div
+          {/* ── Outer gradient border ── */}
+          <m.div
+            initial={false}
+            animate={{
+              background: organized
+                ? `linear-gradient(145deg, ${C.cyan}44, ${C.purple}33, ${C.border}, ${C.border2})`
+                : `linear-gradient(145deg, ${C.border2}, ${C.line}, ${C.border})`,
+            }}
+            transition={{ duration: 0.5 }}
             style={{
               position: "relative",
               borderRadius: 18,
               padding: 1,
-              background: `linear-gradient(145deg, ${C.border2}, ${C.line}, ${C.border})`,
+              maxWidth: 468,
+              margin: "0 auto",
+              willChange: "background",
             }}
           >
             <div
               style={{
                 borderRadius: 17,
-                overflow: "hidden",
                 background: C.bg2,
                 boxShadow: C.shadow,
               }}
             >
-              {/* Title bar */}
+              {/* ── Title bar ── */}
               <div
                 style={{
                   display: "flex",
@@ -452,6 +845,9 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   system-transform.ts
                 </span>
 
+                {/* Organized: blinking cursor in title */}
+                {organized && <BlinkCursor C={C} />}
+
                 <div
                   style={{
                     marginInlineStart: "auto",
@@ -462,15 +858,34 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     transition: "opacity 0.3s ease",
                   }}
                 >
-                  <span
-                    style={{
-                      width: 6,
-                      height: 6,
-                      borderRadius: "50%",
-                      background: organized ? C.green : C.amber,
-                      transition: "background-color 0.3s ease",
-                    }}
-                  />
+                  {/* Animated status indicator */}
+                  {organized ? (
+                    <m.div
+                      animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: C.green,
+                        willChange: "transform, opacity",
+                      }}
+                    />
+                  ) : (
+                    <span
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: C.amber,
+                        display: "block",
+                      }}
+                    />
+                  )}
                   <span
                     style={{
                       fontFamily: labelFont,
@@ -485,7 +900,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                 </div>
               </div>
 
-              {/* Interactive canvas */}
+              {/* ── Interactive canvas ── */}
               <button
                 type="button"
                 aria-pressed={locked}
@@ -500,19 +915,22 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   display: "block",
                   width: "100%",
                   border: "none",
-                  padding: "20px 18px 90px",
+                  padding: "20px 18px 70px",
                   background: "transparent",
                   textAlign: "inherit",
                   cursor: "pointer",
                   touchAction: "manipulation",
                 }}
               >
-                {/* Grid background */}
+                {/* Grid background – dot-style */}
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
-                    backgroundImage: `linear-gradient(${C.gridLine} 1px, transparent 1px), linear-gradient(90deg, ${C.gridLine} 1px, transparent 1px)`,
+                    backgroundImage: [
+                      `linear-gradient(${C.gridLine} 1px, transparent 1px)`,
+                      `linear-gradient(90deg, ${C.gridLine} 1px, transparent 1px)`,
+                    ].join(", "),
                     backgroundSize: "28px 28px",
                     pointerEvents: "none",
                     opacity: organized ? 0.9 : 0.4,
@@ -520,7 +938,23 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   }}
                 />
 
-                {/* Inner card background */}
+                {/* Grain overlay */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 17,
+                    opacity: 0.035,
+                    pointerEvents: "none",
+                    backgroundImage:
+                      "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+                    backgroundRepeat: "repeat",
+                    backgroundSize: "120px 120px",
+                    zIndex: 20,
+                  }}
+                />
+
+                {/* Inner card */}
                 <div
                   style={{
                     position: "absolute",
@@ -533,8 +967,10 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   }}
                 />
 
-                {/* Scan beam – positioned over canvas, clips to button */}
-                {organized && <ScanBeam scanKey={scanKey} C={C} />}
+                {/* Scan beam */}
+                {organized && !shouldReduce && (
+                  <TripleScanBeam scanKey={scanKey} C={C} />
+                )}
 
                 {/* Node canvas */}
                 <div
@@ -545,7 +981,6 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     marginInline: "auto",
                   }}
                 >
-                  {/* Connection lines */}
                   <svg
                     viewBox={`0 0 ${CANVAS_W} ${CANVAS_H}`}
                     style={{
@@ -555,11 +990,18 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                       height: "100%",
                       pointerEvents: "none",
                       overflow: "visible",
+                      zIndex: 2,
                     }}
                   >
+                    {/* Particle field */}
+                    {!shouldReduce && (
+                      <ParticleField organized={organized} C={C} />
+                    )}
+
+                    {/* Edges */}
                     {EDGES.map(([fc, fr, tc, tr], i) => (
                       <EdgeLine
-                        key={`${fc}${fr}-${tc}${tr}`}
+                        key={`e-${fc}${fr}-${tc}${tr}`}
                         fromCol={fc}
                         fromRow={fr}
                         toCol={tc}
@@ -569,6 +1011,21 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                         C={C}
                       />
                     ))}
+
+                    {/* Flow dots */}
+                    {!shouldReduce &&
+                      EDGES.map(([fc, fr, tc, tr], i) => (
+                        <FlowDot
+                          key={`fd-${fc}${fr}-${tc}${tr}`}
+                          fromCol={fc}
+                          fromRow={fr}
+                          toCol={tc}
+                          toRow={tr}
+                          organized={organized}
+                          index={i}
+                          C={C}
+                        />
+                      ))}
                   </svg>
 
                   {/* Nodes */}
@@ -583,7 +1040,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   ))}
                 </div>
 
-                {/* "Hover to transform" cue */}
+                {/* Hover cue */}
                 <m.div
                   initial={false}
                   animate={{
@@ -606,12 +1063,18 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     willChange: "transform, opacity",
                   }}
                 >
-                  <div
+                  <m.div
+                    animate={{ scaleY: [1, 0.6, 1], opacity: [0.6, 1, 0.6] }}
+                    transition={{
+                      duration: 1.4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                     style={{
                       width: 1,
                       height: 28,
                       background: `linear-gradient(180deg, transparent, ${C.cyan}, transparent)`,
-                      opacity: 0.6,
+                      willChange: "transform, opacity",
                     }}
                   />
                   <div
@@ -626,13 +1089,21 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                       boxShadow: "0 10px 24px rgba(15, 23, 42, 0.08)",
                     }}
                   >
-                    <span
+                    <m.span
+                      animate={{ scale: [1, 1.5, 1], opacity: [1, 0.4, 1] }}
+                      transition={{
+                        duration: 1.2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       style={{
                         width: 8,
                         height: 8,
                         borderRadius: "50%",
                         background: C.cyan,
                         flexShrink: 0,
+                        display: "block",
+                        willChange: "transform, opacity",
                       }}
                     />
                     <span
@@ -661,12 +1132,18 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   </div>
                 </m.div>
 
-                {/* "System ready" badge */}
+                {/* System ready badge */}
                 {organized && (
                   <m.div
-                    initial={{ opacity: 0, scale: 0.93 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.35 }}
+                    initial={{ opacity: 0, scale: 0.88, y: 8 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{
+                      duration: 0.45,
+                      delay: 0.3,
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 22,
+                    }}
                     style={{
                       position: "absolute",
                       left: "50%",
@@ -675,23 +1152,31 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 10,
-                      padding: "10px 14px",
+                      padding: "10px 16px",
                       borderRadius: 999,
                       border: `1px solid ${C.border2}`,
                       background: `linear-gradient(180deg, ${C.bg3}, ${C.bg2})`,
-                      boxShadow: "0 10px 24px rgba(15, 23, 42, 0.08)",
+                      boxShadow: `0 10px 32px rgba(15,23,42,0.12), 0 0 0 1px ${C.cyan}20`,
                       pointerEvents: "none",
                       zIndex: 6,
                       willChange: "transform, opacity",
                     }}
                   >
-                    <span
+                    <m.span
+                      animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
                       style={{
                         width: 8,
                         height: 8,
                         borderRadius: "50%",
                         background: C.green,
                         flexShrink: 0,
+                        display: "block",
+                        willChange: "transform, opacity",
                       }}
                     />
                     <span
@@ -710,7 +1195,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                 )}
               </button>
 
-              {/* Status bar */}
+              {/* ── Status bar ── */}
               <div
                 style={{
                   display: "flex",
@@ -732,39 +1217,45 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     color: organized ? C.cyan : C.faint,
                     transition: "color 0.3s ease",
                     userSelect: "none",
+                    fontWeight: 700,
                   }}
                 >
                   {organized ? copy.statusLive : copy.statusIdle}
                 </span>
 
+                {/* Animated metrics */}
                 <div
                   style={{
                     display: "flex",
-                    gap: 10,
-                    opacity: organized ? 0.8 : 0.4,
-                    transition: "opacity 0.3s ease",
+                    gap: 20,
+                    alignItems: "center",
                   }}
                 >
-                  {["Data → Structure", "Manual → Auto", "Chaos → Order"].map(
-                    (item) => (
-                      <span
-                        key={item}
-                        style={{
-                          fontFamily: "var(--font-mono)",
-                          fontSize: 8,
-                          color: C.muted,
-                          letterSpacing: 0.45,
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item}
-                      </span>
-                    ),
-                  )}
+                  <AnimatedMetric
+                    value="6"
+                    label={copy.metricA}
+                    organized={organized}
+                    C={C}
+                    delay={0.4}
+                  />
+                  <AnimatedMetric
+                    value="6"
+                    label={copy.metricB}
+                    organized={organized}
+                    C={C}
+                    delay={0.55}
+                  />
+                  <AnimatedMetric
+                    value="100%"
+                    label={copy.metricC}
+                    organized={organized}
+                    C={C}
+                    delay={0.7}
+                  />
                 </div>
               </div>
             </div>
-          </div>
+          </m.div>
         </div>
       </div>
     </LazyMotion>
