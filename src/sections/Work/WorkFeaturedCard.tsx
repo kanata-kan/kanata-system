@@ -217,6 +217,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
           {isMobile && p.demo && (
             <div style={{ marginBottom: 24 }}>
               <ProjectDemoSpotlight
+                key={`${p.slug}-featured-mobile-demo`}
                 demo={p.demo}
                 summary={p.highlights[0] ?? p.desc}
                 chips={p.caseStudy?.tags ?? []}
@@ -478,6 +479,7 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
           >
             {p.demo && (
               <ProjectDemoSpotlight
+                key={`${p.slug}-featured-desktop-demo`}
                 demo={p.demo}
                 summary={p.highlights[0] ?? p.desc}
                 chips={p.caseStudy?.tags ?? []}

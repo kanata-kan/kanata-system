@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale } from "@/hooks/useLocale";
 import type { ProjectDemoMedia } from "@/data/content";
@@ -12,6 +13,7 @@ const DEMO_COPY = {
     titleHero: "See the workflow in motion",
     titleCard: "Preview the real flow",
     load: "Load Demo",
+    expand: "Expand Demo",
     loading: "Loading Demo...",
     live: "Live Preview",
     liveBadge: "Flow Active",
@@ -24,6 +26,7 @@ const DEMO_COPY = {
     titleHero: "Voir le flux en action",
     titleCard: "Apercu du flux reel",
     load: "Charger la demo",
+    expand: "Agrandir",
     loading: "Chargement...",
     live: "Apercu Actif",
     liveBadge: "Flux Actif",
@@ -36,6 +39,7 @@ const DEMO_COPY = {
     titleHero: "شاهد سير العمل أثناء التشغيل",
     titleCard: "معاينة للتدفق الحقيقي",
     load: "تحميل العرض",
+    expand: "تكبير العرض",
     loading: "جاري التحميل...",
     live: "معاينة حية",
     liveBadge: "التدفق يعمل",
@@ -69,17 +73,24 @@ export function ProjectDemoSpotlight({
   const { locale } = useLocale();
   const copy = DEMO_COPY[locale] ?? DEMO_COPY.en;
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const isBrowser = typeof window !== "undefined";
+
   const [hasActivated, setHasActivated] = useState(false);
   const [isAnimatedReady, setIsAnimatedReady] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [lightboxVisible, setLightboxVisible] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+
   const visibleChips = chips.slice(0, 3);
   const title = mode === "hero" ? copy.titleHero : copy.titleCard;
   const shouldLoadAnimated =
-    hasActivated || (autoPlayWhenVisible && hasEnteredViewport && !prefersReducedMotion);
+    isExpanded ||
+    hasActivated ||
+    (autoPlayWhenVisible && hasEnteredViewport && !prefersReducedMotion);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!isBrowser) return;
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const syncPreference = () => setPrefersReducedMotion(mediaQuery.matches);
@@ -87,11 +98,11 @@ export function ProjectDemoSpotlight({
 
     mediaQuery.addEventListener("change", syncPreference);
     return () => mediaQuery.removeEventListener("change", syncPreference);
-  }, []);
+  }, [isBrowser]);
 
   useEffect(() => {
     if (!autoPlayWhenVisible || prefersReducedMotion) return;
-    if (!cardRef.current || typeof window === "undefined") return;
+    if (!cardRef.current || !isBrowser) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -105,11 +116,45 @@ export function ProjectDemoSpotlight({
 
     observer.observe(cardRef.current);
     return () => observer.disconnect();
-  }, [autoPlayWhenVisible, prefersReducedMotion]);
+  }, [autoPlayWhenVisible, isBrowser, prefersReducedMotion]);
 
   const activateDemo = () => {
     setHasActivated(true);
   };
+
+  const openExpandedPreview = useCallback(() => {
+    setHasActivated(true);
+    setIsExpanded(true);
+    document.body.style.overflow = "hidden";
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => setLightboxVisible(true)),
+    );
+  }, []);
+
+  const closeExpandedPreview = useCallback(() => {
+    setLightboxVisible(false);
+    document.body.style.overflow = "";
+    setTimeout(() => setIsExpanded(false), 320);
+  }, []);
+
+  useEffect(() => {
+    if (!isExpanded) return;
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeExpandedPreview();
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [closeExpandedPreview, isExpanded]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const hintText = prefersReducedMotion
     ? copy.reduceMotionHint
@@ -118,6 +163,246 @@ export function ProjectDemoSpotlight({
       : copy.onDemandHint;
 
   const previewHeight = mode === "hero" ? (isMobile ? 240 : 280) : 220;
+  const triggerMinWidth = isMobile ? "100%" : 150;
+
+  const lightbox = isExpanded ? (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={demo.alt}
+      onClick={closeExpandedPreview}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: isMobile ? 16 : 28,
+        background: lightboxVisible ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0)",
+        backdropFilter: lightboxVisible
+          ? "blur(24px) saturate(180%)"
+          : "blur(0px)",
+        WebkitBackdropFilter: lightboxVisible
+          ? "blur(24px) saturate(180%)"
+          : "blur(0px)",
+        transition: "background .35s ease, backdrop-filter .35s ease",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          width: isMobile ? 260 : 420,
+          height: isMobile ? 260 : 420,
+          top: "8%",
+          left: "8%",
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${color}16 0%, transparent 70%)`,
+          filter: "blur(50px)",
+          opacity: lightboxVisible ? 1 : 0,
+          transition: "opacity .45s ease",
+          pointerEvents: "none",
+        }}
+      />
+
+      <button
+        type="button"
+        aria-label="Close Demo"
+        onClick={closeExpandedPreview}
+        style={{
+          position: "absolute",
+          top: isMobile ? 16 : 20,
+          right: isMobile ? 16 : 24,
+          background: "rgba(255,255,255,0.06)",
+          border: "1px solid rgba(255,255,255,0.14)",
+          borderRadius: 8,
+          padding: "7px 18px",
+          fontFamily: "var(--font-mono)",
+          fontSize: 10,
+          color: "rgba(255,255,255,0.72)",
+          letterSpacing: 2,
+          cursor: "pointer",
+          zIndex: 2,
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+        }}
+      >
+        ESC
+      </button>
+
+      <div
+        onClick={(event) => event.stopPropagation()}
+        style={{
+          width: "100%",
+          maxWidth: 1240,
+          borderRadius: 22,
+          overflow: "hidden",
+          border: "1px solid rgba(255,255,255,0.08)",
+          background: C.bg2,
+          boxShadow: lightboxVisible
+            ? `0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04), 0 0 80px ${color}18`
+            : "0 24px 64px rgba(0,0,0,0.55)",
+          transform: lightboxVisible
+            ? "scale(1) translateY(0)"
+            : "scale(0.94) translateY(24px)",
+          opacity: lightboxVisible ? 1 : 0,
+          transition:
+            "transform .45s cubic-bezier(0.16, 1, 0.3, 1), opacity .35s ease, box-shadow .4s ease",
+        }}
+      >
+        <div
+          style={{
+            height: 3,
+            background: `linear-gradient(90deg, ${color}, ${C.cyan}, ${color})`,
+          }}
+        />
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+            padding: isMobile ? "12px 14px" : "14px 18px",
+            borderBottom: `1px solid ${C.line}`,
+            background: `${C.bg}e8`,
+            flexWrap: "wrap",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: 1.4,
+              color,
+              textTransform: "uppercase",
+            }}
+          >
+            {copy.live}
+          </span>
+          <span
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 12,
+              color: C.sub,
+            }}
+          >
+            {demo.alt}
+          </span>
+        </div>
+
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            minHeight: isMobile ? 260 : 420,
+            maxHeight: "78vh",
+            aspectRatio: "16 / 9",
+            background: `linear-gradient(135deg, ${color}14, ${C.bg} 72%)`,
+          }}
+        >
+          <Image
+            src={demo.posterSrc}
+            alt={shouldLoadAnimated ? "" : demo.alt}
+            aria-hidden={shouldLoadAnimated || undefined}
+            fill
+            priority
+            sizes="100vw"
+            style={{
+              objectFit: "contain",
+              padding: isMobile ? 12 : 18,
+            }}
+          />
+
+          {shouldLoadAnimated && (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={demo.animatedSrc}
+                alt={demo.alt}
+                decoding="async"
+                onLoad={() => setIsAnimatedReady(true)}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  padding: isMobile ? 12 : 18,
+                  opacity: isAnimatedReady ? 1 : 0,
+                  transition: "opacity .25s ease",
+                }}
+              />
+              {!isAnimatedReady && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(14,17,23,0.12)",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 10,
+                      letterSpacing: 1.4,
+                      color: C.text,
+                      background: "rgba(14,17,23,0.72)",
+                      border: `1px solid ${C.border}`,
+                      padding: "8px 12px",
+                      borderRadius: 999,
+                    }}
+                  >
+                    {copy.loading}
+                  </span>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: isMobile ? "flex-start" : "center",
+            justifyContent: "space-between",
+            gap: 14,
+            padding: isMobile ? "14px 16px" : "16px 18px",
+            borderTop: `1px solid ${C.line}`,
+            background: `${C.bg}ee`,
+            flexDirection: isMobile ? "column" : "row",
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 13,
+              color: C.sub,
+              lineHeight: 1.6,
+              margin: 0,
+            }}
+          >
+            {summary}
+          </p>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 9,
+              color: C.faint,
+              letterSpacing: 1.2,
+              textTransform: "uppercase",
+              flexShrink: 0,
+            }}
+          >
+            {copy.expand}
+          </span>
+        </div>
+      </div>
+    </div>
+  ) : null;
 
   return (
     <div
@@ -244,6 +529,50 @@ export function ProjectDemoSpotlight({
           }}
         />
 
+        <button
+          type="button"
+          onClick={openExpandedPreview}
+          aria-label={`${copy.expand}: ${demo.alt}`}
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            zIndex: 5,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontFamily: "var(--font-mono)",
+            fontSize: 8,
+            letterSpacing: 1.1,
+            color: C.text,
+            background: "rgba(14,17,23,0.72)",
+            border: `1px solid ${C.border}`,
+            padding: "7px 10px",
+            borderRadius: 999,
+            cursor: "zoom-in",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+          }}
+        >
+          <span
+            style={{
+              width: 14,
+              height: 14,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "50%",
+              border: `1px solid ${color}55`,
+              color,
+              fontSize: 9,
+              lineHeight: 1,
+            }}
+          >
+            +
+          </span>
+          {copy.expand}
+        </button>
+
         <div
           style={{
             position: "absolute",
@@ -279,7 +608,7 @@ export function ProjectDemoSpotlight({
               textTransform: "uppercase",
             }}
           >
-            {hasActivated && isAnimatedReady ? copy.live : copy.eyebrow}
+            {shouldLoadAnimated && isAnimatedReady ? copy.live : copy.eyebrow}
           </span>
         </div>
 
@@ -407,29 +736,65 @@ export function ProjectDemoSpotlight({
           flexDirection: isMobile ? "column" : "row",
         }}
       >
-        <button
-          type="button"
-          onClick={activateDemo}
+        <div
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: "flex",
             gap: 8,
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            letterSpacing: 1.4,
-            color: hasActivated ? C.bg : color,
-            background: hasActivated ? color : `${color}10`,
-            border: `1px solid ${color}45`,
-            padding: "10px 16px",
-            borderRadius: 999,
-            cursor: "pointer",
-            minWidth: isMobile ? "100%" : 150,
-            transition: "all .2s ease",
+            width: isMobile ? "100%" : "auto",
+            flexDirection: isMobile ? "column" : "row",
           }}
         >
-            {shouldLoadAnimated ? (isAnimatedReady ? copy.live : copy.loading) : copy.load}
-        </button>
+          <button
+            type="button"
+            onClick={activateDemo}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: 1.4,
+              color: shouldLoadAnimated ? C.bg : color,
+              background: shouldLoadAnimated ? color : `${color}10`,
+              border: `1px solid ${color}45`,
+              padding: "10px 16px",
+              borderRadius: 999,
+              cursor: "pointer",
+              minWidth: triggerMinWidth,
+              transition: "all .2s ease",
+            }}
+          >
+            {shouldLoadAnimated
+              ? isAnimatedReady
+                ? copy.live
+                : copy.loading
+              : copy.load}
+          </button>
+          <button
+            type="button"
+            onClick={openExpandedPreview}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 8,
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              letterSpacing: 1.4,
+              color,
+              background: "transparent",
+              border: `1px solid ${C.border2}`,
+              padding: "10px 16px",
+              borderRadius: 999,
+              cursor: "zoom-in",
+              minWidth: triggerMinWidth,
+              transition: "all .2s ease",
+            }}
+          >
+            {copy.expand}
+          </button>
+        </div>
         <p
           style={{
             fontFamily: "var(--font-sans)",
@@ -444,6 +809,8 @@ export function ProjectDemoSpotlight({
           {hintText}
         </p>
       </div>
+
+      {isBrowser && lightbox && createPortal(lightbox, document.body)}
     </div>
   );
 }

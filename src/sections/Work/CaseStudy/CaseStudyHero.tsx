@@ -479,6 +479,7 @@ export function CaseStudyHero({ project, C, isMobile }: CaseStudyHeroProps) {
 
           {project.demo && (
             <ProjectDemoSpotlight
+              key={`${project.slug}-hero-demo`}
               demo={project.demo}
               summary={project.desc}
               chips={cs.tags}
