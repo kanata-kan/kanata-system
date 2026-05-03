@@ -2,18 +2,15 @@
  * @file Container.tsx
  * @description Centralized container component with breakpoint-aware max-widths.
  * Replaces repeated maxWidth + margin patterns throughout sections.
+ * Uses CSS classes (.sc-container) for responsive padding — no JS hooks needed.
  */
-
-import { useResponsiveContext } from "@/hooks/useResponsive";
-import { BREAKPOINTS } from "@/tokens/breakpoints";
-import { CONTAINER_PADDING } from "@/tokens/spacing";
 
 type ContainerVariant = "narrow" | "default" | "wide";
 
-const MAX_WIDTH: Record<ContainerVariant, number> = {
-  narrow: BREAKPOINTS.md, // 768
-  default: BREAKPOINTS.xl, // 1280
-  wide: BREAKPOINTS["2xl"], // 1536
+const VARIANT_CLASS: Record<ContainerVariant, string> = {
+  narrow: "sc-container sc-container--narrow",
+  default: "sc-container sc-container--default",
+  wide: "sc-container sc-container--wide",
 };
 
 interface ContainerProps {
@@ -29,23 +26,8 @@ export function Container({
   children,
   style,
 }: ContainerProps) {
-  const { isMobile } = useResponsiveContext();
-  const px = isMobile
-    ? CONTAINER_PADDING.x.mobile
-    : CONTAINER_PADDING.x.desktop;
-
   return (
-    <Tag
-      style={{
-        maxWidth: MAX_WIDTH[variant],
-        margin: "0 auto",
-        paddingLeft: px,
-        paddingRight: px,
-        width: "100%",
-        boxSizing: "border-box",
-        ...style,
-      }}
-    >
+    <Tag className={VARIANT_CLASS[variant]} style={style}>
       {children}
     </Tag>
   );

@@ -57,7 +57,7 @@ export default async function Home({ params }: Props) {
     <main id="main-content">
       <JsonLd data={buildHomepageJsonLd(locale)} />
       <Hero />
-      <BelowFold />
+      <BelowFold locale={locale} />
     </main>
   );
 }

@@ -23,6 +23,7 @@ import {
   getAlternates,
 } from "@/lib/i18n";
 import { AppShell } from "../AppShell";
+import { Footer } from "@/components/layout/Footer";
 import "../globals.css";
 
 /* ── Fonts ── */
@@ -196,6 +197,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       lang={locale}
       dir={dir}
       data-scroll-behavior="smooth"
+      data-theme={initialDark ? "dark" : "light"}
       className={`${outfit.variable} ${inter.variable} ${tajawal.variable}`}
     >
       <head>
@@ -223,6 +225,14 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         >
           {children}
         </AppShell>
+        <div
+          style={{
+            contentVisibility: "auto",
+            containIntrinsicSize: "1px 400px",
+          }}
+        >
+          <Footer locale={locale} />
+        </div>
       </body>
     </html>
   );

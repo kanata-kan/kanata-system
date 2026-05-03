@@ -1,31 +1,29 @@
 /**
  * @file Footer.tsx
  * @description Minimal footer — identity aligned.
+ * Server Component — uses CSS custom properties for theme, CSS for responsive.
  */
 
-import type { Theme } from "@/tokens/themes";
-import { useLocale } from "@/hooks/useLocale";
+import type { Locale } from "@/data/content/types";
 import { getContent } from "@/data/content";
 
 interface FooterProps {
-  C: Theme;
-  isMobile: boolean;
+  locale: Locale;
 }
 
-export function Footer({ C, isMobile }: FooterProps) {
-  const { locale } = useLocale();
+export function Footer({ locale }: FooterProps) {
   const content = getContent(locale);
   return (
     <footer
+      className="sc-footer"
       style={{
-        padding: isMobile ? "16px 20px" : "16px 48px",
-        borderTop: `1px solid ${C.line}`,
+        borderTop: "1px solid var(--t-line)",
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
         gap: 10,
-        background: C.bg,
+        background: "var(--t-bg)",
         transition: "background .35s",
       }}
     >
@@ -34,12 +32,12 @@ export function Footer({ C, isMobile }: FooterProps) {
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: 9,
-          color: C.faint,
+          color: "var(--t-faint)",
           letterSpacing: 1.5,
         }}
       >
         {content.footer.copyright}{" "}
-        <span style={{ color: C.muted }}>{content.footer.author}</span>
+        <span style={{ color: "var(--t-muted)" }}>{content.footer.author}</span>
       </span>
 
       {/* Right */}
@@ -47,7 +45,7 @@ export function Footer({ C, isMobile }: FooterProps) {
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: 9,
-          color: C.faint,
+          color: "var(--t-faint)",
           letterSpacing: 1.5,
         }}
       >

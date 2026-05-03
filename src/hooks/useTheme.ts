@@ -16,14 +16,34 @@ import {
 } from "react";
 import { DARK, LIGHT, type Theme } from "@/tokens/themes";
 
-const CSS_VARS: (keyof Theme)[] = ["cyan", "purple", "green", "amber"];
 const THEME_STORAGE_KEY = "portfolio-theme";
 
-function applyToDom(theme: Theme) {
+const TOKEN_KEYS: (keyof Theme)[] = [
+  "bg",
+  "bg2",
+  "bg3",
+  "card",
+  "text",
+  "sub",
+  "muted",
+  "faint",
+  "cyan",
+  "green",
+  "amber",
+  "purple",
+  "border",
+  "border2",
+  "line",
+  "gridLine",
+  "glow1",
+  "glow2",
+  "shadow",
+];
+
+function applyToDom(dark: boolean, theme: Theme) {
   const root = document.documentElement;
-  CSS_VARS.forEach((key) =>
-    root.style.setProperty(`--${key}`, theme[key] as string),
-  );
+  root.setAttribute("data-theme", dark ? "dark" : "light");
+  TOKEN_KEYS.forEach((key) => root.style.setProperty(`--t-${key}`, theme[key]));
   document.body.style.background = theme.bg;
   document.body.style.color = theme.text;
 }
@@ -58,7 +78,9 @@ function getCookie(name: string) {
   }
 
   const match = document.cookie.match(
-    new RegExp(`(?:^|; )${name.replace(/[$()*+.?[\\\]^{|}]/g, "\\$&")}=([^;]*)`),
+    new RegExp(
+      `(?:^|; )${name.replace(/[$()*+.?[\\\]^{|}]/g, "\\$&")}=([^;]*)`,
+    ),
   );
 
   return match ? decodeURIComponent(match[1]) : null;
@@ -97,7 +119,7 @@ export function useTheme(initialDark = true) {
   );
 
   useEffect(() => {
-    applyToDom(dark ? DARK : LIGHT);
+    applyToDom(dark, dark ? DARK : LIGHT);
   }, [dark]);
 
   const toggle = useCallback(() => writeTheme(!dark), [dark]);

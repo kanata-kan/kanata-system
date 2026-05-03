@@ -125,3 +125,69 @@ export const TEXT = {
     MozOsxFontSmoothing: "grayscale",
   }),
 } as const;
+
+/**
+ * Server-Component–safe typography presets.
+ * Use CSS custom properties instead of Theme object.
+ * Responsive font sizes use CSS clamp() instead of isMobile boolean.
+ */
+export const SC_TEXT = {
+  sectionHeading: (): CSSProperties => ({
+    fontFamily: "var(--font-display)",
+    fontSize: "clamp(28px, 4vw, 40px)",
+    fontWeight: 600,
+    letterSpacing: -0.02,
+    color: "var(--t-text)",
+    WebkitFontSmoothing: "antialiased",
+    MozOsxFontSmoothing: "grayscale",
+  }),
+
+  monoLabel: (): CSSProperties => ({
+    fontFamily: "var(--font-ui)",
+    fontSize: 9,
+    letterSpacing: "var(--ui-tracking)",
+    color: "var(--t-muted)",
+    textTransform: "uppercase",
+    fontWeight: 500,
+  }),
+
+  body: (): CSSProperties => ({
+    fontFamily: "var(--font-body)",
+    fontSize: 16,
+    color: "var(--t-sub)",
+    lineHeight: 1.7,
+    fontWeight: 400,
+    WebkitFontSmoothing: "antialiased",
+    MozOsxFontSmoothing: "grayscale",
+  }),
+
+  bodySmall: (): CSSProperties => ({
+    fontFamily: "var(--font-body)",
+    fontSize: 14,
+    color: "var(--t-sub)",
+    lineHeight: 1.7,
+    fontWeight: 400,
+    WebkitFontSmoothing: "antialiased",
+    MozOsxFontSmoothing: "grayscale",
+  }),
+
+  metricValue: (color: string): CSSProperties => ({
+    fontFamily: "var(--font-display)",
+    fontSize: 32,
+    fontWeight: 700,
+    color,
+    lineHeight: 1,
+    letterSpacing: -0.02,
+    WebkitFontSmoothing: "antialiased",
+    MozOsxFontSmoothing: "grayscale",
+  }),
+
+  metricLabel: (): CSSProperties => ({
+    fontFamily: "var(--font-ui)",
+    fontSize: 9,
+    color: "var(--t-muted)",
+    letterSpacing: "var(--ui-tracking)",
+    textTransform: "uppercase",
+    fontWeight: 500,
+  }),
+} as const;

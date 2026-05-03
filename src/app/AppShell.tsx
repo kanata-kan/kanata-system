@@ -6,7 +6,6 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { LocaleProvider } from "@/hooks/useLocale";
 import type { Locale } from "@/data/content/types";
 import { Nav } from "@/components/layout/Nav";
-import { Footer } from "@/components/layout/Footer";
 import { ScrollToTop } from "@/components/ui/ScrollToTop";
 import { IntroSplash } from "@/components/ui/IntroSplash";
 import dynamic from "next/dynamic";
@@ -44,8 +43,8 @@ export function AppShell({
             style={{
               minHeight: "100vh",
               width: "100%",
-              background: C.bg,
-              color: C.text,
+              background: "var(--t-bg)",
+              color: "var(--t-text)",
               overflowX: "hidden",
               transition: "background .35s, color .35s",
 
@@ -60,17 +59,8 @@ export function AppShell({
               isMobile={responsive.isMobile}
             />
             {children}
-
-            <div
-              style={{
-                contentVisibility: "auto",
-                containIntrinsicSize: "1px 400px",
-              }}
-            >
-              <Footer C={C} isMobile={responsive.isMobile} />
-            </div>
             <PWAInstallPromptDynamic />
-            <ScrollToTop C={C} />
+            <ScrollToTop />
             <IntroSplash initialSeen={initialIntroSeen} />
           </div>
         </ResponsiveContext.Provider>

@@ -1,20 +1,17 @@
 /**
  * @file Skills.tsx
  * @description Section Skills : grille 1px gap de groupes de compétences.
- * Utilise useThemeContext pour les tokens et useResponsiveContext pour isMobile.
+ * Server Component — uses CSS custom properties for theme, CSS for responsive.
  * Données importées depuis /data/skills.ts.
  */
-"use client";
 
 import { getSkillGroups } from "@/data/skills";
-import { useThemeContext } from "@/hooks/useTheme";
-import { useResponsiveContext } from "@/hooks/useResponsive";
-import { useLocale } from "@/hooks/useLocale";
+import type { Locale } from "@/data/content/types";
 import { Label } from "@/components/ui/Label";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { Stack } from "@/components/layout/Stack";
-import { TEXT } from "@/tokens/typography";
+import { SC_TEXT } from "@/tokens/typography";
 import { getContent } from "@/data/content";
 
 const COPY = {
@@ -35,11 +32,8 @@ const COPY = {
   },
 } as const;
 
-export function Skills() {
-  const { C } = useThemeContext();
-  const { locale } = useLocale();
+export function Skills({ locale }: { locale: Locale }) {
   const content = getContent(locale);
-  const { isMobile } = useResponsiveContext();
   const copy = COPY[locale];
   const skillGroups = getSkillGroups(locale);
   const isArabic = locale === "ar";
@@ -48,13 +42,11 @@ export function Skills() {
     <Section id="skills">
       <Container>
         <Stack direction="column" gap="lg" style={{ marginBottom: 36 }}>
-          <Label c={C}>{content.skills.label}</Label>
-          <h2 style={TEXT.sectionHeading(C, isMobile)}>
-            {content.skills.heading}
-          </h2>
+          <Label>{content.skills.label}</Label>
+          <h2 style={SC_TEXT.sectionHeading()}>{content.skills.heading}</h2>
           <p
             style={{
-              ...TEXT.bodySmall(C),
+              ...SC_TEXT.bodySmall(),
               marginTop: 14,
               maxWidth: 520,
             }}
@@ -63,38 +55,29 @@ export function Skills() {
           </p>
         </Stack>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0, 1fr))",
-            gap: isMobile ? 14 : 18,
-          }}
-        >
+        <div className="sc-skills-grid">
           {skillGroups.map((g, gi) => (
             <div
               key={g.title}
-              className={`rv d${gi + 1}`}
+              className={`rv d${gi + 1} sc-skills-card`}
               data-card
               style={{
                 position: "relative",
                 overflow: "hidden",
                 borderRadius: 18,
-                border: `1px solid ${C.border}`,
-                background: `linear-gradient(180deg, ${C.bg2}, ${C.bg3})`,
-                padding: isMobile ? "20px 18px" : "24px 22px",
-                minHeight: isMobile ? undefined : 220,
-                boxShadow: C.shadow,
+                border: "1px solid var(--t-border)",
+                background:
+                  "linear-gradient(180deg, var(--t-bg2), var(--t-bg3))",
+                boxShadow: "var(--t-shadow)",
                 transition:
                   "background .35s ease, border-color .35s ease, transform .35s ease",
               }}
             >
               <div
+                className="sc-skills-watermark"
                 style={{
                   position: "absolute",
-                  insetInlineEnd: isMobile ? -6 : -10,
-                  top: isMobile ? -8 : -10,
                   fontFamily: "var(--font-display)",
-                  fontSize: isMobile ? 56 : 72,
                   fontWeight: 700,
                   letterSpacing: -0.05,
                   lineHeight: 1,
@@ -124,7 +107,7 @@ export function Skills() {
                 >
                   <div
                     style={{
-                      ...TEXT.monoLabel(C),
+                      ...SC_TEXT.monoLabel(),
                       color: g.color,
                       marginBottom: 10,
                       display: "inline-flex",
@@ -144,13 +127,13 @@ export function Skills() {
                   </div>
 
                   <h3
+                    className="sc-skills-title"
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontSize: isMobile ? 24 : 28,
                       fontWeight: 600,
                       lineHeight: 1.15,
                       letterSpacing: -0.03,
-                      color: C.text,
+                      color: "var(--t-text)",
                       margin: 0,
                     }}
                   >
@@ -165,9 +148,9 @@ export function Skills() {
                     gap: 8,
                     padding: "7px 11px",
                     borderRadius: 999,
-                    border: `1px solid ${C.border}`,
-                    background: C.bg2,
-                    color: C.muted,
+                    border: "1px solid var(--t-border)",
+                    background: "var(--t-bg2)",
+                    color: "var(--t-muted)",
                     fontFamily: "var(--font-ui)",
                     fontSize: 9,
                     fontWeight: 500,
@@ -208,15 +191,16 @@ export function Skills() {
                 {g.items.map((item, index) => (
                   <span
                     key={item}
+                    className="sc-skills-pill"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 8,
-                      padding: isMobile ? "8px 10px" : "9px 12px",
                       borderRadius: 999,
-                      border: `1px solid ${C.border}`,
-                      background: index % 2 === 0 ? C.bg2 : C.bg3,
-                      color: C.sub,
+                      border: "1px solid var(--t-border)",
+                      background:
+                        index % 2 === 0 ? "var(--t-bg2)" : "var(--t-bg3)",
+                      color: "var(--t-sub)",
                       fontFamily: "var(--font-body)",
                       fontSize: 12.5,
                       fontWeight: 500,
@@ -244,7 +228,7 @@ export function Skills() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 10,
-                  color: C.muted,
+                  color: "var(--t-muted)",
                   fontFamily: "var(--font-ui)",
                   fontSize: 9,
                   fontWeight: 500,

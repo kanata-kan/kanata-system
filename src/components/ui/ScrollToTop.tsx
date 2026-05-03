@@ -6,18 +6,13 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import type { Theme } from "@/tokens/themes";
-
-interface Props {
-  C: Theme;
-}
 
 const SIZE = 44;
 const STROKE = 3;
 const RADIUS = (SIZE - STROKE) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-export function ScrollToTop({ C }: Props) {
+export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
   const rafRef = useRef(0);
@@ -57,6 +52,7 @@ export function ScrollToTop({ C }: Props) {
       type="button"
       aria-label="Scroll to top"
       onClick={scrollUp}
+      className="sc-scroll-top"
       style={{
         position: "fixed",
         bottom: 28,
@@ -67,8 +63,8 @@ export function ScrollToTop({ C }: Props) {
         padding: 0,
         borderRadius: "50%",
         border: "none",
-        background: `${C.bg2}e6`,
-        color: C.text,
+        background: "color-mix(in srgb, var(--t-bg2) 90%, transparent)",
+        color: "var(--t-text)",
         cursor: "pointer",
         display: "grid",
         placeItems: "center",
@@ -79,17 +75,7 @@ export function ScrollToTop({ C }: Props) {
           : "translateY(12px) scale(0.85)",
         transition: "opacity .3s, transform .3s cubic-bezier(.4,0,.2,1)",
         backdropFilter: "blur(12px)",
-        boxShadow: `0 4px 24px ${C.bg}60`,
-      }}
-      onMouseOver={(e) => {
-        e.currentTarget.style.transform = "translateY(-2px) scale(1.08)";
-        e.currentTarget.style.boxShadow = `0 6px 28px ${C.bg}90, 0 0 0 1px ${C.cyan}40`;
-      }}
-      onMouseOut={(e) => {
-        e.currentTarget.style.transform = visible
-          ? "translateY(0) scale(1)"
-          : "translateY(12px) scale(0.85)";
-        e.currentTarget.style.boxShadow = `0 4px 24px ${C.bg}60`;
+        boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
       }}
     >
       {/* Progress ring */}
@@ -104,8 +90,8 @@ export function ScrollToTop({ C }: Props) {
       >
         <defs>
           <linearGradient id="scrollGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor={C.cyan} />
-            <stop offset="100%" stopColor={C.purple} />
+            <stop offset="0%" stopColor="var(--t-cyan)" />
+            <stop offset="100%" stopColor="var(--t-purple)" />
           </linearGradient>
         </defs>
         {/* Track */}
@@ -114,7 +100,7 @@ export function ScrollToTop({ C }: Props) {
           cy={SIZE / 2}
           r={RADIUS}
           fill="none"
-          stroke={C.line}
+          stroke="var(--t-line)"
           strokeWidth={STROKE}
           opacity={0.3}
         />

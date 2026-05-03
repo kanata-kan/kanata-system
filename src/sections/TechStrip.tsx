@@ -1,9 +1,6 @@
-"use client";
-
 import { getTechStrip } from "@/data/skills";
 import { Container } from "@/components/layout/Container";
-import { useLocale } from "@/hooks/useLocale";
-import { useThemeContext } from "@/hooks/useTheme";
+import type { Locale } from "@/data/content/types";
 
 function containsArabic(text: string) {
   return /[\u0600-\u06FF]/.test(text);
@@ -57,9 +54,7 @@ const ICONS: React.ReactNode[] = [
   </svg>,
 ];
 
-export function TechStrip() {
-  const { locale } = useLocale();
-  const { C } = useThemeContext();
+export function TechStrip({ locale }: { locale: Locale }) {
   const techStrip = getTechStrip(locale);
   const isArabic = locale === "ar";
 
@@ -72,11 +67,11 @@ export function TechStrip() {
   return (
     <div
       style={{
-        borderTop: `1px solid ${C.line}`,
-        borderBottom: `1px solid ${C.line}`,
+        borderTop: "1px solid var(--t-line)",
+        borderBottom: "1px solid var(--t-line)",
         padding: "13px 0",
         overflow: "hidden",
-        background: C.bg2,
+        background: "var(--t-bg2)",
         transition: "background .35s",
         position: "relative",
       }}
@@ -88,7 +83,7 @@ export function TechStrip() {
           position: "absolute",
           inset: "0 auto 0 0",
           width: 48,
-          background: `linear-gradient(to right, ${C.bg2}, transparent)`,
+          background: "linear-gradient(to right, var(--t-bg2), transparent)",
           zIndex: 2,
           pointerEvents: "none",
         }}
@@ -100,7 +95,7 @@ export function TechStrip() {
           position: "absolute",
           inset: "0 0 0 auto",
           width: 48,
-          background: `linear-gradient(to left, ${C.bg2}, transparent)`,
+          background: "linear-gradient(to left, var(--t-bg2), transparent)",
           zIndex: 2,
           pointerEvents: "none",
         }}
@@ -145,10 +140,10 @@ export function TechStrip() {
                     fontSize: hasArabic ? 11 : 10,
                     fontWeight: hasArabic ? 600 : 500,
                     letterSpacing: hasArabic ? 0 : 2.5,
-                    color: index % 4 === 0 ? C.cyan : C.muted,
+                    color: index % 4 === 0 ? "var(--t-cyan)" : "var(--t-muted)",
                     padding: isArabic ? "0 22px" : "0 28px",
                     textTransform: hasArabic ? "none" : "uppercase",
-                    borderInlineEnd: `1px solid ${C.line}`,
+                    borderInlineEnd: "1px solid var(--t-line)",
                     whiteSpace: "nowrap",
                     transition: "color .35s",
                     unicodeBidi: "isolate",
@@ -159,7 +154,7 @@ export function TechStrip() {
                     style={{
                       display: "inline-flex",
                       flexShrink: 0,
-                      color: C.cyan,
+                      color: "var(--t-cyan)",
                       opacity: 0.45,
                     }}
                   >

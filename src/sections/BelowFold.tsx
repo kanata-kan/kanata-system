@@ -1,25 +1,18 @@
-"use client";
+import type { Locale } from "@/data/content/types";
+import { TechStrip } from "./TechStrip";
+import { About } from "./About";
+import { Skills } from "./Skills";
+import { Work } from "./Work";
+import { Contact } from "./Contact";
 
-import dynamic from "next/dynamic";
-
-const TechStrip = dynamic(() =>
-  import("@/sections/TechStrip").then((m) => m.TechStrip),
-);
-const Work = dynamic(() => import("@/sections/Work").then((m) => m.Work));
-const About = dynamic(() => import("@/sections/About").then((m) => m.About));
-const Skills = dynamic(() => import("@/sections/Skills").then((m) => m.Skills));
-const Contact = dynamic(() =>
-  import("@/sections/Contact").then((m) => m.Contact),
-);
-
-export function BelowFold() {
+export function BelowFold({ locale }: { locale: Locale }) {
   return (
     <>
-      <TechStrip />
+      <TechStrip locale={locale} />
       <Work />
-      <About />
-      <Skills />
-      <Contact />
+      <About locale={locale} />
+      <Skills locale={locale} />
+      <Contact locale={locale} />
     </>
   );
 }

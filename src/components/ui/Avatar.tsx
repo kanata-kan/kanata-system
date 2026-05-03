@@ -169,21 +169,21 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
         onClick={(e) => e.stopPropagation()}
         style={{
           position: "relative",
-          maxWidth: 420,
-          maxHeight: "84vh",
+          maxWidth: 560,
+          maxHeight: "88vh",
           width: "100%",
           borderRadius: 24,
           overflow: "hidden",
           border: "1px solid rgba(255,255,255,0.1)",
           boxShadow: visible
-            ? `0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06), 0 0 80px ${c.cyan}18`
+            ? `0 40px 120px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.06), 0 0 100px ${c.cyan}14`
             : "0 24px 64px rgba(0,0,0,0.6)",
           transform: visible
             ? "scale(1) translateY(0)"
-            : "scale(0.9) translateY(24px)",
+            : "scale(0.92) translateY(20px)",
           opacity: visible ? 1 : 0,
           transition:
-            "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s, box-shadow 0.45s",
+            "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.5s",
           cursor: "default",
           background: c.bg2,
         }}
@@ -195,18 +195,18 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
             top: 0,
             left: 0,
             right: 0,
-            height: 3,
+            height: 2,
             background: `linear-gradient(90deg, ${c.cyan}, ${c.purple}, ${c.cyan})`,
             zIndex: 2,
           }}
         />
 
-        <div style={{ aspectRatio: "3 / 4", position: "relative" }}>
+        <div style={{ aspectRatio: "4 / 5", position: "relative" }}>
           <Image
             src={PROFILE_PHOTO_URL}
             alt="Abdelilah Wajid — Full photo"
-            width={440}
-            height={587}
+            width={560}
+            height={700}
             fetchPriority="high"
             sizes="(max-width: 768px) 100vw, 440px"
             style={{

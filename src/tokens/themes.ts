@@ -75,6 +75,24 @@ export function resolveColor(C: Theme, key: string): string {
   return map[key] ?? C.text;
 }
 
+/**
+ * Résout une clé de couleur vers la CSS custom property correspondante.
+ * For use in Server Components that don't have access to the Theme object.
+ */
+export function resolveColorVar(key: string): string {
+  const map: Record<string, string> = {
+    cyan: "var(--t-cyan)",
+    green: "var(--t-green)",
+    amber: "var(--t-amber)",
+    purple: "var(--t-purple)",
+    text: "var(--t-text)",
+    sub: "var(--t-sub)",
+    muted: "var(--t-muted)",
+    faint: "var(--t-faint)",
+  };
+  return map[key] ?? "var(--t-text)";
+}
+
 export const LIGHT: Theme = {
   bg: "#f4f7fb",
   bg2: "#ffffff",

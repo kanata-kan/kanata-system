@@ -570,7 +570,7 @@ const SystemNode = memo(function SystemNode({
           initial={false}
           animate={{
             opacity: organized ? 1 : 0,
-            backgroundColor: organized ? statusColor : "transparent",
+            backgroundColor: organized ? statusColor : "rgba(0,0,0,0)",
           }}
           transition={{ duration: 0.3, delay: index * 0.06 + 0.3 }}
           style={{

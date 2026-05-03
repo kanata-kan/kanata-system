@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { useThemeContext } from "@/hooks/useTheme";
-import { useResponsiveContext } from "@/hooks/useResponsive";
 import { useLocale } from "@/hooks/useLocale";
 import { getContent } from "@/data/content";
 import {
@@ -19,8 +17,6 @@ import type { FormData } from "@/components/flow";
 const TOTAL_STEPS = 7;
 
 export function HowIStartClient() {
-  const { C } = useThemeContext();
-  const { isMobile } = useResponsiveContext();
   const { locale } = useLocale();
 
   const content = getContent(locale);
@@ -74,7 +70,7 @@ export function HowIStartClient() {
             left: 0,
             right: 0,
             height: 2,
-            background: C.bg3,
+            background: "var(--t-bg3)",
             zIndex: 100,
           }}
         >
@@ -82,7 +78,8 @@ export function HowIStartClient() {
             style={{
               height: "100%",
               width: `${((step + 1) / TOTAL_STEPS) * 100}%`,
-              background: `linear-gradient(90deg, ${C.cyan}, ${C.purple})`,
+              background:
+                "linear-gradient(90deg, var(--t-cyan), var(--t-purple))",
               transition: "width 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
             }}
           />
@@ -95,7 +92,8 @@ export function HowIStartClient() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: isMobile ? "80px 20px 40px" : "100px 48px 60px",
+          padding:
+            "clamp(80px, 12vw, 100px) clamp(20px, 5vw, 48px) clamp(40px, 8vw, 60px)",
           boxSizing: "border-box",
         }}
       >
@@ -130,7 +128,7 @@ export function HowIStartClient() {
         style={{
           textAlign: "center",
           padding: "20px 0",
-          borderTop: `1px solid ${C.line}`,
+          borderTop: "1px solid var(--t-line)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -147,7 +145,7 @@ export function HowIStartClient() {
           <path
             d="M8,82 L28,16 L50,82 L63,16 L76,82 L89,16"
             fill="none"
-            stroke={C.cyan}
+            stroke="var(--t-cyan)"
             strokeWidth="12"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -155,7 +153,7 @@ export function HowIStartClient() {
           <path
             d="M17.5,53 L42,53"
             fill="none"
-            stroke={C.cyan}
+            stroke="var(--t-cyan)"
             strokeWidth="12"
             strokeLinecap="round"
           />
@@ -164,7 +162,7 @@ export function HowIStartClient() {
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 9,
-            color: C.faint,
+            color: "var(--t-faint)",
             letterSpacing: 2,
           }}
         >

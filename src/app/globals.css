@@ -5,10 +5,32 @@
 ────────────────────────────────────────────────── */
 
 :root {
-  --cyan: #22d3ee;
-  --purple: #a855f7;
-  --green: #3fb950;
-  --amber: #f0883e;
+  /* ── Theme tokens (dark default) ── */
+  --t-bg: #0e1117;
+  --t-bg2: #0d1b2a;
+  --t-bg3: #1c2333;
+  --t-card: #21262d;
+  --t-text: #e2e8f0;
+  --t-sub: #cbd5e1;
+  --t-muted: #64748b;
+  --t-faint: #475569;
+  --t-cyan: #22d3ee;
+  --t-green: #3fb950;
+  --t-amber: #f0883e;
+  --t-purple: #a855f7;
+  --t-border: rgba(34, 211, 238, 0.12);
+  --t-border2: rgba(34, 211, 238, 0.3);
+  --t-line: rgba(226, 232, 240, 0.06);
+  --t-gridLine: rgba(34, 211, 238, 0.1);
+  --t-glow1: rgba(34, 211, 238, 0.14);
+  --t-glow2: rgba(168, 85, 247, 0.1);
+  --t-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+
+  /* ── Legacy aliases (used by .grad-text, scrollbar, etc.) ── */
+  --cyan: var(--t-cyan);
+  --purple: var(--t-purple);
+  --green: var(--t-green);
+  --amber: var(--t-amber);
 
   /* ✅ FIX: Navbar height (source of truth) */
   --navbar-height: 64px;
@@ -22,6 +44,29 @@
   --font-mono:
     "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Consolas,
     "Liberation Mono", Menlo, monospace;
+}
+
+[data-theme="light"] {
+  --t-bg: #f4f7fb;
+  --t-bg2: #ffffff;
+  --t-bg3: #e2e8f0;
+  --t-card: #cbd5e1;
+  --t-text: #0f172a;
+  --t-sub: #253243;
+  --t-muted: #475569;
+  --t-faint: #64748b;
+  --t-cyan: #0e7490;
+  --t-green: #166534;
+  --t-amber: #92400e;
+  --t-purple: #6d28d9;
+  --t-border: rgba(15, 23, 42, 0.16);
+  --t-border2: rgba(15, 23, 42, 0.28);
+  --t-line: rgba(15, 23, 42, 0.14);
+  --t-gridLine: rgba(15, 23, 42, 0.08);
+  --t-glow1: rgba(14, 116, 144, 0.1);
+  --t-glow2: rgba(109, 40, 217, 0.08);
+  --t-shadow:
+    0 18px 42px rgba(15, 23, 42, 0.08), 0 2px 10px rgba(15, 23, 42, 0.05);
 }
 
 html[lang="ar"] {
@@ -488,5 +533,142 @@ main,
 @media (prefers-reduced-motion: reduce) {
   [data-hero-cue="pulse"] {
     animation: none !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────
+   SERVER-COMPONENT LAYOUT UTILITIES
+────────────────────────────────────────────────── */
+
+/* Section — responsive vertical padding + theme border */
+.sc-section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid var(--t-line);
+  transition: background 0.35s;
+}
+@media (min-width: 768px) {
+  .sc-section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+.sc-section--alt {
+  background: var(--t-bg2);
+}
+
+/* Container — responsive horizontal padding */
+.sc-container {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+@media (min-width: 768px) {
+  .sc-container {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+.sc-container--narrow {
+  max-width: 768px;
+}
+.sc-container--default {
+  max-width: 1280px;
+}
+.sc-container--wide {
+  max-width: 1536px;
+}
+
+/* About — responsive layout */
+.sc-about-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+@media (min-width: 768px) {
+  .sc-about-layout {
+    flex-direction: row;
+    gap: 48px;
+  }
+}
+
+/* Skills — responsive grid + card */
+.sc-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .sc-skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+.sc-skills-card {
+  padding: 20px 18px;
+}
+@media (min-width: 768px) {
+  .sc-skills-card {
+    padding: 24px 22px;
+    min-height: 220px;
+  }
+}
+.sc-skills-watermark {
+  inset-inline-end: -6px;
+  top: -8px;
+  font-size: 56px;
+}
+@media (min-width: 768px) {
+  .sc-skills-watermark {
+    inset-inline-end: -10px;
+    top: -10px;
+    font-size: 72px;
+  }
+}
+.sc-skills-title {
+  font-size: 24px;
+}
+@media (min-width: 768px) {
+  .sc-skills-title {
+    font-size: 28px;
+  }
+}
+.sc-skills-pill {
+  padding: 8px 10px;
+}
+@media (min-width: 768px) {
+  .sc-skills-pill {
+    padding: 9px 12px;
+  }
+}
+
+/* Contact — hover effects */
+.sc-contact-cta-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--t-cyan) 25%, transparent);
+}
+.sc-contact-cta-intake:hover {
+  background: color-mix(in srgb, var(--t-cyan) 7%, transparent) !important;
+  border-color: var(--t-cyan) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--t-cyan) 15%, transparent);
+}
+.sc-contact-social:hover {
+  color: var(--t-cyan) !important;
+}
+.sc-copy-btn:hover {
+  border-color: var(--t-border2) !important;
+  background: var(--t-bg3) !important;
+}
+
+/* Footer — responsive padding */
+.sc-footer {
+  padding: 16px 20px;
+}
+@media (min-width: 768px) {
+  .sc-footer {
+    padding: 16px 48px;
   }
 }

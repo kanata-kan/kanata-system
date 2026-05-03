@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 import withPWA from "next-pwa";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: [
+      "@/tokens",
+      "@/hooks",
+      "@/components/ui",
+      "@/components/layout",
+      "@/components/brand",
+      "@/data/content",
+    ],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
   },

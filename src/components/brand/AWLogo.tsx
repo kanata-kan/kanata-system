@@ -1,5 +1,3 @@
-"use client";
-
 import { AWMark } from "./AWMark";
 
 const BRAND = {

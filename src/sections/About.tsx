@@ -1,44 +1,35 @@
 /**
  * @file About.tsx
  * @description About section — mindset-driven content (problem → clarity → decision).
+ * Server Component — uses CSS custom properties for theme, CSS for responsive.
  */
-"use client";
 
-import { useThemeContext } from "@/hooks/useTheme";
-import { useResponsiveContext } from "@/hooks/useResponsive";
-import { useLocale } from "@/hooks/useLocale";
+import type { Locale } from "@/data/content/types";
 import { getHeroMetrics } from "@/data/stats";
-import { resolveColor } from "@/tokens/themes";
+import { resolveColorVar } from "@/tokens/themes";
 import { Label } from "@/components/ui/Label";
 import { Tag } from "@/components/ui/Tag";
 import { WindowDots } from "@/components/ui/WindowDots";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { Stack } from "@/components/layout/Stack";
-import { TEXT } from "@/tokens/typography";
+import { SC_TEXT } from "@/tokens/typography";
 import { getContent } from "@/data/content";
 
-export function About() {
-  const { C } = useThemeContext();
-  const { isMobile } = useResponsiveContext();
-  const { locale } = useLocale();
+export function About({ locale }: { locale: Locale }) {
   const content = getContent(locale);
 
   return (
     <Section id="about" bg="alt">
       <Container>
-        <Stack
-          direction={isMobile ? "column" : "row"}
-          gap={isMobile ? "xl" : "3xl"}
-        >
+        <div className="sc-about-layout">
           {/* Left */}
           <div className="rv-l">
-            <Label c={C}>{content.about.label}</Label>
+            <Label>{content.about.label}</Label>
 
             <h2
               className="rv-l d1"
               style={{
-                ...TEXT.sectionHeading(C, isMobile),
+                ...SC_TEXT.sectionHeading(),
                 marginBottom: 22,
                 lineHeight: 1.1,
               }}
@@ -52,7 +43,7 @@ export function About() {
               <p
                 key={i}
                 style={{
-                  ...TEXT.body(C),
+                  ...SC_TEXT.body(),
                   lineHeight: 1.9,
                   marginBottom: 13,
                 }}
@@ -70,7 +61,7 @@ export function About() {
               }}
             >
               {content.about.tags.map((tag) => (
-                <Tag key={tag.text} color={resolveColor(C, tag.colorKey)}>
+                <Tag key={tag.text} color={resolveColorVar(tag.colorKey)}>
                   {tag.text}
                 </Tag>
               ))}
@@ -88,10 +79,10 @@ export function About() {
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: 1,
-                background: C.line,
+                background: "var(--t-line)",
                 borderRadius: 10,
                 overflow: "hidden",
-                border: `1px solid ${C.border}`,
+                border: "1px solid var(--t-border)",
               }}
             >
               {getHeroMetrics(locale).map((m) => (
@@ -99,21 +90,21 @@ export function About() {
                   key={m.label}
                   style={{
                     padding: "20px 18px",
-                    background: C.bg3,
-                    borderRight: `1px solid ${C.border}`,
-                    borderBottom: `1px solid ${C.border}`,
+                    background: "var(--t-bg3)",
+                    borderRight: "1px solid var(--t-border)",
+                    borderBottom: "1px solid var(--t-border)",
                     transition: "background .35s",
                   }}
                 >
                   <div
                     style={{
-                      ...TEXT.metricValue(resolveColor(C, m.colorKey)),
+                      ...SC_TEXT.metricValue(resolveColorVar(m.colorKey)),
                       marginBottom: 5,
                     }}
                   >
                     {m.value}
                   </div>
-                  <div style={TEXT.metricLabel(C)}>{m.label}</div>
+                  <div style={SC_TEXT.metricLabel()}>{m.label}</div>
                 </div>
               ))}
             </div>
@@ -121,8 +112,8 @@ export function About() {
             {/* Code card */}
             <div
               style={{
-                background: C.bg3,
-                border: `1px solid ${C.border}`,
+                background: "var(--t-bg3)",
+                border: "1px solid var(--t-border)",
                 borderRadius: 10,
                 overflow: "hidden",
                 transition: "background .35s",
@@ -130,9 +121,9 @@ export function About() {
             >
               <div
                 style={{
-                  background: C.card,
+                  background: "var(--t-card)",
                   padding: "10px 14px",
-                  borderBottom: `1px solid ${C.line}`,
+                  borderBottom: "1px solid var(--t-line)",
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
@@ -143,7 +134,7 @@ export function About() {
                   style={{
                     fontFamily: "var(--font-mono)",
                     fontSize: 10,
-                    color: C.muted,
+                    color: "var(--t-muted)",
                     marginLeft: 4,
                   }}
                 >
@@ -165,7 +156,7 @@ export function About() {
                   >
                     <span
                       style={{
-                        color: C.faint,
+                        color: "var(--t-faint)",
                         marginInlineEnd: 12,
                         fontSize: 9,
                         minWidth: 14,
@@ -179,7 +170,7 @@ export function About() {
                     {row.map((token, j) => (
                       <span
                         key={j}
-                        style={{ color: resolveColor(C, token.colorKey) }}
+                        style={{ color: resolveColorVar(token.colorKey) }}
                       >
                         {token.text}
                       </span>
@@ -189,7 +180,7 @@ export function About() {
               </div>
             </div>
           </div>
-        </Stack>
+        </div>
       </Container>
     </Section>
   );
