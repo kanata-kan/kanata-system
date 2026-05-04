@@ -171,9 +171,13 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
           position: "relative",
           maxWidth: 560,
           maxHeight: "88vh",
+          height: "min(88vh, 720px)",
           width: "100%",
           borderRadius: 24,
           overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
           border: "1px solid rgba(255,255,255,0.1)",
           boxShadow: visible
             ? `0 40px 120px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.06), 0 0 100px ${c.cyan}14`
@@ -201,17 +205,14 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
           }}
         />
 
-        <div style={{ aspectRatio: "4 / 5", position: "relative" }}>
+        <div style={{ position: "relative", flex: "1 1 auto", minHeight: 0 }}>
           <Image
             src={PROFILE_PHOTO_URL}
             alt="Abdelilah Wajid — Full photo"
-            width={560}
-            height={700}
+            fill
             fetchPriority="high"
             sizes="(max-width: 768px) 100vw, 440px"
             style={{
-              width: "100%",
-              height: "100%",
               objectFit: "cover",
               display: "block",
             }}
@@ -222,6 +223,7 @@ export function Avatar({ c, size = 110, animated = true }: AvatarProps) {
         {/* Info bar — always dark since lightbox backdrop is dark */}
         <div
           style={{
+            flex: "0 0 auto",
             padding: "18px 24px",
             borderTop: "1px solid rgba(255,255,255,0.08)",
             background: "rgba(10,15,20,0.92)",

@@ -114,26 +114,37 @@ export function CaseStudyCTA({
                 alignItems: "center",
                 justifyContent: "center",
                 fontFamily: "var(--font-mono)",
-                fontSize: 10,
-                letterSpacing: 1.4,
-                padding: "11px 24px",
-                borderRadius: 8,
-                background: color,
+                fontSize: isMobile ? 11 : 10.5,
+                letterSpacing: 1.6,
+                padding: isMobile ? "0 18px" : "0 22px",
+                height: isMobile ? 48 : 44,
+                borderRadius: 10,
+                background: `linear-gradient(180deg, ${color}, color-mix(in srgb, ${color} 86%, #000))`,
                 color: "#fff",
-                fontWeight: 600,
+                fontWeight: 700,
                 textDecoration: "none",
                 transition: "all .25s",
-                maxWidth: isMobile ? "100%" : 280,
+                width: isMobile ? "100%" : "auto",
+                maxWidth: isMobile ? "100%" : 320,
+                minWidth: isMobile ? "100%" : 260,
+                border: `1px solid ${color}66`,
+                boxShadow: `0 10px 34px ${color}35, 0 0 0 1px ${color}22`,
                 lineHeight: 1.5,
                 textAlign: "center",
               }}
               onMouseOver={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = `0 8px 28px ${color}40`;
+                e.currentTarget.style.boxShadow = `0 16px 44px ${color}45, 0 0 0 1px ${color}33`;
               }}
               onMouseOut={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.boxShadow = `0 10px 34px ${color}35, 0 0 0 1px ${color}22`;
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.boxShadow = `0 16px 44px ${color}45, 0 0 0 3px ${color}33`;
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.boxShadow = `0 10px 34px ${color}35, 0 0 0 1px ${color}22`;
               }}
             >
               {copy.cta.nextProject(nextProjectLink.name)}

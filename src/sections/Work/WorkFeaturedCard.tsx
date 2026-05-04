@@ -403,28 +403,36 @@ export function WorkFeaturedCard({ C, p, isMobile }: WorkFeaturedCardProps) {
                   alignItems: "center",
                   gap: 10,
                   fontFamily: "var(--font-mono)",
-                  fontSize: 11,
+                  fontSize: isMobile ? 12 : 11.5,
                   letterSpacing: 2,
-                  padding: isMobile ? "14px 24px" : "12px 28px",
-                  borderRadius: 8,
-                  border: `1px solid ${p.color}60`,
-                  color: p.color,
-                  background: `linear-gradient(135deg, ${p.color}12, ${p.color}08)`,
+                  padding: isMobile ? "0 18px" : "0 22px",
+                  height: isMobile ? 50 : 46,
+                  borderRadius: 10,
+                  border: `1px solid ${p.color}85`,
+                  color: "#fff",
+                  background: `linear-gradient(135deg, ${p.color}, color-mix(in srgb, ${p.color} 82%, #000))`,
                   transition: "all .25s",
                   textDecoration: "none",
                   fontWeight: 600,
                   width: isMobile ? "100%" : "auto",
                   justifyContent: "center",
+                  boxShadow: `0 10px 34px ${p.color}30, 0 0 0 1px ${p.color}18`,
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}28, ${p.color}18)`;
-                  e.currentTarget.style.boxShadow = `0 6px 24px ${p.color}35`;
+                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}, color-mix(in srgb, ${p.color} 76%, #000))`;
+                  e.currentTarget.style.boxShadow = `0 16px 44px ${p.color}40, 0 0 0 1px ${p.color}22`;
                   e.currentTarget.style.transform = "translateY(-1px)";
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}12, ${p.color}08)`;
-                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.background = `linear-gradient(135deg, ${p.color}, color-mix(in srgb, ${p.color} 82%, #000))`;
+                  e.currentTarget.style.boxShadow = `0 10px 34px ${p.color}30, 0 0 0 1px ${p.color}18`;
                   e.currentTarget.style.transform = "translateY(0)";
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.boxShadow = `0 16px 44px ${p.color}40, 0 0 0 3px ${p.color}30`;
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.boxShadow = `0 10px 34px ${p.color}30, 0 0 0 1px ${p.color}18`;
                 }}
               >
                 {copy.viewCaseStudy.toUpperCase()}{" "}

@@ -69,7 +69,7 @@ export function ImageLightbox({
         transition:
           "background 0.38s cubic-bezier(0.4,0,0.2,1), backdrop-filter 0.38s cubic-bezier(0.4,0,0.2,1)",
         cursor: "zoom-out",
-        padding: "32px 24px",
+        padding: "18px 14px",
         boxSizing: "border-box",
       }}
     >
@@ -199,10 +199,14 @@ export function ImageLightbox({
           zIndex: 1,
           maxWidth: 980,
           maxHeight: "88vh",
+          height: "min(88vh, 820px)",
           width: "100%",
           borderRadius: 18,
           overflow: "hidden",
           border: "1px solid rgba(255,255,255,0.07)",
+          display: "flex",
+          flexDirection: "column",
+          minHeight: 0,
           boxShadow: visible
             ? `0 48px 120px rgba(0,0,0,0.75),
                0 0 0 1px rgba(255,255,255,0.04),
@@ -250,20 +254,18 @@ export function ImageLightbox({
           }}
         />
 
-        <Image
-          src={src}
-          alt={alt}
-          width={1200}
-          height={675}
-          style={{
-            width: "100%",
-            height: "auto",
-            maxHeight: caption ? "calc(88vh - 58px)" : "88vh",
-            objectFit: "contain",
-            display: "block",
-          }}
-          priority
-        />
+        <div style={{ position: "relative", flex: "1 1 auto", minHeight: 0 }}>
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            style={{
+              objectFit: "contain",
+              display: "block",
+            }}
+            priority
+          />
+        </div>
 
         {caption && (
           <div
@@ -276,6 +278,7 @@ export function ImageLightbox({
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              flexWrap: "wrap",
               gap: 16,
             }}
           >
@@ -286,6 +289,8 @@ export function ImageLightbox({
                 color: "var(--t-sub)",
                 lineHeight: 1.55,
                 margin: 0,
+                flex: "1 1 260px",
+                minWidth: 0,
               }}
             >
               {caption}
@@ -296,9 +301,13 @@ export function ImageLightbox({
                 fontSize: 8,
                 color: "var(--t-faint)",
                 letterSpacing: 1.5,
-                flexShrink: 0,
+                flex: "0 1 auto",
+                minWidth: 0,
                 textTransform: "uppercase",
                 opacity: 0.6,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
               }}
             >
               {alt}

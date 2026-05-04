@@ -776,7 +776,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
       <NoiseFilter />
 
       <div className="rv d4" style={{ width: "100%" }}>
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative", isolation: "isolate" }}>
           {/* ── Layered ambient backdrop ── */}
           <m.div
             initial={false}
@@ -793,6 +793,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
               ].join(", "),
               filter: "blur(28px)",
               pointerEvents: "none",
+              zIndex: 0,
               willChange: "opacity",
             }}
           />
@@ -812,6 +813,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
               padding: 1,
               maxWidth: 468,
               margin: "0 auto",
+              zIndex: 1,
               willChange: "background",
             }}
           >
@@ -1051,9 +1053,10 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                   transition={{ duration: 0.35 }}
                   style={{
                     position: "absolute",
-                    left: "50%",
+                    left: 16,
+                    right: 16,
                     bottom: 24,
-                    transform: "translateX(-50%)",
+                    transform: "none",
                     display: "inline-flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -1082,6 +1085,9 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 10,
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      textAlign: "center",
                       padding: "10px 14px",
                       borderRadius: 999,
                       border: `1px solid ${C.border2}`,
@@ -1113,7 +1119,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                         fontWeight: 700,
                         letterSpacing: isArabic ? 0 : 0.45,
                         color: C.text,
-                        whiteSpace: "nowrap",
+                        whiteSpace: "normal",
                       }}
                     >
                       {copy.cue}
@@ -1124,7 +1130,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                         fontSize: 8,
                         color: C.cyan,
                         letterSpacing: 0.45,
-                        whiteSpace: "nowrap",
+                        whiteSpace: "normal",
                       }}
                     >
                       {copy.cueSub}
@@ -1146,12 +1152,16 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                     }}
                     style={{
                       position: "absolute",
-                      left: "50%",
+                      left: 16,
+                      right: 16,
                       bottom: 24,
-                      transform: "translateX(-50%)",
+                      transform: "none",
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 10,
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                      textAlign: "center",
                       padding: "10px 16px",
                       borderRadius: 999,
                       border: `1px solid ${C.border2}`,
@@ -1186,7 +1196,7 @@ export const HeroSystemTransform = memo(function HeroSystemTransform() {
                         fontWeight: 700,
                         letterSpacing: isArabic ? 0 : 0.45,
                         color: C.text,
-                        whiteSpace: "nowrap",
+                        whiteSpace: "normal",
                       }}
                     >
                       {copy.message}
